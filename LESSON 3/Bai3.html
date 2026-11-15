@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LESSON 3: Tính toán toán tử</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tích hợp CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-btn.active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+        .nav-btn { transition: all 0.2s; }
+        
+        /* Chỉnh sửa hiển thị của CodeMirror để tiệm cận hoàn hảo với VS Code */
+        .CodeMirror {
+            height: auto !important;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+            font-size: 14px;
+            background-color: #1e1e1e !important;
+        }
+        .CodeMirror-scroll {
+            overflow-y: hidden !important;
+            overflow-x: auto !important;
+        }
+        .CodeMirror-lines {
+            padding-top: 16px !important;
+            padding-bottom: 16px !important;
+        }
+        .CodeMirror-gutters {
+            background-color: #1e1e1e !important;
+            border-right: 1px solid #3c3c3c !important;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+        .CodeMirror-linenumber {
+            color: #858585 !important;
+        }
+        
+        /* Tùy chỉnh màu sắc cú pháp CodeMirror giống hệt VS Code (Dark+ theme) */
+        .CodeMirror { color: #d4d4d4 !important; }
+        .cm-s-default .cm-comment { color: #6a9955 !important; font-style: italic; }
+        .cm-s-default .cm-variable { color: #9cdcfe !important; }
+        .cm-s-default .cm-number { color: #b5cea8 !important; }
+        .cm-s-default .cm-keyword { color: #569cd6 !important; font-weight: bold; }
+        .cm-s-default .cm-string { color: #ce9178 !important; }
+        .cm-s-default .cm-operator { color: #d4d4d4 !important; }
+        .cm-s-default .cm-builtin { color: #dcdcaa !important; }
+        .cm-s-default .cm-def { color: #dcdcaa !important; }
+    </style>
+</head>
+<body class="text-slate-800 pb-12">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">LESSON 3: Tính Toán Toán Tử</h1>
+                    <p class="text-slate-400 text-sm mt-1">App Producer - Basic | Độ tuổi: 12+ | Thời lượng: 120 phút</p>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex overflow-x-auto mt-6 pb-2 gap-2 snap-x hide-scrollbar" id="nav-tabs">
+                <button onclick="switchTab('intro')" class="nav-btn active whitespace-nowrap px-4 py-2 rounded-full border border-slate-700 text-sm font-medium hover:bg-slate-800 snap-start">1. Giới thiệu</button>
+                <button onclick="switchTab('arithmetic')" class="nav-btn whitespace-nowrap px-4 py-2 rounded-full border border-slate-700 text-sm font-medium hover:bg-slate-800 snap-start">2. Số học</button>
+                <button onclick="switchTab('relational')" class="nav-btn whitespace-nowrap px-4 py-2 rounded-full border border-slate-700 text-sm font-medium hover:bg-slate-800 snap-start">3. Quan hệ</button>
+                <button onclick="switchTab('logical')" class="nav-btn whitespace-nowrap px-4 py-2 rounded-full border border-slate-700 text-sm font-medium hover:bg-slate-800 snap-start">4. Logic</button>
+                <button onclick="switchTab('practice')" class="nav-btn whitespace-nowrap px-4 py-2 rounded-full border border-slate-700 text-sm font-medium hover:bg-slate-800 snap-start bg-indigo-900/50">💻 Thực hành</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        
+        <!-- SECTION 1: Giới thiệu -->
+        <section id="intro" class="tab-content active">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">1</span>
+                    Giới thiệu về Toán tử
+                </h2>
+                <div class="text-slate-600 leading-relaxed space-y-4">
+                    <p>Trong cuộc sống, để tính tiền thối lại khi đi siêu thị hay tính điểm trung bình môn học, chúng ta dùng các phép tính cộng, trừ, nhân, chia. Trong lập trình cũng vậy, để máy tính hiểu và làm được những việc này, chúng ta cần cung cấp cho nó các công cụ tính toán gọi là <strong>Toán tử (Operator)</strong>.</p>
+                    
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg shadow-inner">
+                        <p class="font-semibold text-indigo-900 mb-1">Khái niệm:</p>
+                        <p class="text-indigo-800">Toán tử là các ký hiệu đặc biệt dùng để thực hiện các phép tính học toán, so sánh, hoặc xử lý logic trên các giá trị và biến.</p>
+                    </div>
+                    
+                    <div class="mt-8 bg-slate-50 border border-slate-200 p-5 rounded-xl">
+                        <h4 class="font-bold text-slate-800 mb-3 flex items-center">
+                            <span class="text-2xl mr-2">📐</span> Ví dụ minh họa 1: Tính diện tích
+                        </h4>
+                        <p class="mb-2">Trong toán học: <strong>Diện tích = Dài × Rộng</strong>.</p>
+                        <p class="mb-3">Trong lập trình, được viết thành câu lệnh:</p>
+                        <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm mb-4 mt-2 flex flex-col">
+                            <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                <div class="flex items-center">
+                                    <div class="flex space-x-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <span class="text-[#858585] text-xs ml-3 font-sans">dien_tich.py</span>
+                                </div>
+                                <button onclick="runPython(editor3, 'output-dien-tich')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs font-bold transition flex items-center shadow-sm z-10">
+                                    ▶ Chạy Code
+                                </button>
+                            </div>
+                            <div class="bg-[#1e1e1e] text-left">
+                                <textarea id="code-dien-tich" name="code-dien-tich">dai = 5
+rong = 3
+dien_tich = dai * rong
+print("Diện tích hình chữ nhật:", dien_tich)</textarea>
+                            </div>
+                            <div class="bg-black text-white p-3 font-mono text-sm border-t border-[#3c3c3c]">
+                                <div class="text-[#858585] mb-1 flex items-center text-xs uppercase tracking-wider">&gt;_ Terminal Output:</div>
+                                <pre id="output-dien-tich" class="text-slate-200 whitespace-pre-wrap min-h-[1.5rem]"></pre>
+                            </div>
+                        </div>
+                        <ul class="list-disc pl-6 text-sm space-y-2 mb-6">
+                            <li>Dấu <code class="text-pink-600 font-bold bg-pink-100 px-1.5 py-0.5 rounded">*</code> là <strong>toán tử nhân</strong> (thực hiện tính toán).</li>
+                            <li>Dấu <code class="text-pink-600 font-bold bg-pink-100 px-1.5 py-0.5 rounded">=</code> là <strong>toán tử gán</strong> (lưu kết quả tính được vào biến <code>dien_tich</code>).</li>
+                        </ul>
+
+                        <div class="border-t border-slate-200 pt-6">
+                            <h4 class="font-bold text-slate-800 mb-3 flex items-center">
+                                <span class="text-2xl mr-2">🛒</span> Ví dụ minh họa 2: Tính tiền giỏ hàng
+                            </h4>
+                            <p class="mb-3">Khi bạn làm ứng dụng mua sắm, bạn cần tính tổng tiền:</p>
+                            <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm mb-3 mt-2 flex flex-col">
+                                <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                    <div class="flex items-center">
+                                        <div class="flex space-x-1.5">
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                        </div>
+                                        <span class="text-[#858585] text-xs ml-3 font-sans">cart.py</span>
+                                    </div>
+                                    <button onclick="runPython(editor4, 'output-gio-hang')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs font-bold transition flex items-center shadow-sm z-10">
+                                        ▶ Chạy Code
+                                    </button>
+                                </div>
+                                <div class="bg-[#1e1e1e] text-left">
+                                    <textarea id="code-gio-hang" name="code-gio-hang">gia_mot_mon = 50000
+so_luong = 3
+tong_tien = gia_mot_mon * so_luong
+print("Tổng tiền giỏ hàng:", tong_tien)</textarea>
+                                </div>
+                                <div class="bg-black text-white p-3 font-mono text-sm border-t border-[#3c3c3c]">
+                                    <div class="text-[#858585] mb-1 flex items-center text-xs uppercase tracking-wider">&gt;_ Terminal Output:</div>
+                                    <pre id="output-gio-hang" class="text-slate-200 whitespace-pre-wrap min-h-[1.5rem]"></pre>
+                                </div>
+                            </div>
+                            <p class="text-sm text-slate-600">Với <code>gia_mot_mon = 50000</code> và <code>so_luong = 3</code>, <code>tong_tien</code> sẽ là <code>150000</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end">
+                    <button onclick="switchTab('arithmetic')" class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition flex items-center">
+                        Tiếp theo: Toán tử số học
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Toán tử số học -->
+        <section id="arithmetic" class="tab-content">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">2</span>
+                    Toán tử Số học
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Lý thuyết -->
+                    <div>
+                        <p class="text-slate-600 mb-4">Được sử dụng để thực hiện các phép tính toán học cơ bản.</p>
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h3 class="font-semibold text-slate-800 mb-3 border-b border-slate-200 pb-2">Các toán tử cơ bản</h3>
+                            <ul class="space-y-3 text-sm text-slate-600 mb-6">
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">+</code> Cộng</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">-</code> Trừ</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">*</code> Nhân</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">/</code> Chia (kết quả số thập phân)</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">//</code> Chia lấy phần nguyên</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">%</code> Chia lấy phần dư</li>
+                                <li class="flex items-center"><code class="bg-blue-100 text-blue-700 w-8 text-center py-1 rounded mr-3 font-bold">**</code> Lũy thừa</li>
+                            </ul>
+
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm">
+                                <h4 class="font-bold text-blue-900 mb-2">💡 Ứng dụng thực tế: Chia hóa đơn</h4>
+                                <p class="text-blue-800 mb-2">3 người bạn ăn hết <strong>100,000đ</strong>. Cần chia đều mà không xài tiền lẻ:</p>
+                                <!-- VS Code Window 3 -->
+                                <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm mt-3 mb-1">
+                                    <div class="flex items-center px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                        <div class="flex space-x-1.5">
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                            <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                        </div>
+                                        <span class="text-[#858585] text-xs ml-3 font-sans">bill_split.py</span>
+                                    </div>
+                                    <div class="p-4 flex">
+                                        <div class="text-[#858585] pr-4 select-none text-right">1<br>2<br>3<br>4</div>
+                                        <div class="text-[#d4d4d4]">
+                                            <span class="text-[#6a9955]"># Mỗi người trả (chia lấy nguyên)</span><br>
+                                            <span class="text-[#9cdcfe]">moi_nguoi_tra</span> = <span class="text-[#b5cea8]">100000</span> // <span class="text-[#b5cea8]">3</span>  <span class="text-[#6a9955]"># 3</span><br>
+                                            <span class="text-[#6a9955]"># Tiền dư (chia lấy dư)</span><br>
+                                            <span class="text-[#9cdcfe]">tien_du</span> = <span class="text-[#b5cea8]">100000</span> % <span class="text-[#b5cea8]">3</span>        <span class="text-[#6a9955]"># 1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox -->
+                    <div class="bg-slate-800 rounded-xl p-6 shadow-lg text-white flex flex-col h-full">
+                        <h3 class="text-lg font-bold text-blue-400 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Khu vực thử nghiệm (Sandbox)
+                        </h3>
+                        <p class="text-sm text-slate-400 mb-6">Thử nhập các con số và chọn phép tính để xem kết quả.</p>
+                        
+                        <div class="flex items-center gap-2 mb-6">
+                            <input type="number" id="arith-a" value="10" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-2 text-center text-white font-mono focus:outline-none focus:border-blue-400">
+                            
+                            <select id="arith-op" class="bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center font-bold text-blue-400 cursor-pointer focus:outline-none">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                                <option value="*">*</option>
+                                <option value="/">/</option>
+                                <option value="//">//</option>
+                                <option value="%">%</option>
+                                <option value="**">**</option>
+                            </select>
+
+                            <input type="number" id="arith-b" value="3" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-2 text-center text-white font-mono focus:outline-none focus:border-blue-400">
+                            
+                            <button onclick="calcArithmetic()" class="ml-2 bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded font-bold transition">=</button>
+                        </div>
+                        
+                        <div class="mt-auto bg-black/30 p-4 rounded-lg border border-slate-700 text-center">
+                            <span class="text-slate-400 block text-sm mb-1">Kết quả:</span>
+                            <span id="arith-result" class="text-3xl font-mono font-bold text-green-400">?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Toán tử quan hệ -->
+        <section id="relational" class="tab-content">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="bg-emerald-100 text-emerald-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">3</span>
+                    Toán tử Quan hệ (So sánh)
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Lý thuyết -->
+                    <div>
+                        <p class="text-slate-600 mb-4">Dùng để so sánh 2 giá trị. Kết quả trả về luôn là <strong class="text-emerald-600">True (Đúng)</strong> hoặc <strong class="text-red-500">False (Sai)</strong>.</p>
+                        
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <ul class="space-y-3 text-sm text-slate-600 mb-4">
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">&gt;</code> Lớn hơn</li>
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">&lt;</code> Nhỏ hơn</li>
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">&gt;=</code> Lớn hơn hoặc bằng</li>
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">&lt;=</code> Nhỏ hơn hoặc bằng</li>
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">==</code> Bằng nhau</li>
+                                <li class="flex items-center"><code class="bg-emerald-100 text-emerald-700 w-10 text-center py-1 rounded mr-3 font-bold">!=</code> Khác nhau</li>
+                            </ul>
+
+                            <div class="mb-4 p-3 bg-amber-50 text-amber-800 rounded-lg border border-amber-200 text-sm">
+                                <strong>⚠️ Lưu ý quan trọng:</strong> Dấu <code>=</code> là gán giá trị, dấu <code>==</code> mới là so sánh bằng.
+                            </div>
+
+                            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100 text-sm">
+                                <h4 class="font-bold text-emerald-900 mb-2">🎮 Ứng dụng trong App/Game:</h4>
+                                <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm mt-3 mb-2 flex flex-col">
+                                    <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                        <div class="flex items-center">
+                                            <div class="flex space-x-1.5">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                            </div>
+                                            <span class="text-[#858585] text-xs ml-3 font-sans">game_logic.py</span>
+                                        </div>
+                                        <button onclick="runPython(editor5, 'output-game-logic')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs font-bold transition flex items-center shadow-sm z-10">
+                                            ▶ Chạy Code
+                                        </button>
+                                    </div>
+                                    <div class="bg-[#1e1e1e] text-left">
+                                        <textarea id="code-game-logic" name="code-game-logic">diem_so = 60
+mat_khau = "123"
+qua_vong = diem_so >= 50
+dang_nhap_dung = mat_khau == "123"
+print("Qua vòng:", qua_vong)
+print("Đăng nhập đúng:", dang_nhap_dung)</textarea>
+                                    </div>
+                                    <div class="bg-black text-white p-3 font-mono text-sm border-t border-[#3c3c3c]">
+                                        <div class="text-[#858585] mb-1 flex items-center text-xs uppercase tracking-wider">&gt;_ Terminal Output:</div>
+                                        <pre id="output-game-logic" class="text-slate-200 whitespace-pre-wrap min-h-[1.5rem]"></pre>
+                                    </div>
+                                </div>
+                                <ul class="space-y-1 text-emerald-800 text-xs mt-3">
+                                    <li>➔ <code>qua_vong</code> sẽ là <strong class="text-emerald-600">True</strong> nếu điểm >= 50.</li>
+                                    <li>➔ <code>dang_nhap_dung</code> sẽ là <strong class="text-red-500">False</strong> nếu mật khẩu khác "123".</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox -->
+                    <div class="bg-slate-800 rounded-xl p-6 shadow-lg text-white flex flex-col h-full">
+                        <h3 class="text-lg font-bold text-emerald-400 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Khu vực thử nghiệm (Sandbox)
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-6 mt-4">
+                            <input type="text" id="rel-a" value="12" class="w-24 bg-slate-700 border border-slate-600 rounded px-3 py-2 text-center text-white font-mono focus:outline-none focus:border-emerald-400">
+                            
+                            <select id="rel-op" class="bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center font-bold text-emerald-400 cursor-pointer focus:outline-none">
+                                <option value=">">&gt;</option>
+                                <option value="<">&lt;</option>
+                                <option value=">=">&gt;=</option>
+                                <option value="<=">&lt;=</option>
+                                <option value="==">==</option>
+                                <option value="!=">!=</option>
+                            </select>
+
+                            <input type="text" id="rel-b" value="18" class="w-24 bg-slate-700 border border-slate-600 rounded px-3 py-2 text-center text-white font-mono focus:outline-none focus:border-emerald-400">
+                            
+                            <button onclick="calcRelational()" class="ml-2 bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded font-bold transition">?</button>
+                        </div>
+                        
+                        <div class="mt-auto bg-black/30 p-4 rounded-lg border border-slate-700 text-center flex flex-col items-center justify-center">
+                            <span class="text-slate-400 text-sm mb-2">Kết quả logic:</span>
+                            <span id="rel-result" class="px-6 py-2 rounded-full font-mono font-bold text-2xl bg-slate-700 text-slate-300 border border-slate-600">Chưa tính</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Toán tử logic -->
+        <section id="logical" class="tab-content">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="bg-rose-100 text-rose-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">4</span>
+                    Toán tử Logic & Biểu thức Logic
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Lý thuyết -->
+                    <div>
+                        <p class="text-slate-600 mb-4">Dùng để kết hợp nhiều điều kiện lại với nhau. Kết quả cuối cùng vẫn là <strong>True</strong> hoặc <strong>False</strong>.</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start">
+                                <span class="font-bold text-rose-600 text-xl mr-3 font-mono bg-rose-100 px-2 rounded">and</span>
+                                <div>
+                                    <p class="font-semibold text-slate-800">Và (Đồng thời)</p>
+                                    <p class="text-sm text-slate-600">Chỉ <strong>True</strong> khi TẤT CẢ đều True.</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start">
+                                <span class="font-bold text-rose-600 text-xl mr-3 font-mono bg-rose-100 px-2 rounded">or</span>
+                                <div>
+                                    <p class="font-semibold text-slate-800">Hoặc (Chỉ cần một)</p>
+                                    <p class="text-sm text-slate-600"><strong>True</strong> khi CHỈ CẦN MỘT điều kiện True.</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start">
+                                <span class="font-bold text-rose-600 text-xl mr-3 font-mono bg-rose-100 px-2 rounded">not</span>
+                                <div>
+                                    <p class="font-semibold text-slate-800">Phủ định (Ngược lại)</p>
+                                    <p class="text-sm text-slate-600">Đảo ngược: True thành False, False thành True.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-rose-50 p-4 rounded-lg border border-rose-100 text-sm">
+                            <h4 class="font-bold text-rose-900 mb-2">🎓 Ứng dụng thực tế: Xét học bổng</h4>
+                            <!-- VS Code Window 5 -->
+                            <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm mt-3 mb-2">
+                                <div class="flex items-center px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                    <div class="flex space-x-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <span class="text-[#858585] text-xs ml-3 font-sans">scholarship.py</span>
+                                </div>
+                                <div class="p-4 flex">
+                                    <div class="text-[#858585] pr-4 select-none text-right">1<br>2</div>
+                                    <div class="text-[#d4d4d4]">
+                                        <span class="text-[#6a9955]"># Thỏa mãn ĐỒNG THỜI cả điểm và hạnh kiểm</span><br>
+                                        <span class="text-[#9cdcfe]">dat_hoc_bong</span> = (<span class="text-[#9cdcfe]">diem_tb</span> >= <span class="text-[#b5cea8]">8.0</span>) <span class="text-[#569cd6] font-bold">and</span> (<span class="text-[#9cdcfe]">hanh_kiem</span> == <span class="text-[#ce9178]">"Tốt"</span>)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox -->
+                    <div class="bg-slate-800 rounded-xl p-6 shadow-lg text-white flex flex-col h-full">
+                        <h3 class="text-lg font-bold text-rose-400 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Khu vực thử nghiệm (Sandbox)
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-6 mt-4 justify-center">
+                            <select id="log-a" class="w-24 bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center text-white font-mono focus:outline-none">
+                                <option value="true">True</option>
+                                <option value="false" selected>False</option>
+                            </select>
+                            
+                            <select id="log-op" class="bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center font-bold text-rose-400 cursor-pointer focus:outline-none">
+                                <option value="and">AND</option>
+                                <option value="or">OR</option>
+                            </select>
+
+                            <select id="log-b" class="w-24 bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center text-white font-mono focus:outline-none">
+                                <option value="true" selected>True</option>
+                                <option value="false">False</option>
+                            </select>
+                            
+                            <button onclick="calcLogical()" class="ml-2 bg-rose-600 hover:bg-rose-500 px-4 py-2 rounded font-bold transition">?</button>
+                        </div>
+                        
+                        <!-- NOT test -->
+                        <div class="flex items-center gap-2 mb-6 justify-center pb-6 border-b border-slate-700">
+                            <span class="font-bold text-rose-400 font-mono">NOT</span>
+                            <select id="log-not-val" class="w-24 bg-slate-700 border border-slate-600 rounded px-2 py-2 text-center text-white font-mono focus:outline-none">
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                            <button onclick="calcNot()" class="ml-2 bg-rose-600 hover:bg-rose-500 px-4 py-2 rounded font-bold transition">?</button>
+                        </div>
+
+                        <div class="mt-auto bg-black/30 p-4 rounded-lg border border-slate-700 text-center flex flex-col items-center justify-center">
+                            <span class="text-slate-400 text-sm mb-2">Kết quả logic:</span>
+                            <span id="log-result" class="px-6 py-2 rounded-full font-mono font-bold text-2xl bg-slate-700 text-slate-300 border border-slate-600">Chưa tính</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Practice (Thay thế Quiz) -->
+        <section id="practice" class="tab-content">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-slate-800 flex items-center">
+                        <span class="text-2xl mr-3">💻</span> Bài tập thực hành tại lớp
+                    </h2>
+                    <span class="bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full">Tổng hợp kiến thức</span>
+                </div>
+                
+                <div class="space-y-8">
+                    <!-- Bài tập 1 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-indigo-700 mb-3">Bài 1: Tính Chỉ số khối cơ thể (BMI)</h3>
+                        <p class="text-slate-600 mb-4">Viết chương trình cho phép người dùng nhập vào <strong>cân nặng (kg)</strong> và <strong>chiều cao (m)</strong>. Yêu cầu:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 mb-4 ml-2">
+                            <li>Sử dụng toán tử số học để tính BMI theo công thức: <code>BMI = Cân nặng / (Chiều cao ** 2)</code></li>
+                            <li>Sử dụng toán tử quan hệ và logic để kiểm tra xem một người có thân hình "Bình thường" hay không. Một người bình thường có <code>BMI lớn hơn hoặc bằng 18.5</code> VÀ <code>nhỏ hơn 25</code>.</li>
+                            <li>In kết quả BMI và giá trị True/False ra màn hình.</li>
+                        </ol>
+                        <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm flex flex-col">
+                            <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                <div class="flex items-center">
+                                    <div class="flex space-x-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <span class="text-[#858585] text-xs ml-3 font-sans">main.py</span>
+                                </div>
+                                <button onclick="runPython(editor1, 'output-bai1')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs font-bold transition flex items-center shadow-sm z-10">
+                                    ▶ Chạy Code
+                                </button>
+                            </div>
+                            <div class="bg-[#1e1e1e] text-left">
+                                <textarea id="code-bai1" name="code-bai1">can_nang = 65
+chieu_cao = 1.7
+
+# 1. Tính BMI 
+bmi = can_nang / (chieu_cao ** 2)
+
+# 2. Kiểm tra BMI có bình thường không
+binh_thuong = (bmi >= 18.5) and (bmi < 25)
+
+# 3. In kết quả
+print("Chỉ số BMI của bạn là:", bmi)
+print("Trạng thái bình thường:", binh_thuong)</textarea>
+                            </div>
+                            <div class="bg-black text-white p-3 font-mono text-sm border-t border-[#3c3c3c]">
+                                <div class="text-[#858585] mb-1 flex items-center text-xs uppercase tracking-wider">>_ Terminal Output:</div>
+                                <pre id="output-bai1" class="text-slate-200 whitespace-pre-wrap min-h-[1.5rem]"></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bài tập 2 -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-indigo-700 mb-3">Bài 2: Hệ thống Đăng nhập</h3>
+                        <p class="text-slate-600 mb-4">Bạn đang xây dựng một màn hình đăng nhập cho trò chơi. Mật khẩu đúng là "admin123" và tên người dùng đúng là "nguoichoi1". Yêu cầu:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 mb-4 ml-2">
+                            <li>Tạo 2 biến lưu username và password người dùng tự nhập vào.</li>
+                            <li>Sử dụng toán tử quan hệ (<code>==</code>) và toán tử logic (<code>and</code>) để kiểm tra: Tài khoản hợp lệ khi ĐỒNG THỜI username đúng VÀ password đúng.</li>
+                            <li>Nếu người dùng nhập sai, in ra cảnh báo hoặc kết quả False.</li>
+                        </ol>
+                        <div class="bg-[#1e1e1e] rounded-lg overflow-hidden shadow-lg border border-[#3c3c3c] font-mono text-sm flex flex-col">
+                            <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-[#3c3c3c]">
+                                <div class="flex items-center">
+                                    <div class="flex space-x-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <span class="text-[#858585] text-xs ml-3 font-sans">login.py</span>
+                                </div>
+                                <button onclick="runPython(editor2, 'output-bai2')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs font-bold transition flex items-center shadow-sm z-10">
+                                    ▶ Chạy Code
+                                </button>
+                            </div>
+                            <div class="bg-[#1e1e1e] text-left">
+                                <textarea id="code-bai2" name="code-bai2">nhap_user = "nguoichoi1"
+nhap_pass = "123456"
+
+# Kiểm tra đăng nhập (đúng user là "nguoichoi1" VÀ pass là "admin123")
+hop_le = (nhap_user == "nguoichoi1") and (nhap_pass == "admin123")
+
+# In kết quả kiểm tra
+print("Tài khoản hợp lệ:", hop_le)</textarea>
+                            </div>
+                            <div class="bg-black text-white p-3 font-mono text-sm border-t border-[#3c3c3c]">
+                                <div class="text-[#858585] mb-1 flex items-center text-xs uppercase tracking-wider">>_ Terminal Output:</div>
+                                <pre id="output-bai2" class="text-slate-200 whitespace-pre-wrap min-h-[1.5rem]"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- Navigation Logic ---
+        let editorsInitialized = false;
+        var editor1, editor2, editor3, editor4, editor5;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-indigo-900/50');
+                if(btn.textContent.includes("Thực hành") && tabId !== 'practice') {
+                     btn.classList.add('bg-indigo-900/50');
+                }
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            // Find button and set active
+            const btns = document.querySelectorAll('.nav-btn');
+            if(tabId === 'intro') btns[0].classList.add('active');
+            else if(tabId === 'arithmetic') btns[1].classList.add('active');
+            else if(tabId === 'relational') {
+                btns[2].classList.add('active');
+                setTimeout(() => {
+                    if (!editor5) {
+                        const gameLogicCodeEditor = document.getElementById("code-game-logic");
+                        if (typeof CodeMirror !== "undefined") {
+                            editor5 = CodeMirror.fromTextArea(gameLogicCodeEditor, {
+                                mode: "python",
+                                theme: "default",
+                                lineNumbers: true,
+                                indentUnit: 4,
+                                viewportMargin: Infinity
+                            });
+                        } else {
+                            editor5 = gameLogicCodeEditor;
+                        }
+                    } else if (typeof editor5.refresh === "function") {
+                        editor5.refresh();
+                    }
+                }, 50);
+            }
+            else if(tabId === 'logical') btns[3].classList.add('active');
+            else if(tabId === 'practice') {
+                btns[4].classList.add('active');
+                btns[4].classList.remove('bg-indigo-900/50');
+                
+                // FIX LỖI: Khởi tạo CodeMirror CHỈ SAU KHI tab Thực hành đã hiển thị (display: block)
+                // Điều này giúp trình soạn thảo lấy được kích thước thật, không bị lỗi lệch dòng
+                setTimeout(() => {
+                    if (!editorsInitialized) {
+                        editor1 = CodeMirror.fromTextArea(document.getElementById("code-bai1"), {
+                            mode: "python",
+                            theme: "default",
+                            lineNumbers: true,
+                            indentUnit: 4,
+                            viewportMargin: Infinity
+                        });
+                        editor2 = CodeMirror.fromTextArea(document.getElementById("code-bai2"), {
+                            mode: "python",
+                            theme: "default",
+                            lineNumbers: true,
+                            indentUnit: 4,
+                            viewportMargin: Infinity
+                        });
+                        editorsInitialized = true;
+                    } else {
+                        // Nếu đã khởi tạo ở lần bấm trước, ta chỉ cần làm mới
+                        if (editor1) editor1.refresh();
+                        if (editor2) editor2.refresh();
+                    }
+                }, 50);
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // --- Arithmetic Sandbox ---
+        function calcArithmetic() {
+            const a = parseFloat(document.getElementById('arith-a').value);
+            const b = parseFloat(document.getElementById('arith-b').value);
+            const op = document.getElementById('arith-op').value;
+            const resEl = document.getElementById('arith-result');
+            
+            if(isNaN(a) || isNaN(b)) { resEl.textContent = 'Lỗi số liệu'; return; }
+            
+            let result;
+            switch(op) {
+                case '+': result = a + b; break;
+                case '-': result = a - b; break;
+                case '*': result = a * b; break;
+                case '/': result = b !== 0 ? (a / b).toFixed(2) : 'Lỗi chia 0'; break;
+                case '//': result = b !== 0 ? Math.floor(a / b) : 'Lỗi chia 0'; break;
+                case '%': result = b !== 0 ? a % b : 'Lỗi chia 0'; break;
+                case '**': result = a ** b; break;
+            }
+            resEl.textContent = result;
+        }
+
+        // --- Relational Sandbox ---
+        function calcRelational() {
+            let a = document.getElementById('rel-a').value;
+            let b = document.getElementById('rel-b').value;
+            const op = document.getElementById('rel-op').value;
+            const resEl = document.getElementById('rel-result');
+            
+            // Try to parse as numbers if possible
+            if(!isNaN(a) && a.trim() !== '') a = parseFloat(a);
+            if(!isNaN(b) && b.trim() !== '') b = parseFloat(b);
+            
+            let result;
+            switch(op) {
+                case '>': result = a > b; break;
+                case '<': result = a < b; break;
+                case '>=': result = a >= b; break;
+                case '<=': result = a <= b; break;
+                case '==': result = a == b; break;
+                case '!=': result = a != b; break;
+            }
+            
+            setBooleanResult(resEl, result);
+        }
+
+        // --- Logical Sandbox ---
+        function calcLogical() {
+            const a = document.getElementById('log-a').value === 'true';
+            const b = document.getElementById('log-b').value === 'true';
+            const op = document.getElementById('log-op').value;
+            const resEl = document.getElementById('log-result');
+            
+            let result = op === 'and' ? (a && b) : (a || b);
+            setBooleanResult(resEl, result);
+        }
+
+        function calcNot() {
+            const val = document.getElementById('log-not-val').value === 'true';
+            const resEl = document.getElementById('log-result');
+            setBooleanResult(resEl, !val);
+        }
+
+        function setBooleanResult(element, value) {
+            element.textContent = value ? 'True' : 'False';
+            if(value) {
+                element.className = "px-6 py-2 rounded-full font-mono font-bold text-2xl bg-emerald-900/50 text-emerald-400 border border-emerald-600";
+            } else {
+                element.className = "px-6 py-2 rounded-full font-mono font-bold text-2xl bg-red-900/50 text-red-400 border border-red-600";
+            }
+        }
+
+        // --- Execute Python Code via Skulpt ---
+        function runPython(editorInstance, outputId) {
+            if (typeof Sk === 'undefined') {
+                document.getElementById(outputId).innerHTML = '<span class="text-red-400">Lỗi: Không tải được trình biên dịch Python. Hãy Refresh (F5) trang.</span>';
+                return;
+            }
+
+            // Lấy nội dung code CHÍNH XÁC từ trình soạn thảo CodeMirror
+            const prog = typeof editorInstance.getValue === 'function'
+                ? editorInstance.getValue()
+                : editorInstance.value;
+            const mypre = document.getElementById(outputId);
+            mypre.innerHTML = '';
+            
+            // Set up Skulpt output function to append to pre
+            function outf(text) {
+                mypre.innerHTML = mypre.innerHTML + text;
+            }
+            
+            // Builtin read function for Skulpt
+            function builtinRead(x) {
+                if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                    throw "File not found: '" + x + "'";
+                return Sk.builtinFiles["files"][x];
+            }
+
+            Sk.pre = outputId;
+            Sk.configure({ output: outf, read: builtinRead });
+            
+            // Run the code asynchronously
+            const myPromise = Sk.misceval.asyncToPromise(function() {
+                return Sk.importMainWithBody("<stdin>", false, prog, true);
+            });
+            
+            myPromise.then(function(mod) {
+                // Code chạy thành công, kết quả đã được đẩy vào terminal thông qua hàm outf
+            },
+            function(err) {
+                // In ra màn hình Terminal bằng màu đỏ nếu code có lỗi cú pháp hoặc logic
+                mypre.innerHTML += '<span class="text-red-400">Lỗi: ' + err.toString() + '</span>';
+            });
+        }
+
+        const areaCodeEditor = document.getElementById("code-dien-tich");
+        if (typeof CodeMirror !== "undefined") {
+            editor3 = CodeMirror.fromTextArea(areaCodeEditor, {
+                mode: "python",
+                theme: "default",
+                lineNumbers: true,
+                indentUnit: 4,
+                viewportMargin: Infinity
+            });
+        } else {
+            editor3 = areaCodeEditor;
+        }
+
+        const cartCodeEditor = document.getElementById("code-gio-hang");
+        if (typeof CodeMirror !== "undefined") {
+            editor4 = CodeMirror.fromTextArea(cartCodeEditor, {
+                mode: "python",
+                theme: "default",
+                lineNumbers: true,
+                indentUnit: 4,
+                viewportMargin: Infinity
+            });
+        } else {
+            editor4 = cartCodeEditor;
+        }
+
+    </script>
+</body>
+</html>

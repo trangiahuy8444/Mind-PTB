@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 3: Sức Mạnh Của Toán Tử (Số Học, Quan Hệ, Logic) | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="../LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="index.html" class="active">Bài 3: Toán Tử</a>
+        <a href="../LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
+        <a href="../LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 3</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(245, 158, 11, 0.2); color:#fde68a;">Cấp Độ: Tính Toán</span>
+          </div>
+          <h1 class="lesson-title">Bài 3: Sức Mạnh Toán Tử (Số Học, Quan Hệ, Logic)</h1>
+          <p class="lesson-desc">
+            Trang bị cho máy tính bộ vi xử lý tính toán siêu việt: làm chủ phép chia nguyên //, chia dư %, lũy thừa **, so sánh quan hệ ==, != và các cổng logic Boolean and/or/not.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">
+          📖 1. Lý Thuyết & Trọng Tâm
+        </button>
+        <button type="button" class="tab-btn" data-tab="simulator">
+          🔬 2. Máy Tính Toán Tử & Code Lab
+        </button>
+        <button type="button" class="tab-btn" data-tab="quiz">
+          🎯 3. Thử Thách Trắc Nghiệm (20 Câu)
+        </button>
+        <button type="button" class="tab-btn" data-tab="practice">
+          💻 4. Bài Tập Thực Hành Tại Lớp
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+      
+      <!-- 3 Operator Groups -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">⚡</span>
+            1. Ba Nhóm Toán Tử Trụ Cột Trong Python
+          </h2>
+        </div>
+        <p>
+          Toán tử (Operator) là các ký hiệu đặc biệt giúp máy tính thực hiện các phép biến đổi toán học hoặc thẩm định các chân lý đúng/sai:
+        </p>
+
+        <div class="grid-3" style="margin-top:20px;">
+          
+          <!-- Arithmetic -->
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#2563eb; text-transform:uppercase;">Nhóm 1</div>
+            <h3 style="font-size:18px; font-weight:800; color:#1e3a8a; margin:6px 0;">Toán Tử Số Học</h3>
+            <p style="font-size:13px; color:#1e40af; margin-bottom:12px;">Thực hiện tính toán trên số:</p>
+            <ul style="padding-left:18px; font-size:13px; line-height:1.7; font-family:var(--font-mono);">
+              <li><code>+</code> Cộng (<code>5 + 3 = 8</code>)</li>
+              <li><code>-</code> Trừ (<code>10 - 4 = 6</code>)</li>
+              <li><code>*</code> Nhân (<code>4 * 5 = 20</code>)</li>
+              <li><code>/</code> Chia thực (<code>7 / 2 = 3.5</code>)</li>
+              <li><code>//</code> <strong>Chia nguyên</strong> (<code>20 // 6 = 3</code>)</li>
+              <li><code>%</code> <strong>Chia dư</strong> (<code>17 % 5 = 2</code>)</li>
+              <li><code>**</code> <strong>Lũy thừa</strong> (<code>2 ** 3 = 8</code>)</li>
+            </ul>
+          </div>
+
+          <!-- Relational -->
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#16a34a; text-transform:uppercase;">Nhóm 2</div>
+            <h3 style="font-size:18px; font-weight:800; color:#14532d; margin:6px 0;">Toán Tử So Sánh</h3>
+            <p style="font-size:13px; color:#166534; margin-bottom:12px;">So sánh 2 vế &rarr; Ra True/False:</p>
+            <ul style="padding-left:18px; font-size:13px; line-height:1.7; font-family:var(--font-mono);">
+              <li><code>==</code> <strong>So sánh bằng</strong> (<code>5 == 5 &rarr; True</code>)</li>
+              <li><code>!=</code> <strong>So sánh khác</strong> (<code>4 != 3 &rarr; True</code>)</li>
+              <li><code>&gt;</code> Lớn hơn (<code>10 &gt; 15 &rarr; False</code>)</li>
+              <li><code>&lt;</code> Nhỏ hơn (<code>3 &lt; 9 &rarr; True</code>)</li>
+              <li><code>&gt;=</code> Lớn hơn hoặc bằng (<code>8 &gt;= 8 &rarr; True</code>)</li>
+              <li><code>&lt;=</code> Nhỏ hơn hoặc bằng</li>
+            </ul>
+          </div>
+
+          <!-- Logical -->
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#d97706; text-transform:uppercase;">Nhóm 3</div>
+            <h3 style="font-size:18px; font-weight:800; color:#78350f; margin:6px 0;">Toán Tử Logic</h3>
+            <p style="font-size:13px; color:#92400e; margin-bottom:12px;">Kết hợp nhiều điều kiện lại:</p>
+            <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+              <li><code>and</code>: Chỉ <code>True</code> khi <strong>CẢ HAI</strong> vế đều đúng.</li>
+              <li><code>or</code>: Chỉ <code>False</code> khi <strong>CẢ HAI</strong> vế đều sai (đúng 1 vế là True).</li>
+              <li><code>not</code>: Đảo ngược chân trị (<code>not True &rarr; False</code>).</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Deep Dive: //, %, ** -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🔍</span>
+            2. Bộ Ba Phép Toán Đặc Thù Trong Lập Trình
+          </h2>
+        </div>
+
+        <div class="grid-3">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#0f172a; font-family:var(--font-mono); font-size:16px; margin-bottom:8px;">// (Chia lấy nguyên)</h4>
+            <p style="font-size:13.5px; color:#475569; line-height:1.6;">
+              Bỏ qua toàn bộ phần dư thập phân, chỉ giữ lại phần nguyên. Ví dụ chia 23 cái kẹo cho 5 bạn: mỗi bạn được <code>23 // 5 = 4</code> cái kẹo.
+            </p>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#0f172a; font-family:var(--font-mono); font-size:16px; margin-bottom:8px;">% (Chia lấy phần dư)</h4>
+            <p style="font-size:13.5px; color:#475569; line-height:1.6;">
+              Lấy phần dư còn lại sau phép chia. Ứng dụng kinh điển: <code>n % 2 == 0</code> dùng để kiểm tra số chẵn, <code>n % 2 != 0</code> là số lẻ!
+            </p>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#0f172a; font-family:var(--font-mono); font-size:16px; margin-bottom:8px;">** (Phép tính lũy thừa)</h4>
+            <p style="font-size:13.5px; color:#475569; line-height:1.6;">
+              Dùng để tính số mũ $a^b$. Trong toán ta viết $2^3$, trong Python viết là <code>2 ** 3 = 8</code>. Diện tích hình vuông cạnh $a$ là <code>a ** 2</code>!
+            </p>
+          </div>
+        </div>
+
+        <div class="alert alert-warning" style="margin-top:18px;">
+          <span>⚠️</span>
+          <div>
+            <strong>Phân biệt sống còn giữa = và ==:</strong><br>
+            &bull; <code>x = 5</code>: Toán tử <strong>GÁN</strong> giá trị 5 vào biến x.<br>
+            &bull; <code>x == 5</code>: Toán tử <strong>SO SÁNH</strong> xem giá trị của x có bằng 5 hay không (cho kết quả True hoặc False).
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTINUITY BRIDGE TO LESSON 4 -->
+      <div style="background:linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border:2px dashed #ef4444; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#991b1b; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+          <span>🌉</span> Cầu Nối Tư Duy Sang Bài 4: "Chiếc Chìa Khóa" Mở Ra Cấu Trúc Rẽ Nhánh
+        </h3>
+        <p style="color:#7f1d1d; font-size:14px; line-height:1.6;">
+          Hãy để ý kỹ: Tất cả các biểu thức so sánh và logic trong Bài 3 như <code>age &gt;= 18</code>, <code>diem &gt;= 8.0</code>, hay <code>n % 2 == 0</code> chỉ có thể trả về đúng 2 kết quả: <strong>True</strong> hoặc <strong>False</strong>!
+        </p>
+        <p style="color:#7f1d1d; font-size:14px; line-height:1.6; margin-top:6px;">
+          Chính hai giá trị <code>True/False</code> này sẽ là ngã rẽ đèn xanh / đèn đỏ để máy tính quyết định: <em>"Nếu True thì đi đường này (if), ngược lại False thì đi đường kia (else)"</em>. Đó chính là nội dung đỉnh cao của <strong>Bài 4: Cấu Trúc Rẽ Nhánh Bằng Câu Điều Kiện</strong>!
+        </p>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: MÁY TÍNH TOÁN TỬ & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+      
+      <!-- Operator Visualizer -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🧮</span>
+            Phòng Thí Nghiệm Toán Tử Tương Tác
+          </h2>
+          <span style="font-size:12px; background:#fef3c7; color:#b45309; padding:4px 10px; border-radius:20px; font-weight:600;">
+            Interactive Expression Evaluator
+          </span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          Chọn hai số và một toán tử để xem máy tính giải thích chi tiết cơ chế hoạt động từng bước:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>
+            Số thứ nhất (a):
+            <input type="number" id="op-a" value="17" style="width:120px;">
+          </label>
+          <label>
+            Toán tử:
+            <select id="op-select" style="font-family:var(--font-mono); font-weight:700;">
+              <optgroup label="Số học">
+                <option value="+">+ (Cộng)</option>
+                <option value="-">- (Trừ)</option>
+                <option value="*">* (Nhân)</option>
+                <option value="/">/ (Chia thực)</option>
+                <option value="//" selected>// (Chia lấy nguyên)</option>
+                <option value="%">% (Chia lấy phần dư)</option>
+                <option value="**">** (Lũy thừa mũ)</option>
+              </optgroup>
+              <optgroup label="So sánh quan hệ">
+                <option value="==">== (Bằng nhau)</option>
+                <option value="!=">!= (Khác nhau)</option>
+                <option value=">">&gt; (Lớn hơn)</option>
+                <option value="<">&lt; (Nhỏ hơn)</option>
+                <option value=">=">&gt;= (Lớn hơn hoặc bằng)</option>
+                <option value="<=">&lt;= (Nhỏ hơn hoặc bằng)</option>
+              </optgroup>
+            </select>
+          </label>
+          <label>
+            Số thứ hai (b):
+            <input type="number" id="op-b" value="5" style="width:120px;">
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 18px; margin-top:auto;" onclick="evaluateOperator()">
+            ⚡ Tính Toán Ngay
+          </button>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:20px; text-align:center;">
+          <div style="font-size:14px; color:#64748b; margin-bottom:6px;">Biểu thức Python:</div>
+          <div style="font-family:var(--font-mono); font-size:24px; font-weight:800; color:var(--navy);" id="expr-display">
+            17 // 5
+          </div>
+          <div style="font-size:15px; margin:12px 0 6px; color:#475569;">Kết quả trả về:</div>
+          <div style="font-family:var(--font-mono); font-size:32px; font-weight:800; color:#2563eb;" id="expr-result">
+            3
+          </div>
+          <div style="font-size:13.5px; color:#10b981; font-weight:600; margin-top:8px;" id="expr-explain">
+            17 chia 5 được 3 dư 2 &rarr; Phép chia nguyên // lấy kết quả 3
+          </div>
+        </div>
+
+      </div>
+
+      <!-- In-browser Code Runner -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">▶️</span>
+            Code Lab: Thực Hành Toán Tử Với Skulpt
+          </h2>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn-copy" onclick="loadLesson3Sample(1)">Mẫu 1: Chia Đội Hình (// và %)</button>
+            <button type="button" class="btn-copy" onclick="loadLesson3Sample(2)">Mẫu 2: Lũy Thừa (**)</button>
+            <button type="button" class="btn-copy" onclick="loadLesson3Sample(3)">Mẫu 3: Điểm Trung Bình</button>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span id="l3-code-title">thuc_hanh_toan_tu.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson3-editor', 'lesson3-terminal')">
+                ▶ Chạy Code
+              </button>
+              <button type="button" class="btn-copy" data-target="lesson3-editor">Sao chép</button>
+            </div>
+          </div>
+
+          <div class="code-editor-area">
+            <textarea id="lesson3-editor" style="min-height:180px;"># Bài 2: Chia đội hình - Dùng // và %
+n = 23 # Số học sinh
+m = 5  # Số thành viên mỗi nhóm
+
+so_nhom = n // m
+so_du = n % m
+
+print("Có", n, "học sinh xếp được:", so_nhom, "nhóm đủ thành viên")
+print("Còn dư ra:", so_du, "học sinh")</textarea>
+          </div>
+
+          <div class="terminal-output" id="lesson3-terminal">
+<span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi đoạn mã...
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: THỬ THÁCH TRẮC NGHIỆM TRỌN BỘ 20 CÂU
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Bộ Đề Trắc Nghiệm Bài 3 (20 Câu Chuẩn Hóa)</h3>
+            <p style="font-size:13.5px; opacity:0.9;">Toàn bộ 20 câu hỏi thẩm định kiến thức toán tử từ tài liệu gốc có đáp án và lời giải chi tiết</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="quiz-card" id="l3q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Trong lập trình, "toán tử" được hiểu là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q1', 0, false, 'Một biến lưu trữ dữ liệu là Variable, không phải toán tử.')">
+              <input type="radio" name="l3q1"><span>A. Một biến lưu trữ dữ liệu</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q1', 1, true, 'Chính xác! Toán tử là ký hiệu đặc biệt dùng để thực hiện phép toán hoặc so sánh.')">
+              <input type="radio" name="l3q1"><span>B. Một ký hiệu dùng để thực hiện phép toán hoặc so sánh</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q1', 2, false, 'Dòng lệnh in ra màn hình là hàm print().')">
+              <input type="radio" name="l3q1"><span>C. Một dòng lệnh in ra màn hình</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q1', 3, false, 'Thư mục là folder lưu trữ file.')">
+              <input type="radio" name="l3q1"><span>D. Một thư mục chứa file code</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-card" id="l3q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Ký hiệu nào sau đây được dùng cho phép nhân trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q2', 0, false, 'Chữ x trong Python bị coi là tên biến, không phải phép nhân!')">
+              <input type="radio" name="l3q2"><span>A. <code>x</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q2', 1, false, 'Dấu chấm . dùng cho số thập phân.')">
+              <input type="radio" name="l3q2"><span>B. <code>.</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q2', 2, true, 'Chuẩn xác! Dấu hoa thị * là phép nhân trong Python.')">
+              <input type="radio" name="l3q2"><span>C. <code>*</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q2', 3, false, 'Dấu mũ ^ trong Python là phép XOR bitwise, không phải phép nhân!')">
+              <input type="radio" name="l3q2"><span>D. <code>^</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-card" id="l3q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Phép toán <code>17 % 5</code> sẽ trả về kết quả là bao nhiêu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q3', 0, false, '3 là thương số của phép chia nguyên (17 // 5 = 3).')">
+              <input type="radio" name="l3q3"><span>A. <code>3</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q3', 1, true, 'Đúng! 17 chia 5 được 3 dư 2, toán tử % lấy phần dư nên kết quả là 2.')">
+              <input type="radio" name="l3q3"><span>B. <code>2</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q3', 2, false, '3.4 là kết quả phép chia thực (17 / 5).')">
+              <input type="radio" name="l3q3"><span>C. <code>3.4</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q3', 3, false, '17 là số bị chia ban đầu.')">
+              <input type="radio" name="l3q3"><span>D. <code>17</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="quiz-card" id="l3q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Để tính lũy thừa $2^3$, ta viết biểu thức nào sau đây?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q4', 0, false, 'Dấu ^ là toán tử XOR, 2 ^ 3 sẽ ra 1.')">
+              <input type="radio" name="l3q4"><span>A. <code>2 ^ 3</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q4', 1, true, 'Rất tốt! Cặp dấu sao kép ** biểu thị phép lũy thừa trong Python.')">
+              <input type="radio" name="l3q4"><span>B. <code>2 ** 3</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q4', 2, false, '2 * 3 là phép nhân ra 6.')">
+              <input type="radio" name="l3q4"><span>C. <code>2 * 3</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q4', 3, false, '2 % 3 là chia dư ra 2.')">
+              <input type="radio" name="l3q4"><span>D. <code>2 % 3</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-card" id="l3q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Phép chia lấy nguyên <code>20 // 6</code> có kết quả là?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q5', 0, false, '3.33 là kết quả chia thực có số thập phân.')">
+              <input type="radio" name="l3q5"><span>A. <code>3.33</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q5', 1, false, '2 là phần dư (20 % 6 = 2).')">
+              <input type="radio" name="l3q5"><span>B. <code>2</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q5', 2, true, 'Chính xác! 20 chia cho 6 được 3 (6 * 3 = 18 dư 2), lấy phần nguyên được 3.')">
+              <input type="radio" name="l3q5"><span>C. <code>3</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q5', 3, false, '4 không phải là thương của 20 chia 6.')">
+              <input type="radio" name="l3q5"><span>D. <code>4</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="quiz-card" id="l3q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Đâu là toán tử dùng để kiểm tra sự bằng nhau của hai giá trị?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q6', 0, false, 'Dấu = đơn là toán tử GÁN giá trị.')">
+              <input type="radio" name="l3q6"><span>A. <code>=</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q6', 1, true, 'Xuất sắc! Cặp dấu == dùng để kiểm tra hai vế có bằng nhau hay không.')">
+              <input type="radio" name="l3q6"><span>B. <code>==</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q6', 2, false, '!= là toán tử so sánh khác.')">
+              <input type="radio" name="l3q6"><span>C. <code>!=</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q6', 3, false, '=> không phải cú pháp hợp lệ trong Python.')">
+              <input type="radio" name="l3q6"><span>D. <code>=&gt;</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="quiz-card" id="l3q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Toán tử nào biểu thị cho phép so sánh "Khác"?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q7', 0, false, '<> là ký hiệu trong SQL hoặc Python 2 cũ, không dùng trong Python 3.')">
+              <input type="radio" name="l3q7"><span>A. <code>&lt;&gt;</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q7', 1, false, '!> không tồn tại.')">
+              <input type="radio" name="l3q7"><span>B. <code>!&gt;</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q7', 2, true, 'Đúng! Dấu chấm than đi cùng dấu bằng != là phép so sánh khác.')">
+              <input type="radio" name="l3q7"><span>C. <code>!=</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q7', 3, false, '=! sai thứ tự ký hiệu.')">
+              <input type="radio" name="l3q7"><span>D. <code>=!</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="quiz-card" id="l3q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Kết quả của phép so sánh <code>10 &gt; 15</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q8', 0, false, '10 không lớn hơn 15.')">
+              <input type="radio" name="l3q8"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q8', 1, true, 'Chính xác! 10 nhỏ hơn 15 nên biểu thức 10 > 15 là Sai (False).')">
+              <input type="radio" name="l3q8"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q8', 2, false, 'Toán tử so sánh trả về kiểu Boolean, không trả về số 10.')">
+              <input type="radio" name="l3q8"><span>C. <code>10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q8', 3, false, 'Không báo lỗi.')">
+              <input type="radio" name="l3q8"><span>D. Báo lỗi</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="quiz-card" id="l3q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Biểu thức <code>8 &gt;= 8</code> trả về giá trị nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q9', 0, true, 'Đúng! >= nghĩa là Lớn hơn HOẶC Bằng. Vì 8 bằng 8 nên thỏa mãn và ra True.')">
+              <input type="radio" name="l3q9"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q9', 1, false, 'Sai, 8 bằng 8 thỏa mãn dấu = trong >=.')">
+              <input type="radio" name="l3q9"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q9', 2, false, 'Không ra số 0.')">
+              <input type="radio" name="l3q9"><span>C. <code>0</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q9', 3, false, 'Cú pháp hợp lệ.')">
+              <input type="radio" name="l3q9"><span>D. Báo lỗi</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="quiz-card" id="l3q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Trong các toán tử sau, toán tử nào <strong>KHÔNG</strong> thuộc nhóm toán tử quan hệ?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q10', 0, false, '> là toán tử quan hệ (lớn hơn).')">
+              <input type="radio" name="l3q10"><span>A. <code>&gt;</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q10', 1, false, '== là toán tử quan hệ (so sánh bằng).')">
+              <input type="radio" name="l3q10"><span>B. <code>==</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q10', 2, true, 'Chính xác! // là toán tử SỐ HỌC (chia nguyên), không phải toán tử quan hệ!')">
+              <input type="radio" name="l3q10"><span>C. <code>//</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q10', 3, false, '<= là toán tử quan hệ (nhỏ hơn hoặc bằng).')">
+              <input type="radio" name="l3q10"><span>D. <code>&lt;=</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="quiz-card" id="l3q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Toán tử logic <code>and</code> sẽ trả về <code>True</code> trong trường hợp nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q11', 0, true, 'Đúng! and đòi hỏi cả hai vế BẮT BUỘC phải đều là True.')">
+              <input type="radio" name="l3q11"><span>A. Cả hai vế đều True</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q11', 1, false, 'Chỉ cần một vế True là đặc tính của toán tử or.')">
+              <input type="radio" name="l3q11"><span>B. Chỉ cần một vế True</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q11', 2, false, 'Cả hai vế False thì and ra False.')">
+              <input type="radio" name="l3q11"><span>C. Cả hai vế đều False</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q11', 3, false, 'Khi có một vế False thì and trả về False.')">
+              <input type="radio" name="l3q11"><span>D. Khi có một vế False</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="quiz-card" id="l3q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Toán tử logic <code>or</code> sẽ trả về <code>False</code> trong trường hợp nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q12', 0, false, 'Cả hai vế True thì or ra True.')">
+              <input type="radio" name="l3q12"><span>A. Cả hai vế đều True</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q12', 1, false, 'Chỉ cần 1 vế True thì or đã ra True rồi.')">
+              <input type="radio" name="l3q12"><span>B. Chỉ cần một vế True</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q12', 2, true, 'Chính xác! Toán tử or chỉ chịu nhận False khi cả hai vế đều là False.')">
+              <input type="radio" name="l3q12"><span>C. Cả hai vế đều False</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q12', 3, false, 'Khi 1 vế False và 1 vế True thì or vẫn ra True.')">
+              <input type="radio" name="l3q12"><span>D. Khi có một vế False</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 13 -->
+        <div class="quiz-card" id="l3q13">
+          <div class="quiz-q-num">Câu 13</div>
+          <div class="quiz-q-text">Kết quả của biểu thức logic <code>not True</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q13', 0, false, 'not phủ định True thành False.')">
+              <input type="radio" name="l3q13"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q13', 1, true, 'Đúng! not là toán tử đảo ngược, not True sẽ biến thành False.')">
+              <input type="radio" name="l3q13"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q13', 2, false, 'Python không có Null, chỉ có None.')">
+              <input type="radio" name="l3q13"><span>C. <code>Null</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q13', 3, false, 'Cú pháp hoàn toàn hợp lệ.')">
+              <input type="radio" name="l3q13"><span>D. Báo lỗi</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="quiz-card" id="l3q14">
+          <div class="quiz-q-num">Câu 14</div>
+          <div class="quiz-q-text">Biểu thức <code>(5 &gt; 3) and (2 &gt; 4)</code> có kết quả là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q14', 0, false, 'Vế phải 2 > 4 là False, nên and không thể ra True.')">
+              <input type="radio" name="l3q14"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q14', 1, true, 'Rất tốt! (5 > 3) là True, nhưng (2 > 4) là False. True and False ra False!')">
+              <input type="radio" name="l3q14"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q14', 2, false, 'Kết quả logic là Boolean.')">
+              <input type="radio" name="l3q14"><span>C. <code>5</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q14', 3, false, 'Không ra số 2.')">
+              <input type="radio" name="l3q14"><span>D. <code>2</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="quiz-card" id="l3q15">
+          <div class="quiz-q-num">Câu 15</div>
+          <div class="quiz-q-text">Biểu thức <code>(10 == 10) or (5 &lt; 1)</code> có kết quả là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q15', 0, true, 'Chính xác! (10 == 10) là True. Toán tử or chỉ cần 1 vế True là toàn bộ biểu thức thành True!')">
+              <input type="radio" name="l3q15"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q15', 1, false, 'Vế trái đã là True rồi.')">
+              <input type="radio" name="l3q15"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q15', 2, false, 'Không ra số 10.')">
+              <input type="radio" name="l3q15"><span>C. <code>10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q15', 3, false, 'Không ra số 5.')">
+              <input type="radio" name="l3q15"><span>D. <code>5</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 16 -->
+        <div class="quiz-card" id="l3q16">
+          <div class="quiz-q-num">Câu 16</div>
+          <div class="quiz-q-text">Để kiểm tra xem biến <code>age</code> có nằm trong độ tuổi thanh thiếu niên (từ 13 đến 19 tuổi bao gồm cả 13 và 19) hay không, ta viết biểu thức nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q16', 0, false, 'or sẽ nhận cả người 50 tuổi (vì 50 >= 13 là đúng)!')">
+              <input type="radio" name="l3q16"><span>A. <code>age &gt;= 13 or age &lt;= 19</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q16', 1, false, 'Thiếu dấu bằng ở 13 và 19.')">
+              <input type="radio" name="l3q16"><span>B. <code>age &gt; 13 and age &lt; 19</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q16', 2, true, 'Chuẩn không cần chỉnh! age >= 13 and age <= 19 kiểm tra đồng thời cả 2 cận.')">
+              <input type="radio" name="l3q16"><span>C. <code>age &gt;= 13 and age &lt;= 19</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q16', 3, false, 'Một người không thể vừa đúng 13 tuổi vừa đúng 19 tuổi cùng một lúc.')">
+              <input type="radio" name="l3q16"><span>D. <code>age == 13 and age == 19</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 17 -->
+        <div class="quiz-card" id="l3q17">
+          <div class="quiz-q-num">Câu 17</div>
+          <div class="quiz-q-text">Lệnh <code>x = 5</code> sử dụng toán tử <code>=</code> với mục đích gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q17', 0, false, 'So sánh là cặp dấu ==.')">
+              <input type="radio" name="l3q17"><span>A. So sánh biến x với 5</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q17', 1, true, 'Đúng! Dấu = là toán tử gán giá trị 5 vào ô nhớ biến x.')">
+              <input type="radio" name="l3q17"><span>B. Gán giá trị 5 cho biến x</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q17', 2, false, 'Cộng vào là x += 5.')">
+              <input type="radio" name="l3q17"><span>C. Cộng 5 vào biến x</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q17', 3, false, 'Kiểm tra khác là !=.')">
+              <input type="radio" name="l3q17"><span>D. Kiểm tra x có khác 5 không</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 18 -->
+        <div class="quiz-card" id="l3q18">
+          <div class="quiz-q-num">Câu 18</div>
+          <div class="quiz-q-text">Kết quả của biểu thức <code>not (10 &lt; 5)</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q18', 0, true, 'Chính xác! 10 < 5 là False. Khi có not phía trước, not False đảo ngược thành True!')">
+              <input type="radio" name="l3q18"><span>A. <code>True</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q18', 1, false, 'Sai, toán tử not đã đảo ngược kết quả.')">
+              <input type="radio" name="l3q18"><span>B. <code>False</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q18', 2, false, 'Luôn xác định được.')">
+              <input type="radio" name="l3q18"><span>C. Không xác định</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q18', 3, false, 'Cú pháp hoàn toàn đúng.')">
+              <input type="radio" name="l3q18"><span>D. Lỗi cú pháp</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 19 -->
+        <div class="quiz-card" id="l3q19">
+          <div class="quiz-q-num">Câu 19</div>
+          <div class="quiz-q-text">Nếu cần kiểm tra một số nguyên <code>n</code> có phải là số lẻ hay không, biểu thức nào sau đây là chính xác?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q19', 0, false, 'n // 2 là thương nguyên, không dùng để xét chẵn lẻ (ví dụ 3 // 2 = 1 nhưng 2 // 2 cũng = 1).')">
+              <input type="radio" name="l3q19"><span>A. <code>n // 2 == 1</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q19', 1, true, 'Tuyệt vời! Số lẻ là số khi chia cho 2 có phần dư khác 0 (n % 2 != 0).')">
+              <input type="radio" name="l3q19"><span>B. <code>n % 2 != 0</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q19', 2, false, 'n * 2 là phép nhân đôi.')">
+              <input type="radio" name="l3q19"><span>C. <code>n * 2 == 1</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q19', 3, false, 'n / 2 == 0 chỉ đúng khi n = 0.')">
+              <input type="radio" name="l3q19"><span>D. <code>n / 2 == 0</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 20 -->
+        <div class="quiz-card" id="l3q20">
+          <div class="quiz-q-num">Câu 20</div>
+          <div class="quiz-q-text">Biểu thức logic nào dưới đây <strong>LUÔN LUÔN</strong> trả về giá trị <code>True</code> với mọi số nguyên <code>x</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l3q20', 0, false, 'Một số không thể vừa âm vừa dương cùng lúc.')">
+              <input type="radio" name="l3q20"><span>A. <code>(x &gt; 0) and (x &lt; 0)</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l3q20', 1, true, 'Đỉnh cao! Bất kỳ số nào hoặc là bằng 0, hoặc là khác 0. Phép toán (x == 0) or (x != 0) luôn luôn đúng 1 trong 2 vế nên luôn là True!')">
+              <input type="radio" name="l3q20"><span>B. <code>(x == 0) or (x != 0)</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q20', 2, false, 'Chỉ đúng khi x bằng 10.')">
+              <input type="radio" name="l3q20"><span>C. <code>x == 10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l3q20', 3, false, 'x == x luôn đúng, not (True) luôn trả về False!')">
+              <input type="radio" name="l3q20"><span>D. <code>not (x == x)</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH TẠI LỚP
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+      
+      <!-- Challenge 1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 1: Tính Diện Tích & Thể Tích (Lũy Thừa **)
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập vào chiều dài cạnh <code>a</code> của một hình vuông (số nguyên). Tính và in ra diện tích của hình vuông đó ($a^2$) và thể tích của khối lập phương ($a^3$) có cùng chiều dài cạnh.
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Dữ liệu nhập (Input)</th>
+              <th>Kết quả mong đợi (Output)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>4</code></td>
+              <td><code>Dien tich: 16, The tich: 64</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>dien_tich_the_tich.py</span>
+                <button class="btn-copy" data-target="l3-sol-1">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="l3-sol-1" readonly style="min-height:120px;">
+a = int(input("Nhập cạnh a: "))
+dien_tich = a ** 2
+the_tich = a ** 3
+
+print("Dien tich:", dien_tich, ", The tich:", the_tich)</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 2: Chia Đội Hình (Toán tử // và %)
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Có <code>n</code> học sinh cần chia đều vào các nhóm, mỗi nhóm có <code>m</code> học sinh. Hỏi xếp được bao nhiêu nhóm đủ thành viên và còn dư ra mấy học sinh?
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Dữ liệu nhập (Input)</th>
+              <th>Kết quả mong đợi (Output)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>23</code><br>
+                <code>5</code>
+              </td>
+              <td>
+                <code>Xep duoc 4 nhom, con du 3 hoc sinh.</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>chia_nhom.py</span>
+                <button class="btn-copy" data-target="l3-sol-2">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="l3-sol-2" readonly style="min-height:130px;">
+n = int(input("Tổng số học sinh: "))
+m = int(input("Số học sinh mỗi nhóm: "))
+
+nhom = n // m
+du = n % m
+
+print("Xep duoc", nhom, "nhom, con du", du, "hoc sinh.")</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 3 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 3: Tính Điểm Trung Bình Môn (Thứ tự ưu tiên PEMDAS)
+          </h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập điểm 3 môn: Toán, Lý, Hóa (kiểu số thực <code>float</code>). Tính và in ra điểm trung bình. Chú ý sử dụng dấu ngoặc đơn <code>()</code> để cộng tổng trước khi chia 3!
+        </p>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>diem_tb.py</span>
+                <button class="btn-copy" data-target="l3-sol-3">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="l3-sol-3" readonly style="min-height:140px;">
+toan = float(input("Điểm Toán: "))
+ly = float(input("Điểm Lý: "))
+hoa = float(input("Điểm Hóa: "))
+
+# CỰC KỲ QUAN TRỌNG: Phải có ngoặc (toan + ly + hoa)
+dtb = (toan + ly + hoa) / 3
+print("Diem trung binh la:", dtb)</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Lesson Bottom Pager -->
+    <div class="lesson-pager">
+      <a href="../LESSON 2/index.html" class="pager-btn">
+        &larr; Bài Trước: Bài 2 - Kiểu Dữ Liệu & Ép Kiểu
+      </a>
+      <a href="../LESSON 4/index.html" class="pager-btn primary">
+        Bài Tiếp Theo: Bài 4 - Cấu Trúc Rẽ Nhánh &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
+          MindX Technology School &bull; TT-C4K-PTB30
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">
+          Bài 3: Sức Mạnh Toán Tử | Thầy Huy Trần
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    function evaluateOperator() {
+      const a = parseFloat(document.getElementById("op-a").value);
+      const b = parseFloat(document.getElementById("op-b").value);
+      const op = document.getElementById("op-select").value;
+
+      const exprDisplay = document.getElementById("expr-display");
+      const exprResult = document.getElementById("expr-result");
+      const exprExplain = document.getElementById("expr-explain");
+
+      exprDisplay.innerText = `${a} ${op} ${b}`;
+
+      let res;
+      let exp = "";
+
+      switch (op) {
+        case "+":
+          res = a + b;
+          exp = `${a} cộng ${b} bằng ${res}`;
+          break;
+        case "-":
+          res = a - b;
+          exp = `${a} trừ ${b} bằng ${res}`;
+          break;
+        case "*":
+          res = a * b;
+          exp = `${a} nhân ${b} bằng ${res}`;
+          break;
+        case "/":
+          res = b !== 0 ? (a / b).toFixed(4).replace(/\.?0+$/, '') : "ZeroDivisionError";
+          exp = b !== 0 ? `${a} chia thực cho ${b} bằng ${res}` : "Lỗi: Không thể chia cho số 0!";
+          break;
+        case "//":
+          res = b !== 0 ? Math.floor(a / b) : "ZeroDivisionError";
+          exp = b !== 0 ? `${a} chia ${b} lấy phần nguyên được thương là ${res}` : "Lỗi: Không thể chia cho 0!";
+          break;
+        case "%":
+          res = b !== 0 ? a % b : "ZeroDivisionError";
+          exp = b !== 0 ? `${a} chia ${b} được phần dư còn lại là ${res}` : "Lỗi: Không thể chia cho 0!";
+          break;
+        case "**":
+          res = Math.pow(a, b);
+          exp = `${a} lũy thừa mũ ${b} ($${a}^{${b}}$) bằng ${res}`;
+          break;
+        case "==":
+          res = (a === b) ? "True" : "False";
+          exp = a === b ? `Hai số bằng nhau -> Kết quả True` : `Hai số không bằng nhau -> Kết quả False`;
+          break;
+        case "!=":
+          res = (a !== b) ? "True" : "False";
+          exp = a !== b ? `Hai số khác nhau -> Kết quả True` : `Hai số giống hệt nhau -> Kết quả False`;
+          break;
+        case ">":
+          res = (a > b) ? "True" : "False";
+          exp = a > b ? `${a} lớn hơn ${b} -> True` : `${a} không lớn hơn ${b} -> False`;
+          break;
+        case "<":
+          res = (a < b) ? "True" : "False";
+          exp = a < b ? `${a} nhỏ hơn ${b} -> True` : `${a} không nhỏ hơn ${b} -> False`;
+          break;
+        case ">=":
+          res = (a >= b) ? "True" : "False";
+          exp = a >= b ? `${a} lớn hơn hoặc bằng ${b} -> True` : `${a} nhỏ hơn ${b} -> False`;
+          break;
+        case "<=":
+          res = (a <= b) ? "True" : "False";
+          exp = a <= b ? `${a} nhỏ hơn hoặc bằng ${b} -> True` : `${a} lớn hơn ${b} -> False`;
+          break;
+      }
+
+      exprResult.innerText = res;
+      exprExplain.innerText = exp;
+    }
+
+    function loadLesson3Sample(sample) {
+      const editor = document.getElementById("lesson3-editor");
+      const title = document.getElementById("l3-code-title");
+      if (sample === 1) {
+        title.innerText = "chia_doi_hinh.py";
+        editor.value = `# Bài 2: Chia đội hình - Dùng // và %
+n = 23 # Số học sinh
+m = 5  # Số thành viên mỗi nhóm
+
+so_nhom = n // m
+so_du = n % m
+
+print("Có", n, "học sinh xếp được:", so_nhom, "nhóm đủ thành viên")
+print("Còn dư ra:", so_du, "học sinh")`;
+      } else if (sample === 2) {
+        title.innerText = "luy_thua_hinh_hoc.py";
+        editor.value = `# Bài 1: Tính diện tích và thể tích - Dùng **
+a = 4
+dien_tich = a ** 2
+the_tich = a ** 3
+
+print("Cạnh hình vuông:", a)
+print("Diện tích hình vuông (a^2):", dien_tich)
+print("Thể tích hình lập phương (a^3):", the_tich)`;
+      } else {
+        title.innerText = "diem_trung_binh.py";
+        editor.value = `# Bài 3: Điểm trung bình môn - Dấu ngoặc () và /
+toan = 8.0
+ly = 7.5
+hoa = 9.0
+
+# Lưu ý thứ tự ưu tiên: Phải có ngoặc (toan + ly + hoa) trước khi chia 3
+dtb = (toan + ly + hoa) / 3
+print("Điểm trung bình 3 môn:", dtb)`;
+      }
+    }
+  </script>
+</body>
+</html>

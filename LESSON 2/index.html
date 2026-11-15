@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting) | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="index.html" class="active">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="../LESSON 3/index.html">Bài 3: Toán Tử</a>
+        <a href="../LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
+        <a href="../LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 2</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(59, 130, 246, 0.2); color:#93c5fd;">Cấp Độ: Nền Tảng</span>
+          </div>
+          <h1 class="lesson-title">Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting)</h1>
+          <p class="lesson-desc">
+            Hiểu rõ 4 kiểu dữ liệu kinh điển (int, float, str, bool), giải mã hiện tượng "10" + "20" = "1020" và làm chủ kỹ thuật ép kiểu int(input()) trong các bài toán thực tế.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">
+          📖 1. Lý Thuyết & Trọng Tâm
+        </button>
+        <button type="button" class="tab-btn" data-tab="simulator">
+          🔬 2. Bộ Chuyển Đổi Kiểu & Code Lab
+        </button>
+        <button type="button" class="tab-btn" data-tab="quiz">
+          🎯 3. Thử Thách Trắc Nghiệm (10 Câu)
+        </button>
+        <button type="button" class="tab-btn" data-tab="practice">
+          💻 4. Bài Tập Thực Hành
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+      
+      <!-- 4 Core Data Types -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">📊</span>
+            1. Bốn Kiểu Dữ Liệu Nền Tảng Trong Python
+          </h2>
+          <span style="font-size:12px; background:#eff6ff; color:#2563eb; padding:4px 10px; border-radius:20px; font-weight:600;">
+            Hàm kiểm tra: type(x)
+          </span>
+        </div>
+        <p>
+          Trong lập trình, mỗi loại dữ liệu có hình thái và cách máy tính xử lý hoàn toàn khác nhau. Python có 4 kiểu dữ liệu cơ bản quan trọng nhất mà mọi lập trình viên đều phải nằm lòng:
+        </p>
+
+        <div class="grid-4" style="margin-top:20px;">
+          
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#16a34a; text-transform:uppercase;">Số nguyên</div>
+            <h3 style="font-size:22px; font-weight:800; color:#14532d; margin:6px 0;">int</h3>
+            <p style="font-size:13px; color:#166534; line-height:1.5;">
+              Các số nguyên không có phần thập phân (dương, âm hoặc số 0).
+            </p>
+            <div style="background:white; padding:6px 10px; border-radius:6px; font-family:var(--font-mono); font-size:12px; margin-top:10px; border:1px solid #bbf7d0;">
+              x = 15<br>y = -8<br>z = 0
+            </div>
+          </div>
+
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#2563eb; text-transform:uppercase;">Số thực</div>
+            <h3 style="font-size:22px; font-weight:800; color:#1e3a8a; margin:6px 0;">float</h3>
+            <p style="font-size:13px; color:#1e40af; line-height:1.5;">
+              Các số có dấu chấm thập phân (Floating-point numbers).
+            </p>
+            <div style="background:white; padding:6px 10px; border-radius:6px; font-family:var(--font-mono); font-size:12px; margin-top:10px; border:1px solid #bfdbfe;">
+              pi = 3.14<br>diem = 9.5<br>nhiet_do = -1.2
+            </div>
+          </div>
+
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#d97706; text-transform:uppercase;">Chuỗi ký tự</div>
+            <h3 style="font-size:22px; font-weight:800; color:#78350f; margin:6px 0;">str</h3>
+            <p style="font-size:13px; color:#92400e; line-height:1.5;">
+              Đoạn văn bản bất kỳ được bao bởi cặp dấu nháy kép hoặc đơn.
+            </p>
+            <div style="background:white; padding:6px 10px; border-radius:6px; font-family:var(--font-mono); font-size:12px; margin-top:10px; border:1px solid #fde68a;">
+              name = "Huy"<br>msg = 'MindX'<br>num = "100"
+            </div>
+          </div>
+
+          <div style="background:#fdf2f8; border:1px solid #fbcfe8; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#db2777; text-transform:uppercase;">Logic đúng/sai</div>
+            <h3 style="font-size:22px; font-weight:800; color:#831843; margin:6px 0;">bool</h3>
+            <p style="font-size:13px; color:#9d174d; line-height:1.5;">
+              Kiểu Boolean chỉ mang đúng một trong 2 giá trị: Đúng hoặc Sai.
+            </p>
+            <div style="background:white; padding:6px 10px; border-radius:6px; font-family:var(--font-mono); font-size:12px; margin-top:10px; border:1px solid #fbcfe8;">
+              is_pass = True<br>is_rain = False<br>(Chữ T, F viết hoa!)
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Type Casting Deep Dive -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🔄</span>
+            2. Bản Chất Ép Kiểu Dữ Liệu (Type Casting)
+          </h2>
+        </div>
+        <p>
+          <strong>Ép kiểu (Type Casting)</strong> là hành động ra lệnh cho Python chuyển đổi một giá trị từ kiểu dữ liệu này sang một kiểu dữ liệu khác.
+        </p>
+
+        <div class="grid-2" style="margin-top:16px;">
+          
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius-md); padding:18px;">
+            <h4 style="color:#991b1b; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <span>❌</span> CẠM BẪY KHI KHÔNG ÉP KIỂU:
+            </h4>
+            <div class="code-box" style="margin:0 0 10px;">
+              <div class="code-header"><span>trap_input.py</span></div>
+              <div class="code-editor-area">
+                <textarea readonly style="min-height:90px;">
+a = input("Nhập a: ")  # Người dùng gõ 10 -> a = "10"
+b = input("Nhập b: ")  # Người dùng gõ 20 -> b = "20"
+print(a + b)           # In ra: "1020" (NỐI CHUỖI!)</textarea>
+              </div>
+            </div>
+            <p style="font-size:13px; color:#7f1d1d; line-height:1.5;">
+              Vì <code>a</code> và <code>b</code> mang kiểu chuỗi <code>str</code>, dấu cộng <code>+</code> trở thành <strong>toán tử nối chuỗi</strong>, ghép hai đoạn chữ dính liền vào nhau!
+            </p>
+          </div>
+
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius-md); padding:18px;">
+            <h4 style="color:#065f46; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <span>✅</span> GIẢI PHÁP: ÉP KIỂU TRỰC TIẾP int()
+            </h4>
+            <div class="code-box" style="margin:0 0 10px;">
+              <div class="code-header"><span>cast_input.py</span></div>
+              <div class="code-editor-area">
+                <textarea readonly style="min-height:90px;">
+a = int(input("Nhập a: "))  # Chuyển chuỗi "10" thành số 10
+b = int(input("Nhập b: "))  # Chuyển chuỗi "20" thành số 20
+print(a + b)                # In ra: 30 (PHÉP CỘNG TOÁN HỌC!)</textarea>
+              </div>
+            </div>
+            <p style="font-size:13px; color:#064e3b; line-height:1.5;">
+              Bằng cách bọc <code>int(...)</code> bên ngoài hàm <code>input()</code>, giá trị chữ người dùng nhập lập tức được biến thành số nguyên để tính toán toán học chính xác!
+            </p>
+          </div>
+
+        </div>
+
+        <h3 style="font-size:16px; font-weight:700; color:var(--navy); margin:24px 0 12px;">
+          🛠️ Bảng các hàm ép kiểu thông dụng nhất:
+        </h3>
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Hàm ép kiểu</th>
+              <th>Mục đích</th>
+              <th>Ví dụ lệnh</th>
+              <th>Kết quả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>int(x)</code></td>
+              <td>Ép về số nguyên</td>
+              <td><code>int("25")</code> &bull; <code>int(7.9)</code></td>
+              <td><code>25</code> &bull; <code>7</code> (Lấy phần nguyên, bỏ phần thập phân!)</td>
+            </tr>
+            <tr>
+              <td><code>float(x)</code></td>
+              <td>Ép về số thực</td>
+              <td><code>float("3.14")</code> &bull; <code>float(10)</code></td>
+              <td><code>3.14</code> &bull; <code>10.0</code></td>
+            </tr>
+            <tr>
+              <td><code>str(x)</code></td>
+              <td>Ép về chuỗi chữ</td>
+              <td><code>str(100)</code> &bull; <code>str(True)</code></td>
+              <td><code>"100"</code> &bull; <code>"True"</code></td>
+            </tr>
+            <tr>
+              <td><code>bool(x)</code></td>
+              <td>Ép về True/False</td>
+              <td><code>bool(1)</code> &bull; <code>bool(0)</code> &bull; <code>bool("")</code></td>
+              <td><code>True</code> &bull; <code>False</code> &bull; <code>False</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert alert-danger" style="margin-top:16px;">
+          <span>🚨</span>
+          <div>
+            <strong>Cạm bẫy lỗi ValueError:</strong> Nếu em cố ép một chuỗi không phải dạng số sang <code>int</code>, ví dụ: <code>int("mindx")</code> hoặc <code>int("abc")</code>, chương trình sẽ báo lỗi <code>ValueError: invalid literal for int()</code> và dừng chạy ngay lập tức!
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTINUITY BRIDGE TO LESSON 3 -->
+      <div style="background:linear-gradient(135deg, #eff6ff 0%, #fef3c7 100%); border:2px dashed #f59e0b; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#b45309; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+          <span>🌉</span> Cầu Nối Tư Duy Sang Bài 3: Sức Mạnh Toán Tử Đang Chờ Đón!
+        </h3>
+        <p style="color:#78350f; font-size:14px; line-height:1.6;">
+          Bây giờ chúng ta đã có dữ liệu dạng số nguyên <code>int</code> và số thực <code>float</code> chuẩn xác trong tay. Nhưng nếu muốn làm những phép toán xịn hơn thì sao?
+          Ví dụ: <em>Làm sao để chia lấy phần dư để biết một số là chẵn hay lẻ? Làm sao để tính lũy thừa $2^{10}$? Làm sao so sánh xem điểm của bạn A có lớn hơn hoặc bằng bạn B hay không?</em>
+        </p>
+        <p style="color:#78350f; font-size:14px; line-height:1.6; margin-top:6px;">
+          Tất cả những phép tính kỳ diệu đó sẽ được bật mí trong <strong>Bài 3: Sức Mạnh Toán Tử (Số Học, Quan Hệ, Logic)</strong>!
+        </p>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: BỘ CHUYỂN ĐỔI KIỂU & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+      
+      <!-- Interactive Type Casting Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🧪</span>
+            Phòng Thí Nghiệm Ép Kiểu Dữ Liệu (Type Casting Lab)
+          </h2>
+          <span style="font-size:12px; background:#f0fdf4; color:#16a34a; padding:4px 10px; border-radius:20px; font-weight:600;">
+            Interactive Type Inspector
+          </span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          Hãy nhập thử một giá trị bất kỳ vào ô bên dưới để quan sát Python biến đổi giá trị đó qua các kiểu <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label style="flex:1;">
+            Nhập giá trị thử nghiệm (Input Value):
+            <input type="text" id="type-test-input" value="42" placeholder="Ví dụ: 15, 3.14, mindx, 0, True">
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 18px; margin-top:auto;" onclick="inspectTypeCasting()">
+            🔬 Phân Tích Ép Kiểu
+          </button>
+        </div>
+
+        <div class="grid-4" id="casting-results-grid">
+          
+          <div class="ram-slot" style="border-color:#16a34a;">
+            <div class="ram-header" style="background:#16a34a;">
+              <span>int(x)</span>
+              <span>Số nguyên</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">Kết quả int:</div>
+              <div class="ram-var-val" id="res-int" style="color:#16a34a;">42</div>
+              <p style="font-size:12px; color:#64748b; margin-top:6px;" id="desc-int">Chuyển thành công số nguyên 42</p>
+            </div>
+          </div>
+
+          <div class="ram-slot" style="border-color:#2563eb;">
+            <div class="ram-header" style="background:#2563eb;">
+              <span>float(x)</span>
+              <span>Số thực</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">Kết quả float:</div>
+              <div class="ram-var-val" id="res-float" style="color:#2563eb;">42.0</div>
+              <p style="font-size:12px; color:#64748b; margin-top:6px;" id="desc-float">Thêm phần thập phân .0</p>
+            </div>
+          </div>
+
+          <div class="ram-slot" style="border-color:#d97706;">
+            <div class="ram-header" style="background:#d97706;">
+              <span>str(x)</span>
+              <span>Chuỗi ký tự</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">Kết quả str:</div>
+              <div class="ram-var-val" id="res-str" style="color:#d97706;">"42"</div>
+              <p style="font-size:12px; color:#64748b; margin-top:6px;" id="desc-str">Bao trong dấu nháy kép</p>
+            </div>
+          </div>
+
+          <div class="ram-slot" style="border-color:#db2777;">
+            <div class="ram-header" style="background:#db2777;">
+              <span>bool(x)</span>
+              <span>Logic</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">Kết quả bool:</div>
+              <div class="ram-var-val" id="res-bool" style="color:#db2777;">True</div>
+              <p style="font-size:12px; color:#64748b; margin-top:6px;" id="desc-bool">Khác 0 nên mang giá trị True</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- In-browser Code Runner -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">▶️</span>
+            Code Lab: Bài Toán Tính Tuổi Tương Lai (File gốc: main.py)
+          </h2>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn-copy" onclick="loadLesson2Code('correct')">Mẫu Chuẩn (int)</button>
+            <button type="button" class="btn-copy" onclick="loadLesson2Code('bug')">Mẫu Bị Lỗi (Nối Chuỗi)</button>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span>tinh_tuoi.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson2-editor', 'lesson2-terminal')">
+                ▶ Chạy Code
+              </button>
+              <button type="button" class="btn-copy" data-target="lesson2-editor">Sao chép</button>
+            </div>
+          </div>
+
+          <div class="code-editor-area">
+            <textarea id="lesson2-editor" style="min-height:160px;"># Đây là bài ép kiểu dữ liệu từ LESSON 2/main.py
+age = int(input("Xin hãy nhập tuổi của bạn: "))
+future_age = age + 10 
+print("Tuổi hiện tại của bạn là:", age)
+print("Trong 10 năm nữa, tuổi của bạn là:", future_age)</textarea>
+          </div>
+
+          <div class="terminal-output" id="lesson2-terminal">
+<span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để nhập tuổi và quan sát kết quả...
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: THỬ THÁCH TRẮC NGHIỆM (10 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 2</h3>
+            <p style="font-size:13.5px; opacity:0.9;">10 câu hỏi trắc nghiệm kiểm tra độ hiểu sâu về kiểu dữ liệu và ép kiểu</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="quiz-card" id="l2q1">
+          <div class="quiz-q-num">Câu Hỏi 1</div>
+          <div class="quiz-q-text">Kiểu dữ liệu của giá trị <code>3.14159</code> trong Python là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q1', 0, false, 'int là số nguyên, không có phần thập phân.')">
+              <input type="radio" name="l2q1">
+              <span>A. <code>int</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q1', 1, true, 'Chính xác! Số có dấu chấm thập phân là số thực kiểu float.')">
+              <input type="radio" name="l2q1">
+              <span>B. <code>float</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q1', 2, false, 'str là chuỗi ký tự phải nằm trong dấu ngoặc kép.')">
+              <input type="radio" name="l2q1">
+              <span>C. <code>str</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q1', 3, false, 'bool là kiểu True/False.')">
+              <input type="radio" name="l2q1">
+              <span>D. <code>bool</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-card" id="l2q2">
+          <div class="quiz-q-num">Câu Hỏi 2</div>
+          <div class="quiz-q-text">Hàm nào trong Python dùng để kiểm tra kiểu dữ liệu của một biến?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q2', 0, false, 'check() không phải là hàm tích hợp sẵn của Python.')">
+              <input type="radio" name="l2q2">
+              <span>A. <code>check()</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q2', 1, true, 'Tuyệt vời! Hàm type(x) trả về kiểu dữ liệu của đối tượng x, ví dụ <class \'int\'>.')">
+              <input type="radio" name="l2q2">
+              <span>B. <code>type()</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q2', 2, false, 'typeof là từ khóa của JavaScript, không phải của Python!')">
+              <input type="radio" name="l2q2">
+              <span>C. <code>typeof()</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q2', 3, false, 'datatype() không tồn tại trong thư viện chuẩn Python.')">
+              <input type="radio" name="l2q2">
+              <span>D. <code>datatype()</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-card" id="l2q3">
+          <div class="quiz-q-num">Câu Hỏi 3</div>
+          <div class="quiz-q-text">Lệnh <code>int("50") + int("25")</code> sẽ cho ra kết quả nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q3', 0, false, '5025 là kết quả khi không dùng int, tức \"50\" + \"25\".')">
+              <input type="radio" name="l2q3">
+              <span>A. <code>"5025"</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q3', 1, true, 'Chính xác! Cả 2 chuỗi đã được ép về số nguyên 50 và 25 nên kết quả cộng là 75.')">
+              <input type="radio" name="l2q3">
+              <span>B. <code>75</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q3', 2, false, 'Chương trình chạy hoàn hảo, không có lỗi.')">
+              <input type="radio" name="l2q3">
+              <span>C. Báo lỗi TypeError</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q3', 3, false, 'int() cho kết quả số nguyên, không phải số thực 75.0.')">
+              <input type="radio" name="l2q3">
+              <span>D. <code>75.0</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="quiz-card" id="l2q4">
+          <div class="quiz-q-num">Câu Hỏi 4</div>
+          <div class="quiz-q-text">Điều gì xảy ra khi thực thi câu lệnh: <code>x = int("Python")</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q4', 0, false, 'Python không tự gán giá trị 0 khi gặp chuỗi chữ không hợp lệ.')">
+              <input type="radio" name="l2q4">
+              <span>A. Biến x nhận giá trị 0</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q4', 1, false, 'Hàm len() mới đếm số ký tự, int() không làm việc này.')">
+              <input type="radio" name="l2q4">
+              <span>B. Biến x nhận giá trị là độ dài từ \"Python\" (6)</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q4', 2, true, 'Chính xác! Python báo lỗi ValueError vì chuỗi \"Python\" chứa chữ cái, không thể chuyển thành số nguyên cơ số 10!')">
+              <input type="radio" name="l2q4">
+              <span>C. Báo lỗi ValueError</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q4', 3, false, 'Lỗi cú pháp SyntaxError xảy ra khi gõ sai ngữ pháp, ở đây ngữ pháp đúng nhưng giá trị sai nên là ValueError.')">
+              <input type="radio" name="l2q4">
+              <span>D. Báo lỗi SyntaxError</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-card" id="l2q5">
+          <div class="quiz-q-num">Câu Hỏi 5</div>
+          <div class="quiz-q-text">Lệnh <code>int(9.99)</code> trả về kết quả là bao nhiêu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q5', 0, false, 'Hàm round() mới làm tròn lên 10. Hàm int() chỉ cắt bỏ phần thập phân.')">
+              <input type="radio" name="l2q5">
+              <span>A. <code>10</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q5', 1, true, 'Rất thông minh! Hàm int() ép số thực sang số nguyên bằng cách CẮT BỎ hoàn toàn phần thập phân (.99), chỉ giữ lại phần nguyên là 9!')">
+              <input type="radio" name="l2q5">
+              <span>B. <code>9</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q5', 2, false, 'Kết quả của int() phải là số nguyên, không thể có .0.')">
+              <input type="radio" name="l2q5">
+              <span>C. <code>9.0</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q5', 3, false, 'int() hoàn toàn ép được số thực float.')">
+              <input type="radio" name="l2q5">
+              <span>D. Báo lỗi không thể chuyển đổi</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="quiz-card" id="l2q6">
+          <div class="quiz-q-num">Câu Hỏi 6</div>
+          <div class="quiz-q-text">Giá trị nào sau đây khi ép kiểu qua <code>bool()</code> sẽ trả về <code>False</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q6', 0, false, 'Số khác 0 luôn trả về True.')">
+              <input type="radio" name="l2q6">
+              <span>A. <code>bool(1)</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q6', 1, false, 'Chuỗi có chữ bên trong luôn trả về True.')">
+              <input type="radio" name="l2q6">
+              <span>B. <code>bool("Hello")</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q6', 2, true, 'Chính xác! Số 0, chuỗi rỗng \"\", danh sách rỗng trong Python đều là giá trị falsy và trả về False.')">
+              <input type="radio" name="l2q6">
+              <span>C. <code>bool(0)</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q6', 3, false, 'Số âm vẫn là số khác 0 nên trả về True.')">
+              <input type="radio" name="l2q6">
+              <span>D. <code>bool(-5)</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="quiz-card" id="l2q7">
+          <div class="quiz-q-num">Câu Hỏi 7</div>
+          <div class="quiz-q-text">Để nhập điểm thi môn Toán có thể là số lẻ (ví dụ 8.5), ta nên dùng câu lệnh nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q7', 0, false, 'int() sẽ báo lỗi nếu người dùng gõ 8.5!')">
+              <input type="radio" name="l2q7">
+              <span>A. <code>diem = int(input("Nhập điểm: "))</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q7', 1, true, 'Chuẩn xác! Điểm số có phần thập phân cần được ép sang kiểu float() để tính toán.')">
+              <input type="radio" name="l2q7">
+              <span>B. <code>diem = float(input("Nhập điểm: "))</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q7', 2, false, 'str() giữ nguyên dạng chữ, không thể dùng để tính trung bình cộng.')">
+              <input type="radio" name="l2q7">
+              <span>C. <code>diem = str(input("Nhập điểm: "))</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q7', 3, false, 'bool() chỉ ra True hoặc False.')">
+              <input type="radio" name="l2q7">
+              <span>D. <code>diem = bool(input("Nhập điểm: "))</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="quiz-card" id="l2q8">
+          <div class="quiz-q-num">Câu Hỏi 8</div>
+          <div class="quiz-q-text">Kết quả của câu lệnh <code>print(type(True))</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q8', 0, false, 'True không phải chuỗi ký tự.')">
+              <input type="radio" name="l2q8">
+              <span>A. <code>&lt;class 'str'&gt;</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q8', 1, true, 'Đúng! True là giá trị của lớp đối tượng boolean (bool).')">
+              <input type="radio" name="l2q8">
+              <span>B. <code>&lt;class 'bool'&gt;</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q8', 2, false, 'True không phải là int.')">
+              <input type="radio" name="l2q8">
+              <span>C. <code>&lt;class 'int'&gt;</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q8', 3, false, 'Không in ra chữ True mà in ra kiểu của nó.')">
+              <input type="radio" name="l2q8">
+              <span>D. <code>True</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="quiz-card" id="l2q9">
+          <div class="quiz-q-num">Câu Hỏi 9</div>
+          <div class="quiz-q-text">Biểu thức <code>"Tuổi: " + str(15)</code> cho kết quả là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q9', 0, true, 'Chính xác! Số 15 được ép sang chữ \"15\", sau đó ghép với \"Tuổi: \" thành \"Tuổi: 15\".')">
+              <input type="radio" name="l2q9">
+              <span>A. <code>"Tuổi: 15"</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q9', 1, false, 'Lỗi TypeError chỉ xảy ra nếu ta viết \"Tuổi: \" + 15 (chưa ép kiểu).')">
+              <input type="radio" name="l2q9">
+              <span>B. Báo lỗi TypeError</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q9', 2, false, 'Không thể ra số.')">
+              <input type="radio" name="l2q9">
+              <span>C. <code>15</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q9', 3, false, 'str(15) tạo ra chữ, không báo lỗi cú pháp.')">
+              <input type="radio" name="l2q9">
+              <span>D. Báo lỗi SyntaxError</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="quiz-card" id="l2q10">
+          <div class="quiz-q-num">Câu Hỏi 10</div>
+          <div class="quiz-q-text">Trong Python, giá trị Boolean nào sau đây được viết <strong>ĐÚNG CHÍNH TẢ</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l2q10', 0, false, 'true viết thường sẽ bị coi là tên biến chưa khai báo (NameError).')">
+              <input type="radio" name="l2q10">
+              <span>A. <code>true</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q10', 1, false, 'false viết thường cũng bị lỗi NameError.')">
+              <input type="radio" name="l2q10">
+              <span>B. <code>false</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l2q10', 2, true, 'Rất chuẩn! Python quy định chữ T trong True và F trong False BẮT BUỘC phải viết hoa.')">
+              <input type="radio" name="l2q10">
+              <span>C. <code>True</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l2q10', 3, false, 'TRUE viết hoa toàn bộ không phải từ khóa Boolean của Python.')">
+              <input type="radio" name="l2q10">
+              <span>D. <code>TRUE</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+      
+      <!-- Practice 1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 1: Cỗ Máy Thời Gian - Dự Đoán Tuổi Trong Tương Lai
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập vào tuổi hiện tại của học sinh và số năm muốn du hành tới tương lai (ví dụ 10 năm nữa). Tính và in ra tuổi của bạn khi đó.
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Dữ liệu nhập (Input)</th>
+              <th>Kết quả mong đợi (Output)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>14</code><br>
+                <code>10</code>
+              </td>
+              <td>
+                <code>Sau 10 năm nữa, tuổi của bạn là: 24</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>giai_bai1.py</span>
+                <button class="btn-copy" data-target="l2-sol-1">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="l2-sol-1" readonly style="min-height:140px;">
+tuoi_hien_tai = int(input("Nhập tuổi hiện tại: "))
+so_nam = int(input("Nhập số năm du hành tới tương lai: "))
+
+tuoi_tuong_lai = tuoi_hien_tai + so_nam
+print("Sau", so_nam, "năm nữa, tuổi của bạn là:", tuoi_tuong_lai)</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Practice 2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 2: Máy Tính Đổi Ngoại Tệ USD Sang VNĐ (Ép kiểu float)
+          </h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập vào số tiền USD (có thể là số lẻ, ví dụ $15.5) và tỷ giá hối đoái hiện tại (ví dụ 25400 đ/USD). Tính và in ra tổng số tiền theo đơn vị Việt Nam Đồng.
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Dữ liệu nhập (Input)</th>
+              <th>Kết quả mong đợi (Output)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>20.5</code><br>
+                <code>25400</code>
+              </td>
+              <td>
+                <code>Số tiền quy đổi sang VNĐ là: 520700.0 VNĐ</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>doi_tien.py</span>
+                <button class="btn-copy" data-target="l2-sol-2">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="l2-sol-2" readonly style="min-height:140px;">
+usd = float(input("Nhập số tiền USD ($): "))
+ty_gia = float(input("Nhập tỷ giá (VNĐ/USD): "))
+
+vnd = usd * ty_gia
+print("Số tiền quy đổi sang VNĐ là:", vnd, "VNĐ")</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Lesson Bottom Pager -->
+    <div class="lesson-pager">
+      <a href="../LESSON 1/index.html" class="pager-btn">
+        &larr; Bài Trước: Bài 1 - Làm Quen & Biến Số
+      </a>
+      <a href="../LESSON 3/index.html" class="pager-btn primary">
+        Bài Tiếp Theo: Bài 3 - Sức Mạnh Toán Tử &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
+          MindX Technology School &bull; TT-C4K-PTB30
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">
+          Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu | Thầy Huy Trần
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    function inspectTypeCasting() {
+      const input = document.getElementById("type-test-input").value.trim();
+      
+      const resInt = document.getElementById("res-int");
+      const descInt = document.getElementById("desc-int");
+      const resFloat = document.getElementById("res-float");
+      const descFloat = document.getElementById("desc-float");
+      const resStr = document.getElementById("res-str");
+      const descStr = document.getElementById("desc-str");
+      const resBool = document.getElementById("res-bool");
+      const descBool = document.getElementById("desc-bool");
+
+      // 1. String conversion is always valid
+      resStr.innerText = `"${input}"`;
+      descStr.innerText = "Chuỗi văn bản bao bởi nháy kép";
+
+      // 2. Boolean conversion
+      if (input === "" || input === "0" || input.toLowerCase() === "false") {
+        resBool.innerText = "False";
+        descBool.innerText = "Giá trị rỗng hoặc bằng 0 -> Falsy";
+        resBool.style.color = "#ef4444";
+      } else {
+        resBool.innerText = "True";
+        descBool.innerText = "Có giá trị khác 0 -> Truthy";
+        resBool.style.color = "#10b981";
+      }
+
+      // 3. Float conversion
+      const numFloat = parseFloat(input);
+      if (!isNaN(numFloat)) {
+        resFloat.innerText = numFloat.toString().includes(".") ? numFloat.toString() : numFloat.toFixed(1);
+        descFloat.innerText = "Chuyển thành số thực thành công";
+        resFloat.style.color = "#2563eb";
+      } else {
+        resFloat.innerText = "LỖI!";
+        descFloat.innerText = "ValueError: Chuỗi không chứa số";
+        resFloat.style.color = "#ef4444";
+      }
+
+      // 4. Int conversion
+      if (!isNaN(numFloat)) {
+        const numInt = parseInt(numFloat, 10);
+        resInt.innerText = numInt.toString();
+        descInt.innerText = "Lấy phần nguyên (cắt bỏ phần thập phân)";
+        resInt.style.color = "#16a34a";
+      } else {
+        resInt.innerText = "LỖI!";
+        descInt.innerText = "ValueError: Không thể ép chữ sang số";
+        resInt.style.color = "#ef4444";
+      }
+    }
+
+    function loadLesson2Code(mode) {
+      const editor = document.getElementById("lesson2-editor");
+      if (mode === 'correct') {
+        editor.value = `# Ép kiểu int() chuẩn xác
+age = int(input("Xin hãy nhập tuổi của bạn: "))
+future_age = age + 10 
+print("Tuổi hiện tại của bạn là:", age)
+print("Trong 10 năm nữa, tuổi của bạn là:", future_age)`;
+      } else {
+        editor.value = `# Cạm bẫy: Quên ép kiểu int()!
+age = input("Xin hãy nhập tuổi của bạn: ")
+# LƯU Ý: age là chuỗi "15", khi cộng với chuỗi "10"
+future_age = age + "10" 
+print("Tuổi hiện tại của bạn là:", age)
+print("Trong 10 năm nữa, tuổi của bạn là (NỐI CHUỖI!):", future_age)`;
+      }
+    }
+  </script>
+</body>
+</html>

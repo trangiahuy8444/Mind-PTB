@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 1: Làm Quen Python, print(), input() & Biến Số | Lập Trình Python Cơ Bản</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="index.html" class="active">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="../LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="../LESSON 3/index.html">Bài 3: Toán Tử</a>
+        <a href="../LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
+        <a href="../LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 1</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(16, 185, 129, 0.2); color:#6ee7b7;">Cấp Độ: Nhập Môn</span>
+          </div>
+          <h1 class="lesson-title">Bài 1: Làm Quen Python, Lệnh print(), input() & Biến Số</h1>
+          <p class="lesson-desc">
+            Khám phá thế giới lập trình máy tính, hiểu biến là "chiếc hộp dán nhãn" trong bộ nhớ RAM, thành thạo lệnh in dữ liệu ra màn hình và thu thập thông tin từ bàn phím.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">
+          📖 1. Lý Thuyết & Trọng Tâm
+        </button>
+        <button type="button" class="tab-btn" data-tab="simulator">
+          🔬 2. Mô Phỏng RAM & Code Lab
+        </button>
+        <button type="button" class="tab-btn" data-tab="quiz">
+          🎯 3. Thử Thách Trắc Nghiệm (10 Câu)
+        </button>
+        <button type="button" class="tab-btn" data-tab="practice">
+          💻 4. Bài Tập Thực Hành
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+      
+      <!-- Key Concept 1 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">💡</span>
+            1. Tại Sao Lại Là Python? & Cấu Trúc Chương Trình Đầu Tiên
+          </h2>
+        </div>
+        <p>
+          Python là ngôn ngữ lập trình phổ biến bậc nhất thế giới, được sử dụng tại Google, NASA, YouTube và Netflix. Cú pháp của Python rất gần gũi với tiếng Anh đời thường, ngắn gọn và trong sáng.
+        </p>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:var(--navy); font-weight:700; margin-bottom:8px;">🎯 3 Bước thực thi của máy tính:</h4>
+            <ol style="padding-left:20px; line-height:1.8; color:#334155;">
+              <li><strong>Nhận dữ liệu vào (Input):</strong> Nhận từ bàn phím, file, mạng internet.</li>
+              <li><strong>Lưu trữ & Xử lý (Process):</strong> Lưu vào các ô nhớ biến (RAM) và tính toán.</li>
+              <li><strong>Xuất dữ liệu ra (Output):</strong> In kết quả lên màn hình, loa hoặc file.</li>
+            </ol>
+          </div>
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#1e40af; font-weight:700; margin-bottom:8px;">📦 Quy tắc Dấu Nháy Kép / Đơn:</h4>
+            <p style="font-size:13.5px; color:#1e3a8a; line-height:1.6;">
+              Khi muốn in một đoạn văn bản (chữ), ta <strong>bắt buộc</strong> phải đặt chữ đó trong cặp dấu nháy kép <code>" "</code> hoặc nháy đơn <code>' '</code>. Nếu in số hoặc tên biến, ta không dùng dấu nháy!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Concept 2: print() -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🖨️</span>
+            2. Lệnh Xuất Dữ Liệu: Hàm print()
+          </h2>
+        </div>
+        <p>
+          Hàm <code>print()</code> dùng để hiển thị thông điệp, giá trị của biến hoặc kết quả phép tính lên màn hình điều khiển (Terminal).
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span>vi_du_print.py</span>
+            <button class="btn-copy" data-target="code-sample-print">Sao chép</button>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="code-sample-print" readonly style="min-height:140px;">
+# 1. In một dòng chữ
+print("Xin chào lớp TT-C4K-PTB30!")
+
+# 2. In số và kết quả tính toán trực tiếp
+print(2026)
+print(98 * 5)
+
+# 3. In nhiều giá trị cùng lúc (ngăn cách bởi dấu phẩy)
+print("Họ và tên:", "Huy Trần", "- Tuổi:", 18)</textarea>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span>💡</span>
+          <div>
+            <strong>Mẹo lập trình:</strong> Khi dùng dấu phẩy <code>,</code> trong hàm <code>print()</code>, Python sẽ tự động chèn thêm một dấu cách trắng giữa các giá trị khi in ra màn hình!
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Concept 3: Biến số -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🏷️</span>
+            3. Biến Số (Variable) & Chiếc Hộp Gán Nhãn Trong RAM
+          </h2>
+        </div>
+        <p>
+          Hãy tưởng tượng bộ nhớ máy tính (RAM) giống như một kho hàng chứa vô số chiếc hộp. <strong>Biến</strong> là chiếc nhãn dán lên một chiếc hộp, còn <strong>giá trị</strong> là đồ vật đặt bên trong chiếc hộp đó.
+        </p>
+
+        <div style="background:#f1f5f9; border-radius:var(--radius-md); padding:18px; margin:16px 0; font-family:var(--font-mono); font-size:16px; text-align:center;">
+          <span style="color:#2563eb; font-weight:700;">ten_bien</span> 
+          <span style="color:#ef4444; font-weight:800; font-size:18px;"> = </span> 
+          <span style="color:#10b981; font-weight:700;">gia_tri_luu_tru</span>
+        </div>
+
+        <div class="alert alert-warning">
+          <span>⚠️</span>
+          <div>
+            <strong>CỰC KỲ QUAN TRỌNG:</strong> Dấu bằng <code>=</code> trong Python là <strong>TOÁN TỬ GÁN (Assignment)</strong>, không phải là dấu bằng so sánh trong toán học! Câu lệnh này có nghĩa: <em>"Lấy giá trị bên phải, ném vào chiếc hộp có tên ở bên trái"</em>.
+          </div>
+        </div>
+
+        <h3 style="font-size:16px; font-weight:700; color:var(--navy); margin:20px 0 10px;">
+          📌 Quy tắc vàng khi đặt tên biến trong Python:
+        </h3>
+        <div class="grid-2">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#065f46; font-weight:700; margin-bottom:8px;">✅ TÊN BIẾN HỢP LỆ:</h4>
+            <ul style="padding-left:18px; font-family:var(--font-mono); font-size:13.5px; line-height:1.8; color:#064e3b;">
+              <li><code>name = "Gia Huy"</code> (Chữ cái thường)</li>
+              <li><code>tuoi_hoc_sinh = 15</code> (Dùng gạch dưới snake_case)</li>
+              <li><code>score1 = 10</code> (Số đứng sau chữ cái)</li>
+              <li><code>_private_var = 5</code> (Bắt đầu bằng gạch dưới)</li>
+            </ul>
+          </div>
+
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#991b1b; font-weight:700; margin-bottom:8px;">❌ TÊN BIẾN PHẠM QUY (LỖI NGAY):</h4>
+            <ul style="padding-left:18px; font-family:var(--font-mono); font-size:13.5px; line-height:1.8; color:#7f1d1d;">
+              <li><code>1score = 10</code> (Lỗi: Số không được đứng đầu)</li>
+              <li><code>ten hoc sinh = "A"</code> (Lỗi: Không được có dấu cách)</li>
+              <li><code>tuoi@mindx = 12</code> (Lỗi: Không dùng ký tự lạ @, $, %)</li>
+              <li><code>print = 100</code> (Lỗi: Trùng từ khóa của Python)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Concept 4: input() & Continuity Bridge -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">⌨️</span>
+            4. Lệnh Nhập Dữ Liệu: Hàm input()
+          </h2>
+        </div>
+        <p>
+          Hàm <code>input()</code> cho phép máy tính tạm dừng việc thực thi chương trình và kiên nhẫn chờ đợi người dùng nhập dữ liệu từ bàn phím rồi nhấn phím <kbd style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-weight:700;">Enter</kbd>.
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span>input_demo.py</span>
+            <button class="btn-copy" data-target="code-sample-input">Sao chép</button>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="code-sample-input" readonly style="min-height:130px;">
+name = input("Bạn tên là gì: ")
+print("Xin chào", name)
+
+age = input("Bạn mấy tuổi: ")
+print("Tuổi của bạn là:", age)
+
+grade = input("Bạn học lớp mấy: ")
+print("Bạn đang học lớp:", grade)</textarea>
+          </div>
+        </div>
+
+        <!-- CONTINUITY BRIDGE TO LESSON 2 -->
+        <div style="background:linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px; margin-top:20px;">
+          <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+            <span>🌉</span> Cầu Nối Tư Duy Sang Bài 2: Bí Ẩn Về Hàm input()
+          </h3>
+          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+            Thử tưởng tượng: Thầy viết chương trình nhập vào 2 số <code>a</code> và <code>b</code> rồi in ra <code>a + b</code>:
+          </p>
+          <div style="background:#0f172a; color:#f8fafc; font-family:var(--font-mono); padding:12px; border-radius:8px; margin:10px 0; font-size:13px;">
+            a = input("Nhập số thứ nhất: ") &nbsp;# Nhập vào 10<br>
+            b = input("Nhập số thứ hai: ") &nbsp;&nbsp;# Nhập vào 20<br>
+            print(a + b) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)
+          </div>
+          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+            <strong>Tại sao lại như vậy?</strong> Bởi vì hàm <code>input()</code> luôn luôn coi tất cả những gì em gõ là một chuỗi chữ (Text). Dấu cộng lúc này biến thành <em>"phép nối chuỗi"</em> dán hai chữ lại với nhau! Để giải mã và dạy máy tính hiểu đây là con số thực sự, chúng ta sẽ bước sang <strong>Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu</strong>!
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: MÔ PHỎNG RAM & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+      
+      <!-- Interactive RAM Allocator -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🧠</span>
+            Mô Phỏng Trực Quan: Cấp Phát Biến Vào Bộ Nhớ RAM
+          </h2>
+          <span style="font-size:12px; background:#eff6ff; color:#2563eb; padding:4px 10px; border-radius:20px; font-weight:600;">
+            Interactive RAM Inspector
+          </span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          Hãy thử nhập tên biến và giá trị bên dưới rồi bấm <strong>"Gán Vào Bộ Nhớ RAM"</strong> để quan sát chiếc hộp biến được tạo ra trong bộ nhớ máy tính như thế nào:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>
+            Tên biến (Identifier):
+            <input type="text" id="ram-input-var" placeholder="Ví dụ: my_name, age, city" value="student_name">
+          </label>
+          <label>
+            Giá trị gán (Value):
+            <input type="text" id="ram-input-val" placeholder='Ví dụ: "Huy", 15, True' value='"Minh Anh"'>
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 18px; margin-top:auto;" onclick="allocateRamVariable()">
+            📥 Gán Vào RAM (=)
+          </button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto;" onclick="resetRamMemory()">
+            🔄 Xóa Sạch RAM
+          </button>
+        </div>
+
+        <div id="ram-alert-box" style="display:none; margin-bottom:14px;"></div>
+
+        <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:10px;">
+          Bảng ô nhớ RAM hiện tại:
+        </h4>
+        <div class="memory-grid" id="ram-container">
+          <!-- Default memory cells -->
+          <div class="ram-slot" id="slot-name">
+            <div class="ram-header">
+              <span>RAM 0x7FFF01</span>
+              <span>Variable</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">name</div>
+              <div class="ram-var-type">String (Chuỗi)</div>
+              <div class="ram-var-val">"Gia Huy"</div>
+            </div>
+          </div>
+
+          <div class="ram-slot" id="slot-age">
+            <div class="ram-header">
+              <span>RAM 0x7FFF08</span>
+              <span>Variable</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">age</div>
+              <div class="ram-var-type">Integer (Số nguyên)</div>
+              <div class="ram-var-val">15</div>
+            </div>
+          </div>
+
+          <div class="ram-slot" id="slot-school">
+            <div class="ram-header">
+              <span>RAM 0x7FFF12</span>
+              <span>Variable</span>
+            </div>
+            <div class="ram-body">
+              <div class="ram-var-name">school</div>
+              <div class="ram-var-type">String (Chuỗi)</div>
+              <div class="ram-var-val">"MindX School"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-browser Python Playground -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">▶️</span>
+            Phòng Thí Nghiệm Python (Skulpt In-browser Code Runner)
+          </h2>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn-copy" onclick="loadSampleCode(1)">Mẫu 1: Hỏi Tên Tuổi</button>
+            <button type="button" class="btn-copy" onclick="loadSampleCode(2)">Mẫu 2: Bảng Cửu Chương 98</button>
+          </div>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">
+          Em có thể chỉnh sửa trực tiếp đoạn mã nguồn Python bên dưới và nhấn <strong>▶ Chạy Code</strong> để xem chương trình thực thi ngay lập tức!
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span id="playground-filename">main_lesson1.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson1-editor', 'lesson1-terminal')">
+                ▶ Chạy Code
+              </button>
+              <button type="button" class="btn-copy" data-target="lesson1-editor">Sao chép</button>
+            </div>
+          </div>
+
+          <div class="code-editor-area">
+            <textarea id="lesson1-editor" style="min-height:180px;"># Chương trình hỏi đáp tương tác - Bài 1
+name = input("Bạn tên là gì: ")
+print("Xin chào", name)
+
+age = input("Bạn mấy tuổi: ")
+print("Tuổi của bạn là:", age)
+
+grade = input("Bạn lớp mấy: ")
+print("Bạn đang học lớp:", grade)</textarea>
+          </div>
+
+          <div class="terminal-output" id="lesson1-terminal">
+<span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để bắt đầu thực thi chương trình...
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: THỬ THÁCH TRẮC NGHIỆM (10 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 1</h3>
+            <p style="font-size:13.5px; opacity:0.9;">10 câu hỏi phản xạ nhanh rèn luyện tư duy biến và nhập xuất</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="quiz-card" id="q1">
+          <div class="quiz-q-num">Câu Hỏi 1</div>
+          <div class="quiz-q-text">Hàm nào trong Python được sử dụng để xuất thông tin ra màn hình?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q1', 0, false, 'input() là hàm nhập dữ liệu từ bàn phím, không phải xuất.')">
+              <input type="radio" name="q1">
+              <span>A. <code>input()</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q1', 1, true, 'Chính xác! print() là hàm xuất dữ liệu tiêu chuẩn trong Python.')">
+              <input type="radio" name="q1">
+              <span>B. <code>print()</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q1', 2, false, 'echo là lệnh trong shell/bash/PHP, không phải hàm chuẩn trong Python.')">
+              <input type="radio" name="q1">
+              <span>C. <code>echo()</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q1', 3, false, 'display() không phải là hàm tích hợp sẵn cốt lõi của Python chuẩn.')">
+              <input type="radio" name="q1">
+              <span>D. <code>display()</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-card" id="q2">
+          <div class="quiz-q-num">Câu Hỏi 2</div>
+          <div class="quiz-q-text">Đoạn lệnh nào sau đây sẽ in đúng dòng chữ: <em>Xin chào Python</em>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q2', 0, false, 'Lỗi cú pháp vì thiếu cặp ngoặc tròn ().')">
+              <input type="radio" name="q2">
+              <span>A. <code>print "Xin chào Python"</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q2', 1, true, 'Tuyệt vời! Hàm print() có đầy đủ ngoặc đơn và đoạn văn bản nằm trong nháy kép.')">
+              <input type="radio" name="q2">
+              <span>B. <code>print("Xin chào Python")</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q2', 2, false, 'Lỗi SyntaxError vì chuỗi ký tự thiếu dấu nháy kép bao bọc.')">
+              <input type="radio" name="q2">
+              <span>C. <code>print(Xin chào Python)</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q2', 3, false, 'Lỗi: Tên hàm là print viết thường, Python phân biệt chữ hoa chữ thường!')">
+              <input type="radio" name="q2">
+              <span>D. <code>Print("Xin chào Python")</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-card" id="q3">
+          <div class="quiz-q-num">Câu Hỏi 3</div>
+          <div class="quiz-q-text">Tên biến nào sau đây là <strong>HỢP LỆ</strong> trong ngôn ngữ Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q3', 0, false, 'Sai quy tắc: Tên biến không bao giờ được phép bắt đầu bằng chữ số!')">
+              <input type="radio" name="q3">
+              <span>A. <code>2_tuoi</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q3', 1, false, 'Sai quy tắc: Tên biến không được phép chứa dấu khoảng trắng.')">
+              <input type="radio" name="q3">
+              <span>B. <code>ho va ten</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q3', 2, true, 'Rất tốt! Tên biến dùng ký tự gạch dưới snake_case hợp lệ 100%.')">
+              <input type="radio" name="q3">
+              <span>C. <code>diem_trung_binh</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q3', 3, false, 'Sai quy tắc: Tên biến không được chứa ký tự đặc biệt như @, #, $.')">
+              <input type="radio" name="q3">
+              <span>D. <code>tuoi@mindx</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="quiz-card" id="q4">
+          <div class="quiz-q-num">Câu Hỏi 4</div>
+          <div class="quiz-q-text">Dấu bằng <code>=</code> trong câu lệnh <code>x = 10</code> đóng vai trò là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q4', 0, false, 'Dấu bằng so sánh trong Python là cặp dấu == hai lần.')">
+              <input type="radio" name="q4">
+              <span>A. Phép so sánh xem x có bằng 10 hay không</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q4', 1, true, 'Chính xác! Dấu = là toán tử gán (Assignment), đưa giá trị 10 vào biến x.')">
+              <input type="radio" name="q4">
+              <span>B. Phép gán giá trị 10 vào ô nhớ có tên x</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q4', 2, false, 'Sai, Python không có cú pháp định nghĩa hằng số bằng dấu = đơn.')">
+              <input type="radio" name="q4">
+              <span>C. Khai báo biến x là hằng số bất biến</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q4', 3, false, 'Không có phép toán nào tên là logic bằng.')">
+              <input type="radio" name="q4">
+              <span>D. Phép toán logic bằng</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-card" id="q5">
+          <div class="quiz-q-num">Câu Hỏi 5</div>
+          <div class="quiz-q-text">Chương trình sau in ra kết quả gì: <code>print("3" + "4")</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q5', 0, false, '7 là kết quả nếu viết print(3 + 4) (không có ngoặc kép).')">
+              <input type="radio" name="q5">
+              <span>A. <code>7</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q5', 1, true, 'Chuẩn xác! Vì hai giá trị đều nằm trong nháy kép nên là chuỗi chữ, dấu + sẽ nối chữ thành 34!')">
+              <input type="radio" name="q5">
+              <span>B. <code>34</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q5', 2, false, 'Chương trình chạy hoàn toàn bình thường, không báo lỗi.')">
+              <input type="radio" name="q5">
+              <span>C. Báo lỗi TypeError</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q5', 3, false, 'Dấu cộng không tự chèn khoảng trắng.')">
+              <input type="radio" name="q5">
+              <span>D. <code>3 4</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="quiz-card" id="q6">
+          <div class="quiz-q-num">Câu Hỏi 6</div>
+          <div class="quiz-q-text">Hàm <code>input("Nhập tên: ")</code> sẽ trả về dữ liệu thuộc kiểu gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q6', 0, false, 'Sai! Kể cả người dùng gõ số 100 thì input() vẫn trả về là chuỗi chữ 100.')">
+              <input type="radio" name="q6">
+              <span>A. Số nguyên (int)</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q6', 1, true, 'Xuất sắc! Hàm input() trong Python LUÔN LUÔN trả về chuỗi ký tự (str).')">
+              <input type="radio" name="q6">
+              <span>B. Chuỗi ký tự (str)</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q6', 2, false, 'Sai, số thực float cần hàm ép kiểu float().')">
+              <input type="radio" name="q6">
+              <span>C. Số thực (float)</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q6', 3, false, 'Sai, kiểu Boolean chỉ gồm True/False.')">
+              <input type="radio" name="q6">
+              <span>D. Kiểu đúng sai (bool)</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="quiz-card" id="q7">
+          <div class="quiz-q-num">Câu Hỏi 7</div>
+          <div class="quiz-q-text">Điều gì xảy ra khi máy tính chạy đến dòng lệnh <code>name = input("Nhập tên: ")</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q7', 0, false, 'Chương trình không bỏ qua mà sẽ đứng chờ.')">
+              <input type="radio" name="q7">
+              <span>A. Chương trình chạy lướt qua ngay lập tức</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q7', 1, true, 'Đúng! Chương trình dừng lại chờ người dùng nhập và nhấn phím Enter để tiếp tục.')">
+              <input type="radio" name="q7">
+              <span>B. Chương trình tạm dừng, chờ người dùng gõ xong và ấn Enter</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q7', 2, false, 'Chương trình chỉ dừng chờ chứ không tự tắt.')">
+              <input type="radio" name="q7">
+              <span>C. Chương trình tự động tắt và thoát ra</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q7', 3, false, 'input() không in biến name ra mà là lưu dữ liệu vào name.')">
+              <input type="radio" name="q7">
+              <span>D. Máy tính tự động in giá trị của biến name ra màn hình</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="quiz-card" id="q8">
+          <div class="quiz-q-num">Câu Hỏi 8</div>
+          <div class="quiz-q-text">Đoạn code sau: <code>a = 5</code> sau đó <code>a = 20</code> thì giá trị cuối cùng của <code>a</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q8', 0, false, 'Giá trị 5 đã bị ghi đè bởi giá trị mới 20.')">
+              <input type="radio" name="q8">
+              <span>A. <code>5</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q8', 1, true, 'Chính xác! Biến số là ô nhớ có thể thay đổi (variable), giá trị mới 20 ghi đè lên giá trị cũ 5.')">
+              <input type="radio" name="q8">
+              <span>B. <code>20</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q8', 2, false, 'Phép gán không tự cộng hai giá trị lại với nhau.')">
+              <input type="radio" name="q8">
+              <span>C. <code>25</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q8', 3, false, 'Gán lại giá trị cho biến là hành vi hợp lệ hoàn toàn trong Python.')">
+              <input type="radio" name="q8">
+              <span>D. Báo lỗi vì biến a đã được gán trước đó</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="quiz-card" id="q9">
+          <div class="quiz-q-num">Câu Hỏi 9</div>
+          <div class="quiz-q-text">Lệnh <code>print("A", "B", "C")</code> sẽ in ra màn hình như thế nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q9', 0, false, 'Dấu phẩy trong print tự động tạo dấu cách giữa các từ.')">
+              <input type="radio" name="q9">
+              <span>A. <code>ABC</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q9', 1, true, 'Đúng! Mặc định print có tham số sep=\' \' nên in ra A B C có dấu cách.')">
+              <input type="radio" name="q9">
+              <span>B. <code>A B C</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q9', 2, false, 'Mặc định print in trên cùng 1 dòng trừ khi dùng \\n.')">
+              <input type="radio" name="q9">
+              <span>C. 3 chữ nằm trên 3 dòng riêng biệt</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q9', 3, false, 'Không in dấu phẩy ra màn hình.')">
+              <input type="radio" name="q9">
+              <span>D. <code>A, B, C</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="quiz-card" id="q10">
+          <div class="quiz-q-num">Câu Hỏi 10</div>
+          <div class="quiz-q-text">Ký tự nào dùng để viết dòng chú thích (Comment) giải thích code mà máy tính sẽ bỏ qua?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('q10', 0, false, '// là cú pháp comment của C/C++/Java/JS, không phải Python.')">
+              <input type="radio" name="q10">
+              <span>A. <code>//</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('q10', 1, true, 'Chính xác! Dấu thăng # dùng để viết chú thích 1 dòng trong Python.')">
+              <input type="radio" name="q10">
+              <span>B. <code>#</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q10', 2, false, '-- là comment của SQL/Lua.')">
+              <input type="radio" name="q10">
+              <span>C. <code>--</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('q10', 3, false, '/* */ dùng trong CSS và C.')">
+              <input type="radio" name="q10">
+              <span>D. <code>/* */</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+      
+      <!-- Practice 1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 1: Thiệp Giới Thiệu Bản Thân Đẹp Mắt
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Viết chương trình sử dụng hàm <code>input()</code> để hỏi người dùng 4 thông tin: Họ tên, Năm sinh, Trường học, Sở thích. Sau đó dùng các hàm <code>print()</code> để in ra một chiếc thiệp giới thiệu viền ngôi sao <code>*</code> đẹp mắt.
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr>
+              <th>Dữ liệu nhập mẫu (Input)</th>
+              <th>Kết quả in mong muốn (Output)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>Nguyễn Gia Huy</code><br>
+                <code>2012</code><br>
+                <code>THCS Giảng Võ</code><br>
+                <code>Lập trình game</code>
+              </td>
+              <td>
+                <code>************************************</code><br>
+                <code>* THIỆP GIỚI THIỆU HỌC SINH MINDX *</code><br>
+                <code>* Họ và tên: Nguyễn Gia Huy        *</code><br>
+                <code>* Năm sinh : 2012                  *</code><br>
+                <code>* Trường   : THCS Giảng Võ         *</code><br>
+                <code>* Sở thích : Lập trình game        *</code><br>
+                <code>************************************</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem gợi ý & Lời giải mẫu</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>giai_bai_1.py</span>
+                <button class="btn-copy" data-target="code-sol-1">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="code-sol-1" readonly style="min-height:160px;">
+name = input("Họ và tên: ")
+year = input("Năm sinh: ")
+school = input("Trường học: ")
+hobby = input("Sở thích: ")
+
+print("*" * 36)
+print("* THIỆP GIỚI THIỆU HỌC SINH MINDX *")
+print("* Họ và tên:", name)
+print("* Năm sinh :", year)
+print("* Trường   :", school)
+print("* Sở thích :", hobby)
+print("*" * 36)</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Practice 2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 2: Bảng Cửu Chương Kỳ Diệu (File gốc: bangcuuchuong.py)
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Viết chương trình in toàn bộ bảng nhân của số 98 từ 1 đến 10 theo đúng mẫu sau (sử dụng toán tử nhân <code>*</code> trực tiếp trong hàm print).
+        </p>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn bangcuuchuong.py</summary>
+          <div style="margin-top:10px;">
+            <div class="code-box">
+              <div class="code-header">
+                <span>bangcuuchuong.py</span>
+                <button class="btn-copy" data-target="code-sol-2">Sao chép</button>
+              </div>
+              <div class="code-editor-area">
+                <textarea id="code-sol-2" readonly style="min-height:220px;">
+print("98 x 1 = ", 98 * 1)
+print("98 x 2 = ", 98 * 2)
+print("98 x 3 = ", 98 * 3)
+print("98 x 4 = ", 98 * 4)
+print("98 x 5 = ", 98 * 5)
+print("98 x 6 = ", 98 * 6)
+print("98 x 7 = ", 98 * 7)
+print("98 x 8 = ", 98 * 8)
+print("98 x 9 = ", 98 * 9)
+print("98 x 10 = ", 98 * 10)</textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Lesson Bottom Pager -->
+    <div class="lesson-pager">
+      <a href="../index.html" class="pager-btn">
+        &larr; Về Cổng Tổng Quan Khóa Học
+      </a>
+      <a href="../LESSON 2/index.html" class="pager-btn primary">
+        Bài Tiếp Theo: Bài 2 - Kiểu Dữ Liệu & Ép Kiểu &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
+          MindX Technology School &bull; TT-C4K-PTB30
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">
+          Bài 1: Làm quen Python, print(), input() & Biến số | Thầy Huy Trần
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    // Specific logic for Lesson 1 RAM simulator
+    let ramCounter = 0x7FFF20;
+
+    function allocateRamVariable() {
+      const varNameInput = document.getElementById("ram-input-var");
+      const varValInput = document.getElementById("ram-input-val");
+      const alertBox = document.getElementById("ram-alert-box");
+
+      const varName = varNameInput.value.trim();
+      const rawVal = varValInput.value.trim();
+
+      // Check valid variable name
+      const varRegex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+      if (!varRegex.test(varName)) {
+        alertBox.style.display = "block";
+        alertBox.className = "alert alert-danger";
+        alertBox.innerHTML = `<strong>❌ Lỗi Tên Biến:</strong> "${varName}" không hợp lệ! Tên biến phải bắt đầu bằng chữ cái hoặc dấu gạch dưới, không chứa khoảng trắng hay ký tự đặc biệt!`;
+        return;
+      }
+
+      // Detect type
+      let typeLabel = "String (Chuỗi)";
+      if (rawVal === "True" || rawVal === "False") {
+        typeLabel = "Boolean (Đúng/Sai)";
+      } else if (!isNaN(rawVal) && rawVal.includes(".")) {
+        typeLabel = "Float (Số thực)";
+      } else if (!isNaN(rawVal) && rawVal !== "") {
+        typeLabel = "Integer (Số nguyên)";
+      }
+
+      alertBox.style.display = "block";
+      alertBox.className = "alert alert-success";
+      alertBox.innerHTML = `<strong>✅ Thành Công:</strong> Đã tạo biến <code>${varName}</code> và gán giá trị <code>${rawVal}</code> vào ô nhớ RAM!`;
+
+      // Check if slot exists or create new
+      const container = document.getElementById("ram-container");
+      let existingSlot = document.getElementById("slot-" + varName);
+
+      if (existingSlot) {
+        existingSlot.querySelector(".ram-var-val").innerText = rawVal;
+        existingSlot.querySelector(".ram-var-type").innerText = typeLabel;
+        existingSlot.style.borderColor = "#10b981";
+        setTimeout(() => existingSlot.style.borderColor = "#3b82f6", 1500);
+      } else {
+        const hexAddr = "0x" + ramCounter.toString(16).toUpperCase();
+        ramCounter += 8;
+
+        const newSlot = document.createElement("div");
+        newSlot.className = "ram-slot";
+        newSlot.id = "slot-" + varName;
+        newSlot.innerHTML = `
+          <div class="ram-header">
+            <span>RAM ${hexAddr}</span>
+            <span>Variable</span>
+          </div>
+          <div class="ram-body">
+            <div class="ram-var-name">${varName}</div>
+            <div class="ram-var-type">${typeLabel}</div>
+            <div class="ram-var-val">${rawVal}</div>
+          </div>
+        `;
+        container.prepend(newSlot);
+      }
+    }
+
+    function resetRamMemory() {
+      const container = document.getElementById("ram-container");
+      container.innerHTML = `
+        <div class="ram-slot" id="slot-name">
+          <div class="ram-header"><span>RAM 0x7FFF01</span><span>Variable</span></div>
+          <div class="ram-body">
+            <div class="ram-var-name">name</div>
+            <div class="ram-var-type">String (Chuỗi)</div>
+            <div class="ram-var-val">"Gia Huy"</div>
+          </div>
+        </div>
+      `;
+      document.getElementById("ram-alert-box").style.display = "none";
+    }
+
+    function loadSampleCode(type) {
+      const editor = document.getElementById("lesson1-editor");
+      const filename = document.getElementById("playground-filename");
+      if (type === 1) {
+        filename.innerText = "main.py";
+        editor.value = `name = input("Bạn tên là gì: ")
+print("Xin chào", name)
+age = input("Bạn mấy tuổi: ")
+print("Tuổi của bạn là:", age)
+grade = input("Bạn lớp mấy: ")
+print("Bạn đang học lớp:", grade)`;
+      } else {
+        filename.innerText = "bangcuuchuong.py";
+        editor.value = `print("98 x 1 = ", 98 * 1)
+print("98 x 2 = ", 98 * 2)
+print("98 x 3 = ", 98 * 3)
+print("98 x 4 = ", 98 * 4)
+print("98 x 5 = ", 98 * 5)
+print("98 x 6 = ", 98 * 6)
+print("98 x 7 = ", 98 * 7)
+print("98 x 8 = ", 98 * 8)
+print("98 x 9 = ", 98 * 9)
+print("98 x 10 = ", 98 * 10)`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 4: Cấu Trúc Rẽ Nhánh (if, elif, else) & Sơ Đồ Khối | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    /* Flowchart Node Styles */
+    .flowchart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 24px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      margin: 16px 0;
+    }
+    .fc-node {
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      background: white;
+      transition: all 0.3s;
+      min-width: 180px;
+    }
+    .fc-node.active-step {
+      border-color: #2563eb !important;
+      background: #eff6ff !important;
+      color: #1d4ed8 !important;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+      transform: scale(1.04);
+    }
+    .fc-oval { border-radius: 30px; background: #f1f5f9; }
+    .fc-rect { border-radius: 6px; }
+    .fc-rhombus {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      transform: rotate(0deg);
+      border-radius: 6px;
+    }
+    .fc-arrow {
+      color: #94a3b8;
+      font-size: 18px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="../LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="../LESSON 3/index.html">Bài 3: Toán Tử</a>
+        <a href="index.html" class="active">Bài 4: Rẽ Nhánh</a>
+        <a href="../LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 4</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(239, 68, 68, 0.2); color:#fca5a5;">Cấp Độ: Tư Duy Logic</span>
+          </div>
+          <h1 class="lesson-title">Bài 4: Cấu Trúc Rẽ Nhánh (if, elif, else) & Sơ Đồ Khối</h1>
+          <p class="lesson-desc">
+            Dạy máy tính tự đưa ra quyết định thông minh dựa trên điều kiện, làm chủ kỹ năng đọc vẽ sơ đồ khối Flowchart tiêu chuẩn và nhận diện ngay lỗi thụt lề IndentationError.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">
+          📖 1. Lý Thuyết & Trọng Tâm
+        </button>
+        <button type="button" class="tab-btn" data-tab="simulator">
+          🔬 2. Mô Phỏng Flowchart & Code Lab
+        </button>
+        <button type="button" class="tab-btn" data-tab="quiz">
+          🎯 3. Thử Thách Trắc Nghiệm (20 Câu)
+        </button>
+        <button type="button" class="tab-btn" data-tab="practice">
+          💻 4. Bài Tập Thực Hành Tại Lớp (10 Bài)
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+      
+      <!-- Key Concept 1 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🔀</span>
+            1. Cấu Trúc Rẽ Nhánh Là Gì?
+          </h2>
+        </div>
+        <p>
+          Trong đời sống, chúng ta luôn phải đưa ra các quyết định: <em>"Nếu trời mưa thì mang áo mưa, ngược lại thì không mang"</em>, hay <em>"Nếu điểm thi &ge; 8.0 thì đạt học sinh Giỏi"</em>.
+          Trong lập trình, cấu trúc rẽ nhánh giúp máy tính kiểm tra một <strong>điều kiện logic</strong> (trả về <code>True</code> hoặc <code>False</code> từ Bài 3) để chọn khối lệnh tương ứng cần thực thi.
+        </p>
+
+        <div class="grid-3" style="margin-top:20px;">
+          
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#2563eb; text-transform:uppercase;">Dạng 1: if khuyết</div>
+            <h3 style="font-size:17px; font-weight:800; color:var(--navy); margin:6px 0;">if (Nếu... thì...)</h3>
+            <p style="font-size:13px; color:#475569; margin-bottom:10px;">Chỉ làm khi điều kiện đúng:</p>
+            <div class="code-box" style="margin:0;">
+              <div class="code-editor-area">
+                <textarea readonly style="min-height:90px;">
+if x > 0:
+    print("x là số dương")</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#16a34a; text-transform:uppercase;">Dạng 2: if - else</div>
+            <h3 style="font-size:17px; font-weight:800; color:var(--navy); margin:6px 0;">if - else (Nếu... ngược lại...)</h3>
+            <p style="font-size:13px; color:#475569; margin-bottom:10px;">Chọn 1 trong 2 nhánh đối lập:</p>
+            <div class="code-box" style="margin:0;">
+              <div class="code-editor-area">
+                <textarea readonly style="min-height:90px;">
+if n % 2 == 0:
+    print("Số chẵn")
+else:
+    print("Số lẻ")</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:18px;">
+            <div style="font-size:12px; font-weight:800; color:#d97706; text-transform:uppercase;">Dạng 3: if - elif - else</div>
+            <h3 style="font-size:17px; font-weight:800; color:var(--navy); margin:6px 0;">Đa nhánh (Nhiều trường hợp)</h3>
+            <p style="font-size:13px; color:#475569; margin-bottom:10px;">Xét từ điều kiện khắt khe nhất:</p>
+            <div class="code-box" style="margin:0;">
+              <div class="code-editor-area">
+                <textarea readonly style="min-height:90px;">
+if diem >= 8.0:
+    print("Giỏi")
+elif diem >= 6.5:
+    print("Khá")
+else:
+    print("Cần cố gắng")</textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 4 Flowchart Symbols & 3 Pitfalls -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">📐</span>
+            2. Bốn Ký Hiệu Sơ Đồ Khối (Flowchart) Chuẩn Quốc Tế
+          </h2>
+        </div>
+
+        <div class="grid-4">
+          <div style="background:white; border:2px solid #3b82f6; border-radius:30px; padding:16px; text-align:center;">
+            <strong style="color:#1d4ed8;">Khối Oval / Bo Tròn</strong>
+            <p style="font-size:12.5px; color:#64748b; margin-top:4px;">Bắt đầu (Start) / Kết thúc (End)</p>
+          </div>
+          <div style="background:white; border:2px solid #059669; border-radius:6px; transform:skewX(-10deg); padding:16px; text-align:center;">
+            <strong style="color:#047857; display:inline-block; transform:skewX(10deg);">Hình Bình Hành</strong>
+            <p style="font-size:12.5px; color:#64748b; margin-top:4px; transform:skewX(10deg);">Nhập dữ liệu (input) / In ra (print)</p>
+          </div>
+          <div style="background:#fffbeb; border:2px solid #f59e0b; border-radius:6px; padding:16px; text-align:center;">
+            <strong style="color:#b45309;">Hình Thoi</strong>
+            <p style="font-size:12.5px; color:#92400e; margin-top:4px;">Khối điều kiện xét Đúng (True) / Sai (False)</p>
+          </div>
+          <div style="background:white; border:2px solid #64748b; border-radius:6px; padding:16px; text-align:center;">
+            <strong style="color:#1e293b;">Hình Chữ Nhật</strong>
+            <p style="font-size:12.5px; color:#64748b; margin-top:4px;">Khối xử lý tính toán / Phép gán biến</p>
+          </div>
+        </div>
+
+        <h3 style="font-size:16px; font-weight:700; color:var(--navy); margin:28px 0 12px;">
+          🚨 3 Cạm Bẫy Kinh Điển Của Học Sinh Khi Viết Câu Điều Kiện:
+        </h3>
+        <div class="grid-3">
+          <div class="alert alert-danger" style="margin:0;">
+            <div>
+              <strong>1. Quên dấu hai chấm (:):</strong><br>
+              Sau <code>if</code>, <code>elif</code>, <code>else</code> BẮT BUỘC phải có dấu hai chấm <code>:</code> ở cuối dòng tiêu đề!
+            </div>
+          </div>
+          <div class="alert alert-danger" style="margin:0;">
+            <div>
+              <strong>2. Lỗi thụt lề (IndentationError):</strong><br>
+              Các lệnh bên trong khối lệnh con phải được thụt vào đúng 1 phím <code>Tab</code> (hoặc 4 dấu cách)!
+            </div>
+          </div>
+          <div class="alert alert-danger" style="margin:0;">
+            <div>
+              <strong>3. Nhầm lẫn = với ==:</strong><br>
+              Viết <code>if x = 10:</code> sẽ bị báo lỗi ngay lập tức! Bắt buộc phải viết là <code>if x == 10:</code>!
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTINUITY BRIDGE TO LESSON 5 -->
+      <div style="background:linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); border:2px dashed #8b5cf6; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#6d28d9; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+          <span>🌉</span> Cầu Nối Tư Duy Sang Bài 5: Hội Tụ 4 Trụ Cột & Chinh Phục Dự Án EVN!
+        </h3>
+        <p style="color:#5b21b6; font-size:14px; line-height:1.6;">
+          Chúc mừng các em! Chúng ta đã hoàn thành xuất sắc 4 mảnh ghép nền tảng:
+          <strong>Biến (Bài 1) &bull; Kiểu dữ liệu (Bài 2) &bull; Toán tử (Bài 3) &bull; Câu điều kiện rẽ nhánh (Bài 4)</strong>.
+        </p>
+        <p style="color:#5b21b6; font-size:14px; line-height:1.6; margin-top:6px;">
+          Trong Bài 4, các em đã thử sức với bài toán tiền điện 2 bậc sơ khởi (Bài 9 thực hành). Nhưng trong thực tế cuộc sống, <strong>Tập đoàn Điện lực Việt Nam (EVN)</strong> áp dụng biểu giá lũy tiến <strong>5 bậc thang phức tạp</strong>! Làm sao kết hợp cả 4 trụ cột để giải quyết bài toán lớn này? Hãy bước ngay vào <strong>Bài 5: Ôn Tập Tổng Hợp & Dự Án Tiền Điện EVN</strong>!
+        </p>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: MÔ PHỎNG FLOWCHART & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+      
+      <!-- Flowchart Simulator -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">🔬</span>
+            Mô Phỏng Trực Quan: Sơ Đồ Khối & Lần Vết Code (Trace Code)
+          </h2>
+          <span style="font-size:12px; background:#eff6ff; color:#2563eb; padding:4px 10px; border-radius:20px; font-weight:600;">
+            Interactive Flowchart Stepper
+          </span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          Chọn dạng bài toán rẽ nhánh, nhập giá trị đầu vào và bấm <strong>▶ Chạy Từng Bước</strong> để quan sát luồng rẽ nhánh sáng đèn trên sơ đồ:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>
+            Dạng bài toán rẽ nhánh:
+            <select id="sim-type" onchange="resetFlowchartSim()">
+              <option value="even_odd">1. Kiểm tra Chẵn / Lẻ (if - else)</option>
+              <option value="grade">2. Xếp loại học lực (if - elif - else)</option>
+              <option value="positive">3. Số dương (if khuyết)</option>
+            </select>
+          </label>
+          <label>
+            Giá trị đầu vào (Input):
+            <input type="number" id="sim-val" value="7" style="width:120px;" onchange="resetFlowchartSim()">
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 18px; margin-top:auto;" onclick="stepFlowchart()">
+            ▶ Bước Kế Tiếp
+          </button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto;" onclick="resetFlowchartSim()">
+            🔄 Đặt Lại
+          </button>
+        </div>
+
+        <div class="grid-2">
+          
+          <!-- Flowchart Visual -->
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">
+              Sơ Đồ Khối Tương Tác:
+            </h4>
+            <div class="flowchart-container" id="fc-box">
+              <div class="fc-node fc-oval" id="fc-start">BẮT ĐẦU (Start)</div>
+              <div class="fc-arrow">&darr;</div>
+              <div class="fc-node fc-rect" id="fc-input">Nhập giá trị n từ bàn phím</div>
+              <div class="fc-arrow">&darr;</div>
+              <div class="fc-node fc-rhombus" id="fc-cond">Điều kiện: n % 2 == 0 ?</div>
+              <div style="display:flex; width:100%; justify-content:space-around;">
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                  <span style="font-size:12px; color:#10b981; font-weight:700;">ĐÚNG (True)</span>
+                  <div class="fc-arrow">&darr;</div>
+                  <div class="fc-node fc-rect" id="fc-branch-true">In: "So chan"</div>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                  <span style="font-size:12px; color:#ef4444; font-weight:700;">SAI (False)</span>
+                  <div class="fc-arrow">&darr;</div>
+                  <div class="fc-node fc-rect" id="fc-branch-false">In: "So le"</div>
+                </div>
+              </div>
+              <div class="fc-arrow">&darr;</div>
+              <div class="fc-node fc-oval" id="fc-end">KẾT THÚC (End)</div>
+            </div>
+          </div>
+
+          <!-- Code Trace Panel -->
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">
+              Trạng Thái & Lời Thầy Giảng Giải:
+            </h4>
+            <div style="background:#0f172a; color:#e2e8f0; border-radius:var(--radius-md); padding:20px; font-family:var(--font-mono); min-height:280px; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="color:#94a3b8; font-size:12px; margin-bottom:8px;">// BƯỚC THỰC THI HIỆN TẠI:</div>
+                <div style="color:#38bdf8; font-size:16px; font-weight:700;" id="trace-step-title">
+                  Chưa bắt đầu
+                </div>
+                <div style="margin-top:16px; color:#cbd5e1; font-size:14px; line-height:1.6;" id="trace-step-desc">
+                  Bấm nút [▶ Bước Kế Tiếp] để bắt đầu quan sát dòng chảy thực thi của máy tính...
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); padding:10px 14px; border-radius:6px; font-size:13px; color:#fde047;" id="trace-var-state">
+                Biến trong RAM: n = 7
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- In-browser Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="icon-box">▶️</span>
+            Code Lab: Chạy Thử Code Rẽ Nhánh
+          </h2>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn-copy" onclick="loadLesson4Sample(1)">Mẫu 1: Chẵn Lẻ</button>
+            <button type="button" class="btn-copy" onclick="loadLesson4Sample(2)">Mẫu 2: Âm Dương Không</button>
+            <button type="button" class="btn-copy" onclick="loadLesson4Sample(3)">Mẫu 3: Tiền Điện 2 Bậc</button>
+          </div>
+        </div>
+
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span id="l4-code-title">re_nhanh.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson4-editor', 'lesson4-terminal')">
+                ▶ Chạy Code
+              </button>
+              <button type="button" class="btn-copy" data-target="lesson4-editor">Sao chép</button>
+            </div>
+          </div>
+
+          <div class="code-editor-area">
+            <textarea id="lesson4-editor" style="min-height:180px;"># Bài 1: Kiểm tra chẵn lẻ
+n = int(input("Nhập số nguyên n: "))
+
+if n % 2 == 0:
+    print(n, "là So chan")
+else:
+    print(n, "là So le")</textarea>
+          </div>
+
+          <div class="terminal-output" id="lesson4-terminal">
+<span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi chương trình...
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: THỬ THÁCH TRẮC NGHIỆM TRỌN BỘ 20 CÂU (KÈM ẢNH CODE WAYGROUND)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Bộ Đề Trắc Nghiệm Rẽ Nhánh Python (20 Câu)</h3>
+            <p style="font-size:13.5px; opacity:0.9;">Chuẩn hóa từ bộ đề Trac_nghiem_Python_Hoc_sinh.pdf & Wayground có hình ảnh code</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="quiz-card" id="l4q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Từ khóa nào bắt đầu một câu lệnh rẽ nhánh trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q1', 0, false, 'switch dùng trong C/Java, Python không dùng switch để rẽ nhánh cơ bản.')">
+              <input type="radio" name="l4q1"><span>A. <code>switch</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q1', 1, true, 'Chính xác! Từ khóa if bắt đầu một câu lệnh rẽ nhánh trong Python.')">
+              <input type="radio" name="l4q1"><span>B. <code>if</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q1', 2, false, 'when không phải từ khóa rẽ nhánh.')">
+              <input type="radio" name="l4q1"><span>C. <code>when</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q1', 3, false, 'check không tồn tại.')">
+              <input type="radio" name="l4q1"><span>D. <code>check</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-card" id="l4q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Ký tự nào phải kết thúc dòng tiêu đề của if, elif và else?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q2', 0, false, '; dùng trong C/C++/Java.')">
+              <input type="radio" name="l4q2"><span>A. <code>;</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q2', 1, true, 'Đúng! Dấu hai chấm : là bắt buộc ở cuối tiêu đề if, elif và else.')">
+              <input type="radio" name="l4q2"><span>B. <code>:</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q2', 2, false, 'Dấu chấm . sai cú pháp.')">
+              <input type="radio" name="l4q2"><span>C. <code>.</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q2', 3, false, 'Dấu phẩy , sai cú pháp.')">
+              <input type="radio" name="l4q2"><span>D. <code>,</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-card" id="l4q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Python dựa vào đâu để xác định các câu lệnh thuộc cùng một khối if?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q3', 0, true, 'Chính xác! Python sử dụng độ thụt lề (Indentation) để gom nhóm khối lệnh.')">
+              <input type="radio" name="l4q3"><span>A. Thụt lề cùng mức (Indentation)</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q3', 1, false, '{ } là của C/Java/JS.')">
+              <input type="radio" name="l4q3"><span>B. Cặp ngoặc nhọn { }</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q3', 2, false, 'Dòng trống bị bỏ qua.')">
+              <input type="radio" name="l4q3"><span>C. Dòng trống giữa các lệnh</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q3', 3, false, 'Ngoặc tròn không xác định khối lệnh.')">
+              <input type="radio" name="l4q3"><span>D. Cặp ngoặc tròn ( )</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 4 (With Image) -->
+        <div class="quiz-card" id="l4q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Đoạn mã dưới đây báo loại lỗi cụ thể nào do thiếu thụt lề sau if?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_04_code.png" alt="Code câu 4" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q4', 0, false, 'ValueError liên quan đến giá trị ép kiểu.')">
+              <input type="radio" name="l4q4"><span>A. <code>ValueError</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q4', 1, false, 'NameError liên quan đến gọi tên biến chưa khai báo.')">
+              <input type="radio" name="l4q4"><span>B. <code>NameError</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q4', 2, false, 'ZeroDivisionError là chia cho số 0.')">
+              <input type="radio" name="l4q4"><span>C. <code>ZeroDivisionError</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q4', 3, true, 'Rất giỏi! Thiếu thụt lề sau if khiến Python ném lỗi IndentationError: expected an indented block!')">
+              <input type="radio" name="l4q4"><span>D. <code>IndentationError</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-card" id="l4q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Trong một chuỗi if–elif–else, từ khóa nào kiểm tra điều kiện tiếp theo khi các điều kiện trước đều sai?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q5', 0, false, 'else if không phải từ khóa hợp lệ trong Python.')">
+              <input type="radio" name="l4q5"><span>A. <code>else if</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q5', 1, false, 'elseif dùng trong PHP.')">
+              <input type="radio" name="l4q5"><span>B. <code>elseif</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q5', 2, true, 'Chính xác! Python viết tắt else if thành từ khóa elif.')">
+              <input type="radio" name="l4q5"><span>C. <code>elif</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q5', 3, false, 'then dùng trong Pascal/Lua.')">
+              <input type="radio" name="l4q5"><span>D. <code>then</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 6 (With Image) -->
+        <div class="quiz-card" id="l4q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Chương trình in ra những gì, theo đúng thứ tự? Dấu / trong phương án biểu thị xuống dòng.</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_06_code.png" alt="Code câu 6" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q6', 0, false, 'n = 0 không thỏa mãn n > 0 nên không in Duong.')">
+              <input type="radio" name="l4q6"><span>A. Duong / Xong</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q6', 1, true, 'Đúng! n = 0 thì 0 > 0 là False, bỏ qua dòng print(\"Duong\"). Dòng print(\"Xong\") không thụt lề nên luôn luôn được thực thi!')">
+              <input type="radio" name="l4q6"><span>B. <code>Xong</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q6', 2, false, 'print(\"Xong\") vẫn in.')">
+              <input type="radio" name="l4q6"><span>C. Không in gì</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q6', 3, false, 'Duong không được in.')">
+              <input type="radio" name="l4q6"><span>D. <code>Duong</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="quiz-card" id="l4q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Phát biểu nào đúng về else trong chuỗi if–elif–else?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q7', 0, false, 'else không bao giờ có điều kiện đứng sau.')">
+              <input type="radio" name="l4q7"><span>A. else cần có một điều kiện ở sau</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q7', 1, false, 'else chỉ chạy khi các nhánh trước sai.')">
+              <input type="radio" name="l4q7"><span>B. else chạy sau mọi nhánh if đúng</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q7', 2, false, 'Chỉ được có tối đa 1 else ở cuối chuỗi.')">
+              <input type="radio" name="l4q7"><span>C. Một chuỗi if có thể có hai else cùng mức</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q7', 3, true, 'Chuẩn xác! else là tùy chọn (có thể có hoặc không), và chỉ kích hoạt khi tất cả điều kiện phía trước đều sai.')">
+              <input type="radio" name="l4q7"><span>D. else là tùy chọn và chạy khi mọi điều kiện trước trong chuỗi đều sai</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 8 (With Image) -->
+        <div class="quiz-card" id="l4q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Cần thay đúng một ký hiệu nào để mã kiểm tra x bằng 10 và chạy được?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_08_code.png" alt="Code câu 8" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q8', 0, false, 'Dòng 1 x = 10 là phép gán hợp lệ.')">
+              <input type="radio" name="l4q8"><span>A. Thay = ở dòng 1 bằng ==</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q8', 1, false, 'Thay if bằng else sai cú pháp.')">
+              <input type="radio" name="l4q8"><span>B. Thay if bằng else</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q8', 2, false, '; sai.')">
+              <input type="radio" name="l4q8"><span>C. Thay : bằng ;</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q8', 3, true, 'Rất thông minh! Dòng 2 dùng nhầm dấu = gán giá trị trong điều kiện if. Phải sửa thành == để so sánh bằng!')">
+              <input type="radio" name="l4q8"><span>D. Thay = ở dòng 2 bằng ==</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 9 (With Image) -->
+        <div class="quiz-card" id="l4q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Chương trình in ra gì khi n = -7?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_09_code.png" alt="Code câu 9" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q9', 0, false, '-7 không chia hết cho 2.')">
+              <input type="radio" name="l4q9"><span>A. So chan</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q9', 1, false, 'Phép % xử lý tốt số âm trong Python, không lỗi.')">
+              <input type="radio" name="l4q9"><span>B. Báo lỗi vì số âm</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q9', 2, false, 'Không in giá trị n.')">
+              <input type="radio" name="l4q9"><span>C. -7</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q9', 3, true, 'Chính xác! -7 chia 2 dư 1 (khác 0) nên điều kiện sai -> vào nhánh else in \"So le\"!')">
+              <input type="radio" name="l4q9"><span>D. <code>So le</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 10 (With Image) -->
+        <div class="quiz-card" id="l4q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Theo quy tắc: điểm &ge; 8 là Gioi, 6.5 &le; điểm &lt; 8 là Kha. Đoạn mã phân loại sai điểm 9 thành "Kha". Cách sửa nào đúng cho cả hai khoảng?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_10_code.png" alt="Code câu 10" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q10', 0, true, 'Đỉnh cao! Khi xét elif, luôn phải xét điều kiện khắt khe nhất (>= 8) lên trước! Nếu để >= 6.5 lên trước thì điểm 9 sẽ bị chặn lại và in Kha ngay!')">
+              <input type="radio" name="l4q10"><span>A. Đưa kiểm tra diem >= 8 lên trước, rồi elif diem >= 6.5</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q10', 1, false, 'Đổi thành 2 if độc lập thì điểm 9 sẽ bị in CẢ HAI chữ Kha và Gioi.')">
+              <input type="radio" name="l4q10"><span>B. Đổi elif thành if độc lập</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q10', 2, false, 'Đổi <= đảo ngược hoàn toàn logic.')">
+              <input type="radio" name="l4q10"><span>C. Đổi >= thành <= ở cả hai điều kiện</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q10', 3, false, 'Xóa elif làm mất phân loại.')">
+              <input type="radio" name="l4q10"><span>D. Xóa nhánh elif</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 11 (With Image) -->
+        <div class="quiz-card" id="l4q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Với quy tắc trong mã, điểm đúng bằng 6.5 được xếp vào nhóm nào?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_11_code.png" alt="Code câu 11" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q11', 0, false, '6.5 không >= 8.')">
+              <input type="radio" name="l4q11"><span>A. Gioi</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q11', 1, true, 'Đúng! 6.5 >= 6.5 là True (nhờ có dấu bằng) nên in ra \"Kha\"!')">
+              <input type="radio" name="l4q11"><span>B. <code>Kha</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q11', 2, false, 'Nhánh Kha đã bắt được rồi nên không xuống Trung bình.')">
+              <input type="radio" name="l4q11"><span>C. Trung binh</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q11', 3, false, 'Không phải Yếu.')">
+              <input type="radio" name="l4q11"><span>D. Yeu</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="quiz-card" id="l4q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Toán tử nào cho kết quả True khi CẢ HAI điều kiện Boolean đều đúng?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q12', 0, true, 'Chính xác! Toán tử and đòi hỏi cả hai vế đều True.')">
+              <input type="radio" name="l4q12"><span>A. <code>and</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q12', 1, false, 'not là phủ định 1 vế.')">
+              <input type="radio" name="l4q12"><span>B. <code>not</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q12', 2, false, 'or chỉ cần 1 trong 2 đúng.')">
+              <input type="radio" name="l4q12"><span>C. <code>or</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q12', 3, false, '!= là so sánh khác.')">
+              <input type="radio" name="l4q12"><span>D. <code>!=</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 13 (With Image) -->
+        <div class="quiz-card" id="l4q13">
+          <div class="quiz-q-num">Câu 13</div>
+          <div class="quiz-q-text">Chương trình in ra gì khi a đúng bằng 20?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_13_code.png" alt="Code câu 13" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q13', 0, false, 'a < 20 là False khi a = 20 vì không có dấu =.')">
+              <input type="radio" name="l4q13"><span>A. Trong khoang</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q13', 1, false, 'Không in True.')">
+              <input type="radio" name="l4q13"><span>B. True</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q13', 2, true, 'Rất cẩn thận! Vì điều kiện là a < 20 (dấu nhỏ hơn nghiêm ngặt), nên khi a = 20 thì vế này False -> nhảy vào else in \"Ngoai khoang\"!')">
+              <input type="radio" name="l4q13"><span>C. <code>Ngoai khoang</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q13', 3, false, 'Luôn in kết quả.')">
+              <input type="radio" name="l4q13"><span>D. Không in gì</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="quiz-card" id="l4q14">
+          <div class="quiz-q-num">Câu 14</div>
+          <div class="quiz-q-text">Cho x = 6. Phương án nào là một lệnh if HỢP LỆ trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q14', 0, true, 'Đúng! if x > 5: print(\"Lon\") là câu lệnh 1 dòng hợp lệ trong Python!')">
+              <input type="radio" name="l4q14"><span>A. <code>if x &gt; 5: print("Lon")</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q14', 1, false, 'Python không dùng { } cho khối lệnh.')">
+              <input type="radio" name="l4q14"><span>B. <code>if x &gt; 5 { print("Lon") }</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q14', 2, false, 'then không tồn tại trong Python.')">
+              <input type="radio" name="l4q14"><span>C. <code>if x &gt; 5 then print("Lon")</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q14', 3, false, 'Thiếu dấu hai chấm : bắt buộc.')">
+              <input type="radio" name="l4q14"><span>D. <code>if x &gt; 5 print("Lon")</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="quiz-card" id="l4q15">
+          <div class="quiz-q-num">Câu 15</div>
+          <div class="quiz-q-text">Muốn phát hiện điểm nằm NGOÀI khoảng từ 0 đến 10, kể cả khi điểm âm, nên dùng điều kiện nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q15', 0, true, 'Chuẩn xác! Điểm ngoài [0, 10] nghĩa là điểm bị âm (diem < 0) HOẶC điểm vượt quá 10 (diem > 10).')">
+              <input type="radio" name="l4q15"><span>A. <code>diem &lt; 0 or diem &gt; 10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q15', 1, false, 'Điều kiện này luôn đúng với mọi số.')">
+              <input type="radio" name="l4q15"><span>B. <code>diem &gt;= 0 or diem &lt;= 10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q15', 2, false, 'Một số không thể vừa âm vừa lớn hơn 10 được (and vô nghiệm).')">
+              <input type="radio" name="l4q15"><span>C. <code>diem &lt; 0 and diem &gt; 10</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q15', 3, false, 'Điều kiện này kiểm tra điểm NẰM TRONG khoảng (0, 10).')">
+              <input type="radio" name="l4q15"><span>D. <code>diem &gt; 0 and diem &lt; 10</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 16 (With Image) -->
+        <div class="quiz-card" id="l4q16">
+          <div class="quiz-q-num">Câu 16</div>
+          <div class="quiz-q-text">Chương trình in ra gì? Dấu / biểu thị xuống dòng.</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_16_code.png" alt="Code câu 16" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q16', 0, false, 'Không chỉ A.')">
+              <input type="radio" name="l4q16"><span>A. Chỉ A</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q16', 1, false, 'Không chỉ B.')">
+              <input type="radio" name="l4q16"><span>B. Chỉ B</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q16', 2, true, 'Rất sắc bén! Đây là hai lệnh IF ĐỘC LẬP. Với x = 10, cả 10 > 5 và 10 > 8 đều đúng, nên in cả A và B trên 2 dòng!')">
+              <input type="radio" name="l4q16"><span>C. <code>A / B</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q16', 3, false, 'Có in.')">
+              <input type="radio" name="l4q16"><span>D. Không in gì</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 17 (With Image) -->
+        <div class="quiz-card" id="l4q17">
+          <div class="quiz-q-num">Câu 17</div>
+          <div class="quiz-q-text">Chương trình in ra gì khi x = 10 (Lưu ý: Dùng elif thay vì if độc lập)?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_17_code.png" alt="Code câu 17" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q17', 0, false, 'Chuỗi if-elif chỉ thực thi đúng 1 nhánh đầu tiên đúng rồi thoát luôn!')">
+              <input type="radio" name="l4q17"><span>A. A rồi B trên hai dòng</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q17', 1, false, 'B bị bỏ qua.')">
+              <input type="radio" name="l4q17"><span>B. Chỉ B</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q17', 2, true, 'Tuyệt vời! Đây là bản chất chuỗi if-elif: Khi if x > 5 đã đúng và in \"A\", máy tính BỎ QUA toàn bộ các nhánh elif phía sau!')">
+              <input type="radio" name="l4q17"><span>C. <code>Chỉ A</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q17', 3, false, 'A được in.')">
+              <input type="radio" name="l4q17"><span>D. Không in gì</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 18 (With Image) -->
+        <div class="quiz-card" id="l4q18">
+          <div class="quiz-q-num">Câu 18</div>
+          <div class="quiz-q-text">Câu lệnh dưới đây in ra gì?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_18_code.png" alt="Code câu 18" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q18', 0, false, 'Biểu thức so sánh and trả về Boolean.')">
+              <input type="radio" name="l4q18"><span>A. 5</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q18', 1, true, 'Đúng! 5 >= 5 là True, và 5 != 0 cũng là True. True and True ra True!')">
+              <input type="radio" name="l4q18"><span>B. <code>True</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q18', 2, false, 'Cả hai vế đều True.')">
+              <input type="radio" name="l4q18"><span>C. False</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q18', 3, false, 'Cú pháp chuẩn.')">
+              <input type="radio" name="l4q18"><span>D. Báo lỗi</span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 19 -->
+        <div class="quiz-card" id="l4q19">
+          <div class="quiz-q-num">Câu 19</div>
+          <div class="quiz-q-text">Toán tử nào kiểm tra hai giá trị không bằng nhau trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q19', 0, false, '=!= không tồn tại.')">
+              <input type="radio" name="l4q19"><span>A. <code>=!=</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q19', 1, false, '<> đã lỗi thời trong Python 3.')">
+              <input type="radio" name="l4q19"><span>B. <code>&lt;&gt;</code></span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q19', 2, true, 'Chính xác! Toán tử != kiểm tra khác nhau.')">
+              <input type="radio" name="l4q19"><span>C. <code>!=</code></span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q19', 3, false, 'not= sai.')">
+              <input type="radio" name="l4q19"><span>D. <code>not=</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 20 (With Image) -->
+        <div class="quiz-card" id="l4q20">
+          <div class="quiz-q-num">Câu 20</div>
+          <div class="quiz-q-text">Chương trình in ra gì khi a = 0 và b = 5?</div>
+          <div style="margin:10px 0;">
+            <img src="Wayground_Code/Anh_code/Cau_20_code.png" alt="Code câu 20" style="max-width:320px; border-radius:8px; border:1px solid #cbd5e1; display:block;">
+          </div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l4q20', 0, false, 'Chỉ vô số nghiệm khi cả a = 0 và b = 0.')">
+              <input type="radio" name="l4q20"><span>A. Vo so nghiem</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q20', 1, false, 'Nhờ kiểm tra a == 0 trước nên tránh được lỗi chia cho 0.')">
+              <input type="radio" name="l4q20"><span>B. Báo lỗi chia cho 0</span>
+            </label>
+            <label class="quiz-option" onclick="selectQuizOption('l4q20', 2, false, 'Nhánh else ngoài cùng không chạy.')">
+              <input type="radio" name="l4q20"><span>C. Nghiem x = -5.0</span>
+            </label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l4q20', 3, true, 'Đỉnh cao! a == 0 là True, đi vào khối if trong. Tại đây b == 0 là False (vì b = 5), nên nhảy vào else của b và in \"Vo nghiem\"!')">
+              <input type="radio" name="l4q20"><span>D. <code>Vo nghiem</code></span>
+            </label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH TẠI LỚP (10 BÀI)
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+      
+      <!-- Practice 1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 1: Kiểm Tra Số Chẵn / Lẻ (Xử lý cả số âm và số 0)
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập số nguyên n. In <code>So chan</code> nếu n chia hết cho 2; ngược lại in <code>So le</code>.
+        </p>
+
+        <table class="testcase-table">
+          <thead>
+            <tr><th>Input mẫu</th><th>Output mẫu</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>4</code></td><td><code>So chan</code></td></tr>
+            <tr><td><code>-7</code></td><td><code>So le</code></td></tr>
+            <tr><td><code>0</code></td><td><code>So chan</code></td></tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div class="code-box" style="margin-top:10px;">
+            <div class="code-header"><span>bai1_chan_le.py</span><button class="btn-copy" data-target="l4-p1">Sao chép</button></div>
+            <div class="code-editor-area">
+              <textarea id="l4-p1" readonly style="min-height:100px;">
+n = int(input())
+if n % 2 == 0:
+    print("So chan")
+else:
+    print("So le")</textarea>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Practice 2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 2: Số Âm, Dương Hay Bằng Không
+          </h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập số nguyên n. In <code>So duong</code>, <code>So am</code> hoặc <code>So khong</code> tương ứng với giá trị của n.
+        </p>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div class="code-box" style="margin-top:10px;">
+            <div class="code-header"><span>bai2_dau_so.py</span><button class="btn-copy" data-target="l4-p2">Sao chép</button></div>
+            <div class="code-editor-area">
+              <textarea id="l4-p2" readonly style="min-height:120px;">
+n = int(input())
+if n > 0:
+    print("So duong")
+elif n < 0:
+    print("So am")
+else:
+    print("So khong")</textarea>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Practice 3 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">
+            Bài 3: Tìm Số Lớn Nhất Trong Ba Số (Không Dùng max())
+          </h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập lần lượt 3 số nguyên a, b, c. Tìm và in số lớn nhất sử dụng biến lưu trữ tạm thời <code>lon_nhat</code> và hai câu lệnh <code>if</code> độc lập.
+        </p>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem mã nguồn mẫu</summary>
+          <div class="code-box" style="margin-top:10px;">
+            <div class="code-header"><span>bai4_max3.py</span><button class="btn-copy" data-target="l4-p3">Sao chép</button></div>
+            <div class="code-editor-area">
+              <textarea id="l4-p3" readonly style="min-height:150px;">
+a = int(input())
+b = int(input())
+c = int(input())
+
+lon_nhat = a
+if b > lon_nhat:
+    lon_nhat = b
+if c > lon_nhat:
+    lon_nhat = c
+
+print(lon_nhat)</textarea>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Practice 4: Tiền điện 2 bậc -->
+      <div class="exercise-box" style="border:2px solid #8b5cf6;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#6d28d9;">
+            Bài 9: Tính Tiền Điện Hai Bậc Sơ Khởi (Tiền Đề Cho Bài 5!)
+          </h3>
+          <span class="badge-level badge-hard" style="background:#f3e8ff; color:#6b21a8;">Đặc biệt</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          <strong>Yêu cầu:</strong> Nhập số thực kwh. Biểu giá giả định: 50 kWh đầu giá 1500 đ/kWh; phần vượt 50 kWh giá 2000 đ/kWh. Nếu kwh âm, in <code>So dien khong hop le</code>. Ngược lại in tổng tiền.
+        </p>
+
+        <table class="testcase-table">
+          <thead><tr><th>Input mẫu</th><th>Output mẫu</th></tr></thead>
+          <tbody>
+            <tr><td><code>50</code></td><td><code>75000.0</code></td></tr>
+            <tr><td><code>60</code></td><td><code>95000.0</code> (50*1500 + 10*2000)</td></tr>
+            <tr><td><code>-1</code></td><td><code>So dien khong hop le</code></td></tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:14px; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#6d28d9; cursor:pointer;">💡 Xem mã nguồn mẫu tiền điện 2 bậc</summary>
+          <div class="code-box" style="margin-top:10px;">
+            <div class="code-header"><span>tien_dien_2bac.py</span><button class="btn-copy" data-target="l4-p4">Sao chép</button></div>
+            <div class="code-editor-area">
+              <textarea id="l4-p4" readonly style="min-height:160px;">
+kwh = float(input())
+
+if kwh < 0:
+    print("So dien khong hop le")
+else:
+    if kwh <= 50:
+        tien = kwh * 1500
+    else:
+        tien = 50 * 1500 + (kwh - 50) * 2000
+    print(tien)</textarea>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Lesson Bottom Pager -->
+    <div class="lesson-pager">
+      <a href="../LESSON 3/index.html" class="pager-btn">
+        &larr; Bài Trước: Bài 3 - Sức Mạnh Toán Tử
+      </a>
+      <a href="../LESSON 5/index.html" class="pager-btn primary" style="background:#7c3aed; border-color:#7c3aed;">
+        Bài Tiếp Theo: Bài 5 - Ôn Tập 4 Trụ Cột & Dự Án EVN &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
+          MindX Technology School &bull; TT-C4K-PTB30
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">
+          Bài 4: Cấu Trúc Rẽ Nhánh & Sơ Đồ Khối | Thầy Huy Trần
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    // Specific Flowchart Stepper Simulator
+    let simStep = 0;
+
+    function resetFlowchartSim() {
+      simStep = 0;
+      document.querySelectorAll(".fc-node").forEach(el => el.classList.remove("active-step"));
+      document.getElementById("trace-step-title").innerText = "Sẵn sàng chạy";
+      document.getElementById("trace-step-desc").innerText = "Bấm [▶ Bước Kế Tiếp] để bắt đầu thực thi từng dòng lệnh...";
+      const val = document.getElementById("sim-val").value;
+      document.getElementById("trace-var-state").innerText = `Biến trong RAM: n = ${val}`;
+    }
+
+    function stepFlowchart() {
+      const val = parseInt(document.getElementById("sim-val").value, 10);
+      const isEven = (val % 2 === 0);
+
+      document.querySelectorAll(".fc-node").forEach(el => el.classList.remove("active-step"));
+
+      simStep++;
+      if (simStep === 1) {
+        document.getElementById("fc-start").classList.add("active-step");
+        document.getElementById("trace-step-title").innerText = "Bước 1: Bắt đầu chương trình";
+        document.getElementById("trace-step-desc").innerText = "Hệ thống chuẩn bị cấp phát bộ nhớ và bắt đầu nạp mã nguồn.";
+      } else if (simStep === 2) {
+        document.getElementById("fc-input").classList.add("active-step");
+        document.getElementById("trace-step-title").innerText = "Bước 2: Nhập dữ liệu n = " + val;
+        document.getElementById("trace-step-desc").innerText = `Hàm input() nhận dữ liệu và int() ép về số nguyên ${val}, lưu vào ô nhớ n.`;
+        document.getElementById("trace-var-state").innerText = `Biến trong RAM: n = ${val}`;
+      } else if (simStep === 3) {
+        document.getElementById("fc-cond").classList.add("active-step");
+        document.getElementById("trace-step-title").innerText = `Bước 3: Kiểm tra điều kiện (${val} % 2 == 0)`;
+        document.getElementById("trace-step-desc").innerText = `Phép tính ${val} % 2 cho kết quả ${val % 2}. So sánh ${val % 2} == 0 cho ra: ${isEven ? 'True (ĐÚNG)' : 'False (SAI)'}!`;
+      } else if (simStep === 4) {
+        if (isEven) {
+          document.getElementById("fc-branch-true").classList.add("active-step");
+          document.getElementById("trace-step-title").innerText = "Bước 4: Rẽ sang nhánh True (ĐÚNG)";
+          document.getElementById("trace-step-desc").innerText = 'Thực thi câu lệnh: print("So chan").';
+        } else {
+          document.getElementById("fc-branch-false").classList.add("active-step");
+          document.getElementById("trace-step-title").innerText = "Bước 4: Rẽ sang nhánh False (SAI)";
+          document.getElementById("trace-step-desc").innerText = 'Điều kiện if sai, nhảy vào khối else và thực thi: print("So le").';
+        }
+      } else if (simStep >= 5) {
+        document.getElementById("fc-end").classList.add("active-step");
+        document.getElementById("trace-step-title").innerText = "Bước 5: KẾT THÚC CHƯƠNG TRÌNH";
+        document.getElementById("trace-step-desc").innerText = "Chương trình đã hoàn thành toàn bộ luồng rẽ nhánh an toàn.";
+        simStep = 0; // Loop around
+      }
+    }
+
+    function loadLesson4Sample(id) {
+      const editor = document.getElementById("lesson4-editor");
+      const title = document.getElementById("l4-code-title");
+      if (id === 1) {
+        title.innerText = "kiem_tra_chan_le.py";
+        editor.value = `# Bài 1: Kiểm tra chẵn lẻ
+n = int(input("Nhập số nguyên n: "))
+
+if n % 2 == 0:
+    print(n, "là So chan")
+else:
+    print(n, "là So le")`;
+      } else if (id === 2) {
+        title.innerText = "so_am_duong.py";
+        editor.value = `# Bài 2: Số âm, dương hay bằng không (if-elif-else)
+n = int(input("Nhập số nguyên n: "))
+
+if n > 0:
+    print("So duong")
+elif n < 0:
+    print("So am")
+else:
+    print("So khong")`;
+      } else {
+        title.innerText = "tien_dien_2bac.py";
+        editor.value = `# Bài 9: Tính tiền điện 2 bậc sơ khởi
+kwh = float(input("Nhập số điện tiêu thụ (kWh): "))
+
+if kwh < 0:
+    print("So dien khong hop le")
+else:
+    if kwh <= 50:
+        tien = kwh * 1500
+    else:
+        tien = 50 * 1500 + (kwh - 50) * 2000
+    print("Tổng tiền điện chưa thuế:", tien, "VNĐ")`;
+      }
+    }
+  </script>
+</body>
+</html>

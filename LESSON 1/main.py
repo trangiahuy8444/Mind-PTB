@@ -1,0 +1,6 @@
+name = input("Bạn tên là gì: ")
+print("Xin chào", name)
+age = input("Bạn mấy tuổi: ")
+print("Tuổi của bạn là: ", age)
+grade = input("Bạn lớp mấy: ")
+print("Bạn lớp: ", grade)

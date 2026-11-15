@@ -1,0 +1,2851 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bài 5: Ôn tập Biến, Kiểu dữ liệu, Toán tử & Câu điều kiện | Lập trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-light: #eff6ff;
+      --primary-border: #93c5fd;
+      --navy: #0f172a;
+      --header-bg: #152b43;
+      --nav-bg: #0b1f34;
+      --nav-active: #2864d0;
+      --body-bg: #edf1f6;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #dce4ed;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --code-bg: #111827;
+      --code-title: #1f2937;
+      --code-text: #e2e8f0;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Fira Code', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--body-bg);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select { font-family: inherit; }
+    button {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.4;
+      transition: all 0.2s ease;
+    }
+    button:disabled { cursor: not-allowed; opacity: 0.45; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px;
+    }
+
+    .primary { background: var(--primary); color: white; }
+    .primary:hover:not(:disabled) { background: var(--primary-hover); }
+    .secondary {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .secondary:hover:not(:disabled) { background: #e2e8f0; }
+
+    .app {
+      max-width: 1460px;
+      margin: 16px auto 40px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 45px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e2e8f0;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--header-bg);
+      color: white;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      flex-shrink: 0;
+    }
+    .brand-info h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin: 0 0 3px;
+      color: #ffffff;
+    }
+    .brand-info p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin: 0;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* TIMER WIDGET */
+    .timer-widget {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 5px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .timer-display {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      color: #38bdf8;
+      min-width: 48px;
+    }
+    .timer-btn {
+      padding: 4px 9px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    .timer-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      background: var(--nav-bg);
+      padding: 5px;
+      border-radius: 14px;
+    }
+    nav button {
+      background: transparent;
+      color: #94a3b8;
+      font-size: 14px;
+      white-space: nowrap;
+      padding: 9px 18px;
+      border-radius: 10px;
+    }
+    nav button:hover:not(.active) { color: #f8fafc; background: rgba(255,255,255,0.05); }
+    nav button.active {
+      background: var(--nav-active);
+      color: white;
+      box-shadow: 0 4px 12px rgba(40, 100, 208, 0.35);
+    }
+
+    /* TIMELINE BAR - 60 MINUTE 3 PHASES */
+    .timeline-bar {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      overflow-x: auto;
+    }
+    .timeline-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+    .timeline-steps {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex: 1;
+      min-width: 600px;
+    }
+    .tl-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #334155;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .tl-step:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .tl-step.active {
+      background: #eff6ff;
+      border-color: #2563eb;
+      color: #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+    }
+    .tl-step .tl-min {
+      background: #e2e8f0;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .tl-step.active .tl-min {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* MAIN SECTIONS */
+    .tab-pane { padding: 32px; background: #f8fafc; }
+    .tab-pane[hidden] { display: none; }
+
+    /* CARDS & GRIDS */
+    .section-title { margin-bottom: 24px; }
+    .section-title .eyebrow {
+      display: block;
+      color: #2563eb;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .section-title h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+
+    /* PILLARS OF PYTHON */
+    .pillar-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      border-top: 4px solid #3b82f6;
+    }
+    .pillar-card.p-var { border-top-color: #3b82f6; }
+    .pillar-card.p-type { border-top-color: #10b981; }
+    .pillar-card.p-op { border-top-color: #f59e0b; }
+    .pillar-card.p-if { border-top-color: #8b5cf6; }
+
+    .pillar-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pillar-card p {
+      font-size: 13.5px;
+      color: #475569;
+      margin-bottom: 12px;
+    }
+    .pillar-card ul {
+      padding-left: 18px;
+      font-size: 13px;
+      color: #334155;
+    }
+    .pillar-card li { margin-bottom: 6px; }
+    .pillar-card code {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* COMMON PITFALLS */
+    .pitfall-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-top: 24px;
+      font-size: 13.5px;
+      color: #78350f;
+    }
+    .pitfall-box h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* FLOWCHART SYMBOLS GUIDE */
+    .symbol-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+    .symbol-svg {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .symbol-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .symbol-card p {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    /* ELECTRICITY BANNER */
+    .electricity-banner {
+      background: linear-gradient(135deg, #1e3a8a, #0f172a);
+      color: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 28px;
+      position: relative;
+    }
+    .electricity-banner h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #f8fafc;
+    }
+    .electricity-banner p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    /* TARIFF TABLE & DYNAMIC TIERS - FIX VISIBILITY & INTERACTION */
+    .tariff-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13.5px;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      color: #1e293b !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .tariff-table th, .tariff-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      color: #1e293b !important;
+    }
+    .tariff-table th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #0f172a !important;
+      border-bottom: 2px solid #cbd5e1;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tariff-table td strong {
+      color: #0f172a !important;
+    }
+    .tariff-table td code {
+      color: #0284c7 !important;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-family: "Fira Code", monospace;
+    }
+    .tariff-table tr.tier-full td {
+      background: #f0fdf4 !important;
+    }
+    .tariff-table tr.tier-active td {
+      background: #eff6ff !important;
+      font-weight: 600;
+    }
+    .tariff-table tr.tier-empty td {
+      background: #fafafa !important;
+      opacity: 0.75;
+    }
+    .tariff-table tfoot td {
+      background: #f1f5f9 !important;
+      border-top: 2px solid #94a3b8;
+      font-weight: 700;
+      color: #0f172a !important;
+    }
+    .badge-tier {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .tier-1 { background: #dbeafe; color: #1e40af !important; }
+    .tier-2 { background: #d1fae5; color: #065f46 !important; }
+    .tier-3 { background: #fef3c7; color: #92400e !important; }
+    .tier-4 { background: #fed7aa; color: #9a3412 !important; }
+    .tier-5 { background: #fee2e2; color: #991b1b !important; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .status-full { background: #dcfce7; color: #15803d !important; border: 1px solid #86efac; }
+    .status-active { background: #dbeafe; color: #1d4ed8 !important; border: 1px solid #93c5fd; }
+    .status-empty { background: #f1f5f9; color: #64748b !important; border: 1px solid #e2e8f0; }
+
+    /* TASK BOX BANNER (ĐỀ BÀI CỤ THỂ TRONG CHUYÊN ĐỀ ĐIỆN) */
+    .task-box-banner {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 18px 0;
+      color: #f8fafc;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+    .task-box-banner .badge-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f59e0b;
+      color: #78350f;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+    }
+    .task-box-banner h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .task-box-banner p {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      margin-bottom: 14px;
+    }
+    .task-box-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .task-box-specs .spec-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+    }
+    .task-box-specs .spec-card strong {
+      color: #93c5fd;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .task-box-specs .spec-card code {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fde047;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* INTERACTIVE CONTROL STRIP ON TABLE */
+    .table-control-strip {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #1e293b;
+      margin-top: 18px;
+    }
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .chip-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .chip-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    /* WATER BUCKET / TIER VISUALIZER */
+    .tier-visualizer {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .tier-visualizer h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+    .bucket-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .bucket-col {
+      flex: 1;
+      min-width: 135px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .bucket-col.active {
+      border-color: #2563eb;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+    .bucket-water {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.45));
+      border-top: 2px solid #3b82f6;
+      transition: height 0.4s ease;
+      z-index: 1;
+    }
+    .bucket-content { position: relative; z-index: 2; }
+    .bucket-col .b-name { font-size: 12px; font-weight: 700; color: #1e293b; }
+    .bucket-col .b-range { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+    .bucket-col .b-price { font-size: 13px; font-weight: 800; color: #1d4ed8; }
+    .bucket-col .b-calc { font-size: 11.5px; color: #0f172a; margin-top: 6px; font-weight: 700; }
+
+    /* TARIFF CALCULATOR WIDGET */
+    .quick-calc {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .quick-calc h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .calc-input-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .calc-input-group input {
+      padding: 10px 14px;
+      border: 1px solid #94a3b8;
+      border-radius: 8px;
+      font-size: 15px;
+      width: 180px;
+      font-weight: 600;
+    }
+    .calc-result-box {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+    .calc-breakdown {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    /* LAB CALLOUT SECTION IN TAB 1 */
+    .lab-handoff {
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
+    }
+    .lab-handoff h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lab-handoff p {
+      font-size: 14.5px;
+      color: #475569;
+      max-width: 800px;
+      margin: 0;
+    }
+
+    /* ========================================================== */
+    /* SIMULATOR TAB STYLING - EXPANDED & LARGER DIAGRAMS         */
+    /* ========================================================== */
+    /* PROBLEM STATEMENT CARD (ĐỀ BÀI CỤ THỂ) */
+    .task-card {
+      background: #ffffff;
+      border: 1.5px solid #bfdbfe;
+      border-left: 6px solid #2563eb;
+      border-radius: 14px;
+      padding: 22px 26px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.06);
+    }
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .task-badge {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .task-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+    .task-desc {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .task-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      background: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      font-size: 13.5px;
+    }
+    .spec-item strong { color: #1e40af; }
+
+    /* CONTROLS BAR */
+    .sim-controls {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .sim-form-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .sim-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sim-field label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sim-select {
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      min-width: 320px;
+    }
+    .sim-input {
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #0f172a;
+      width: 170px;
+    }
+    .sim-buttons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .speed-select {
+      padding: 9px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+    }
+    .sim-chips {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 13px;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+    .chip-btn {
+      padding: 5px 12px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+    }
+    .chip-btn:hover { background: #e2e8f0; color: #0f172a; border-color: #94a3b8; }
+
+    /* WORKSPACE: 2-COLUMN LAYOUT - FLOWCHART GETS HUGE & SPACIOUS */
+    .sim-workspace-2col {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1100px) {
+      .sim-workspace-2col { grid-template-columns: 1fr; }
+    }
+
+    .sim-panel {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
+    .sim-panel h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* LARGE SVG FLOWCHART STYLING */
+    .flow-canvas-large {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      overflow-x: auto;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .flow-canvas-large svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* SVG NODES - LARGE, HIGH CONTRAST */
+    .node-bg {
+      fill: #ffffff;
+      stroke: #475569;
+      stroke-width: 2.2;
+      transition: all 0.25s ease;
+    }
+    .node-text {
+      font-family: var(--font-main);
+      font-size: 13.5px;
+      font-weight: 700;
+      fill: #0f172a;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .node-active .node-bg {
+      fill: #eff6ff;
+      stroke: #2563eb;
+      stroke-width: 3.6;
+      filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.45));
+    }
+    .node-active .node-text {
+      font-weight: 800;
+      fill: #1d4ed8;
+      font-size: 14px;
+    }
+    .edge-line {
+      stroke: #64748b;
+      stroke-width: 2.2;
+      fill: none;
+      transition: all 0.25s ease;
+    }
+    .edge-line.active {
+      stroke: #2563eb;
+      stroke-width: 3.6;
+    }
+    .label-pill {
+      font-family: var(--font-main);
+      font-size: 12px;
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .label-pill.yes { fill: #15803d; }
+    .label-pill.no { fill: #b91c1c; }
+
+    /* CODE BOXES */
+    .code-box {
+      background: var(--code-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+    .code-header {
+      background: var(--code-title);
+      padding: 10px 16px;
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .copy-btn {
+      padding: 4px 10px;
+      font-size: 11.5px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+    .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
+    .code-content {
+      padding: 14px 0;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--code-text);
+    }
+    .code-row {
+      display: flex;
+      padding: 2px 16px;
+      border-left: 3px solid transparent;
+      white-space: pre;
+    }
+    .code-row.active {
+      background: #1e3a5f;
+      border-left-color: #60a5fa;
+    }
+    .code-num {
+      width: 34px;
+      text-align: right;
+      padding-right: 14px;
+      color: #64748b;
+      user-select: none;
+      font-size: 12px;
+    }
+    .code-text { flex: 1; }
+    .kw { color: #f472b6; font-weight: 600; }
+    .fn { color: #60a5fa; }
+    .str { color: #34d399; }
+    .num { color: #fbbf24; }
+    .op { color: #38bdf8; font-weight: 600; }
+    .cm { color: #94a3b8; font-style: italic; }
+
+    /* TEACHER COMMENTARY & MEMORY WATCH */
+    .commentary-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .commentary-card h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1e40af;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .commentary-text {
+      font-size: 14px;
+      color: #1e3a8a;
+      line-height: 1.6;
+    }
+
+    .memory-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      margin-top: 10px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .memory-table th, .memory-table td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .memory-table th {
+      background: #f8fafc;
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .memory-table td.var-name {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .memory-table td.var-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .terminal-window {
+      background: #090d16;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      min-height: 110px;
+      margin-top: 18px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .term-title {
+      color: #64748b;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      padding: 22px 32px;
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      header { padding: 16px 20px; }
+      .tab-pane { padding: 18px; }
+      .timeline-bar { padding: 12px 18px; }
+      .sim-controls { padding: 16px; }
+      .task-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="../LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="../LESSON 3/index.html">Bài 3: Toán Tử</a>
+        <a href="../LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
+        <a href="index.html" class="active">Bài 5: Ôn Tập & EVN</a>
+      </div>
+    </div>
+  </div>
+
+
+<div class="app">
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+      </div>
+      <div class="brand-info">
+        <h1>Bài 5: Ôn tập Biến, Kiểu dữ liệu, Toán tử & Rẽ nhánh</h1>
+        <p>
+          <span>Khóa học: Lập trình Python Cơ Bản (TT-C4K-PTB30)</span>
+          <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">Thời lượng: 60 Phút</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- CLASSROOM TIMER FOR TEACHER -->
+    <div class="timer-widget">
+      <span>⏱ Tiết học:</span>
+      <span id="class-timer-display" class="timer-display">60:00</span>
+      <button type="button" class="timer-btn" id="btn-timer-toggle" onclick="toggleTimer()">Bắt đầu</button>
+      <button type="button" class="timer-btn" onclick="resetTimer()">Đặt lại</button>
+    </div>
+
+    <!-- TABS NAVIGATION (CLEAN 2 TABS - MINITEST REMOVED) -->
+    <nav aria-label="Điều hướng bài học">
+      <button type="button" class="tab-btn active" data-tab="theory">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        Lý Thuyết & Trọng Tâm
+      </button>
+      <button type="button" class="tab-btn" data-tab="simulator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+        Phòng Thí Nghiệm Mô Phỏng Trace Code
+      </button>
+    </nav>
+  </header>
+
+  <!-- 60-MINUTE TIMELINE BAR - 3 CLEAR PHASES -->
+  <div class="timeline-bar">
+    <div class="timeline-title">Lộ trình 60 phút:</div>
+    <div class="timeline-steps">
+      <div class="tl-step active" id="tl-step-1" onclick="navToStep(1)">
+        <span class="tl-min">00' - 15'</span>
+        <span>1. Rà soát 4 Trụ Cột Nền Tảng</span>
+      </div>
+      <div class="tl-step" id="tl-step-2" onclick="navToStep(2)">
+        <span class="tl-min">15' - 35'</span>
+        <span>2. Sơ đồ khối & Bài toán Tiền Điện EVN</span>
+      </div>
+      <div class="tl-step" id="tl-step-3" onclick="navToStep(3)">
+        <span class="tl-min">35' - 60'</span>
+        <span>3. Thực Hành Phòng Thí Nghiệm Mô Phỏng</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- TAB 1: LÝ THUYẾT & TRỌNG TÂM                                       -->
+  <!-- =================================================================== -->
+  <main id="pane-theory" class="tab-pane">
+    <div class="section-title" id="sec-pillars">
+      <span class="eyebrow">Trạm 1: Tổng quan kiến thức (00' - 15')</span>
+      <h2>Bốn Trụ Cột Nền Tảng Của Lập Trình Python</h2>
+      <p>Trước khi giải quyết các bài toán lớn, hãy củng cố thật chắc chắn bản chất của 4 thành tố cơ bản nhất:</p>
+    </div>
+
+    <!-- 4 PILLARS GRID -->
+    <div class="grid-4">
+      <div class="pillar-card p-var">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          1. Biến (Variables)
+        </h3>
+        <p>Hộp chứa dữ liệu trong RAM máy tính. Tạo biến bằng toán tử gán <code>=</code>.</p>
+        <ul>
+          <li>Quy tắc: Viết thường cách nhau bởi gạch dưới (<code>snake_case</code>).</li>
+          <li>Không bắt đầu bằng số (ví dụ: <code>1a</code> là sai).</li>
+          <li>Không trùng từ khóa (như <code>if</code>, <code>class</code>, <code>def</code>).</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card p-type">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          2. Kiểu Dữ Liệu
+        </h3>
+        <p>Quyết định biến chứa được loại thông tin nào và tính toán ra sao:</p>
+        <ul>
+          <li><code>int</code>: Số nguyên (ví dụ: <code>-5</code>, <code>0</code>, <code>100</code>).</li>
+          <li><code>float</code>: Số thực dấu phẩy động (ví dụ: <code>6.5</code>, <code>3.14</code>).</li>
+          <li><code>str</code>: Chuỗi ký tự đặt trong dấu nháy <code>"Python"</code>.</li>
+          <li><code>bool</code>: Đúng/Sai (<code>True</code> / <code>False</code>).</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card p-op">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          3. Toán Tử (Operators)
+        </h3>
+        <p>Công cụ để tính toán và so sánh các biểu thức:</p>
+        <ul>
+          <li>Số học: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> (chia thực), <code>//</code> (chia nguyên), <code>%</code> (chia dư).</li>
+          <li>So sánh: <code>==</code> (bằng), <code>!=</code> (khác), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>.</li>
+          <li>Logic: <code>and</code> (và), <code>or</code> (hoặc), <code>not</code> (phủ định).</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card p-if">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          4. Câu Điều Kiện
+        </h3>
+        <p>Cho phép chương trình rẽ nhánh dựa trên điều kiện Đúng hay Sai:</p>
+        <ul>
+          <li><code>if</code>: Rẽ một nhánh khi đúng.</li>
+          <li><code>if ... else</code>: Rẽ 2 nhánh đối lập (hoặc cái này, hoặc cái kia).</li>
+          <li><code>if ... elif ... else</code>: Rẽ nhiều nhánh liên tiếp theo thứ tự từ trên xuống dưới.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PITFALLS ALERT -->
+    <div class="pitfall-box">
+      <h4>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        3 Cạm Bẫy Học Sinh Hay Mắc Nhất Cần Nhớ:
+      </h4>
+      <p><strong>1. Quên ép kiểu khi dùng <code>input()</code>:</strong> <code>input()</code> luôn trả về kiểu <code>str</code>. Muốn tính toán số học bắt buộc phải ép kiểu: <code>kwh = float(input())</code> hoặc <code>n = int(input())</code>.</p>
+      <p><strong>2. Nhầm lẫn giữa <code>=</code> và <code>==</code>:</strong> Dấu <code>=</code> là lệnh <strong>Gán giá trị</strong>, còn <code>==</code> mới là phép toán <strong>So sánh bằng</strong> (cho ra <code>True</code> hoặc <code>False</code>).</p>
+      <p><strong>3. Lỗi thụt lề (IndentationError):</strong> Các câu lệnh thuộc khối <code>if</code>, <code>elif</code>, <code>else</code> phải được thụt vào đúng 4 khoảng trắng (hoặc 1 phím Tab).</p>
+    </div>
+
+    <!-- FLOWCHART SYMBOLS -->
+    <div style="margin-top: 36px;" id="sec-flowchart">
+      <div class="section-title">
+        <span class="eyebrow">Trạm 2: Ngôn ngữ hình ảnh thuật toán</span>
+        <h2>Quy Chuẩn Ký Hiệu Sơ Đồ Khối (Flowchart)</h2>
+        <p>Trước khi viết code, lập trình viên giỏi luôn vẽ sơ đồ khối để thấy rõ mọi ngã rẽ của dữ liệu:</p>
+      </div>
+
+      <div class="grid-4">
+        <div class="symbol-card">
+          <div class="symbol-svg">
+            <svg width="160" height="46" viewBox="0 0 160 46">
+              <rect x="5" y="5" width="150" height="36" rx="18" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+              <text x="80" y="24" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#1e40af">Bắt đầu / Kết thúc</text>
+            </svg>
+          </div>
+          <h4>Khối Bo Tròn (Terminal)</h4>
+          <p>Xác định điểm mở đầu hoặc kết thúc của luồng chương trình.</p>
+        </div>
+
+        <div class="symbol-card">
+          <div class="symbol-svg">
+            <svg width="160" height="46" viewBox="0 0 160 46">
+              <polygon points="25,5 155,5 135,41 5,41" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+              <text x="80" y="24" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#1e40af">Nhập a / In kết quả</text>
+            </svg>
+          </div>
+          <h4>Khối Hình Bình Hành (I/O)</h4>
+          <p>Tương ứng lệnh <code>input()</code> (Nhập dữ liệu) hoặc <code>print()</code> (Xuất thông tin).</p>
+        </div>
+
+        <div class="symbol-card">
+          <div class="symbol-svg">
+            <svg width="160" height="54" viewBox="0 0 160 54">
+              <polygon points="80,4 152,27 80,50 8,27" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+              <text x="80" y="28" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#92400e">kwh &lt;= 50 ?</text>
+            </svg>
+          </div>
+          <h4>Khối Hình Thoi (Decision)</h4>
+          <p>Kiểm tra điều kiện rẽ nhánh (cho ra 2 hướng: <strong>Đúng / True</strong> hoặc <strong>Sai / False</strong>).</p>
+        </div>
+
+        <div class="symbol-card">
+          <div class="symbol-svg">
+            <svg width="160" height="46" viewBox="0 0 160 46">
+              <rect x="8" y="5" width="144" height="36" fill="#f0fdf4" stroke="#10b981" stroke-width="2"/>
+              <text x="80" y="24" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#065f46">tien = kwh * 1806</text>
+            </svg>
+          </div>
+          <h4>Khối Hình Chữ Nhật (Process)</h4>
+          <p>Khối xử lý tính toán, gán giá trị biểu thức cho biến.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- CHUYÊN ĐỀ ĐẶC BIỆT: BÀI TOÁN TÍNH TIỀN ĐIỆN BẬC THANG EVN      -->
+    <!-- ============================================================== -->
+    <div class="electricity-banner" id="sec-electricity">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+        <div>
+          <span style="background:rgba(245,158,11,0.25); color:#fde68a; padding:3px 10px; border-radius:6px; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;">Trọng Tâm Bài Học (15' - 35')</span>
+          <h3 style="margin-top:6px;">Chuyên Đề Trọng Tâm: Bài Toán Tính Tiền Điện Sinh Hoạt Bậc Thang (EVN)</h3>
+          <p>Tại sao tiền điện không lấy toàn bộ số điện nhân với một giá cố định? Để khuyến khích toàn dân tiết kiệm năng lượng, EVN áp dụng <strong>Biểu giá điện lũy tiến bậc thang</strong>: dùng càng nhiều, phần vượt mức sẽ chịu đơn giá càng cao!</p>
+        </div>
+        <button type="button" class="primary" style="background:#2563eb; font-weight:700; box-shadow:0 4px 14px rgba(0,0,0,0.3);" onclick="switchTab('simulator')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Mở Mô Phỏng Bài Này Ngay
+        </button>
+      </div>
+
+      <!-- ĐỀ BÀI CỤ THỂ CHO BÀI TOÁN TÍNH TIỀN ĐIỆN -->
+      <div class="task-box-banner">
+        <span class="badge-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          ĐỀ BÀI BÀI TOÁN TRỌNG TÂM
+        </span>
+        <h4>Bài toán: Lập trình tính tiền điện sinh hoạt bậc thang (EVN)</h4>
+        <p>
+          Viết chương trình Python yêu cầu người dùng nhập vào số kWh điện năng tiêu thụ trong tháng của một hộ gia đình (số thực <code>kwh</code>).<br>
+          • Nếu người dùng nhập số âm (<code>kwh &lt; 0</code>), in thông báo: <strong>"Số điện không hợp lệ!"</strong>.<br>
+          • Nếu hợp lệ, tính tiền điện phải nộp theo <strong>biểu giá lũy tiến 5 bậc chính thức của EVN</strong>, cộng thêm <strong>8% thuế Giá trị gia tăng (VAT)</strong> và in ra hóa đơn chi tiết.
+        </p>
+        <div class="task-box-specs">
+          <div class="spec-card">
+            <strong>📥 Dữ liệu vào (Input)</strong>
+            Một số thực <code>kwh</code> từ bàn phím (Ví dụ: <code>125.0</code>).
+          </div>
+          <div class="spec-card">
+            <strong>📤 Dữ liệu ra (Output)</strong>
+            Tiền điện chưa thuế, Thuế GTGT 8% và Tổng tiền thanh toán (VNĐ).
+          </div>
+          <div class="spec-card">
+            <strong>💡 Ví dụ thực tế (kwh = 125)</strong>
+            Bậc 1: <code>50 * 1806 = 90.300đ</code> | Bậc 2: <code>50 * 1866 = 93.300đ</code> | Bậc 3: <code>25 * 2167 = 54.175đ</code><br>
+            ➔ Tiền điện: <strong>237.775 đ</strong> · VAT: <strong>19.022 đ</strong> · Tổng: <strong>256.797 đ</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CONTROL STRIP & LIVE TARIFF TABLE -->
+      <div class="table-control-strip">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <span style="font-weight:700; font-size:13.5px; color:#1e293b; display:flex; align-items:center; gap:6px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            Nhập số kWh thử nghiệm:
+          </span>
+          <input type="number" id="calc-kwh" value="125" min="0" step="1" style="width:110px; padding:6px 10px; font-size:15px; font-weight:700; border:2px solid #3b82f6; border-radius:6px; color:#1d4ed8; text-align:center;" oninput="runQuickCalc()">
+          <span style="font-size:13px; font-weight:700; color:#475569;">kWh</span>
+          <button type="button" class="primary" style="padding:6px 14px; font-size:13px; font-weight:700;" onclick="runQuickCalc()">Tính ngay</button>
+        </div>
+        <div class="quick-chips">
+          <span style="font-size:12px; font-weight:700; color:#64748b; margin-right:4px;">Mẫu nhanh:</span>
+          <button type="button" class="chip-btn" onclick="setKwhVal(35)">35 kWh (B1)</button>
+          <button type="button" class="chip-btn" onclick="setKwhVal(80)">80 kWh (B2)</button>
+          <button type="button" class="chip-btn active" onclick="setKwhVal(125)">125 kWh (B3 - Mẫu)</button>
+          <button type="button" class="chip-btn" onclick="setKwhVal(250)">250 kWh (B4)</button>
+          <button type="button" class="chip-btn" onclick="setKwhVal(350)">350 kWh (B5)</button>
+        </div>
+      </div>
+
+      <!-- TARIFF TABLE WITH LIVE DATA INJECTION -->
+      <table class="tariff-table" style="margin-top:0; border-top:none; border-radius:0 0 10px 10px;">
+        <thead>
+          <tr>
+            <th style="width:75px;">Bậc</th>
+            <th>Khung quy định (kWh)</th>
+            <th style="width:140px;">Đơn giá EVN</th>
+            <th style="width:160px; text-align:center;">Số kWh tính vào bậc</th>
+            <th style="width:160px; text-align:right;">Thành tiền của bậc</th>
+            <th style="width:140px; text-align:center;">Trạng thái bậc</th>
+          </tr>
+        </thead>
+        <tbody id="tariff-table-body">
+          <!-- Live injected rows with active highlights -->
+        </tbody>
+        <tfoot id="tariff-table-foot">
+          <!-- Live total footer -->
+        </tfoot>
+      </table>
+
+      <!-- TIER VISUALIZER: XÔ NƯỚC BẬC THANG ĐỘNG -->
+      <div class="tier-visualizer">
+        <h4>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Mô hình động: "Những chiếc xô bậc thang" (Nước rót đầy từng xô theo số kWh):
+        </h4>
+        <div class="bucket-row" id="bucket-row-container">
+          <!-- Dynamically filled with water bars -->
+        </div>
+        <p id="bucket-summary-text" style="font-size:14px; color:#1e293b; margin-top:10px; font-weight:600;">
+          <!-- Live summary -->
+        </p>
+      </div>
+
+      <!-- QUICK RESULT BOX SUMMARY -->
+      <div id="calc-output" class="calc-result-box" style="margin-top:16px;">
+        <!-- Live calculation details -->
+      </div>
+    </div>
+
+    <div class="lab-handoff" id="sec-lab">
+      <div>
+        <span style="color:#2563eb; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Trạm 3: Thực hành trực quan (35' - 60')</span>
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          3. Phòng Thí Nghiệm Mô Phỏng Trace Code & Sơ Đồ Khối
+        </h3>
+        <p>Đã đến lúc chuyển từ lý thuyết sang trực quan hóa! Bước vào phòng thí nghiệm mô phỏng để tự tay điều khiển từng bước thực thi: theo dõi sơ đồ khối sáng đèn, dòng code highlight, bộ nhớ RAM biến động và đọc lời thầy cô phân tích.</p>
+      </div>
+      <button type="button" class="primary" style="font-size:15px; padding:12px 24px; box-shadow:0 4px 16px rgba(37,99,235,0.35);" onclick="switchTab('simulator')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        Bắt Đầu Chạy Mô Phỏng Ngay
+      </button>
+    </div>
+  </main>
+
+  <!-- =================================================================== -->
+  <!-- TAB 2: MÔ PHỎNG SƠ ĐỒ KHỐI & CODE                                 -->
+  <!-- =================================================================== -->
+  <main id="pane-simulator" class="tab-pane" hidden>
+    <div class="section-title">
+      <span class="eyebrow">Trạm 3: Thực hành tương tác (35' - 60')</span>
+      <h2>Phòng Thí Nghiệm Mô Phỏng Trace Code & Sơ Đồ Khối</h2>
+      <p>Quan sát đề bài chi tiết, nhập dữ liệu kiểm thử rồi nhấn <strong>"Tiếp theo"</strong> hoặc <strong>"Tự động chạy"</strong> để theo dõi máy tính xử lý từng dòng lệnh:</p>
+    </div>
+
+    <!-- PROBLEM STATEMENT CARD (ĐỀ BÀI CỤ THỂ CHO TỪNG BÀI TOÁN) -->
+    <div class="task-card" id="task-card-box">
+      <div class="task-header">
+        <div>
+          <span class="task-badge" id="task-badge">BÀI TOÁN TRỌNG TÂM · BẬC THANG EVN</span>
+          <h3 class="task-title" id="task-title">1. Bài toán: Tính tiền điện sinh hoạt bậc thang (EVN)</h3>
+        </div>
+      </div>
+      <p class="task-desc" id="task-desc">
+        Viết chương trình nhập vào số kWh điện tiêu thụ trong tháng của một hộ gia đình. Tính và in ra tổng số tiền điện phải thanh toán (bao gồm 8% thuế GTGT) theo biểu giá điện lũy tiến 5 bậc chính thức của EVN.
+      </p>
+      <div class="task-specs" id="task-specs">
+        <div class="spec-item"><strong>Dữ liệu vào (Input):</strong> Một số thực <code>kwh</code> (nếu &lt; 0 thông báo lỗi).</div>
+        <div class="spec-item"><strong>Dữ liệu ra (Output):</strong> Tiền điện chưa thuế, thuế VAT (8%), tổng cộng thanh toán (VNĐ).</div>
+        <div class="spec-item"><strong>Quy tắc tính:</strong> 50 kWh đầu (1.806đ); 50 kWh kế (1.866đ); 100 kWh kế (2.167đ); 100 kWh kế (2.729đ); &gt;300 kWh (3.050đ).</div>
+      </div>
+    </div>
+
+    <!-- CONTROLS BAR -->
+    <div class="sim-controls">
+      <div class="sim-form-row">
+        <div class="sim-field">
+          <label for="sel-example">Chọn Bài Toán Ôn Tập</label>
+          <select id="sel-example" class="sim-select" onchange="onSelectExample()">
+            <option value="dien_bac_thang">1. [Trọng tâm] Tính tiền điện sinh hoạt bậc thang (EVN)</option>
+            <option value="chan_le_am_duong">2. Kiểm tra số chẵn/lẻ & số âm/dương/không</option>
+            <option value="xep_loai_diem">3. Xếp loại học lực học sinh theo điểm số</option>
+            <option value="tam_giac_logic">4. Kiểm tra tam giác hợp lệ & phân loại (Toán tử logic)</option>
+          </select>
+        </div>
+
+        <div class="sim-field">
+          <label id="lbl-input" for="sim-input-val">Nhập Giá Trị Đầu Vào</label>
+          <input type="text" id="sim-input-val" class="sim-input" value="125">
+        </div>
+
+        <div class="sim-buttons">
+          <button type="button" id="btn-start" class="primary" onclick="startSim()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            Bắt đầu
+          </button>
+          <button type="button" id="btn-prev" class="secondary" onclick="prevStep()" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Trước
+          </button>
+          <button type="button" id="btn-next" class="primary" onclick="nextStep()" disabled>
+            Tiếp theo
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button type="button" id="btn-auto" class="secondary" onclick="toggleAutoPlay()" disabled>
+            <svg id="icon-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            Tự động chạy
+          </button>
+          <select id="sel-speed" class="speed-select" onchange="updatePlaySpeed()" title="Tốc độ tự động chạy">
+            <option value="1800">Tốc độ: Chậm (1.8s)</option>
+            <option value="1200" selected>Tốc độ: Vừa (1.2s)</option>
+            <option value="700">Tốc độ: Nhanh (0.7s)</option>
+          </select>
+          <button type="button" class="secondary" onclick="resetSim()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            Đặt lại
+          </button>
+        </div>
+
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+          <span id="sim-step-badge" style="font-size: 13.5px; font-weight: 700; color: #1e40af; background: #dbeafe; padding: 5px 12px; border-radius: 6px;">Bước 1 / 10</span>
+        </div>
+      </div>
+
+      <!-- CHIPS SUGGESTIONS -->
+      <div class="sim-chips">
+        <span style="font-weight: 700;">Gợi ý các trường hợp test:</span>
+        <div id="chip-container" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+      <div id="sim-error-msg" style="color: #dc2626; font-size: 13px; font-weight: 600; margin-top: 8px; display: none;"></div>
+    </div>
+
+    <!-- 2-COLUMNS WORKSPACE: EXTRA SPACIOUS FLOWCHART -->
+    <div class="sim-workspace-2col">
+      <!-- COLUMN 1: LARGE SVG FLOWCHART (TO RÕ, RỘNG RÃI) -->
+      <div class="sim-panel">
+        <h3>
+          <span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            Sơ Đồ Khối Thuật Toán (Trực Quan & To Rõ)
+          </span>
+          <span style="font-size: 12px; font-weight: normal; color: #64748b;">Khối phát sáng: Đang thực thi</span>
+        </h3>
+        <div class="flow-canvas-large" id="flow-container">
+          <!-- Flowchart SVG rendered here -->
+        </div>
+      </div>
+
+      <!-- COLUMN 2: PYTHON CODE, MEMORY RAM & COMMENTARY -->
+      <div class="sim-panel">
+        <!-- PYTHON CODE PANEL -->
+        <h3>
+          <span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            Mã Nguồn Python
+          </span>
+          <button type="button" class="copy-btn" id="btn-copy-code" onclick="copyPythonCode()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép mã
+          </button>
+        </h3>
+        <div class="code-box">
+          <div class="code-header">
+            <span>solution.py</span>
+            <span style="color:#60a5fa; font-weight:600;">Python 3.10+</span>
+          </div>
+          <div class="code-content" id="code-container">
+            <!-- Code rows injected dynamically -->
+          </div>
+        </div>
+
+        <!-- TEACHER COMMENTARY -->
+        <div class="commentary-card">
+          <h4>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Lời Thầy Cô Giảng Giải Từng Bước:
+          </h4>
+          <div id="commentary-box" class="commentary-text">
+            Chương trình bắt đầu chạy từ dòng 1. Chuẩn bị nhận giá trị đầu vào từ bàn phím.
+          </div>
+        </div>
+
+        <!-- MEMORY TABLE -->
+        <div style="font-size: 12.5px; font-weight: 700; color: #475569; text-transform: uppercase;">Các Biến Đang Lưu Trong Bộ Nhớ (RAM):</div>
+        <table class="memory-table">
+          <thead>
+            <tr>
+              <th>Tên biến</th>
+              <th>Kiểu</th>
+              <th>Giá trị hiện tại</th>
+            </tr>
+          </thead>
+          <tbody id="memory-tbody">
+            <tr><td colspan="3" style="color:#94a3b8; text-align:center; padding:12px;">Chưa có biến nào khởi tạo</td></tr>
+          </tbody>
+        </table>
+
+        <!-- TERMINAL OUTPUT -->
+        <div class="terminal-window">
+          <div class="term-title">Console Output (Màn hình in ra)</div>
+          <div id="term-output" style="line-height:1.6;">$ python main.py<br></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Giáo án & Học liệu tương tác môn Tin học - Lập trình Python Cơ Bản · Tiết 5: Ôn tập tổng hợp · Hỗ trợ hoạt động ngoại tuyến (Offline-ready).</p>
+  </footer>
+
+  <!-- Lesson Bottom Pager -->
+  <div class="lesson-pager" style="margin: 32px 28px 24px; padding-top:20px; border-top:1px solid #dce4ed;">
+    <a href="../LESSON 4/index.html" class="pager-btn">
+      &larr; Bài Trước: Bài 4 - Cấu Trúc Rẽ Nhánh
+    </a>
+    <a href="../index.html" class="pager-btn primary" style="background:#1d4ed8; border-color:#1d4ed8;">
+      &uarr; Về Cổng Tổng Quan Khóa Học
+    </a>
+  </div>
+</div>
+
+<script>
+// =====================================================================
+// CLASSROOM 60-MINUTE TIMER
+// =====================================================================
+let timerSeconds = 60 * 60;
+let timerInterval = null;
+
+function formatTimer(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById("class-timer-display");
+  if (el) el.textContent = formatTimer(timerSeconds);
+}
+
+function toggleTimer() {
+  const btn = document.getElementById("btn-timer-toggle");
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    if (btn) btn.textContent = "Tiếp tục";
+  } else {
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        if (btn) btn.textContent = "Hết giờ";
+        alert("⏰ Đã kết thúc thời lượng 60 phút của tiết ôn tập!");
+      }
+    }, 1000);
+    if (btn) btn.textContent = "Tạm dừng";
+  }
+}
+
+function resetTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  timerSeconds = 60 * 60;
+  updateTimerDisplay();
+  const btn = document.getElementById("btn-timer-toggle");
+  if (btn) btn.textContent = "Bắt đầu";
+}
+
+// =====================================================================
+// TIMELINE NAVIGATION
+// =====================================================================
+function navToStep(stepNum) {
+  document.querySelectorAll(".tl-step").forEach((el, idx) => {
+    el.classList.toggle("active", idx === stepNum - 1);
+  });
+
+  if (stepNum === 1) {
+    switchTab('theory');
+    document.getElementById("sec-pillars").scrollIntoView({ behavior: 'smooth' });
+  } else if (stepNum === 2) {
+    switchTab('theory');
+    document.getElementById("sec-electricity").scrollIntoView({ behavior: 'smooth' });
+  } else if (stepNum === 3) {
+    switchTab('simulator');
+    if (currentStepIdx < 0) {
+      startSim();
+    }
+  }
+}
+
+// =====================================================================
+// GLOBAL DATA STRUCTURES & EXAMPLES WITH FULL PROBLEM STATEMENTS
+// =====================================================================
+const EXAMPLES = {
+  dien_bac_thang: {
+    id: "dien_bac_thang",
+    name: "1. [Trọng tâm] Tính tiền điện sinh hoạt bậc thang (EVN)",
+    badge: "BÀI TOÁN TRỌNG TÂM · BẬC THANG LŨY TIẾN EVN",
+    title: "1. Bài toán: Tính tiền điện sinh hoạt bậc thang (EVN)",
+    desc: "Viết chương trình nhập vào số kWh điện tiêu thụ trong tháng của một hộ gia đình. Tính và in ra tổng số tiền điện phải thanh toán (bao gồm 8% thuế GTGT) theo biểu giá điện lũy tiến 5 bậc chính thức của EVN.",
+    specs: [
+      { label: "Dữ liệu vào (Input)", val: "Một số thực <code>kwh</code> (nếu kwh < 0 in thông báo lỗi)." },
+      { label: "Dữ liệu ra (Output)", val: "Tiền điện chưa thuế, thuế VAT (8%), tổng cộng thanh toán (VNĐ)." },
+      { label: "Quy tắc lũy tiến", val: "50 kWh đầu (1.806đ); 50 kWh kế (1.866đ); 100 kWh kế (2.167đ); 100 kWh kế (2.729đ); >300 kWh (3.050đ)." }
+    ],
+    label: "Nhập số điện (kWh):",
+    defaultVal: "125",
+    chips: [
+      { text: "35 kWh (Bậc 1)", val: "35" },
+      { text: "80 kWh (Bậc 2)", val: "80" },
+      { text: "125 kWh (Bậc 3)", val: "125" },
+      { text: "250 kWh (Bậc 4)", val: "250" },
+      { text: "350 kWh (Bậc 5)", val: "350" },
+      { text: "-10 kWh (Lỗi âm)", val: "-10" }
+    ],
+    codeLines: [
+      { num: 1, text: 'kwh = float(input("Nhap so kWh: "))' },
+      { num: 2, text: 'if kwh < 0:' },
+      { num: 3, text: '    print("So dien khong hop le!")' },
+      { num: 4, text: 'elif kwh <= 50:' },
+      { num: 5, text: '    tien = kwh * 1806' },
+      { num: 6, text: 'elif kwh <= 100:' },
+      { num: 7, text: '    tien = 50 * 1806 + (kwh - 50) * 1866' },
+      { num: 8, text: 'elif kwh <= 200:' },
+      { num: 9, text: '    tien = 50*1806 + 50*1866 + (kwh - 100) * 2167' },
+      { num: 10, text: 'elif kwh <= 300:' },
+      { num: 11, text: '    tien = 50*1806 + 50*1866 + 100*2167 + (kwh - 200) * 2729' },
+      { num: 12, text: 'else:' },
+      { num: 13, text: '    tien = 50*1806 + 50*1866 + 100*2167 + 100*2729 + (kwh - 300) * 3050' },
+      { num: 14, text: 'if kwh >= 0:' },
+      { num: 15, text: '    vat = tien * 0.08' },
+      { num: 16, text: '    tong = tien + vat' },
+      { num: 17, text: '    print(f"Tien: {tien:,.0f}d, VAT: {vat:,.0f}d, Tong: {tong:,.0f}d")' }
+    ],
+    // EXTRA LARGE, SPACIOUS FLOWCHART NODES (Coordinates expanded)
+    flowNodes: [
+      { id: "start", type: "terminal", text: "Bắt đầu", x: 260, y: 35, w: 180, h: 44 },
+      { id: "input", type: "io", text: "Nhập kwh (số thực)", x: 260, y: 105, w: 210, h: 44 },
+      { id: "c_neg", type: "decision", text: "kwh < 0 ?", x: 260, y: 185, w: 180, h: 54 },
+      { id: "err_msg", type: "io", text: 'In: Số điện không hợp lệ', x: 520, y: 185, w: 220, h: 44 },
+      { id: "c_b1", type: "decision", text: "kwh <= 50 ?", x: 260, y: 275, w: 180, h: 54 },
+      { id: "calc_b1", type: "process", text: "tien = kwh * 1806", x: 520, y: 275, w: 220, h: 44 },
+      { id: "c_b2", type: "decision", text: "kwh <= 100 ?", x: 260, y: 365, w: 180, h: 54 },
+      { id: "calc_b2", type: "process", text: "Bậc 1 + (kwh-50)*1866", x: 520, y: 365, w: 220, h: 44 },
+      { id: "c_b3", type: "decision", text: "kwh <= 200 ?", x: 260, y: 455, w: 180, h: 54 },
+      { id: "calc_b3", type: "process", text: "Bậc 1,2 + (kwh-100)*2167", x: 520, y: 455, w: 230, h: 44 },
+      { id: "c_b4", type: "decision", text: "kwh <= 300 ?", x: 260, y: 545, w: 180, h: 54 },
+      { id: "calc_b4", type: "process", text: "Bậc 1,2,3 + (kwh-200)*2729", x: 520, y: 545, w: 240, h: 44 },
+      { id: "calc_b5", type: "process", text: "Bậc 1..4 + (kwh-300)*3050", x: 260, y: 635, w: 240, h: 44 },
+      { id: "calc_vat", type: "process", text: "vat = tien*0.08, tong = tien+vat", x: 390, y: 720, w: 300, h: 46 },
+      { id: "output", type: "io", text: "In hóa đơn chi tiết", x: 390, y: 795, w: 220, h: 44 },
+      { id: "end", type: "terminal", text: "Kết thúc", x: 390, y: 865, w: 180, h: 44 }
+    ],
+    flowEdges: [
+      { from: "start", to: "input", d: "M260,57 V105" },
+      { from: "input", to: "c_neg", d: "M260,127 V185" },
+      { from: "c_neg", to: "err_msg", label: "Đúng", isYes: true, lx: 395, ly: 175, d: "M350,185 H520" },
+      { from: "err_msg", to: "end", label: "", isYes: false, d: "M630,207 V865 H480" },
+      { from: "c_neg", to: "c_b1", label: "Sai", isYes: false, lx: 235, ly: 230, d: "M260,212 V275" },
+      { from: "c_b1", to: "calc_b1", label: "Đúng", isYes: true, lx: 395, ly: 265, d: "M350,275 H520" },
+      { from: "calc_b1", to: "calc_vat", label: "", isYes: false, d: "M630,297 V720 H540" },
+      { from: "c_b1", to: "c_b2", label: "Sai", isYes: false, lx: 235, ly: 320, d: "M260,302 V365" },
+      { from: "c_b2", to: "calc_b2", label: "Đúng", isYes: true, lx: 395, ly: 355, d: "M350,365 H520" },
+      { from: "calc_b2", to: "calc_vat", label: "", isYes: false, d: "M630,387 V720 H540" },
+      { from: "c_b2", to: "c_b3", label: "Sai", isYes: false, lx: 235, ly: 410, d: "M260,392 V455" },
+      { from: "c_b3", to: "calc_b3", label: "Đúng", isYes: true, lx: 395, ly: 445, d: "M350,455 H520" },
+      { from: "calc_b3", to: "calc_vat", label: "", isYes: false, d: "M635,477 V720 H540" },
+      { from: "c_b3", to: "c_b4", label: "Sai", isYes: false, lx: 235, ly: 500, d: "M260,482 V545" },
+      { from: "c_b4", to: "calc_b4", label: "Đúng", isYes: true, lx: 395, ly: 535, d: "M350,545 H520" },
+      { from: "calc_b4", to: "calc_vat", label: "", isYes: false, d: "M640,567 V720 H540" },
+      { from: "c_b4", to: "calc_b5", label: "Sai", isYes: false, lx: 235, ly: 590, d: "M260,572 V635" },
+      { from: "calc_b5", to: "calc_vat", label: "", isYes: false, d: "M260,657 V720 H240" },
+      { from: "calc_vat", to: "output", d: "M390,743 V795" },
+      { from: "output", to: "end", d: "M390,817 V865" }
+    ],
+    generateTrace: (inputStr) => {
+      let val = parseFloat(inputStr);
+      if (isNaN(val)) return { error: "Vui lòng nhập một số hợp lệ!" };
+      let steps = [];
+      let mem = {};
+      let out = "";
+
+      steps.push({
+        node: "start", line: 1,
+        teacher: "Chương trình bắt đầu chạy từ dòng 1. Chuẩn bị nhận giá trị đầu vào từ bàn phím.",
+        mem: {}, out: ""
+      });
+
+      mem = { kwh: { type: "float", val: val } };
+      steps.push({
+        node: "input", line: 1,
+        teacher: `Đã đọc và ép kiểu số thực: kwh = ${val}. Biến kwh được lưu vào RAM.`,
+        mem: { ...mem }, out: ""
+      });
+
+      let isNeg = val < 0;
+      steps.push({
+        node: "c_neg", line: 2,
+        teacher: `Kiểm tra điều kiện: kwh < 0 ? Với kwh = ${val}, kết quả là: ${isNeg ? "ĐÚNG (True)" : "SAI (False)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      if (isNeg) {
+        out = "So dien khong hop le!";
+        steps.push({
+          node: "err_msg", line: 3,
+          teacher: `Vì số điện âm (< 0) nên chương trình rẽ vào nhánh if dòng 3 để cảnh báo lỗi.`,
+          mem: { ...mem }, out: out
+        });
+        steps.push({
+          node: "end", line: null,
+          teacher: `Kết thúc chương trình sau khi in thông báo lỗi.`,
+          mem: { ...mem }, out: out
+        });
+        return { steps };
+      }
+
+      let isB1 = val <= 50;
+      steps.push({
+        node: "c_b1", line: 4,
+        teacher: `Kiểm tra Bậc 1: kwh <= 50 ? (${val} <= 50) => ${isB1 ? "ĐÚNG (True)" : "SAI (False)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      let tien = 0;
+      if (isB1) {
+        tien = val * 1806;
+        mem.tien = { type: "float", val: tien };
+        steps.push({
+          node: "calc_b1", line: 5,
+          teacher: `Thuộc Bậc 1: Tính tien = ${val} * 1806 = ${tien.toLocaleString('vi-VN')} đ. Bỏ qua tất cả các nhánh elif và else phía dưới!`,
+          mem: { ...mem }, out: ""
+        });
+      } else {
+        let isB2 = val <= 100;
+        steps.push({
+          node: "c_b2", line: 6,
+          teacher: `Kiểm tra Bậc 2: kwh <= 100 ? (${val} <= 100) => ${isB2 ? "ĐÚNG (True)" : "SAI (False)"}.`,
+          mem: { ...mem }, out: ""
+        });
+
+        if (isB2) {
+          tien = 50 * 1806 + (val - 50) * 1866;
+          mem.tien = { type: "float", val: tien };
+          steps.push({
+            node: "calc_b2", line: 7,
+            teacher: `Thuộc Bậc 2: 50 kWh đầu tính giá Bậc 1 (90.300 đ), còn ${val - 50} kWh tính giá Bậc 2. Tổng: ${tien.toLocaleString('vi-VN')} đ.`,
+            mem: { ...mem }, out: ""
+          });
+        } else {
+          let isB3 = val <= 200;
+          steps.push({
+            node: "c_b3", line: 8,
+            teacher: `Kiểm tra Bậc 3: kwh <= 200 ? (${val} <= 200) => ${isB3 ? "ĐÚNG (True)" : "SAI (False)"}.`,
+            mem: { ...mem }, out: ""
+          });
+
+          if (isB3) {
+            tien = 50 * 1806 + 50 * 1866 + (val - 100) * 2167;
+            mem.tien = { type: "float", val: tien };
+            steps.push({
+              node: "calc_b3", line: 9,
+              teacher: `Thuộc Bậc 3: Bậc 1 (90.300 đ) + Bậc 2 (93.300 đ) + ${val - 100} kWh giá Bậc 3. Tổng: ${tien.toLocaleString('vi-VN')} đ.`,
+              mem: { ...mem }, out: ""
+            });
+          } else {
+            let isB4 = val <= 300;
+            steps.push({
+              node: "c_b4", line: 10,
+              teacher: `Kiểm tra Bậc 4: kwh <= 300 ? (${val} <= 300) => ${isB4 ? "ĐÚNG (True)" : "SAI (False)"}.`,
+              mem: { ...mem }, out: ""
+            });
+
+            if (isB4) {
+              tien = 50 * 1806 + 50 * 1866 + 100 * 2167 + (val - 200) * 2729;
+              mem.tien = { type: "float", val: tien };
+              steps.push({
+                node: "calc_b4", line: 11,
+                teacher: `Thuộc Bậc 4: Bậc 1,2,3 đầy (400.300 đ) + ${val - 200} kWh giá Bậc 4. Tổng: ${tien.toLocaleString('vi-VN')} đ.`,
+                mem: { ...mem }, out: ""
+              });
+            } else {
+              tien = 50 * 1806 + 50 * 1866 + 100 * 2167 + 100 * 2729 + (val - 300) * 3050;
+              mem.tien = { type: "float", val: tien };
+              steps.push({
+                node: "calc_b5", line: 13,
+                teacher: `Vượt quá 300 kWh: Toàn bộ 4 bậc trước đầy (673.200 đ), còn ${val - 300} kWh chịu giá Bậc 5 (3.050 đ/kWh). Tổng: ${tien.toLocaleString('vi-VN')} đ.`,
+                mem: { ...mem }, out: ""
+              });
+            }
+          }
+        }
+      }
+
+      let vat = Math.round(tien * 0.08);
+      let tong = tien + vat;
+      mem.vat = { type: "float", val: vat };
+      mem.tong = { type: "float", val: tong };
+      steps.push({
+        node: "calc_vat", line: 15,
+        teacher: `Tính thuế VAT 8% = ${vat.toLocaleString('vi-VN')} đ và Tổng tiền thanh toán = ${tong.toLocaleString('vi-VN')} đ.`,
+        mem: { ...mem }, out: ""
+      });
+
+      out = `Tien: ${tien.toLocaleString('vi-VN')}d, VAT: ${vat.toLocaleString('vi-VN')}d, Tong: ${tong.toLocaleString('vi-VN')}d`;
+      steps.push({
+        node: "output", line: 17,
+        teacher: `In toàn bộ hóa đơn chi tiết ra màn hình console.`,
+        mem: { ...mem }, out: out
+      });
+
+      steps.push({
+        node: "end", line: null,
+        teacher: `Chương trình thực thi hoàn tất thành công!`,
+        mem: { ...mem }, out: out
+      });
+
+      return { steps };
+    }
+  },
+
+  chan_le_am_duong: {
+    id: "chan_le_am_duong",
+    name: "2. Kiểm tra số chẵn/lẻ & số âm/dương/không",
+    badge: "BÀI TOÁN CƠ BẢN · RẼ NHÁNH LỒNG NHAU",
+    title: "2. Bài toán: Phân tích tính chất số nguyên n",
+    desc: "Nhập vào một số nguyên n từ bàn phím. Kiểm tra và in ra thông báo: số đó là số 0, hay số chẵn dương, chẵn âm, lẻ dương, lẻ âm.",
+    specs: [
+      { label: "Dữ liệu vào (Input)", val: "Một số nguyên <code>n</code> bất kỳ." },
+      { label: "Dữ liệu ra (Output)", val: "Chuỗi thông báo phân loại (ví dụ: '7 la so Le Duong', '-4 la so Chan Am', 'So khong')." },
+      { label: "Kiến thức áp dụng", val: "Toán tử chia dư <code>% 2 == 0</code>, so sánh dấu <code>&gt; 0</code>, câu điều kiện <code>if - else</code> lồng nhau." }
+    ],
+    label: "Nhập số nguyên n:",
+    defaultVal: "7",
+    chips: [
+      { text: "n = 8 (Chẵn dương)", val: "8" },
+      { text: "n = -7 (Lẻ âm)", val: "-7" },
+      { text: "n = 0 (Số không)", val: "0" },
+      { text: "n = -4 (Chẵn âm)", val: "-4" }
+    ],
+    codeLines: [
+      { num: 1, text: 'n = int(input("Nhap so nguyen n: "))' },
+      { num: 2, text: 'if n == 0:' },
+      { num: 3, text: '    print("So khong")' },
+      { num: 4, text: 'else:' },
+      { num: 5, text: '    if n % 2 == 0:' },
+      { num: 6, text: '        loai_chan_le = "Chan"' },
+      { num: 7, text: '    else:' },
+      { num: 8, text: '        loai_chan_le = "Le"' },
+      { num: 9, text: '    if n > 0:' },
+      { num: 10, text: '        loai_dau = "Duong"' },
+      { num: 11, text: '    else:' },
+      { num: 12, text: '        loai_dau = "Am"' },
+      { num: 13, text: '    print(f"{n} la so {loai_chan_le} {loai_dau}")' }
+    ],
+    flowNodes: [
+      { id: "start", type: "terminal", text: "Bắt đầu", x: 260, y: 35, w: 180, h: 44 },
+      { id: "input", type: "io", text: "Nhập số nguyên n", x: 260, y: 105, w: 200, h: 44 },
+      { id: "c_zero", type: "decision", text: "n == 0 ?", x: 260, y: 185, w: 170, h: 54 },
+      { id: "out_zero", type: "io", text: 'In "Số không"', x: 520, y: 185, w: 180, h: 44 },
+      { id: "c_even", type: "decision", text: "n % 2 == 0 ?", x: 260, y: 280, w: 180, h: 54 },
+      { id: "p_even", type: "process", text: 'loai = "Chan"', x: 520, y: 255, w: 180, h: 42 },
+      { id: "p_odd", type: "process", text: 'loai = "Le"', x: 520, y: 305, w: 180, h: 42 },
+      { id: "c_pos", type: "decision", text: "n > 0 ?", x: 260, y: 390, w: 170, h: 54 },
+      { id: "p_pos", type: "process", text: 'dau = "Duong"', x: 520, y: 365, w: 180, h: 42 },
+      { id: "p_neg", type: "process", text: 'dau = "Am"', x: 520, y: 415, w: 180, h: 42 },
+      { id: "output", type: "io", text: "In kết quả phân loại", x: 260, y: 495, w: 230, h: 44 },
+      { id: "end", type: "terminal", text: "Kết thúc", x: 260, y: 575, w: 180, h: 44 }
+    ],
+    flowEdges: [
+      { from: "start", to: "input", d: "M260,57 V105" },
+      { from: "input", to: "c_zero", d: "M260,127 V185" },
+      { from: "c_zero", to: "out_zero", label: "Đúng", isYes: true, lx: 395, ly: 175, d: "M345,185 H520" },
+      { from: "out_zero", to: "end", label: "", isYes: false, d: "M610,207 V575 H350" },
+      { from: "c_zero", to: "c_even", label: "Sai", isYes: false, lx: 235, ly: 230, d: "M260,212 V280" },
+      { from: "c_even", to: "p_even", label: "Đúng", isYes: true, lx: 395, ly: 260, d: "M350,280 H520" },
+      { from: "c_even", to: "p_odd", label: "Sai", isYes: false, lx: 360, ly: 310, d: "M260,307 V325 H520" },
+      { from: "p_even", to: "c_pos", label: "", isYes: false, d: "M610,276 V390 H345" },
+      { from: "p_odd", to: "c_pos", label: "", isYes: false, d: "M610,326 V390 H345" },
+      { from: "c_pos", to: "p_pos", label: "Đúng", isYes: true, lx: 395, ly: 370, d: "M345,390 H520" },
+      { from: "c_pos", to: "p_neg", label: "Sai", isYes: false, lx: 360, ly: 420, d: "M260,417 V435 H520" },
+      { from: "p_pos", to: "output", label: "", isYes: false, d: "M610,386 V495 H375" },
+      { from: "p_neg", to: "output", label: "", isYes: false, d: "M610,436 V495 H375" },
+      { from: "output", to: "end", d: "M260,517 V575" }
+    ],
+    generateTrace: (inputStr) => {
+      let n = parseInt(inputStr);
+      if (isNaN(n)) return { error: "Vui lòng nhập một số nguyên (ví dụ: -7, 0, 8)!" };
+      let steps = [];
+      let mem = { n: { type: "int", val: n } };
+
+      steps.push({ node: "start", line: 1, teacher: "Khởi động chương trình.", mem: {}, out: "" });
+      steps.push({ node: "input", line: 1, teacher: `Đã đọc n = ${n} vào bộ nhớ RAM.`, mem: { ...mem }, out: "" });
+
+      let isZero = n === 0;
+      steps.push({
+        node: "c_zero", line: 2,
+        teacher: `Kiểm tra n == 0 ? (${n} == 0) => ${isZero ? "ĐÚNG (True)" : "SAI (False)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      if (isZero) {
+        steps.push({ node: "out_zero", line: 3, teacher: `In "So khong" ra màn hình.`, mem: { ...mem }, out: "So khong" });
+        steps.push({ node: "end", line: null, teacher: "Kết thúc chương trình.", mem: { ...mem }, out: "So khong" });
+        return { steps };
+      }
+
+      let isEven = n % 2 === 0;
+      steps.push({
+        node: "c_even", line: 5,
+        teacher: `Kiểm tra chia hết cho 2: n % 2 == 0 ? (${n} % 2 = ${Math.abs(n % 2)}) => ${isEven ? "ĐÚNG (Chẵn)" : "SAI (Lẻ)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      let loai_chan_le = isEven ? "Chan" : "Le";
+      mem.loai_chan_le = { type: "str", val: `"${loai_chan_le}"` };
+      steps.push({
+        node: isEven ? "p_even" : "p_odd", line: isEven ? 6 : 8,
+        teacher: `Gán loai_chan_le = "${loai_chan_le}".`,
+        mem: { ...mem }, out: ""
+      });
+
+      let isPos = n > 0;
+      steps.push({
+        node: "c_pos", line: 9,
+        teacher: `Kiểm tra dấu: n > 0 ? (${n} > 0) => ${isPos ? "ĐÚNG (Dương)" : "SAI (Âm)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      let loai_dau = isPos ? "Duong" : "Am";
+      mem.loai_dau = { type: "str", val: `"${loai_dau}"` };
+      steps.push({
+        node: isPos ? "p_pos" : "p_neg", line: isPos ? 10 : 12,
+        teacher: `Gán loai_dau = "${loai_dau}".`,
+        mem: { ...mem }, out: ""
+      });
+
+      let out = `${n} la so ${loai_chan_le} ${loai_dau}`;
+      steps.push({ node: "output", line: 13, teacher: `In kết quả cuối cùng: ${out}`, mem: { ...mem }, out: out });
+      steps.push({ node: "end", line: null, teacher: "Chương trình kết thúc.", mem: { ...mem }, out: out });
+
+      return { steps };
+    }
+  },
+
+  xep_loai_diem: {
+    id: "xep_loai_diem",
+    name: "3. Xếp loại học lực học sinh theo điểm số",
+    badge: "BÀI TOÁN KINH ĐIỂN · IF - ELIF - ELSE",
+    title: "3. Bài toán: Xếp loại học lực theo thang điểm 10",
+    desc: "Nhập điểm trung bình (từ 0.0 đến 10.0) của một học sinh. Phân loại theo quy tắc: từ 8.0 trở lên: 'Giỏi'; từ 6.5 đến dưới 8.0: 'Khá'; từ 5.0 đến dưới 6.5: 'Trung bình'; dưới 5.0: 'Yếu'.",
+    specs: [
+      { label: "Dữ liệu vào (Input)", val: "Một số thực <code>diem</code> trong đoạn [0.0, 10.0]." },
+      { label: "Dữ liệu ra (Output)", val: "Thông báo xếp loại (Giỏi, Khá, Trung bình, Yếu)." },
+      { label: "Cạm bẫy cần tránh", val: "Bắt buộc phải xét từ ngưỡng cao xuống thấp (8.0 -> 6.5 -> 5.0) để tránh lỗi logic rẽ nhánh sai!" }
+    ],
+    label: "Nhập điểm (0 - 10):",
+    defaultVal: "8.5",
+    chips: [
+      { text: "9.0 (Giỏi)", val: "9.0" },
+      { text: "7.2 (Khá)", val: "7.2" },
+      { text: "5.5 (Trung bình)", val: "5.5" },
+      { text: "4.0 (Yếu)", val: "4.0" }
+    ],
+    codeLines: [
+      { num: 1, text: 'diem = float(input("Nhap diem (0-10): "))' },
+      { num: 2, text: 'if diem >= 8.0:' },
+      { num: 3, text: '    xep_loai = "Gioi"' },
+      { num: 4, text: 'elif diem >= 6.5:' },
+      { num: 5, text: '    xep_loai = "Kha"' },
+      { num: 6, text: 'elif diem >= 5.0:' },
+      { num: 7, text: '    xep_loai = "Trung binh"' },
+      { num: 8, text: 'else:' },
+      { num: 9, text: '    xep_loai = "Yeu"' },
+      { num: 10, text: 'print(f"Xep loai: {xep_loai}")' }
+    ],
+    flowNodes: [
+      { id: "start", type: "terminal", text: "Bắt đầu", x: 260, y: 35, w: 180, h: 44 },
+      { id: "input", type: "io", text: "Nhập diem (số thực)", x: 260, y: 105, w: 200, h: 44 },
+      { id: "c_g", type: "decision", text: "diem >= 8.0 ?", x: 260, y: 185, w: 180, h: 54 },
+      { id: "p_g", type: "process", text: 'loai = "Gioi"', x: 520, y: 185, w: 180, h: 44 },
+      { id: "c_k", type: "decision", text: "diem >= 6.5 ?", x: 260, y: 275, w: 180, h: 54 },
+      { id: "p_k", type: "process", text: 'loai = "Kha"', x: 520, y: 275, w: 180, h: 44 },
+      { id: "c_tb", type: "decision", text: "diem >= 5.0 ?", x: 260, y: 365, w: 180, h: 54 },
+      { id: "p_tb", type: "process", text: 'loai = "Trung binh"', x: 520, y: 365, w: 190, h: 44 },
+      { id: "p_y", type: "process", text: 'loai = "Yeu"', x: 260, y: 455, w: 180, h: 44 },
+      { id: "output", type: "io", text: "In xếp loại học lực", x: 390, y: 535, w: 220, h: 44 },
+      { id: "end", type: "terminal", text: "Kết thúc", x: 390, y: 605, w: 180, h: 44 }
+    ],
+    flowEdges: [
+      { from: "start", to: "input", d: "M260,57 V105" },
+      { from: "input", to: "c_g", d: "M260,127 V185" },
+      { from: "c_g", to: "p_g", label: "Đúng", isYes: true, lx: 395, ly: 175, d: "M350,185 H520" },
+      { from: "p_g", to: "output", label: "", isYes: false, d: "M610,207 V535 H500" },
+      { from: "c_g", to: "c_k", label: "Sai", isYes: false, lx: 235, ly: 230, d: "M260,212 V275" },
+      { from: "c_k", to: "p_k", label: "Đúng", isYes: true, lx: 395, ly: 265, d: "M350,275 H520" },
+      { from: "p_k", to: "output", label: "", isYes: false, d: "M610,297 V535 H500" },
+      { from: "c_k", to: "c_tb", label: "Sai", isYes: false, lx: 235, ly: 320, d: "M260,302 V365" },
+      { from: "c_tb", to: "p_tb", label: "Đúng", isYes: true, lx: 395, ly: 355, d: "M350,365 H520" },
+      { from: "p_tb", to: "output", label: "", isYes: false, d: "M615,387 V535 H500" },
+      { from: "c_tb", to: "p_y", label: "Sai", isYes: false, lx: 235, ly: 410, d: "M260,392 V455" },
+      { from: "p_y", to: "output", label: "", isYes: false, d: "M260,477 V535 H280" },
+      { from: "output", to: "end", d: "M390,557 V605" }
+    ],
+    generateTrace: (inputStr) => {
+      let d = parseFloat(inputStr);
+      if (isNaN(d) || d < 0 || d > 10) return { error: "Vui lòng nhập điểm hợp lệ từ 0 đến 10!" };
+      let steps = [];
+      let mem = { diem: { type: "float", val: d } };
+
+      steps.push({ node: "start", line: 1, teacher: "Bắt đầu chương trình phân loại học lực.", mem: {}, out: "" });
+      steps.push({ node: "input", line: 1, teacher: `Nhập diem = ${d}.`, mem: { ...mem }, out: "" });
+
+      let isG = d >= 8.0;
+      steps.push({
+        node: "c_g", line: 2,
+        teacher: `Kiểm tra diem >= 8.0 ? (${d} >= 8.0) => ${isG ? "ĐÚNG" : "SAI"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      let loai = "";
+      if (isG) {
+        loai = "Gioi";
+        mem.xep_loai = { type: "str", val: '"Gioi"' };
+        steps.push({ node: "p_g", line: 3, teacher: `Gán xep_loai = "Gioi". Bỏ qua các nhánh elif còn lại.`, mem: { ...mem }, out: "" });
+      } else {
+        let isK = d >= 6.5;
+        steps.push({
+          node: "c_k", line: 4,
+          teacher: `Kiểm tra diem >= 6.5 ? (${d} >= 6.5) => ${isK ? "ĐÚNG" : "SAI"}.`,
+          mem: { ...mem }, out: ""
+        });
+        if (isK) {
+          loai = "Kha";
+          mem.xep_loai = { type: "str", val: '"Kha"' };
+          steps.push({ node: "p_k", line: 5, teacher: `Gán xep_loai = "Kha".`, mem: { ...mem }, out: "" });
+        } else {
+          let isTB = d >= 5.0;
+          steps.push({
+            node: "c_tb", line: 6,
+            teacher: `Kiểm tra diem >= 5.0 ? (${d} >= 5.0) => ${isTB ? "ĐÚNG" : "SAI"}.`,
+            mem: { ...mem }, out: ""
+          });
+          if (isTB) {
+            loai = "Trung binh";
+            mem.xep_loai = { type: "str", val: '"Trung binh"' };
+            steps.push({ node: "p_tb", line: 7, teacher: `Gán xep_loai = "Trung binh".`, mem: { ...mem }, out: "" });
+          } else {
+            loai = "Yeu";
+            mem.xep_loai = { type: "str", val: '"Yeu"' };
+            steps.push({ node: "p_y", line: 9, teacher: `Rơi vào nhánh else cuối cùng: xep_loai = "Yeu".`, mem: { ...mem }, out: "" });
+          }
+        }
+      }
+
+      let out = `Xep loai: ${loai}`;
+      steps.push({ node: "output", line: 10, teacher: `In kết quả: ${out}`, mem: { ...mem }, out: out });
+      steps.push({ node: "end", line: null, teacher: "Kết thúc chương trình.", mem: { ...mem }, out: out });
+
+      return { steps };
+    }
+  },
+
+  tam_giac_logic: {
+    id: "tam_giac_logic",
+    name: "4. Kiểm tra tam giác hợp lệ & phân loại (Toán tử logic)",
+    badge: "HÌNH HỌC TOÁN TIN · TOÁN TỬ LOGIC AND / OR",
+    title: "4. Bài toán: Kiểm tra 3 cạnh tam giác & phân loại",
+    desc: "Nhập độ dài 3 cạnh a, b, c. Trước tiên kiểm tra xem 3 cạnh có lập thành tam giác không (tổng 2 cạnh luôn lớn hơn cạnh còn lại). Nếu hợp lệ, phân loại tam giác: Đều, Cân, Vuông hoặc Thường.",
+    specs: [
+      { label: "Dữ liệu vào (Input)", val: "3 số thực <code>a, b, c</code> cách nhau bởi dấu phẩy." },
+      { label: "Dữ liệu ra (Output)", val: "'Tam giac deu', 'Tam giac can', 'Tam giac vuong', 'Tam giac thuong' hoặc 'Khong phai 3 canh tam giac'." },
+      { label: "Công thức toán học", val: "Bất đẳng thức: <code>a+b>c and a+c>b and b+c>a</code>; Định lý Pytago: <code>a² + b² == c²</code>." }
+    ],
+    label: "Nhập 3 cạnh a, b, c (cách nhau bởi phẩy):",
+    defaultVal: "3, 4, 5",
+    chips: [
+      { text: "3, 4, 5 (Vuông)", val: "3, 4, 5" },
+      { text: "5, 5, 5 (Đều)", val: "5, 5, 5" },
+      { text: "6, 6, 8 (Cân)", val: "6, 6, 8" },
+      { text: "1, 2, 5 (Không hợp lệ)", val: "1, 2, 5" }
+    ],
+    codeLines: [
+      { num: 1, text: 'a, b, c = map(float, input("Nhap a, b, c: ").split(","))' },
+      { num: 2, text: 'if a + b > c and a + c > b and b + c > a:' },
+      { num: 3, text: '    if a == b == c:' },
+      { num: 4, text: '        loai = "Tam giac deu"' },
+      { num: 5, text: '    elif a == b or b == c or a == c:' },
+      { num: 6, text: '        loai = "Tam giac can"' },
+      { num: 7, text: '    elif a**2 + b**2 == c**2 or a**2 + c**2 == b**2 or b**2 + c**2 == a**2:' },
+      { num: 8, text: '        loai = "Tam giac vuong"' },
+      { num: 9, text: '    else:' },
+      { num: 10, text: '        loai = "Tam giac thuong"' },
+      { num: 11, text: '    print(loai)' },
+      { num: 12, text: 'else:' },
+      { num: 13, text: '    print("Khong phai 3 canh tam giac")' }
+    ],
+    flowNodes: [
+      { id: "start", type: "terminal", text: "Bắt đầu", x: 260, y: 35, w: 180, h: 44 },
+      { id: "input", type: "io", text: "Nhập 3 cạnh a, b, c", x: 260, y: 105, w: 210, h: 44 },
+      { id: "c_valid", type: "decision", text: "Bất đẳng thức tam giác ?", x: 260, y: 185, w: 220, h: 54 },
+      { id: "out_invalid", type: "io", text: 'In "Không hợp lệ"', x: 530, y: 185, w: 180, h: 44 },
+      { id: "c_deu", type: "decision", text: "a == b == c ?", x: 260, y: 280, w: 180, h: 54 },
+      { id: "p_deu", type: "process", text: 'loai = "Tam giác đều"', x: 530, y: 280, w: 200, h: 44 },
+      { id: "c_can", type: "decision", text: "a==b or b==c or a==c ?", x: 260, y: 375, w: 210, h: 54 },
+      { id: "p_can", type: "process", text: 'loai = "Tam giác cân"', x: 530, y: 375, w: 200, h: 44 },
+      { id: "c_vuong", type: "decision", text: "Pytago: a²+b² == c² ?", x: 260, y: 470, w: 200, h: 54 },
+      { id: "p_vuong", type: "process", text: 'loai = "Tam giác vuông"', x: 530, y: 470, w: 210, h: 44 },
+      { id: "p_thuong", type: "process", text: 'loai = "Tam giác thường"', x: 260, y: 555, w: 220, h: 44 },
+      { id: "output", type: "io", text: "In loại tam giác", x: 395, y: 635, w: 210, h: 44 },
+      { id: "end", type: "terminal", text: "Kết thúc", x: 395, y: 705, w: 180, h: 44 }
+    ],
+    flowEdges: [
+      { from: "start", to: "input", d: "M260,57 V105" },
+      { from: "input", to: "c_valid", d: "M260,127 V185" },
+      { from: "c_valid", to: "out_invalid", label: "Sai", isYes: false, lx: 405, ly: 175, d: "M370,185 H530" },
+      { from: "out_invalid", to: "end", label: "", isYes: false, d: "M620,207 V705 H485" },
+      { from: "c_valid", to: "c_deu", label: "Đúng", isYes: true, lx: 235, ly: 230, d: "M260,212 V280" },
+      { from: "c_deu", to: "p_deu", label: "Đúng", isYes: true, lx: 405, ly: 270, d: "M350,280 H530" },
+      { from: "p_deu", to: "output", label: "", isYes: false, d: "M630,302 V635 H500" },
+      { from: "c_deu", to: "c_can", label: "Sai", isYes: false, lx: 235, ly: 325, d: "M260,307 V375" },
+      { from: "c_can", to: "p_can", label: "Đúng", isYes: true, lx: 405, ly: 365, d: "M365,375 H530" },
+      { from: "p_can", to: "output", label: "", isYes: false, d: "M630,397 V635 H500" },
+      { from: "c_can", to: "c_vuong", label: "Sai", isYes: false, lx: 235, ly: 420, d: "M260,402 V470" },
+      { from: "c_vuong", to: "p_vuong", label: "Đúng", isYes: true, lx: 405, ly: 460, d: "M360,470 H530" },
+      { from: "p_vuong", to: "output", label: "", isYes: false, d: "M635,492 V635 H500" },
+      { from: "c_vuong", to: "p_thuong", label: "Sai", isYes: false, lx: 235, ly: 510, d: "M260,497 V555" },
+      { from: "p_thuong", to: "output", label: "", isYes: false, d: "M260,577 V635 H290" },
+      { from: "output", to: "end", d: "M395,657 V705" }
+    ],
+    generateTrace: (inputStr) => {
+      let parts = inputStr.split(",").map(s => parseFloat(s.trim()));
+      if (parts.length !== 3 || parts.some(isNaN)) {
+        return { error: "Vui lòng nhập 3 cạnh cách nhau bởi dấu phẩy, ví dụ: 3, 4, 5" };
+      }
+      let [a, b, c] = parts;
+      let steps = [];
+      let mem = {
+        a: { type: "float", val: a },
+        b: { type: "float", val: b },
+        c: { type: "float", val: c }
+      };
+
+      steps.push({ node: "start", line: 1, teacher: "Bắt đầu thuật toán kiểm tra tam giác.", mem: {}, out: "" });
+      steps.push({ node: "input", line: 1, teacher: `Nhập 3 cạnh: a = ${a}, b = ${b}, c = ${c}.`, mem: { ...mem }, out: "" });
+
+      let isValid = (a + b > c) && (a + c > b) && (b + c > a);
+      steps.push({
+        node: "c_valid", line: 2,
+        teacher: `Kiểm tra bất đẳng thức tam giác: (a+b>c) and (a+c>b) and (b+c>a) => ${isValid ? "ĐÚNG (Hợp lệ)" : "SAI (Không hợp lệ)"}.`,
+        mem: { ...mem }, out: ""
+      });
+
+      if (!isValid) {
+        steps.push({ node: "out_invalid", line: 13, teacher: `In "Khong phai 3 canh tam giac".`, mem: { ...mem }, out: "Khong phai 3 canh tam giac" });
+        steps.push({ node: "end", line: null, teacher: "Kết thúc chương trình.", mem: { ...mem }, out: "Khong phai 3 canh tam giac" });
+        return { steps };
+      }
+
+      let isDeu = (a === b && b === c);
+      steps.push({ node: "c_deu", line: 3, teacher: `Kiểm tra tam giác đều: a == b == c ? => ${isDeu ? "ĐÚNG" : "SAI"}.`, mem: { ...mem }, out: "" });
+
+      let loai = "";
+      if (isDeu) {
+        loai = "Tam giac deu";
+        mem.loai = { type: "str", val: `"${loai}"` };
+        steps.push({ node: "p_deu", line: 4, teacher: `Gán loai = "Tam giac deu".`, mem: { ...mem }, out: "" });
+      } else {
+        let isCan = (a === b || b === c || a === c);
+        steps.push({ node: "c_can", line: 5, teacher: `Kiểm tra tam giác cân: a==b or b==c or a==c ? => ${isCan ? "ĐÚNG" : "SAI"}.`, mem: { ...mem }, out: "" });
+        if (isCan) {
+          loai = "Tam giac can";
+          mem.loai = { type: "str", val: `"${loai}"` };
+          steps.push({ node: "p_can", line: 6, teacher: `Gán loai = "Tam giac can".`, mem: { ...mem }, out: "" });
+        } else {
+          let isVuong = Math.abs(a*a + b*b - c*c) < 1e-5 || Math.abs(a*a + c*c - b*b) < 1e-5 || Math.abs(b*b + c*c - a*a) < 1e-5;
+          steps.push({ node: "c_vuong", line: 7, teacher: `Kiểm tra định lý Pytago (tam giác vuông) ? => ${isVuong ? "ĐÚNG" : "SAI"}.`, mem: { ...mem }, out: "" });
+          if (isVuong) {
+            loai = "Tam giac vuong";
+            mem.loai = { type: "str", val: `"${loai}"` };
+            steps.push({ node: "p_vuong", line: 8, teacher: `Gán loai = "Tam giac vuong".`, mem: { ...mem }, out: "" });
+          } else {
+            loai = "Tam giac thuong";
+            mem.loai = { type: "str", val: `"${loai}"` };
+            steps.push({ node: "p_thuong", line: 10, teacher: `Gán loai = "Tam giac thuong".`, mem: { ...mem }, out: "" });
+          }
+        }
+      }
+
+      steps.push({ node: "output", line: 11, teacher: `In kết quả: ${loai}`, mem: { ...mem }, out: loai });
+      steps.push({ node: "end", line: null, teacher: "Kết thúc chương trình.", mem: { ...mem }, out: loai });
+
+      return { steps };
+    }
+  }
+};
+
+// =====================================================================
+// SIMULATOR STATE ENGINE
+// =====================================================================
+let currentExample = EXAMPLES.dien_bac_thang;
+let simTrace = [];
+let currentStepIdx = -1;
+let autoPlayTimer = null;
+let playSpeedMs = 1200;
+
+function switchTab(tabId) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".tab-pane").forEach(p => p.hidden = true);
+
+  const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+  if (activeBtn) activeBtn.classList.add("active");
+  const targetPane = document.getElementById(`pane-${tabId}`);
+  if (targetPane) targetPane.hidden = false;
+
+  if (tabId === "theory") {
+    document.querySelectorAll(".tl-step").forEach((el, idx) => el.classList.toggle("active", idx === 0));
+  } else if (tabId === "simulator") {
+    document.querySelectorAll(".tl-step").forEach((el, idx) => el.classList.toggle("active", idx === 2));
+    if (currentStepIdx < 0) {
+      startSim();
+    }
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+});
+
+function updateTaskCard() {
+  document.getElementById("task-badge").textContent = currentExample.badge;
+  document.getElementById("task-title").textContent = currentExample.title;
+  document.getElementById("task-desc").innerHTML = currentExample.desc;
+  
+  const specsBox = document.getElementById("task-specs");
+  specsBox.innerHTML = currentExample.specs.map(s => `
+    <div class="spec-item"><strong>${s.label}:</strong> ${s.val}</div>
+  `).join("");
+}
+
+function onSelectExample() {
+  const sel = document.getElementById("sel-example");
+  currentExample = EXAMPLES[sel.value];
+  document.getElementById("lbl-input").textContent = currentExample.label;
+  document.getElementById("sim-input-val").value = currentExample.defaultVal;
+  updateTaskCard();
+  renderChips();
+  startSim();
+}
+
+function updatePlaySpeed() {
+  const sel = document.getElementById("sel-speed");
+  playSpeedMs = parseInt(sel.value) || 1200;
+  if (autoPlayTimer) {
+    stopAutoPlay();
+    toggleAutoPlay();
+  }
+}
+
+function copyPythonCode() {
+  const fullCode = currentExample.codeLines.map(l => l.text).join("\n");
+  navigator.clipboard.writeText(fullCode).then(() => {
+    const btn = document.getElementById("btn-copy-code");
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Đã chép!
+    `;
+    setTimeout(() => { btn.innerHTML = originalText; }, 1800);
+  });
+}
+
+function renderChips() {
+  const container = document.getElementById("chip-container");
+  container.innerHTML = "";
+  currentExample.chips.forEach(chip => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip-btn";
+    btn.textContent = chip.text;
+    btn.onclick = () => {
+      document.getElementById("sim-input-val").value = chip.val;
+      startSim();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// SAFE SYNTAX HIGHLIGHTER (NO HTML CORRUPTION)
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function highlightPythonSyntax(code) {
+  const tokenRegex = /(f"[^"\\]*(?:\\.[^"\\]*)*"|f'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*')|(#[^\n]*)|(\b(?:if|elif|else|and|or|not|in|is|def|return|for|while|import|from)\b)|(\b(?:print|input|float|int|str|bool|len|map|split|round)\b)|(\b\d+(?:\.\d+)?\b)|(==|!=|<=|>=|=>|->|\/\/|\*\*|[+\-*\/%<>=])/g;
+
+  let result = "";
+  let lastIndex = 0;
+  let match;
+
+  while ((match = tokenRegex.exec(code)) !== null) {
+    const before = code.slice(lastIndex, match.index);
+    result += escapeHtml(before);
+
+    const [full, str, comment, kw, fn, num, op] = match;
+    if (str) {
+      result += `<span class="str">${escapeHtml(str)}</span>`;
+    } else if (comment) {
+      result += `<span class="cm">${escapeHtml(comment)}</span>`;
+    } else if (kw) {
+      result += `<span class="kw">${escapeHtml(kw)}</span>`;
+    } else if (fn) {
+      result += `<span class="fn">${escapeHtml(fn)}</span>`;
+    } else if (num) {
+      result += `<span class="num">${escapeHtml(num)}</span>`;
+    } else if (op) {
+      result += `<span class="op">${escapeHtml(op)}</span>`;
+    }
+    lastIndex = tokenRegex.lastIndex;
+  }
+  result += escapeHtml(code.slice(lastIndex));
+  return result;
+}
+
+function renderCodePanel(activeLine = null) {
+  const container = document.getElementById("code-container");
+  container.innerHTML = "";
+  currentExample.codeLines.forEach(line => {
+    const row = document.createElement("div");
+    row.className = `code-row ${activeLine === line.num ? "active" : ""}`;
+    row.id = `code-line-${line.num}`;
+
+    const numSpan = document.createElement("span");
+    numSpan.className = "code-num";
+    numSpan.textContent = line.num;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "code-text";
+    textSpan.innerHTML = highlightPythonSyntax(line.text);
+
+    row.appendChild(numSpan);
+    row.appendChild(textSpan);
+    container.appendChild(row);
+  });
+}
+
+function renderFlowchart(activeNodeId = null, visitedEdges = []) {
+  const container = document.getElementById("flow-container");
+  const nodes = currentExample.flowNodes;
+  const edges = currentExample.flowEdges;
+
+  let maxY = 0;
+  nodes.forEach(n => { if (n.y + n.h > maxY) maxY = n.y + n.h; });
+  const svgHeight = maxY + 40;
+
+  let edgesHtml = edges.map(e => {
+    const isActive = visitedEdges.includes(`${e.from}->${e.to}`);
+    let labelHtml = "";
+    if (e.label && e.lx && e.ly) {
+      let cls = e.isYes ? "yes" : "no";
+      labelHtml = `
+        <g>
+          <rect x="${e.lx - 18}" y="${e.ly - 10}" width="36" height="20" rx="5" fill="#ffffff" stroke="${e.isYes ? "#bbf7d0" : "#fecaca"}" stroke-width="1.2"/>
+          <text x="${e.lx}" y="${e.ly}" class="label-pill ${cls}">${e.label}</text>
+        </g>
+      `;
+    }
+    return `
+      <g>
+        <path d="${e.d}" class="edge-line ${isActive ? "active" : ""}" marker-end="url(#${isActive ? "arr-active" : "arr"})"/>
+        ${labelHtml}
+      </g>
+    `;
+  }).join("");
+
+  let nodesHtml = nodes.map(n => {
+    const isActive = n.id === activeNodeId;
+    let shape = "";
+    if (n.type === "terminal") {
+      shape = `<rect x="${n.x - n.w/2}" y="${n.y - n.h/2}" width="${n.w}" height="${n.h}" rx="${n.h/2}" class="node-bg"/>`;
+    } else if (n.type === "io") {
+      let x1 = n.x - n.w/2 + 16, y1 = n.y - n.h/2;
+      let x2 = n.x + n.w/2 + 16, y2 = n.y - n.h/2;
+      let x3 = n.x + n.w/2 - 16, y3 = n.y + n.h/2;
+      let x4 = n.x - n.w/2 - 16, y4 = n.y + n.h/2;
+      shape = `<polygon points="${x1},${y1} ${x2},${y2} ${x3},${y3} ${x4},${y4}" class="node-bg"/>`;
+    } else if (n.type === "decision") {
+      let top = `${n.x},${n.y - n.h/2}`;
+      let right = `${n.x + n.w/2},${n.y}`;
+      let bottom = `${n.x},${n.y + n.h/2}`;
+      let left = `${n.x - n.w/2},${n.y}`;
+      shape = `<polygon points="${top} ${right} ${bottom} ${left}" class="node-bg"/>`;
+    } else {
+      shape = `<rect x="${n.x - n.w/2}" y="${n.y - n.h/2}" width="${n.w}" height="${n.h}" rx="8" class="node-bg"/>`;
+    }
+
+    return `
+      <g id="node-${n.id}" class="${isActive ? "node-active" : ""}">
+        ${shape}
+        <text x="${n.x}" y="${n.y}" class="node-text">${n.text}</text>
+      </g>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 740 ${svgHeight}" width="100%" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#64748b"/>
+        </marker>
+        <marker id="arr-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#2563eb"/>
+        </marker>
+      </defs>
+      ${edgesHtml}
+      ${nodesHtml}
+    </svg>
+  `;
+}
+
+function startSim() {
+  const inputVal = document.getElementById("sim-input-val").value;
+  const res = currentExample.generateTrace(inputVal);
+  const errBox = document.getElementById("sim-error-msg");
+
+  if (res.error) {
+    errBox.textContent = res.error;
+    errBox.style.display = "block";
+    return;
+  }
+  errBox.style.display = "none";
+
+  simTrace = res.steps;
+  currentStepIdx = 0;
+  document.getElementById("btn-prev").disabled = true;
+  document.getElementById("btn-next").disabled = (simTrace.length <= 1);
+  document.getElementById("btn-auto").disabled = false;
+  document.getElementById("btn-start").disabled = true;
+  document.getElementById("sim-input-val").disabled = true;
+
+  updateSimUI();
+}
+
+function nextStep() {
+  if (currentStepIdx < simTrace.length - 1) {
+    currentStepIdx++;
+    updateSimUI();
+  }
+}
+
+function prevStep() {
+  if (currentStepIdx > 0) {
+    currentStepIdx--;
+    updateSimUI();
+  }
+}
+
+function resetSim() {
+  stopAutoPlay();
+  document.getElementById("btn-start").disabled = false;
+  document.getElementById("btn-prev").disabled = true;
+  document.getElementById("btn-next").disabled = true;
+  document.getElementById("btn-auto").disabled = true;
+  document.getElementById("sim-input-val").disabled = false;
+  document.getElementById("sim-step-badge").textContent = "Chưa bắt đầu";
+  document.getElementById("commentary-box").textContent = 'Bấm "Bắt đầu" hoặc chọn một số liệu test nhanh để xem từng bước luồng chương trình di chuyển!';
+  document.getElementById("term-output").innerHTML = "$ python main.py<br>";
+  document.getElementById("memory-tbody").innerHTML = '<tr><td colspan="3" style="color:#94a3b8; text-align:center; padding:12px;">Chưa có biến nào khởi tạo</td></tr>';
+
+  simTrace = [];
+  currentStepIdx = -1;
+  renderCodePanel(null);
+  renderFlowchart(null, []);
+}
+
+function toggleAutoPlay() {
+  if (autoPlayTimer) {
+    stopAutoPlay();
+  } else {
+    document.getElementById("btn-auto").innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+      Tạm dừng
+    `;
+    autoPlayTimer = setInterval(() => {
+      if (currentStepIdx < simTrace.length - 1) {
+        nextStep();
+      } else {
+        stopAutoPlay();
+      }
+    }, playSpeedMs);
+  }
+}
+
+function stopAutoPlay() {
+  if (autoPlayTimer) {
+    clearInterval(autoPlayTimer);
+    autoPlayTimer = null;
+    document.getElementById("btn-auto").innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      Tự động chạy
+    `;
+  }
+}
+
+function updateSimUI() {
+  if (currentStepIdx < 0 || currentStepIdx >= simTrace.length) return;
+  const step = simTrace[currentStepIdx];
+
+  document.getElementById("btn-prev").disabled = (currentStepIdx === 0);
+  document.getElementById("btn-next").disabled = (currentStepIdx === simTrace.length - 1);
+  if (currentStepIdx === simTrace.length - 1) stopAutoPlay();
+
+  document.getElementById("sim-step-badge").textContent = `Bước ${currentStepIdx + 1} / ${simTrace.length}`;
+
+  renderCodePanel(step.line);
+
+  let visitedEdges = [];
+  for (let i = 0; i < currentStepIdx; i++) {
+    visitedEdges.push(`${simTrace[i].node}->${simTrace[i+1].node}`);
+  }
+  renderFlowchart(step.node, visitedEdges);
+
+  document.getElementById("commentary-box").textContent = step.teacher;
+
+  const tbody = document.getElementById("memory-tbody");
+  tbody.innerHTML = "";
+  const entries = Object.entries(step.mem);
+  if (entries.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" style="color:#94a3b8; text-align:center; padding:12px;">Chưa có biến nào khởi tạo</td></tr>';
+  } else {
+    entries.forEach(([name, info]) => {
+      let displayVal = typeof info.val === "number" ? info.val.toLocaleString('vi-VN') : info.val;
+      tbody.innerHTML += `
+        <tr>
+          <td class="var-name">${name}</td>
+          <td><span style="background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:600; color:#475569;">${info.type}</span></td>
+          <td class="var-val">${displayVal}</td>
+        </tr>
+      `;
+    });
+  }
+
+  let termEl = document.getElementById("term-output");
+  let inputVal = document.getElementById("sim-input-val").value;
+  let termText = `$ python main.py<br><span style="color:#64748b;">${currentExample.label} ${inputVal}</span><br>`;
+  if (step.out) {
+    termText += `<span style="color:#4ade80; font-weight:600;">${step.out}</span><br>`;
+  }
+  termEl.innerHTML = termText;
+}
+
+// =====================================================================
+// QUICK CALCULATOR & DYNAMIC WATER BUCKETS IN TAB 1
+// =====================================================================
+function setKwhVal(val) {
+  const input = document.getElementById("calc-kwh");
+  if (input) input.value = val;
+  document.querySelectorAll(".chip-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent.includes(val + " kWh"));
+  });
+  runQuickCalc();
+}
+
+function runQuickCalc() {
+  const inputEl = document.getElementById("calc-kwh");
+  const rawVal = inputEl ? String(inputEl.value).trim() : "125";
+  const kwh = parseFloat(rawVal) || 0;
+  const outBox = document.getElementById("calc-output");
+  const tableBody = document.getElementById("tariff-table-body");
+  const tableFoot = document.getElementById("tariff-table-foot");
+  const bucketContainer = document.getElementById("bucket-row-container");
+  const summaryText = document.getElementById("bucket-summary-text");
+
+  if (kwh < 0) {
+    if (outBox) outBox.innerHTML = '<span style="color:#dc2626; font-weight:700;">⚠️ Số điện không hợp lệ! Vui lòng nhập số lớn hơn hoặc bằng 0.</span>';
+    return;
+  }
+
+  let b1 = Math.min(Math.max(kwh, 0), 50);
+  let b2 = Math.min(Math.max(kwh - 50, 0), 50);
+  let b3 = Math.min(Math.max(kwh - 100, 0), 100);
+  let b4 = Math.min(Math.max(kwh - 200, 0), 100);
+  let b5 = Math.max(kwh - 300, 0);
+
+  let t1 = b1 * 1806;
+  let t2 = b2 * 1866;
+  let t3 = b3 * 2167;
+  let t4 = b4 * 2729;
+  let t5 = b5 * 3050;
+
+  let tien = t1 + t2 + t3 + t4 + t5;
+  let vat = Math.round(tien * 0.08);
+  let tong = tien + vat;
+
+  const tiers = [
+    { num: 1, cls: "tier-1", label: "Bậc 1", range: "0 đến 50", price: 1806, max: 50, cur: b1, money: t1 },
+    { num: 2, cls: "tier-2", label: "Bậc 2", range: "51 đến 100", price: 1866, max: 50, cur: b2, money: t2 },
+    { num: 3, cls: "tier-3", label: "Bậc 3", range: "101 đến 200", price: 2167, max: 100, cur: b3, money: t3 },
+    { num: 4, cls: "tier-4", label: "Bậc 4", range: "201 đến 300", price: 2729, max: 100, cur: b4, money: t4 },
+    { num: 5, cls: "tier-5", label: "Bậc 5", range: "301 trở lên", price: 3050, max: null, cur: b5, money: t5 }
+  ];
+
+  if (tableBody) {
+    tableBody.innerHTML = tiers.map(t => {
+      let isFull = t.max && t.cur >= t.max;
+      let isActive = t.cur > 0 && (!t.max || t.cur < t.max);
+      let rowCls = isFull ? "tier-full" : (isActive ? "tier-active" : "tier-empty");
+      let statusBadge = isFull 
+        ? `<span class="status-badge status-full">✓ Đầy mức (${t.cur}/${t.max})</span>`
+        : (isActive 
+          ? `<span class="status-badge status-active">▶ Đang tính (${t.cur}${t.max ? `/${t.max}` : ""})</span>`
+          : `<span class="status-badge status-empty">Chưa chạm tới</span>`);
+
+      return `
+        <tr class="${rowCls}">
+          <td><span class="badge-tier ${t.cls}">${t.label}</span></td>
+          <td>Cho kWh từ <strong>${t.range}</strong></td>
+          <td><strong>${t.price.toLocaleString("vi-VN")} đ</strong>/kWh</td>
+          <td style="text-align:center; font-size:14px;">
+            <strong style="color:${t.cur > 0 ? "#1d4ed8" : "#64748b"};">${t.cur}</strong> kWh
+          </td>
+          <td style="text-align:right; font-size:14px;">
+            <strong style="color:${t.money > 0 ? "#0f766e" : "#94a3b8"};">${t.money.toLocaleString("vi-VN")} đ</strong>
+          </td>
+          <td style="text-align:center;">${statusBadge}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  if (tableFoot) {
+    tableFoot.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align:right; font-weight:800; color:#1e293b;">TỔNG CỘNG TIÊU THỤ & TIỀN ĐIỆN CHƯA THUẾ:</td>
+        <td style="text-align:center; font-weight:800; font-size:15px; color:#1d4ed8;">${kwh} kWh</td>
+        <td style="text-align:right; font-weight:800; font-size:15px; color:#0f766e;">${tien.toLocaleString("vi-VN")} đ</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="text-align:right; font-weight:700; color:#475569;">Thuế Giá trị gia tăng GTGT (8%):</td>
+        <td style="text-align:right; font-weight:700; color:#475569;">${vat.toLocaleString("vi-VN")} đ</td>
+        <td></td>
+      </tr>
+      <tr style="background:#e0f2fe;">
+        <td colspan="4" style="text-align:right; font-weight:800; font-size:15px; color:#1e3a8a;">TỔNG TIỀN PHẢI THANH TOÁN (GỒM VAT):</td>
+        <td style="text-align:right; font-weight:800; font-size:17px; color:#dc2626;">${tong.toLocaleString("vi-VN")} đ</td>
+        <td style="text-align:center;"><span style="background:#2563eb; color:white; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">Hóa Đơn Cuối</span></td>
+      </tr>
+    `;
+  }
+
+  if (bucketContainer) {
+    bucketContainer.innerHTML = tiers.map(b => {
+      let pct = b.max ? Math.min(Math.round((b.cur / b.max) * 100), 100) : (b.cur > 0 ? Math.min(Math.round((b.cur / 100) * 100), 100) : 0);
+      let isActive = b.cur > 0;
+      return `
+        <div class="bucket-col ${isActive ? "active" : ""}">
+          <div class="bucket-water" style="height: ${pct}%;"></div>
+          <div class="bucket-content">
+            <div class="b-name">${b.label}</div>
+            <div class="b-range">${b.range} kWh</div>
+            <div class="b-price">${b.price.toLocaleString("vi-VN")} đ/kWh</div>
+            <div class="b-calc" style="font-weight:700;">${b.cur} kWh</div>
+            <div style="font-size:12px; font-weight:800; color:${isActive ? "#1d4ed8" : "#94a3b8"}; margin-top:2px;">
+              ${b.money > 0 ? b.money.toLocaleString("vi-VN") + " đ" : "0 đ"}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  if (summaryText) {
+    summaryText.innerHTML = `
+      👉 <strong>Với ${kwh} kWh:</strong> Tiền điện chưa thuế = <strong>${tien.toLocaleString("vi-VN")} đ</strong> 
+      + Thuế GTGT 8% (${vat.toLocaleString("vi-VN")} đ) = 
+      <span style="color:#dc2626; font-size:15px; font-weight:800;">${tong.toLocaleString("vi-VN")} đồng</span>.
+    `;
+  }
+
+  if (outBox) {
+    outBox.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <span style="font-size:12px; color:#64748b; font-weight:700; text-transform:uppercase;">Tổng Tiền Thanh Toán (Gồm 8% VAT):</span>
+          <div style="font-size:26px; font-weight:800; color:#1d4ed8;">${tong.toLocaleString("vi-VN")} VNĐ</div>
+        </div>
+        <div style="font-size:13px; color:#475569; text-align:right;">
+          Tiền điện chưa thuế: <strong>${tien.toLocaleString("vi-VN")} đ</strong><br>
+          Tiền thuế VAT (8%): <strong>${vat.toLocaleString("vi-VN")} đ</strong>
+        </div>
+      </div>
+      <div class="calc-breakdown">
+        <strong>Bảng kê chi tiết từng bậc:</strong>
+        <ul style="padding-left:18px; margin-top:6px; line-height:1.7;">
+          ${b1 > 0 ? `<li>Bậc 1 (0-50 kWh): <strong>${b1} kWh</strong> × 1.806 đ = <strong>${t1.toLocaleString("vi-VN")} đ</strong></li>` : ""}
+          ${b2 > 0 ? `<li>Bậc 2 (51-100 kWh): <strong>${b2} kWh</strong> × 1.866 đ = <strong>${t2.toLocaleString("vi-VN")} đ</strong></li>` : ""}
+          ${b3 > 0 ? `<li>Bậc 3 (101-200 kWh): <strong>${b3} kWh</strong> × 2.167 đ = <strong>${t3.toLocaleString("vi-VN")} đ</strong></li>` : ""}
+          ${b4 > 0 ? `<li>Bậc 4 (201-300 kWh): <strong>${b4} kWh</strong> × 2.729 đ = <strong>${t4.toLocaleString("vi-VN")} đ</strong></li>` : ""}
+          ${b5 > 0 ? `<li>Bậc 5 (&gt;300 kWh): <strong>${b5} kWh</strong> × 3.050 đ = <strong>${t5.toLocaleString("vi-VN")} đ</strong></li>` : ""}
+        </ul>
+      </div>
+    `;
+  }
+}
+
+// =====================================================================
+// INITIALIZATION
+// =====================================================================
+window.addEventListener("DOMContentLoaded", () => {
+  updateTaskCard();
+  renderChips();
+  startSim();
+  runQuickCalc();
+  updateTimerDisplay();
+});
+</script>
+
+
+  <!-- Global Footer -->
+  <footer class="global-footer" style="margin-top:40px;">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
+          MindX Technology School &bull; TT-C4K-PTB30
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">
+          Bài 5: Ôn Tập 4 Trụ Cột & Dự Án Tiền Điện EVN | Thầy Huy Trần
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 5</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

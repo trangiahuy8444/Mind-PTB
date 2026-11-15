@@ -1,0 +1,136 @@
+# Mind-PTB: Hệ Thống Học Liệu & Web Tương Tác Lập Trình Python
+> **Lớp học:** `TT-C4K-PTB30` &bull; **Đơn vị:** MindX Technology School  
+> **Giáo viên phụ trách:** Thầy Huy Trần  
+> **Repository:** [https://github.com/trangiahuy8444/Mind-PTB.git](https://github.com/trangiahuy8444/Mind-PTB.git)
+
+---
+
+## 🌟 Giới Thiệu Khóa Học
+
+Hệ thống web học liệu tương tác (Interactive Web Labs) được xây dựng theo chuẩn giao diện hiện đại, đồng bộ và liên kết kiến thức sư phạm chặt chẽ dành cho học sinh khóa **Lập trình Python Cơ Bản (TT-C4K-PTB30)**.
+
+Toàn bộ các buổi học đều được tích hợp công nghệ chạy Python trực tiếp trên trình duyệt (**Skulpt Python Engine**), bộ mô phỏng ô nhớ RAM trực quan, trình mô phỏng sơ đồ khối động (Flowchart Stepper) và hệ thống trắc nghiệm phản xạ có chấm điểm tự động kèm giải thích chi tiết.
+
+---
+
+## 🧭 Lộ Trình Kiến Thức Liên Hoàn (Knowledge Continuity)
+
+Chương trình học được thiết kế theo lộ trình xoắn ốc liên hoàn:
+
+```
+[Buổi 1: Biến & Lệnh Nhập/Xuất]
+            │
+            ▼ (Giải mã vì sao input() luôn trả về chuỗi text)
+[Buổi 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting)]
+            │
+            ▼ (Dữ liệu đã là số -> Làm chủ các phép toán chia nguyên //, chia dư %, lũy thừa **)
+[Buổi 3: Sức Mạnh Toán Tử & Biểu Thức So Sánh/Logic]
+            │
+            ▼ (Biểu thức trả về True/False -> Dùng làm điều kiện rẽ nhánh đèn xanh/đỏ)
+[Buổi 4: Cấu Trúc Rẽ Nhánh (if - elif - else) & Sơ Đồ Khối Flowchart]
+            │
+            ▼ (Tổng hợp 4 trụ cột -> Chinh phục bài toán lũy tiến bậc thang ngoài thực tế)
+[Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp 4 Trụ Cột Nền Tảng]
+```
+
+---
+
+## 📚 Danh Sách Các Buổi Học & Tính Năng Tương Tác
+
+### 🏠 [Trang Chủ Cổng Học Tập (index.html)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/index.html)
+- Tổng quan khóa học, bản đồ lộ trình học tập và bảng điều hướng 1-click tới toàn bộ 5 buổi học.
+
+### 📘 [Buổi 1: Làm Quen Python, print(), input() & Biến Số](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%201/index.html)
+- **Lý thuyết:** Lệnh `print()`, lệnh `input()`, biến số là chiếc hộp dán nhãn trong RAM, quy tắc đặt tên biến snake_case.
+- **Tương tác:** Mô phỏng cấp phát ô nhớ RAM (Interactive RAM Allocator), trình chạy code Skulpt (bài toán hỏi tên tuổi và bảng cửu chương 98).
+- **Trắc nghiệm:** 10 câu hỏi phản xạ nhanh có chấm điểm và giải thích.
+- **Thực hành:** Thiệp giới thiệu cá nhân, bảng cửu chương tùy biến.
+
+### 📗 [Buổi 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%202/index.html)
+- **Lý thuyết:** 4 kiểu dữ liệu kinh điển (`int`, `float`, `str`, `bool`), hàm `type()`, giải mã cạm bẫy nối chuỗi `"10" + "20" = "1020"`, lỗi `ValueError`.
+- **Tương tác:** Bộ phân tích chuyển đổi kiểu dữ liệu đa năng (Type Inspector Lab), máy tính tuổi 10 năm nữa có mô phỏng biến đổi kiểu.
+- **Trắc nghiệm:** 10 câu hỏi trắc nghiệm kiểm tra độ hiểu sâu về ép kiểu.
+- **Thực hành:** Cỗ máy thời gian dự đoán tuổi, máy đổi ngoại tệ USD sang VNĐ.
+
+### 📙 [Buổi 3: Sức Mạnh Toán Tử (Số Học, Quan Hệ, Logic)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%203/index.html)
+- **Lý thuyết:** Toán tử số học (`//`, `%`, `**`), toán tử quan hệ (`==`, `!=`, `<`, `>`, `<=`, `>=`), cổng logic (`and`, `or`, `not`), thứ tự ưu tiên PEMDAS.
+- **Tương tác:** Máy tính toán tử tương tác (Operator Expression Evaluator), trình chạy code chia đội hình và điểm trung bình.
+- **Trắc nghiệm:** Trọn bộ **20 câu hỏi trắc nghiệm** chuẩn hóa từ `Bai3_Trắc Nghiệm Toán Tử.pdf`.
+- **Thực hành:** 4 bài tập thực hành tại lớp (Lũy thừa diện tích/thể tích, chia đội hình, điểm TB, chẵn lẻ).
+
+### 📕 [Buổi 4: Cấu Trúc Rẽ Nhánh (if - elif - else) & Sơ Đồ Khối](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%204/index.html)
+- **Lý thuyết:** Cú pháp `if`, `if-else`, `if-elif-else`, 4 ký hiệu sơ đồ khối Flowchart quốc tế, 3 lỗi cấm kỵ: quên `:`, lỗi thụt lề `IndentationError`, nhầm `=` với `==`.
+- **Tương tác:** Trình mô phỏng sơ đồ khối động (Flowchart Stepper Simulator) sáng viền từng bước và đồng bộ với giải thích.
+- **Trắc nghiệm:** Trọn bộ **20 câu hỏi trắc nghiệm Wayground** có hình ảnh mã code thực tế từ `Trac_nghiem_Python_Hoc_sinh.pdf`.
+- **Thực hành:** Trọn bộ 10 bài toán rẽ nhánh kinh điển (có tiền đề bài toán tiền điện 2 bậc).
+
+### 🎓 [Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp 4 Trụ Cột](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%205/index.html)
+- **Lý thuyết:** Rà soát 4 trụ cột, phân tích bản chất mô hình "xô nước bậc thang" EVN (5 bậc + 8% VAT).
+- **Tương tác:** Phòng thí nghiệm Trace Code Flowchart & Bộ nhớ RAM cho 4 bài toán thực tế, công cụ tính tiền điện EVN trực quan.
+- **Trắc nghiệm:** 8 câu hỏi phản xạ bẫy logic sâu.
+- **Thực hành:** Bộ mã nguồn mẫu chuẩn `bai5_on_tap.py` và bài tập về nhà.
+
+---
+
+## 🛠️ Cấu Trúc Thư Mục Repository
+
+```
+TT-C4K-PTB30/
+├── index.html                      # Cổng học tập trung tâm (Course Portal)
+├── README.md                       # Tài liệu hướng dẫn khóa học
+├── .gitignore                      # Bộ lọc tệp tạm thời hệ điều hành
+│
+├── assets/                         # Hệ thống tài nguyên dùng chung
+│   ├── css/
+│   │   └── template.css            # Design System chuẩn hóa toàn bộ giao diện
+│   └── js/
+│       └── common.js               # Động cơ chuyển Tab, Trắc nghiệm, Chạy Python
+│
+├── LESSON 1/                       # Buổi 1: Biến & Lệnh Nhập/Xuất
+│   ├── index.html                  # Web tương tác Buổi 1
+│   ├── main.py                     # Mã nguồn hỏi đáp tên tuổi
+│   └── bangcuuchuong.py            # Mã nguồn bảng cửu chương 98
+│
+├── LESSON 2/                       # Buổi 2: Kiểu Dữ Liệu & Ép Kiểu
+│   ├── index.html                  # Web tương tác Buổi 2
+│   ├── main.py                     # Mã nguồn tính tuổi tương lai
+│   └── bttl_1.py                   # File bài tập tự luyện
+│
+├── LESSON 3/                       # Buổi 3: Sức Mạnh Toán Tử
+│   ├── index.html                  # Web tương tác Buổi 3 (Template chuẩn)
+│   ├── Bai3.html                   # Web thực hành toán tử gốc
+│   ├── Bai3_Thuchanhtailop.pdf     # Đề bài tập thực hành 4 bài
+│   └── Bai3_Trắc Nghiệm Toán Tử.pdf # Bộ 20 câu trắc nghiệm gốc
+│
+├── LESSON 4/                       # Buổi 4: Cấu Trúc Rẽ Nhánh & Flowchart
+│   ├── index.html                  # Web tương tác Buổi 4 (Tích hợp Flowchart + 20 câu)
+│   ├── interactivebranchingsimulator.html # Simulator rẽ nhánh gốc
+│   ├── Bai4_Thuchanhtailop.pdf     # Đề 10 bài tập thực hành kèm đáp án
+│   ├── Trac_nghiem_Python_Hoc_sinh.pdf # Bộ đề 20 câu trắc nghiệm rẽ nhánh
+│   └── Wayground_Code/             # Tài liệu & 11 hình ảnh code trắc nghiệm
+│       ├── Huong_dan.html
+│       └── Anh_code/
+│
+└── LESSON 5/                       # Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp
+    ├── index.html                  # Web tương tác Buổi 5 hoàn chỉnh (2800+ dòng)
+    ├── interactive_review_lesson5.html
+    ├── Giao_An_Bai_5.md            # Kế hoạch bài dạy chi tiết 60 phút
+    └── bai5_on_tap.py              # Mã nguồn hoàn chỉnh bài toán EVN & hình học
+```
+
+---
+
+## 🚀 Hướng Dẫn Sử Dụng & Trải Nghiệm
+
+1. **Xem trực tiếp trên máy (Offline/Local):**
+   - Mở bất kỳ file `index.html` nào bằng trình duyệt web yêu thích (Google Chrome, Microsoft Edge, Safari, Firefox).
+   - Không cần cài đặt bất kỳ máy chủ (server) hay phần mềm nào khác!
+
+2. **Kích hoạt GitHub Pages (Online):**
+   - Sau khi push lên GitHub, truy cập **Settings** &rarr; **Pages** của repository.
+   - Chọn nhánh **main** và thư mục **/ (root)** rồi nhấn **Save**.
+   - Toàn bộ trang web sẽ được phát hành miễn phí trên internet theo địa chỉ:  
+     `https://trangiahuy8444.github.io/Mind-PTB/`
+
+---
+*Chúc các em học sinh lớp TT-C4K-PTB30 có những giờ học lập trình bổ ích và đầy cảm hứng!* 🚀
