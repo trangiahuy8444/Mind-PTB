@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 7: Vòng Lặp Vô Hạn (while), break &amp; continue | Lập Trình Python Cơ Bản</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .trace-code { background:var(--code-bg); border-radius:var(--radius-md); padding:12px 0; font-family:var(--font-mono); font-size:13.5px; color:#e2e8f0; overflow-x:auto; }
+    .trace-line { display:flex; border-left:3px solid transparent; padding:3px 14px 3px 0; white-space:pre; }
+    .trace-line .ln { width:36px; text-align:right; padding-right:12px; color:#64748b; user-select:none; flex-shrink:0; }
+    .trace-line.active { background:#1e3a8a; border-left-color:#38bdf8; }
+    .trace-console { background:#030712; color:#a7f3d0; font-family:var(--font-mono); font-size:13px; padding:12px 14px; border-radius:var(--radius-md); min-height:110px; max-height:220px; overflow-y:auto; white-space:pre-wrap; }
+    .trace-explain { background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; border-radius:6px; font-size:14px; color:#78350f; min-height:68px; }
+    .step-counter { font-size:13px; font-weight:700; color:#0369a1; background:#e0f2fe; padding:4px 10px; border-radius:20px; }
+    .flow-loop-box { display:flex; flex-direction:column; align-items:center; gap:8px; padding:18px; background:#f8fafc; border:1px solid var(--border-color); border-radius:var(--radius-md); }
+    .fl-node { padding:8px 18px; border-radius:8px; border:2px solid #cbd5e1; background:white; font-weight:700; font-size:13px; text-align:center; }
+    .fl-oval { border-radius:24px; background:#f1f5f9; }
+    .fl-cond { border-color:#f59e0b; background:#fffbeb; color:#92400e; }
+    .guess-box { background:linear-gradient(135deg,#0f172a,#1e293b); color:white; border-radius:var(--radius-lg); padding:22px; }
+    .guess-log { background:#020617; border-radius:8px; padding:12px; font-family:var(--font-mono); font-size:13px; color:#94a3b8; min-height:90px; max-height:160px; overflow-y:auto; margin-top:14px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="index.html" class="active" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 7</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(14, 165, 233, 0.22); color:#7dd3fc;">Cấp Độ: Vòng Lặp Điều Kiện</span>
+          </div>
+          <h1 class="lesson-title">Bài 7: Vòng Lặp Vô Hạn (while), break &amp; continue</h1>
+          <p class="lesson-desc">
+            Làm chủ vòng lặp lặp theo điều kiện <code>while</code> khi chưa biết trước số lần lặp, điều khiển luồng thông minh với <code>break</code> / <code>continue</code> và nhận biết bẫy lặp vô hạn.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết &amp; Trọng Tâm</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🔬 2. Mô Phỏng While &amp; Code Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">♾️</span> 1. Khi Nào Cần Dùng while Thay Cho for?</h2>
+          <span style="font-size:12px; background:#e0f2fe; color:#0369a1; padding:4px 10px; border-radius:20px; font-weight:600;">Kết nối Bài 6</span>
+        </div>
+        <p>Ở Bài 6, vòng lặp <code>for</code> rất mạnh khi ta <strong>biết trước số lần lặp</strong> (10 dòng bảng nhân, 12 tháng tiền điện). Nhưng với các bài toán thực tế sau đây, bạn có biết trước cần lặp bao nhiêu lần không?</p>
+        <div class="grid-2" style="margin-top:14px;">
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#1e40af; font-weight:700; margin-bottom:8px;">📏 Dùng <code>for</code> (Hữu hạn)</h4>
+            <ul style="padding-left:18px; font-size:14px; line-height:1.7; color:#1e3a8a;">
+              <li>In bảng nhân từ 1 đến 10.</li>
+              <li>Tính tổng các số từ 1 đến <code>n</code>.</li>
+              <li>Duyệt qua từng ký tự của chuỗi <code>"MindX"</code>.</li>
+            </ul>
+          </div>
+          <div style="background:#ecfeff; border:1px solid #a5f3fc; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#0e7490; font-weight:700; margin-bottom:8px;">🔄 Dùng <code>while</code> (Theo điều kiện)</h4>
+            <ul style="padding-left:18px; font-size:14px; line-height:1.7; color:#155e75;">
+              <li>Nhập mật khẩu cho đến khi gõ đúng mới cho đăng nhập.</li>
+              <li>Nhập số liên tục cho đến khi người dùng gõ <code>-1</code> thì dừng.</li>
+              <li>Vòng lặp Game chạy liên tục cho đến khi nhân vật hết máu (<code>hp &lt;= 0</code>).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧬</span> 2. Cấu Trúc 3 Mảnh Ghép Của while &amp; Sơ Đồ Khối</h2>
+        </div>
+        <p>Hãy tưởng tượng <code>while</code> giống như việc <strong>chạy quanh sân trường</strong>: trước mỗi vòng chạy, thầy kiểm tra <em>"Đã đủ sức / chưa nghe tiếng còi chưa?"</em> — còn đúng thì chạy tiếp, sai thì dừng lại.</p>
+
+        <div class="grid-2" style="margin-top:16px; align-items:start;">
+          <div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>ba_manh_ghep_while.py</span><button class="btn-copy" data-target="th-while-3">Sao chép</button></div>
+              <div class="code-editor-area"><textarea id="th-while-3" readonly style="min-height:150px;">i = 1                # 1. KHỞI TẠO biến điều kiện
+while i <= 5:        # 2. ĐIỀU KIỆN lặp (giống if, nhớ dấu :)
+    print(i)         #    Thân vòng lặp (thụt lề 4 dấu cách)
+    i += 1           # 3. CẬP NHẬT biến để tiến tới lúc dừng!
+print("Xong!")</textarea></div>
+            </div>
+            <div class="alert alert-danger" style="margin-top:14px;">
+              <span>🚨</span>
+              <div>
+                <strong>Bẫy Vòng Lặp Vô Hạn (Infinite Loop):</strong><br>
+                Nếu quên dòng <code>i += 1</code>, biến <code>i</code> mãi mãi bằng <code>1 &lt;= 5</code> → chương trình chạy mãi không bao giờ dừng! Khi lỡ chạy nhầm trên Terminal, hãy bấm ngay tổ hợp phím cứu hộ <kbd style="background:#fee2e2; padding:2px 6px; border-radius:4px; font-weight:800;">Ctrl + C</kbd> để ngắt!
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-loop-box">
+            <div style="font-size:12px; font-weight:800; color:#64748b; text-transform:uppercase;">Sơ Đồ Khối Vòng Lặp While</div>
+            <div class="fl-node fl-oval">1. Khởi tạo biến (i = 1)</div>
+            <div>&darr;</div>
+            <div class="fl-node fl-cond">2. Kiểm tra điều kiện: i &le; 5 ?</div>
+            <div style="display:flex; width:100%; justify-content:space-around; gap:10px; margin-top:4px;">
+              <div style="text-align:center; flex:1;">
+                <span style="font-size:12px; font-weight:700; color:#10b981;">True (Đúng)</span><br>&darr;
+                <div class="fl-node" style="margin-top:4px; border-color:#3b82f6;">Chạy thân lặp &amp;<br>Cập nhật i += 1</div>
+                <div style="font-size:12px; color:#2563eb; font-weight:700; margin-top:4px;">&uarr; Quay lại bước 2</div>
+              </div>
+              <div style="text-align:center; flex:1;">
+                <span style="font-size:12px; font-weight:700; color:#ef4444;">False (Sai)</span><br>&darr;
+                <div class="fl-node fl-oval" style="margin-top:4px; border-color:#ef4444;">Thoát vòng lặp<br>Chạy lệnh sau</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🚦</span> 3. Hai Lệnh Điều Khiển Luồng: break &amp; continue</h2>
+        </div>
+        <div class="grid-3">
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#991b1b; font-weight:800; margin-bottom:6px;">🛑 <code>break</code> (Thoát Khẩn Cấp)</h4>
+            <p style="font-size:13.5px; color:#7f1d1d;">Chấm dứt <strong>ngay lập tức toàn bộ</strong> vòng lặp đang chứa nó và nhảy xuống dòng code đầu tiên sau vòng lặp.</p>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#92400e; font-weight:800; margin-bottom:6px;">⏭️ <code>continue</code> (Bỏ Qua Lượt Này)</h4>
+            <p style="font-size:13.5px; color:#78350f;">Bỏ qua các dòng code còn lại ở lượt hiện tại và <strong>nhảy thẳng lên đầu vòng lặp</strong> kiểm tra điều kiện cho lượt tiếp theo.</p>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#166534; font-weight:800; margin-bottom:6px;">🎮 Mẫu <code>while True:</code> + <code>break</code></h4>
+            <p style="font-size:13.5px; color:#14532d;">Tạo vòng lặp chạy mãi cho tới khi gặp điều kiện thắng/thoát hợp lệ mới gọi <code>break</code>. Cực phổ biến cho menu &amp; game!</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>vi_du_break.py (Login)</span><button class="btn-copy" data-target="th-brk">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-brk" readonly style="min-height:130px;">while True:
+    mk = input("Nhập mật khẩu: ")
+    if mk == "Mindx2026":
+        print("Đăng nhập thành công!")
+        break
+    print("Sai rồi, nhập lại!")</textarea></div>
+          </div>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>vi_du_continue_an_toan.py</span><button class="btn-copy" data-target="th-cont">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-cont" readonly style="min-height:130px;">i = 0
+while i &lt; 5:
+    i += 1         # PHẢI tăng i TRƯỚC continue!
+    if i == 3:
+        continue   # Bỏ qua số 3
+    print(i)       # In ra: 1, 2, 4, 5</textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 8: Kết Hợp Toàn Bộ Vũ Khí Vào Dự Án Lớn</h3>
+        <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+          Đến hết Bài 7, em đã có trong tay đủ bộ công cụ lập trình cấu trúc: <strong>Biến (B1) + Ép kiểu (B2) + Toán tử (B3) + Câu điều kiện (B4) + Vòng lặp <code>for</code> (B6) + <code>while True</code> &amp; <code>break</code> (B7)</strong>!
+        </p>
+        <p style="color:#0c4a6e; font-size:14px; line-height:1.6; margin-top:6px;">
+          Ở <strong>Bài 8: Lập Trình Giải Quyết Vấn Đề</strong>, chúng ta sẽ đóng vai kỹ sư phần mềm xây dựng một tựa game hoàn chỉnh: <strong>Sinh Tồn Trên Hoang Đảo</strong>!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: MÔ PHỎNG WHILE & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔬</span> While-Loop &amp; Break / Continue Tracer</h2>
+          <span class="step-counter" id="w-counter">Chưa bắt đầu</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">
+          Chọn kịch bản thực thi và bấm <strong>▶ Bước tiếp</strong> để quan sát vòng quay kiểm tra điều kiện của <code>while</code>, tác dụng của <code>break</code> và <code>continue</code> từng dòng một:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>Kịch bản:
+            <select id="w-mode" onchange="wReset()">
+              <option value="count">1. Đếm 1 → n bằng while</option>
+              <option value="password">2. Đăng nhập mật khẩu (while True + break)</option>
+              <option value="break">3. Dừng khẩn cấp bằng break (tại 4)</option>
+              <option value="continue">4. Bỏ qua lượt bằng continue (bỏ số 3)</option>
+            </select>
+          </label>
+          <label id="w-param-wrap">Giá trị n / giới hạn:
+            <input type="number" id="w-n" value="5" min="1" max="10" style="width:90px;" onchange="wReset()">
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto;" onclick="wStep()">▶ Bước tiếp</button>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto; background:#2563eb;" onclick="wRunAll()">⏩ Chạy hết</button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto; background:#e2e8f0; color:#334155;" onclick="wReset()">🔄 Đặt lại</button>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Mã Python:</h4>
+            <div class="trace-code" id="w-code"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Bộ nhớ RAM:</h4>
+            <div class="memory-grid" id="w-ram" style="margin:0;"></div>
+          </div>
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Màn hình Terminal:</h4>
+            <div class="trace-console" id="w-console"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Lời thầy giảng giải:</h4>
+            <div class="trace-explain" id="w-explain">Bấm ▶ Bước tiếp để theo dõi từng bước chạy của vòng lặp while.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Guessing Game -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🎲</span> Mini Game Trực Quan: Casino Đoán Số Bí Mật (1 – 50)</h2>
+          <span class="step-counter" id="g-status">Còn 7 lượt</span>
+        </div>
+        <div class="guess-box">
+          <p style="font-size:14px; color:#cbd5e1; margin-bottom:14px;">
+            Máy tính đang giữ bí mật một số nguyên từ <strong>1 đến 50</strong> (sử dụng mô hình Game Loop <code>while luot &lt; 7</code> và <code>break</code> khi trúng). Em có tối đa 7 lượt đoán!
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <input type="number" id="g-input" min="1" max="50" placeholder="Nhập số 1–50" style="padding:10px 14px; border-radius:8px; border:1px solid #475569; background:#0f172a; color:white; font-size:15px; width:160px;">
+            <button type="button" class="btn-run" style="padding:10px 18px;" onclick="playGuess()">🎯 Đoán Ngay</button>
+            <button type="button" class="btn-copy" style="padding:10px 14px;" onclick="resetGuess()">🔄 Chơi Lại</button>
+          </div>
+          <div class="guess-log" id="g-log">🎮 Trò chơi đã sẵn sàng! Hãy nhập số đầu tiên...</div>
+        </div>
+      </div>
+
+      <!-- Skulpt Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Thực Hành While Trên Trình Duyệt</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL7(1)">Nhập đến -1</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL7(2)">Kiểm tra mật khẩu</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL7(3)">Demo break / continue</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL7(4)">While lồng nhau</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l7-title">nhap_den_am_1.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson7-editor', 'lesson7-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson7-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson7-editor" style="min-height:170px;"># Nhập các số cho đến khi nhập -1 thì dừng và in tổng
+tong = 0
+while True:
+    n = int(input("Nhập số (-1 để dừng): "))
+    if n == -1:
+        break
+    tong += n
+print("Tổng các số đã nhập là:", tong)</textarea>
+          </div>
+          <div class="terminal-output" id="lesson7-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi chương trình...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 7</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu hỏi kiểm tra vòng lặp while, break, continue và bẫy lặp vô hạn</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l7q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Khi nào nên chọn vòng lặp <code>while</code> thay cho vòng lặp <code>for</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q1', 0, false, 'Biết trước lặp đúng 10 lần nên dùng for i in range(10).')"><input type="radio" name="l7q1"><span>A. Khi biết chính xác cần lặp đúng 10 lần</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q1', 1, true, 'Chính xác! while dùng khi chưa biết trước số lần lặp mà lặp dựa trên một điều kiện (vd: nhập đến khi đúng).')"><input type="radio" name="l7q1"><span>B. Khi chưa biết trước số lần lặp, chỉ biết điều kiện để tiếp tục/dừng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q1', 2, false, 'for chạy nhanh và gọn hơn khi duyệt dãy số.')"><input type="radio" name="l7q1"><span>C. Khi chỉ muốn duyệt từ 1 đến 100</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q1', 3, false, 'Cả for và while đều hỗ trợ biểu thức điều kiện bên trong.')"><input type="radio" name="l7q1"><span>D. Khi chương trình không có biến nào</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Vòng lặp <code>while &lt;điều_kiện&gt;:</code> sẽ dừng lại khi nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q2', 0, false, 'Nếu điều kiện vẫn True thì vòng lặp tiếp tục chạy.')"><input type="radio" name="l7q2"><span>A. Khi điều kiện trở thành <code>True</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q2', 1, true, 'Đúng! while chỉ chạy khi điều kiện là True; ngay khi điều kiện thành False (hoặc gặp break) thì vòng lặp dừng.')"><input type="radio" name="l7q2"><span>B. Khi điều kiện trở thành <code>False</code> (hoặc gặp lệnh <code>break</code>)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q2', 2, false, 'while không có giới hạn mặc định 100 lần.')"><input type="radio" name="l7q2"><span>C. Sau đúng 100 lượt lặp</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q2', 3, false, 'continue chỉ bỏ qua 1 lượt, không dừng hẳn vòng lặp.')"><input type="radio" name="l7q2"><span>D. Khi gặp lệnh <code>continue</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Điều gì xảy ra khi chạy đoạn code sau?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">i = 1
+while i &lt;= 5:
+    print(i)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q3', 0, false, 'i không hề được tăng nên không bao giờ tới 5.')"><input type="radio" name="l7q3"><span>A. In từ 1 đến 5 rồi dừng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q3', 1, false, '1 <= 5 là True nên vẫn vào thân vòng lặp.')"><input type="radio" name="l7q3"><span>B. Không in gì cả</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q3', 2, true, 'Chuẩn xác! Thiếu câu lệnh cập nhật i += 1 nên i mãi bằng 1 <= 5 -> in số 1 vô hạn!')"><input type="radio" name="l7q3"><span>C. Lặp vô hạn, in số <code>1</code> mãi mãi</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q3', 3, false, 'Không báo lỗi cú pháp SyntaxError.')"><input type="radio" name="l7q3"><span>D. Báo lỗi SyntaxError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Tổ hợp phím nào trên Terminal dùng để ngắt khẩn cấp một vòng lặp đang chạy vô hạn?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q4', 0, false, 'Ctrl + S là lưu file trong VS Code.')"><input type="radio" name="l7q4"><span>A. <code>Ctrl + S</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q4', 1, true, 'Đúng! Ctrl + C gửi tín hiệu KeyboardInterrupt để dừng chương trình đang kẹt.')"><input type="radio" name="l7q4"><span>B. <code>Ctrl + C</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q4', 2, false, 'Ctrl + Z là hoàn tác (Undo) khi gõ văn bản.')"><input type="radio" name="l7q4"><span>C. <code>Ctrl + Z</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q4', 3, false, 'Tab dùng để thụt lề.')"><input type="radio" name="l7q4"><span>D. <code>Ctrl + Tab</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Lệnh <code>break</code> bên trong vòng lặp có tác dụng gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q5', 0, false, 'Đó là tác dụng của continue.')"><input type="radio" name="l7q5"><span>A. Bỏ qua lượt hiện tại và chuyển sang lượt tiếp theo</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q5', 1, true, 'Chính xác! break lập tức thoát khỏi vòng lặp hiện tại.')"><input type="radio" name="l7q5"><span>B. Thoát hẳn khỏi vòng lặp ngay lập tức</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q5', 2, false, 'break không dừng trong 1 giây (đó là time.sleep).')"><input type="radio" name="l7q5"><span>C. Tạm nghỉ 1 giây rồi chạy tiếp</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q5', 3, false, 'break không đặt lại biến đếm.')"><input type="radio" name="l7q5"><span>D. Đặt lại biến đếm về 0</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Chương trình sau in ra những số nào (trên các dòng)?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q6', 0, false, 'Đó là nếu dùng break thay cho continue.')"><input type="radio" name="l7q6"><span>A. <code>1, 2</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q6', 1, true, 'Đúng! Khi i == 3, continue bỏ qua lệnh print(i) ở lượt đó nhưng vẫn chạy tiếp 4 và 5.')"><input type="radio" name="l7q6"><span>B. <code>1, 2, 4, 5</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q6', 2, false, 'Số 3 bị bỏ qua do continue.')"><input type="radio" name="l7q6"><span>C. <code>1, 2, 3, 4, 5</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q6', 3, false, 'Chỉ số 3 bị bỏ qua.')"><input type="radio" name="l7q6"><span>D. <code>3</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Chương trình sau in ra những số nào?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">i = 1
+while i &lt;= 5:
+    if i == 4:
+        break
+    print(i)
+    i += 1</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q7', 0, true, 'Chính xác! In 1, 2, 3; đến khi i == 4 thì break thoát khỏi vòng lặp trước khi in 4.')"><input type="radio" name="l7q7"><span>A. <code>1, 2, 3</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q7', 1, false, 'if i == 4: break nằm TRƯỚC print(i) nên không in 4.')"><input type="radio" name="l7q7"><span>B. <code>1, 2, 3, 4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q7', 2, false, 'Số 5 không được chạy tới.')"><input type="radio" name="l7q7"><span>C. <code>1, 2, 3, 5</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q7', 3, false, 'Không bị lặp vô hạn vì i += 1 giúp i tăng tới 4.')"><input type="radio" name="l7q7"><span>D. Lặp vô hạn</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Vòng lặp dưới đây chạy bao nhiêu lần?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">x = 10
+while x &lt; 5:
+    print(x)
+    x += 1</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q8', 0, true, 'Đúng! Ngay từ đầu 10 < 5 đã là False -> while kiểm tra trước khi chạy nên lặp 0 lần.')"><input type="radio" name="l7q8"><span>A. 0 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q8', 1, false, 'Điều kiện sai ngay từ lần kiểm tra đầu tiên.')"><input type="radio" name="l7q8"><span>B. 1 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q8', 2, false, 'Không phải 5 lần.')"><input type="radio" name="l7q8"><span>C. 5 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q8', 3, false, 'Điều kiện False ngay lập tức nên không lặp vô hạn.')"><input type="radio" name="l7q8"><span>D. Lặp vô hạn</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Giá trị của biến <code>tong</code> sau khi vòng lặp kết thúc là bao nhiêu?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">tong = 0
+n = 1
+while n &lt; 8:
+    tong += n
+    n += 2
+print(tong)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q9', 0, false, 'n nhận các giá trị 1, 3, 5, 7 (vì 7 < 8 là True).')"><input type="radio" name="l7q9"><span>A. <code>9</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q9', 1, true, 'Tuyệt vời! n lần lượt là 1, 3, 5, 7 -> tong = 1 + 3 + 5 + 7 = 16, sau đó n thành 9 >= 8 nên dừng.')"><input type="radio" name="l7q9"><span>B. <code>16</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q9', 2, false, 'n tăng mỗi lần 2 chứ không phải 1.')"><input type="radio" name="l7q9"><span>C. <code>28</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q9', 3, false, '9 là giá trị của n sau khi dừng, không phải tong.')"><input type="radio" name="l7q9"><span>D. <code>25</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Đoạn code sau bị lỗi logic nghiêm trọng gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">i = 1
+while i &lt;= 5:
+    if i == 3:
+        continue
+    print(i)
+    i += 1</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q10', 0, false, '1 và 2 vẫn in ra bình thường.')"><input type="radio" name="l7q10"><span>A. Không in ra số nào</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q10', 1, true, 'Rất tinh mắt! Khi i == 3, continue nhảy qua dòng i += 1 bên dưới, nên i mãi giữ nguyên là 3 và lặp vô hạn!')"><input type="radio" name="l7q10"><span>B. In 1, 2 rồi treo (lặp vô hạn) tại i = 3</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q10', 2, false, 'Vì i += 1 nằm dưới continue nên không bao giờ tăng tới 4.')"><input type="radio" name="l7q10"><span>C. In 1, 2, 4, 5</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q10', 3, false, 'Cú pháp Python hợp lệ hoàn toàn.')"><input type="radio" name="l7q10"><span>D. Báo lỗi SyntaxError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Với cấu trúc <code>while True:</code>, làm sao để chương trình có thể thoát ra an toàn?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q11', 0, true, 'Đúng! Bên trong while True: bắt buộc có điều kiện if dẫn tới break (hoặc return khi dùng trong hàm).')"><input type="radio" name="l7q11"><span>A. Kết hợp <code>if &lt;điều_kiện_dừng&gt;: break</code> bên trong vòng lặp</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q11', 1, false, 'continue chỉ quay lại đầu vòng lặp, không thoát ra.')"><input type="radio" name="l7q11"><span>B. Dùng lệnh <code>continue</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q11', 2, false, 'True là hằng số, không tự đổi thành False.')"><input type="radio" name="l7q11"><span>C. Chương trình tự thoát sau 10 giây</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q11', 3, false, 'pass chỉ là lệnh rỗng không làm gì cả.')"><input type="radio" name="l7q11"><span>D. Dùng lệnh <code>pass</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l7q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Vòng lặp <code>while</code> lồng nhau sau in ra dấu <code>*</code> tổng cộng bao nhiêu lần?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">hang = 1
+while hang &lt;= 3:
+    cot = 1
+    while cot &lt;= 4:
+        print("*")
+        cot += 1
+    hang += 1</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l7q12', 0, false, 'Vòng trong chạy 4 lần cho mỗi lần của vòng ngoài (3 lần).')"><input type="radio" name="l7q12"><span>A. 7 lần</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l7q12', 1, true, 'Chính xác! Vòng ngoài chạy 3 lượt, mỗi lượt vòng trong chạy 4 lượt -> 3 × 4 = 12 lần.')"><input type="radio" name="l7q12"><span>B. 12 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q12', 2, false, 'Không phải 3 lần.')"><input type="radio" name="l7q12"><span>C. 3 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l7q12', 3, false, 'cot được đặt lại bằng 1 ở mỗi hàng.')"><input type="radio" name="l7q12"><span>D. 4 lần</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Máy Tính Cộng Dồn (Nhập Tới 0 Thì Dừng)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết chương trình liên tục yêu cầu người dùng nhập vào số nguyên. Nếu số khác <code>0</code> thì cộng vào tổng; nếu nhập đúng <code>0</code> thì dừng vòng lặp và in tổng các số đã nhập.</p>
+        <table class="testcase-table">
+          <thead><tr><th>Input mẫu</th><th>Output mẫu</th></tr></thead>
+          <tbody><tr><td><code>5</code><br><code>12</code><br><code>-3</code><br><code>0</code></td><td><code>14</code></td></tr></tbody>
+        </table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_cong_don.py</span><button class="btn-copy" data-target="l7-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l7-s1" readonly style="min-height:130px;">tong = 0
+while True:
+    n = int(input())
+    if n == 0:
+        break
+    tong += n
+print(tong)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Kiểm Tra Đầu Vào Hợp Lệ (Điểm 0 – 10)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập điểm số thực <code>diem</code>. Nếu <code>diem &lt; 0</code> hoặc <code>diem &gt; 10</code> thì in <code>"Diem khong hop le, nhap lai!"</code> và bắt nhập lại cho đến khi đúng. Khi hợp lệ, in <code>"Hop le:"</code> kèm điểm.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_kiem_tra_diem.py</span><button class="btn-copy" data-target="l7-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l7-s2" readonly style="min-height:120px;">diem = float(input("Nhập điểm (0-10): "))
+while diem &lt; 0 or diem &gt; 10:
+    print("Diem khong hop le, nhap lai!")
+    diem = float(input("Nhập điểm (0-10): "))
+print("Hop le:", diem)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Khóa Thẻ ATM Sau 3 Lần Sai Mật Khẩu</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Cho trước mã PIN đúng là <code>"2468"</code>. Người dùng có tối đa <strong>3 lần</strong> nhập. Đúng thì in <code>"Mo khoa thanh cong"</code> và dừng ngay bằng <code>break</code>; nếu sai hết 3 lần thì in <code>"The da bi khoa!"</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_atm.py</span><button class="btn-copy" data-target="l7-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l7-s3" readonly style="min-height:190px;">pin_dung = "2468"
+so_lan = 0
+da_mo = False
+
+while so_lan &lt; 3:
+    nhap = input("Nhập mã PIN: ")
+    so_lan += 1
+    if nhap == pin_dung:
+        print("Mo khoa thanh cong")
+        da_mo = True
+        break
+    print("Sai PIN!")
+
+if not da_mo:
+    print("The da bi khoa!")</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 4: Đếm Số Chữ Số Của Một Số Nguyên Dương</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số nguyên dương <code>n</code>. Dùng vòng lặp <code>while</code> và phép chia nguyên <code>// 10</code> (Bài 3) để đếm xem <code>n</code> có bao nhiêu chữ số (ví dụ <code>2026</code> có <code>4</code> chữ số).</p>
+        <table class="testcase-table">
+          <thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>2026</code></td><td><code>4</code></td></tr><tr><td><code>7</code></td><td><code>1</code></td></tr></tbody>
+        </table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_dem_chu_so.py</span><button class="btn-copy" data-target="l7-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l7-s4" readonly style="min-height:130px;">n = int(input())
+dem = 0
+while n &gt; 0:
+    n = n // 10
+    dem += 1
+print(dem)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #0284c7;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#0369a1;">Bài 5: Casino Đoán Số Bí Mật (While + Random + Continue)</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Dùng <code>import random</code> tạo số bí mật từ 1 đến 50. Cho phép tối đa 7 lượt đoán. Nếu người chơi nhập số ngoài khoảng 1–50, dùng <code>continue</code> để không trừ lượt và yêu cầu nhập lại!</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#0369a1; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai5_doan_so.py</span><button class="btn-copy" data-target="l7-s5">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l7-s5" readonly style="min-height:240px;">import random
+bi_mat = random.randint(1, 50)
+luot = 0
+thang = False
+
+while luot &lt; 7:
+    doan = int(input("Đoán số (1-50): "))
+    if doan &lt; 1 or doan &gt; 50:
+        print("Chỉ nhập từ 1 đến 50! Không tính lượt.")
+        continue
+    luot += 1
+    if doan == bi_mat:
+        print("Chính xác! Bạn thắng sau", luot, "lượt!")
+        thang = True
+        break
+    elif doan &lt; bi_mat:
+        print("Số bí mật LỚN hơn!")
+    else:
+        print("Số bí mật NHỎ hơn!")
+
+if not thang:
+    print("GAME OVER! Số bí mật là:", bi_mat)</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Pager -->
+    <div class="lesson-pager">
+      <a href="../LESSON 6/index.html" class="pager-btn">&larr; Bài Trước: Bài 6 - Vòng Lặp for &amp; range()</a>
+      <a href="../LESSON 8/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 8 - Dự Án Giải Quyết Vấn Đề &rarr;</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 7: Vòng Lặp Vô Hạn (while), break &amp; continue | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    // =====================================================================
+    // WHILE-LOOP & BREAK/CONTINUE TRACER
+    // =====================================================================
+    let wSteps = [];
+    let wIdx = -1;
+
+    function esc7(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function wGetCode(mode, n) {
+      if (mode === "count") return [
+        "i = 1",
+        `while i <= ${n}:`,
+        "    print(i)",
+        "    i += 1",
+        'print("Xong!")'
+      ];
+      if (mode === "password") return [
+        'ds_nhap = ["1234", "Mindx2026"]',
+        "while True:",
+        "    mk = nhap_tiep_theo()",
+        '    if mk == "Mindx2026":',
+        '        print("Đăng nhập thành công!")',
+        "        break",
+        '    print("Sai mật khẩu, thử lại!")'
+      ];
+      if (mode === "break") return [
+        "i = 1",
+        `while i <= ${n}:`,
+        "    if i == 4:",
+        "        break",
+        "    print(i)",
+        "    i += 1",
+        'print("Đã thoát!")'
+      ];
+      return [
+        "i = 0",
+        `while i < ${n}:`,
+        "    i += 1",
+        "    if i == 3:",
+        "        continue",
+        "    print(i)",
+        'print("Hoàn tất!")'
+      ];
+    }
+
+    function wBuildSteps(mode, n) {
+      const steps = [];
+      let out = "";
+      const push = (line, ram, explain) => steps.push({ line, ram: { ...ram }, out, explain });
+
+      if (mode === "count") {
+        let i = 1;
+        push(0, { i }, "Khởi tạo biến đếm <b>i = 1</b>.");
+        while (i <= n) {
+          push(1, { i }, `Kiểm tra điều kiện <b>i &lt;= ${n}</b> (${i} &lt;= ${n}) → <b>True</b>, vào thân vòng lặp.`);
+          out += i + "\n";
+          push(2, { i }, `In giá trị <b>${i}</b> ra màn hình.`);
+          i += 1;
+          push(3, { i }, `Cập nhật biến đếm <b>i += 1</b> → i bây giờ là <b>${i}</b>.`);
+        }
+        push(1, { i }, `Kiểm tra điều kiện <b>${i} &lt;= ${n}</b> → <b>False</b> → thoát khỏi vòng lặp!`);
+        out += "Xong!\n";
+        push(4, { i }, "Chạy câu lệnh đầu tiên sau vòng lặp: in <b>Xong!</b>.");
+      } else if (mode === "password") {
+        const tries = ["1234", "Mindx2026"];
+        push(0, {}, 'Chuẩn bị danh sách 2 lần nhập thử: <code>"1234"</code> rồi <code>"Mindx2026"</code>.');
+        for (let k = 0; k < tries.length; k++) {
+          const mk = tries[k];
+          push(1, { mk }, "<code>while True:</code> luôn đúng → tiếp tục vòng lặp.");
+          push(2, { mk }, `Người dùng gõ <b>"${mk}"</b>.`);
+          const ok = mk === "Mindx2026";
+          push(3, { mk }, `Kiểm tra <code>mk == "Mindx2026"</code> → <b>${ok ? "True" : "False"}</b>.`);
+          if (ok) {
+            out += "Đăng nhập thành công!\n";
+            push(4, { mk }, "Mật khẩu chính xác → in thông báo thành công.");
+            push(5, { mk }, "Gặp <code>break</code> → <b>thoát hẳn khỏi vòng lặp while True!</b>");
+            break;
+          } else {
+            out += "Sai mật khẩu, thử lại!\n";
+            push(6, { mk }, "Mật khẩu sai → in thông báo và quay lại đầu <code>while True</code>.");
+          }
+        }
+      } else if (mode === "break") {
+        let i = 1;
+        push(0, { i }, "Khởi tạo <b>i = 1</b>.");
+        while (i <= n) {
+          push(1, { i }, `Kiểm tra <b>${i} &lt;= ${n}</b> → <b>True</b>.`);
+          const hit = i === 4;
+          push(2, { i }, `Kiểm tra <code>i == 4</code> → <b>${hit ? "True" : "False"}</b>.`);
+          if (hit) {
+            push(3, { i }, "Gặp <code>break</code> → <b>cắt ngang vòng lặp ngay lập tức!</b>");
+            break;
+          }
+          out += i + "\n";
+          push(4, { i }, `In <b>${i}</b>.`);
+          i += 1;
+          push(5, { i }, `Tăng <b>i</b> lên <b>${i}</b>.`);
+        }
+        if (i !== 4) {
+          push(1, { i }, `Kiểm tra <b>${i} &lt;= ${n}</b> → <b>False</b> → hết vòng lặp.`);
+        }
+        out += "Đã thoát!\n";
+        push(6, { i }, "Nhảy xuống dòng code sau vòng lặp: in <b>Đã thoát!</b>.");
+      } else {
+        let i = 0;
+        push(0, { i }, "Khởi tạo <b>i = 0</b>.");
+        while (i < n) {
+          push(1, { i }, `Kiểm tra <b>${i} &lt; ${n}</b> → <b>True</b>.`);
+          i += 1;
+          push(2, { i }, `Tăng <b>i += 1</b> thành <b>${i}</b> (TRƯỚC continue để không kẹt lặp vô hạn!).`);
+          const skip = i === 3;
+          push(3, { i }, `Kiểm tra <code>i == 3</code> → <b>${skip ? "True" : "False"}</b>.`);
+          if (skip) {
+            push(4, { i }, "Gặp <code>continue</code> → <b>bỏ qua print(3)</b>, nhảy thẳng lên kiểm tra điều kiện <code>while</code>!");
+            continue;
+          }
+          out += i + "\n";
+          push(5, { i }, `In <b>${i}</b>.`);
+        }
+        push(1, { i }, `Kiểm tra <b>${i} &lt; ${n}</b> → <b>False</b> → kết thúc vòng lặp.`);
+        out += "Hoàn tất!\n";
+        push(6, { i }, "In <b>Hoàn tất!</b>.");
+      }
+      return steps;
+    }
+
+    function wReset() {
+      const mode = document.getElementById("w-mode").value;
+      const paramWrap = document.getElementById("w-param-wrap");
+      paramWrap.style.display = mode === "password" ? "none" : "flex";
+      let n = parseInt(document.getElementById("w-n").value, 10);
+      if (isNaN(n) || n < 1) n = 5;
+      if (n > 10) n = 10;
+      wIdx = -1;
+      wSteps = wBuildSteps(mode, n);
+      wRender(mode, n);
+    }
+
+    function wRender(mode, n) {
+      const step = wSteps[wIdx];
+      const lines = wGetCode(mode, n);
+      document.getElementById("w-code").innerHTML = lines.map((ln, k) =>
+        `<div class="trace-line ${step && step.line === k ? "active" : ""}"><span class="ln">${k + 1}</span>${esc7(ln)}</div>`
+      ).join("");
+
+      const ram = step ? step.ram : {};
+      const keys = Object.keys(ram);
+      document.getElementById("w-ram").innerHTML = keys.length ? keys.map(k => `
+        <div class="ram-slot"><div class="ram-header"><span>RAM</span><span>${typeof ram[k] === "string" ? "str" : "int"}</span></div>
+        <div class="ram-body"><div class="ram-var-name">${k}</div><div class="ram-var-val">${typeof ram[k] === "string" ? '"' + esc7(ram[k]) + '"' : ram[k]}</div></div></div>`
+      ).join("") : `<div style="color:#94a3b8; font-size:13px;">(Chưa có biến nào)</div>`;
+
+      document.getElementById("w-console").textContent = step ? step.out : "";
+      document.getElementById("w-explain").innerHTML = step ? step.explain : "Bấm ▶ Bước tiếp để theo dõi từng bước chạy của vòng lặp while.";
+      document.getElementById("w-counter").innerText = step ? `Bước ${wIdx + 1}/${wSteps.length}` : "Chưa bắt đầu";
+    }
+
+    function wStep() {
+      const mode = document.getElementById("w-mode").value;
+      let n = parseInt(document.getElementById("w-n").value, 10) || 5;
+      if (!wSteps.length) return;
+      if (wIdx >= wSteps.length - 1) wIdx = -1;
+      wIdx++;
+      wRender(mode, n);
+    }
+
+    function wRunAll() {
+      const mode = document.getElementById("w-mode").value;
+      let n = parseInt(document.getElementById("w-n").value, 10) || 5;
+      if (!wSteps.length) return;
+      wIdx = wSteps.length - 1;
+      wRender(mode, n);
+    }
+
+    // =====================================================================
+    // MINI GAME ĐOÁN SỐ
+    // =====================================================================
+    let secretNum = Math.floor(Math.random() * 50) + 1;
+    let guessLeft = 7;
+    let guessOver = false;
+
+    function resetGuess() {
+      secretNum = Math.floor(Math.random() * 50) + 1;
+      guessLeft = 7;
+      guessOver = false;
+      document.getElementById("g-status").innerText = "Còn 7 lượt";
+      document.getElementById("g-log").innerHTML = "🎮 Đã tạo số bí mật mới (1–50)! Hãy nhập số đầu tiên...";
+      document.getElementById("g-input").value = "";
+    }
+
+    function playGuess() {
+      if (guessOver) return;
+      const inp = document.getElementById("g-input");
+      const val = parseInt(inp.value, 10);
+      const log = document.getElementById("g-log");
+
+      if (isNaN(val) || val < 1 || val > 50) {
+        log.innerHTML += `\n⚠️ Ngoài khoảng 1–50! (continue: không trừ lượt)`;
+        log.scrollTop = log.scrollHeight;
+        return;
+      }
+
+      guessLeft--;
+      const luot = 7 - guessLeft;
+      if (val === secretNum) {
+        log.innerHTML += `\n🎉 Lượt ${luot}: Đoán ${val} -> CHÍNH XÁC! (break thoát vòng lặp!)`;
+        document.getElementById("g-status").innerText = "Chiến thắng!";
+        guessOver = true;
+      } else if (guessLeft === 0) {
+        log.innerHTML += `\n💥 Lượt ${luot}: Đoán ${val} -> Sai! Hết lượt. GAME OVER (số đúng là ${secretNum}).`;
+        document.getElementById("g-status").innerText = "Hết lượt!";
+        guessOver = true;
+      } else {
+        const hint = val < secretNum ? "Số bí mật LỚN hơn ▲" : "Số bí mật NHỎ hơn ▼";
+        log.innerHTML += `\nLượt ${luot}: Đoán ${val} -> ${hint}`;
+        document.getElementById("g-status").innerText = `Còn ${guessLeft} lượt`;
+      }
+      log.scrollTop = log.scrollHeight;
+      inp.value = "";
+      inp.focus();
+    }
+
+    // =====================================================================
+    // CODE LAB SAMPLES (Skulpt compatible - NO f-strings!)
+    // =====================================================================
+    function loadL7(id) {
+      const ed = document.getElementById("lesson7-editor");
+      const t = document.getElementById("l7-title");
+      const samples = {
+        1: ["nhap_den_am_1.py", `# Nhập các số cho đến khi nhập -1 thì dừng\ntong = 0\nwhile True:\n    n = int(input("Nhập số (-1 để dừng): "))\n    if n == -1:\n        break\n    tong += n\nprint("Tổng các số đã nhập là:", tong)`],
+        2: ["kiem_tra_mat_khau.py", `# Nhập mật khẩu tối đa 3 lần\nmat_khau_dung = "Mindx2026"\nlan = 0\nda_vao = False\n\nwhile lan < 3:\n    mk = input("Nhập mật khẩu: ")\n    lan += 1\n    if mk == mat_khau_dung:\n        print("Đăng nhập thành công!")\n        da_vao = True\n        break\n    print("Sai mật khẩu! Còn", 3 - lan, "lần thử.")\n\nif not da_vao:\n    print("Tài khoản tạm khóa!")`],
+        3: ["break_va_continue.py", `# In số từ 1 đến 10, bỏ qua số 3, dừng ở 7\ni = 0\nwhile i < 10:\n    i += 1\n    if i == 3:\n        continue\n    if i == 7:\n        print("Gặp 7 -> break!")\n        break\n    print(i)`],
+        4: ["while_long_nhau.py", `# Vẽ hình chữ nhật sao 3x5 bằng while lồng nhau\nhang = 1\nwhile hang <= 3:\n    dong = ""\n    cot = 1\n    while cot <= 5:\n        dong += "* "\n        cot += 1\n    print(dong)\n    hang += 1`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", wReset);
+  </script>
+</body>
+</html>

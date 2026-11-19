@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 10: Danh Sách &amp; Thao Tác CRUD (Thêm, Xóa, Sửa) | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .balo-strip { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; min-height:76px; padding:14px; background:#0f172a; border-radius:var(--radius-md); align-items:center; }
+    .balo-slot { background:#1e293b; border:2px solid #38bdf8; color:white; border-radius:10px; padding:8px 14px; min-width:105px; text-align:center; }
+    .balo-slot small { display:block; font-family:var(--font-mono); font-size:11px; color:#7dd3fc; }
+    .balo-slot strong { font-family:var(--font-mono); font-size:14px; color:#f8fafc; }
+    .crud-log { background:#030712; color:#a7f3d0; font-family:var(--font-mono); font-size:13px; padding:12px 14px; border-radius:var(--radius-md); min-height:95px; max-height:170px; overflow-y:auto; white-space:pre-wrap; }
+    .step-counter { font-size:13px; font-weight:700; color:#b45309; background:#fef3c7; padding:4px 10px; border-radius:20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="index.html" class="active" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 10</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(245, 158, 11, 0.22); color:#fde68a;">Cấp Độ: Thao Tác Dữ Liệu CRUD</span>
+          </div>
+          <h1 class="lesson-title">Bài 10: Danh Sách Và Hơn Thế Nữa — Thêm, Xóa, Sửa (CRUD)</h1>
+          <p class="lesson-desc">
+            Làm chủ toàn bộ các phương thức biến đổi danh sách: <code>.append()</code>, <code>.insert()</code>, sửa <code>ds[i]</code>, <code>.remove()</code>, <code>.pop()</code>, <code>.sort()</code> và phòng tránh bẫy <code>ValueError</code>.
+          </p>
+        </div>
+      </div>
+
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết CRUD &amp; Bẫy</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🎒 2. Balo Minecraft Sandbox &amp; Code Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧰</span> 1. Mô Hình CRUD: 4 Thao Tác Vàng Với Danh Sách</h2>
+        </div>
+        <p>Mọi ứng dụng thực tế từ Giỏ hàng Shopee, Danh bạ điện thoại đến Túi đồ Minecraft đều xoay quanh 4 thao tác <strong>CRUD</strong>: <strong>C</strong>reate (Thêm) — <strong>R</strong>ead (Xem) — <strong>U</strong>pdate (Sửa) — <strong>D</strong>elete (Xóa).</p>
+
+        <table class="testcase-table" style="margin-top:16px;">
+          <thead><tr><th>Nhóm</th><th>Câu lệnh Python</th><th>Tác dụng chi tiết</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Thêm cuối</strong></td><td><code>ds.append(x)</code></td><td>Thêm <code>x</code> vào vị trí <strong>cuối cùng</strong> của danh sách</td><td><code>balo.append("Đuốc")</code></td></tr>
+            <tr><td><strong>Chèn vị trí</strong></td><td><code>ds.insert(i, x)</code></td><td>Chèn <code>x</code> vào chỉ số <code>i</code>, đẩy phần tử sau lùi phải</td><td><code>balo.insert(0, "Khiên")</code></td></tr>
+            <tr><td><strong>Sửa giá trị</strong></td><td><code>ds[i] = moi</code></td><td>Ghi đè giá trị tại chỉ số <code>i</code> bằng giá trị mới</td><td><code>balo[0] = "Kiếm kim cương"</code></td></tr>
+            <tr><td><strong>Xóa theo tên</strong></td><td><code>ds.remove(x)</code></td><td>Tìm và xóa phần tử đầu tiên có giá trị <code>x</code></td><td><code>balo.remove("Bánh mì")</code></td></tr>
+            <tr><td><strong>Xóa theo vị trí</strong></td><td><code>ds.pop(i)</code></td><td>Xóa phần tử ở chỉ số <code>i</code> (trống <code>i</code> = xóa cuối) &amp; trả về nó</td><td><code>mon = balo.pop(1)</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">📊</span> 2. Sắp Xếp, Thống Kê &amp; 2 Bẫy Kinh Điển</h2>
+        </div>
+        <div class="grid-2">
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>sap_xep_va_thong_ke.py</span><button class="btn-copy" data-target="th-l10-sort">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-l10-sort" readonly style="min-height:155px;">diem = [7.5, 9.0, 6.0, 10.0, 8.5]
+diem.sort()               # Tăng dần: [6.0, 7.5, 8.5, 9.0, 10.0]
+diem.sort(reverse=True)   # Giảm dần: [10.0, 9.0, 8.5, 7.5, 6.0]
+diem.reverse()            # Đảo ngược thứ tự hiện tại
+
+print("Tổng:", sum(diem), "| Min:", min(diem), "| Max:", max(diem))</textarea></div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="alert alert-danger" style="margin:0;">
+              <div>
+                <strong>Bẫy 1 — <code>ValueError: list.remove(x): x not in list</code>:</strong><br>
+                Gọi <code>balo.remove("Bom")</code> khi không có "Bom" sẽ crash ngay! Cách phòng vệ:<br>
+                <code>if "Bom" in balo: balo.remove("Bom")</code>
+              </div>
+            </div>
+            <div class="alert alert-warning" style="margin:0;">
+              <div>
+                <strong>Bẫy 2 — Gán kết quả <code>ds = ds.sort()</code> hoặc <code>ds = ds.append(x)</code>:</strong><br>
+                Các hàm này sửa <em>trực tiếp tại chỗ</em> và trả về <code>None</code>! Nếu gán lại <code>ds = ds.sort()</code>, danh sách sẽ biến thành <code>None</code>!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #fffbeb 0%, #fef2f2 100%); border:2px dashed #f59e0b; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#b45309; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 11: Chuỗi Ký Tự (String) Có Sửa Được Như List Không?</h3>
+        <p style="color:#78350f; font-size:14px; line-height:1.6;">
+          Cả <code>list</code> (Bài 9–10) và <code>str</code> (Bài 11) đều đánh chỉ số từ <code>0</code> và dùng được <code>len()</code>, <code>in</code>, <code>for</code>. Thế nhưng nếu em thử viết <code>s = "MindX"</code> rồi sửa <code>s[0] = "K"</code> giống List, điều gì sẽ xảy ra?
+        </p>
+        <p style="color:#78350f; font-size:14px; line-height:1.6; margin-top:6px;">
+          Python sẽ báo lỗi vì chuỗi mang tính <strong>bất biến (Immutable)</strong>! Hãy khám phá cách cắt lát chuỗi <code>[::]</code> và giải mã mật thư điệp viên trong <strong>Bài 11: Xâu Ký Tự (String)</strong>!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: BALO MINECRAFT CRUD SANDBOX & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🎒</span> Balo Minecraft CRUD Sandbox</h2>
+          <span class="step-counter" id="crud-count">Số món: 3</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">
+          Thao tác trực tiếp với danh sách <code>balo</code> bằng các nút bên dưới để quan sát chỉ số thay đổi và câu lệnh Python tương ứng được thực thi:
+        </p>
+
+        <div class="balo-strip" id="balo-strip"></div>
+
+        <div class="interactive-ctrls">
+          <label>Tên món đồ (value):
+            <input type="text" id="crud-val" value="Khiên sắt" placeholder="vd: Cung tên" style="width:155px;">
+          </label>
+          <label>Vị trí (index):
+            <input type="number" id="crud-idx" value="1" style="width:85px;">
+          </label>
+          <button type="button" class="btn-run" style="margin-top:auto;" onclick="crudAct('append')">+ .append(val)</button>
+          <button type="button" class="btn-run" style="margin-top:auto; background:#2563eb;" onclick="crudAct('insert')">↳ .insert(idx, val)</button>
+          <button type="button" class="btn-run" style="margin-top:auto; background:#d97706;" onclick="crudAct('update')">✎ balo[idx] = val</button>
+          <button type="button" class="btn-run" style="margin-top:auto; background:#dc2626;" onclick="crudAct('remove')">✕ .remove(val)</button>
+          <button type="button" class="btn-run" style="margin-top:auto; background:#991b1b;" onclick="crudAct('pop')">↑ .pop(idx)</button>
+          <button type="button" class="btn-copy" style="margin-top:auto; background:#e2e8f0; color:#334155;" onclick="crudAct('sort')">⇅ .sort()</button>
+          <button type="button" class="btn-copy" style="margin-top:auto; background:#e2e8f0; color:#334155;" onclick="crudAct('reverse')">⇄ .reverse()</button>
+          <button type="button" class="btn-copy" style="margin-top:auto; background:#e2e8f0; color:#334155;" onclick="crudReset()">🔄 Reset</button>
+        </div>
+
+        <div class="crud-log" id="crud-log">🎒 Khởi tạo: balo = ["Kiếm gỗ", "Bánh mì", "Đuốc"]</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Thực Hành CRUD Danh Sách</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL10(1)">Thêm, Chèn, Sửa, Xóa</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL10(2)">Sắp Xếp &amp; Thống Kê</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL10(3)">Menu Quản Lý Balo</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l10-title">crud_balo.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson10-editor', 'lesson10-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson10-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson10-editor" style="min-height:180px;">balo = ["Kiếm gỗ", "Bánh mì"]
+balo.append("Đuốc")
+balo.insert(1, "Khiên sắt")
+balo[0] = "Kiếm kim cương"
+print("Sau khi nâng cấp:", balo)
+
+if "Bánh mì" in balo:
+    balo.remove("Bánh mì")
+mon_cuoi = balo.pop()
+print("Đã lấy ra:", mon_cuoi, "| Balo còn:", balo)</textarea>
+          </div>
+          <div class="terminal-output" id="lesson10-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 10</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu kiểm tra append, insert, remove, pop, sort và phòng tránh ValueError</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l10q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Phương thức <code>ds.append("Táo")</code> thêm phần tử <code>"Táo"</code> vào vị trí nào của danh sách?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q1', 0, false, 'Muốn chèn vào đầu phải dùng ds.insert(0, &quot;Táo&quot;).')"><input type="radio" name="l10q1"><span>A. Đầu danh sách (chỉ số 0)</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q1', 1, true, 'Chính xác! append() luôn nối phần tử mới vào CUỐI danh sách.')"><input type="radio" name="l10q1"><span>B. Cuối danh sách</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q1', 2, false, 'append không chèn vào giữa.')"><input type="radio" name="l10q1"><span>C. Giữa danh sách</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q1', 3, false, 'append luôn đặt ở cuối, không ngẫu nhiên.')"><input type="radio" name="l10q1"><span>D. Vị trí ngẫu nhiên</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Cho <code>a = ["X", "Y", "Z"]</code>. Sau khi chạy <code>a.insert(1, "K")</code>, danh sách <code>a</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q2', 0, false, 'insert không xóa phần tử Y mà đẩy Y và Z sang phải.')"><input type="radio" name="l10q2"><span>A. <code>["X", "K", "Z"]</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q2', 1, true, 'Đúng! Chèn &quot;K&quot; vào chỉ số 1, đẩy &quot;Y&quot; và &quot;Z&quot; lùi về sau -> [&quot;X&quot;, &quot;K&quot;, &quot;Y&quot;, &quot;Z&quot;].')"><input type="radio" name="l10q2"><span>B. <code>["X", "K", "Y", "Z"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q2', 2, false, 'Chỉ số 1 nằm sau phần tử X (chỉ số 0).')"><input type="radio" name="l10q2"><span>C. <code>["K", "X", "Y", "Z"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q2', 3, false, 'insert thêm ở vị trí chỉ định chứ không thêm ở cuối.')"><input type="radio" name="l10q2"><span>D. <code>["X", "Y", "Z", "K"]</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Để sửa phần tử đầu tiên của danh sách <code>ds</code> thành <code>"Mới"</code>, ta viết câu lệnh nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q3', 0, true, 'Chính xác! Gán trực tiếp qua chỉ số 0: ds[0] = &quot;Mới&quot;.')"><input type="radio" name="l10q3"><span>A. <code>ds[0] = "Mới"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q3', 1, false, 'ds[1] sửa phần tử thứ hai.')"><input type="radio" name="l10q3"><span>B. <code>ds[1] = "Mới"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q3', 2, false, 'List không có phương thức .update().')"><input type="radio" name="l10q3"><span>C. <code>ds.update(0, "Mới")</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q3', 3, false, 'append thêm mới ở cuối, không sửa phần tử đầu.')"><input type="radio" name="l10q3"><span>D. <code>ds.append("Mới")</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Sự khác nhau cơ bản giữa <code>ds.remove(x)</code> và <code>ds.pop(i)</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q4', 0, true, 'Đúng! remove() tìm xóa theo GIÁ TRỊ x; còn pop() xóa theo CHỈ SỐ vị trí i và trả lại phần tử vừa lấy.')"><input type="radio" name="l10q4"><span>A. <code>remove</code> xóa theo giá trị; <code>pop</code> xóa theo chỉ số vị trí</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q4', 1, false, 'Ngược lại hoàn toàn!')"><input type="radio" name="l10q4"><span>B. <code>remove</code> xóa theo chỉ số; <code>pop</code> xóa theo giá trị</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q4', 2, false, 'remove chỉ xóa lần xuất hiện ĐẦU TIÊN.')"><input type="radio" name="l10q4"><span>C. <code>remove</code> xóa toàn bộ danh sách</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q4', 3, false, 'pop(0) xóa phần tử đầu, pop() mới xóa cuối.')"><input type="radio" name="l10q4"><span>D. Hai lệnh hoàn toàn giống hệt nhau</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Cho <code>ds = [1, 2, 3, 2]</code>. Sau lệnh <code>ds.remove(2)</code>, danh sách còn lại gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q5', 0, false, 'remove(2) không xóa hết mọi số 2, chỉ xóa số 2 đầu tiên!')"><input type="radio" name="l10q5"><span>A. <code>[1, 3]</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q5', 1, true, 'Tuyệt vời! remove(2) chỉ xóa lần xuất hiện ĐẦU TIÊN của số 2, số 2 ở cuối vẫn còn -> [1, 3, 2].')"><input type="radio" name="l10q5"><span>B. <code>[1, 3, 2]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q5', 2, false, 'Số 2 ở cuối không bị xóa trước.')"><input type="radio" name="l10q5"><span>C. <code>[1, 2, 3]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q5', 3, false, '2 có trong ds nên không lỗi.')"><input type="radio" name="l10q5"><span>D. Báo lỗi ValueError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Điều gì xảy ra nếu gọi <code>["A", "B"].remove("C")</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q6', 0, false, 'Python không âm thầm bỏ qua mà sẽ báo lỗi!')"><input type="radio" name="l10q6"><span>A. Không có chuyện gì xảy ra</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q6', 1, true, 'Chính xác! Vì &quot;C&quot; không có trong danh sách nên Python báo ValueError. Cần kiểm tra if &quot;C&quot; in ds trước!')"><input type="radio" name="l10q6"><span>B. Báo lỗi <code>ValueError: list.remove(x): x not in list</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q6', 2, false, 'Không phải IndexError.')"><input type="radio" name="l10q6"><span>C. Báo lỗi <code>IndexError</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q6', 3, false, 'remove không thêm phần tử.')"><input type="radio" name="l10q6"><span>D. Tự thêm &quot;C&quot; vào cuối</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Cho <code>ds = ["A", "B", "C"]</code> và thực hiện <code>x = ds.pop()</code>. Giá trị của <code>x</code> và <code>ds</code> lần lượt là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q7', 0, true, 'Đúng! pop() không truyền đối số sẽ lấy phần tử cuối cùng (&quot;C&quot;) ra khỏi danh sách.')"><input type="radio" name="l10q7"><span>A. <code>x = "C"</code>, <code>ds = ["A", "B"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q7', 1, false, 'Muốn lấy phần tử đầu phải viết ds.pop(0).')"><input type="radio" name="l10q7"><span>B. <code>x = "A"</code>, <code>ds = ["B", "C"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q7', 2, false, 'pop() có trả về phần tử vừa xóa.')"><input type="radio" name="l10q7"><span>C. <code>x = None</code>, <code>ds = ["A", "B"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q7', 3, false, 'Không báo lỗi khi không truyền tham số.')"><input type="radio" name="l10q7"><span>D. Báo lỗi thiếu tham số</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Đoạn code sau in ra kết quả gì? (Chú ý cái bẫy!)</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">ds = [3, 1, 2]
+kq = ds.sort()
+print(kq)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q8', 0, false, 'ds đã được sắp xếp thành [1, 2, 3], nhưng giá trị trả về của .sort() là None!')"><input type="radio" name="l10q8"><span>A. <code>[1, 2, 3]</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q8', 1, true, 'Cực kỳ tỉnh táo! ds.sort() sắp xếp tại chỗ và trả về None. Muốn in phải gọi ds.sort() rồi print(ds)!')"><input type="radio" name="l10q8"><span>B. <code>None</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q8', 2, false, 'Không phải [3, 1, 2].')"><input type="radio" name="l10q8"><span>C. <code>[3, 1, 2]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q8', 3, false, 'Không báo lỗi.')"><input type="radio" name="l10q8"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Để sắp xếp danh sách <code>diem</code> theo thứ tự <strong>giảm dần</strong> (từ cao xuống thấp), ta viết câu lệnh nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q9', 0, false, 'sort() mặc định sắp xếp tăng dần.')"><input type="radio" name="l10q9"><span>A. <code>diem.sort()</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q9', 1, true, 'Chính xác! Truyền thêm tham số reverse=True vào .sort() sẽ sắp xếp giảm dần.')"><input type="radio" name="l10q9"><span>B. <code>diem.sort(reverse=True)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q9', 2, false, 'reverse() chỉ đảo ngược thứ tự hiện có chứ không sắp xếp.')"><input type="radio" name="l10q9"><span>C. <code>diem.reverse()</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q9', 3, false, 'Không có phương thức desc().')"><input type="radio" name="l10q9"><span>D. <code>diem.desc()</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Hàm tích hợp nào giúp tính nhanh tổng tất cả các số trong danh sách <code>ds = [5, 10, 15]</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q10', 0, false, 'total() không có sẵn trong Python.')"><input type="radio" name="l10q10"><span>A. <code>total(ds)</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q10', 1, true, 'Đúng! sum(ds) tính tổng nhanh, trả về 30.')"><input type="radio" name="l10q10"><span>B. <code>sum(ds)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q10', 2, false, 'len(ds) đếm số lượng phần tử (= 3).')"><input type="radio" name="l10q10"><span>C. <code>len(ds)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q10', 3, false, 'max(ds) tìm số lớn nhất (= 15).')"><input type="radio" name="l10q10"><span>D. <code>max(ds)</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Cho <code>balo = ["Áo", "Mũ", "Giày"]</code>. Sau 2 lệnh <code>balo.pop(0)</code> rồi <code>balo.append("Áo")</code>, danh sách trở thành gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q11', 0, true, 'Chính xác! pop(0) xóa &quot;Áo&quot; ở đầu còn [&quot;Mũ&quot;, &quot;Giày&quot;], sau đó append(&quot;Áo&quot;) đưa xuống cuối -> [&quot;Mũ&quot;, &quot;Giày&quot;, &quot;Áo&quot;].')"><input type="radio" name="l10q11"><span>A. <code>["Mũ", "Giày", "Áo"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q11', 1, false, 'Thứ tự bị thay đổi khi xóa ở đầu rồi thêm ở cuối.')"><input type="radio" name="l10q11"><span>B. <code>["Áo", "Mũ", "Giày"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q11', 2, false, 'Đã xóa Áo cũ đi rồi nên không có 2 chữ Áo.')"><input type="radio" name="l10q11"><span>C. <code>["Áo", "Mũ", "Giày", "Áo"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q11', 3, false, 'Không báo lỗi.')"><input type="radio" name="l10q11"><span>D. Báo lỗi IndexError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l10q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Trong mô hình 4 chữ cái <strong>CRUD</strong>, phương thức <code>.append()</code> và <code>.pop()</code> lần lượt đại diện cho thao tác nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l10q12', 0, false, 'Xem là Read, Sửa là Update.')"><input type="radio" name="l10q12"><span>A. Read và Update</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l10q12', 1, true, 'Đúng! append() là Create (Thêm mới), pop() là Delete (Xóa bỏ).')"><input type="radio" name="l10q12"><span>B. Create (Thêm) và Delete (Xóa)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q12', 2, false, 'Không phải Update và Read.')"><input type="radio" name="l10q12"><span>C. Update và Read</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l10q12', 3, false, 'Ngược thứ tự.')"><input type="radio" name="l10q12"><span>D. Delete và Create</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Nhập Danh Sách 5 Môn Học &amp; Sắp Xếp A–Z</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Tạo danh sách rỗng <code>ds = []</code>. Dùng <code>for</code> lặp 5 lần nhập tên môn học và thêm bằng <code>.append()</code>. Sau đó sắp xếp theo thứ tự bảng chữ cái và in ra.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_mon_hoc.py</span><button class="btn-copy" data-target="l10-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l10-s1" readonly style="min-height:115px;">ds = []
+for i in range(5):
+    mon = input("Nhập tên môn học: ")
+    ds.append(mon)
+ds.sort()
+print("Danh sách A-Z:", ds)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Xóa Sạch Phần Tử Trùng (Phòng Tránh ValueError)</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Cho danh sách <code>so = [4, 2, 7, 2, 9, 2, 5]</code>. Dùng vòng lặp <code>while</code> kết hợp <code>in</code> và <code>.remove()</code> để xóa tất cả số <code>2</code> ra khỏi danh sách.</p>
+        <table class="testcase-table"><thead><tr><th>Ban đầu</th><th>Kết quả</th></tr></thead>
+          <tbody><tr><td><code>[4, 2, 7, 2, 9, 2, 5]</code></td><td><code>[4, 7, 9, 5]</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_xoa_tat_ca.py</span><button class="btn-copy" data-target="l10-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l10-s2" readonly style="min-height:100px;">so = [4, 2, 7, 2, 9, 2, 5]
+while 2 in so:
+    so.remove(2)
+print(so)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Điểm Chấm Thi Bỏ Cao Nhất &amp; Thấp Nhất</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Cho danh sách điểm của 5 giám khảo <code>diem = [8.5, 9.5, 7.0, 8.0, 9.0]</code>. Bỏ 1 điểm cao nhất và 1 điểm thấp nhất (gợi ý: <code>diem.sort()</code>, <code>diem.pop(0)</code>, <code>diem.pop()</code>), rồi tính trung bình các điểm còn lại.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_cham_thi.py</span><button class="btn-copy" data-target="l10-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l10-s3" readonly style="min-height:125px;">diem = [8.5, 9.5, 7.0, 8.0, 9.0]
+diem.sort()
+diem.pop(0)    # Bỏ điểm thấp nhất
+diem.pop()     # Bỏ điểm cao nhất
+print("Điểm còn lại:", diem, "| TB:", sum(diem) / len(diem))</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #d97706;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#b45309;">Bài 4: Shop Trang Bị Minecraft (Menu CRUD + Ví Xu)</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết chương trình quản lý balo tối đa <code>5</code> món đồ với ví ban đầu <code>100</code> xu. Hỗ trợ menu: <code>1. Xem balo</code>, <code>2. Mua đồ (+append, -xu)</code>, <code>3. Vứt/Bán đồ (+xu, remove an toàn)</code>, <code>4. Sắp xếp balo</code>, <code>0. Thoát</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#b45309; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_shop_minecraft.py</span><button class="btn-copy" data-target="l10-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l10-s4" readonly style="min-height:260px;">xu = 100
+balo = ["Táo"]
+while True:
+    print("\nVí:", xu, "xu | Balo:", balo)
+    chon = input("1.Mua (30 xu) | 2.Bán (+15 xu) | 3.Sắp xếp | 0.Thoát: ")
+    if chon == "0":
+        break
+    elif chon == "1":
+        if len(balo) &gt;= 5:
+            print("Balo đã đầy (tối đa 5 món)!")
+        elif xu &lt; 30:
+            print("Không đủ 30 xu!")
+        else:
+            ten = input("Tên món cần mua: ")
+            balo.append(ten)
+            xu -= 30
+    elif chon == "2":
+        ten = input("Tên món muốn bán: ")
+        if ten in balo:
+            balo.remove(ten)
+            xu += 15
+        else:
+            print("Không có món này!")
+    elif chon == "3":
+        balo.sort()
+        print("Đã sắp xếp balo A-Z!")</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 9/index.html" class="pager-btn">&larr; Bài Trước: Bài 9 - Kiểm Tra &amp; Danh Sách (List)</a>
+      <a href="../LESSON 11/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 11 - Xâu Ký Tự (String) &rarr;</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 10: Danh Sách &amp; Thao Tác CRUD | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    let balo = ["Kiếm gỗ", "Bánh mì", "Đuốc"];
+
+    function esc10(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderBalo() {
+      const strip = document.getElementById("balo-strip");
+      document.getElementById("crud-count").innerText = `Số món: ${balo.length}`;
+      if (!balo.length) {
+        strip.innerHTML = `<span style="color:#94a3b8; font-family:var(--font-mono);">balo = [] (Danh sách rỗng)</span>`;
+        return;
+      }
+      strip.innerHTML = balo.map((item, i) => `
+        <div class="balo-slot">
+          <small>[${i}]</small>
+          <strong>"${esc10(item)}"</strong>
+        </div>
+      `).join("");
+    }
+
+    function logCrud(msg) {
+      const log = document.getElementById("crud-log");
+      log.textContent += "\n" + msg;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function crudAct(op) {
+      const val = document.getElementById("crud-val").value.trim();
+      const idx = parseInt(document.getElementById("crud-idx").value, 10);
+
+      if (op === "append") {
+        if (!val) { logCrud("⚠️ Hãy nhập tên món đồ!"); return; }
+        balo.push(val);
+        logCrud(`✅ balo.append("${val}") -> ${JSON.stringify(balo)}`);
+      } else if (op === "insert") {
+        if (!val || isNaN(idx)) { logCrud("⚠️ Nhập đủ tên và chỉ số!"); return; }
+        const pos = Math.max(0, Math.min(balo.length, idx));
+        balo.splice(pos, 0, val);
+        logCrud(`✅ balo.insert(${idx}, "${val}") -> ${JSON.stringify(balo)}`);
+      } else if (op === "update") {
+        if (!val || isNaN(idx) || idx < 0 || idx >= balo.length) {
+          logCrud(`❌ IndexError: chỉ số ${idx} ngoài phạm vi [0..${balo.length - 1}]!`);
+          return;
+        }
+        balo[idx] = val;
+        logCrud(`✅ balo[${idx}] = "${val}" -> ${JSON.stringify(balo)}`);
+      } else if (op === "remove") {
+        const found = balo.indexOf(val);
+        if (found === -1) {
+          logCrud(`❌ ValueError: "${val}" không có trong balo! (Cần kiểm tra if "${val}" in balo:)`);
+          return;
+        }
+        balo.splice(found, 1);
+        logCrud(`✅ balo.remove("${val}") -> ${JSON.stringify(balo)}`);
+      } else if (op === "pop") {
+        if (!balo.length) { logCrud("❌ IndexError: pop from empty list!"); return; }
+        const target = isNaN(idx) ? balo.length - 1 : idx;
+        if (target < 0 || target >= balo.length) {
+          logCrud(`❌ IndexError: chỉ số pop(${idx}) ngoài phạm vi!`);
+          return;
+        }
+        const popped = balo.splice(target, 1)[0];
+        logCrud(`✅ mon = balo.pop(${target}) -> lấy ra "${popped}" | còn ${JSON.stringify(balo)}`);
+      } else if (op === "sort") {
+        balo.sort((a, b) => a.localeCompare(b, "vi"));
+        logCrud(`✅ balo.sort() -> ${JSON.stringify(balo)}`);
+      } else if (op === "reverse") {
+        balo.reverse();
+        logCrud(`✅ balo.reverse() -> ${JSON.stringify(balo)}`);
+      }
+      renderBalo();
+    }
+
+    function crudReset() {
+      balo = ["Kiếm gỗ", "Bánh mì", "Đuốc"];
+      document.getElementById("crud-log").textContent = '🎒 Khởi tạo lại: balo = ["Kiếm gỗ", "Bánh mì", "Đuốc"]';
+      renderBalo();
+    }
+
+    function loadL10(id) {
+      const ed = document.getElementById("lesson10-editor");
+      const t = document.getElementById("l10-title");
+      const samples = {
+        1: ["crud_balo.py", `balo = ["Kiếm gỗ", "Bánh mì"]\nbalo.append("Đuốc")\nbalo.insert(1, "Khiên sắt")\nbalo[0] = "Kiếm kim cương"\nprint("Sau khi nâng cấp:", balo)\n\nif "Bánh mì" in balo:\n    balo.remove("Bánh mì")\nmon_cuoi = balo.pop()\nprint("Đã lấy ra:", mon_cuoi, "| Balo còn:", balo)`],
+        2: ["sap_xep_thong_ke.py", `diem = [7.5, 9.0, 6.0, 10.0, 8.5]\ndiem.sort()\nprint("Tăng dần:", diem)\ndiem.sort(reverse=True)\nprint("Giảm dần:", diem)\nprint("Tổng:", sum(diem), "| Thấp nhất:", min(diem), "| Cao nhất:", max(diem))`],
+        3: ["menu_todo.py", `# Menu To-Do CRUD đơn giản\nviec = ["Học Python", "Làm bài tập"]\nwhile True:\n    print("Danh sách việc:", viec)\n    c = input("1.Thêm | 2.Xóa cuối | 0.Thoát: ")\n    if c == "0":\n        break\n    elif c == "1":\n        viec.append(input("Nhập việc mới: "))\n    elif c == "2":\n        if len(viec) > 0:\n            print("Đã xong:", viec.pop())\n        else:\n            print("Danh sách trống!")`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", renderBalo);
+  </script>
+</body>
+</html>

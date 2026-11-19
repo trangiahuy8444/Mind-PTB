@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 13: Tham Số, Đối Số, return &amp; Phạm Vi Biến | Lập Trình Python Cơ Bản</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .trace-code { background:var(--code-bg); border-radius:var(--radius-md); padding:12px 0; font-family:var(--font-mono); font-size:13.5px; color:#e2e8f0; overflow-x:auto; }
+    .trace-line { display:flex; border-left:3px solid transparent; padding:3px 14px 3px 0; white-space:pre; }
+    .trace-line .ln { width:36px; text-align:right; padding-right:12px; color:#64748b; user-select:none; flex-shrink:0; }
+    .trace-line.active { background:#1e3a8a; border-left-color:#38bdf8; }
+    .trace-console { background:#030712; color:#a7f3d0; font-family:var(--font-mono); font-size:13px; padding:12px 14px; border-radius:var(--radius-md); min-height:95px; max-height:190px; overflow-y:auto; white-space:pre-wrap; }
+    .trace-explain { background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; border-radius:6px; font-size:14px; color:#78350f; min-height:68px; }
+    .scope-box { border:2px solid #cbd5e1; border-radius:var(--radius-md); padding:14px; background:#f8fafc; min-height:110px; }
+    .scope-box.global { border-color:#2563eb; background:#eff6ff; }
+    .scope-box.local { border-color:#10b981; background:#ecfdf5; }
+    .scope-box.local.gone { border-color:#cbd5e1; background:#f1f5f9; opacity:.7; }
+    .scope-title { font-size:12px; font-weight:800; text-transform:uppercase; margin-bottom:8px; }
+    .step-counter { font-size:13px; font-weight:700; color:#0f766e; background:#ccfbf1; padding:4px 10px; border-radius:20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="index.html" class="active" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 13</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(20, 184, 166, 0.22); color:#99f6e4;">Cấp Độ: Hàm Nâng Cao</span>
+          </div>
+          <h1 class="lesson-title">Bài 13: Tham Số, Đối Số, return &amp; Phạm Vi Biến</h1>
+          <p class="lesson-desc">
+            Nâng cấp hàm biết nhận dữ liệu đầu vào qua <strong>Tham số / Đối số</strong>, trả kết quả bằng <code>return</code> (phân biệt với <code>print()</code>) và làm chủ vùng nhớ <strong>Local vs Global</strong> chuẩn bị Hackathon Buổi 14.
+          </p>
+        </div>
+      </div>
+
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết &amp; Phạm Vi Biến</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🔬 2. Mô Phỏng Scope &amp; Return Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">📥</span> 1. Tham Số (Parameter) vs Đối Số (Argument)</h2>
+        </div>
+        <div class="grid-2">
+          <div>
+            <ul style="padding-left:18px; line-height:1.8; font-size:14px;">
+              <li><strong>Tham số (Parameter):</strong> tên biến giả đặt bên trong ngoặc tròn lúc <code>def</code> (ví dụ <code>ten</code>, <code>danh_hieu</code>).</li>
+              <li><strong>Đối số (Argument):</strong> giá trị thật truyền vào lúc gọi hàm (ví dụ <code>"Gia Huy"</code>).</li>
+              <li><strong>Tham số mặc định:</strong> gán sẵn giá trị <code>danh_hieu="Tân Binh"</code> để nếu người gọi bỏ qua vẫn chạy được!</li>
+            </ul>
+          </div>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>tham_so_doi_so.py</span><button class="btn-copy" data-target="th-l13-param">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-l13-param" readonly style="min-height:125px;">def chao(ten, danh_hieu="Tân Binh"):   # ten, danh_hieu là THAM SỐ
+    print("Xin chào", danh_hieu, ten)
+
+chao("Gia Huy")                         # "Gia Huy" là ĐỐI SỐ
+chao("Minh Anh", "Cao Thủ")             # Ghi đè tham số mặc định</textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧃</span> 2. Thí Nghiệm "Máy Ép Hoa Quả": <code>print()</code> vs <code>return</code></h2>
+        </div>
+        <p>Đây là chỗ học sinh mới dễ nhầm nhất: <code>print()</code> chỉ là <strong>nói to kết quả ra màn hình</strong> rồi bỏ đi; còn <code>return</code> là <strong>đóng chai kết quả gửi về</strong> cho nơi gọi hàm để lưu vào biến hoặc tính toán tiếp!</p>
+
+        <div class="grid-2" style="margin-top:14px;">
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius-md); padding:14px;">
+            <h4 style="color:#991b1b; margin-bottom:8px;">❌ Chỉ dùng <code>print()</code> (Trả về <code>None</code>)</h4>
+            <div class="code-box" style="margin:0;"><div class="code-editor-area"><textarea readonly style="min-height:105px;">def gap_doi(x):
+    print(x * 2)     # Không có return!
+
+kq = gap_doi(5)      # In ra 10, nhưng kq = None!
+# kq + 10            -> LỖI TypeError (None + int)!</textarea></div></div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius-md); padding:14px;">
+            <h4 style="color:#065f46; margin-bottom:8px;">✅ Dùng <code>return</code> (Trả giá trị thật)</h4>
+            <div class="code-box" style="margin:0;"><div class="code-editor-area"><textarea readonly style="min-height:105px;">def gap_doi(x):
+    return x * 2     # Trả về số 10 và thoát hàm!
+
+kq = gap_doi(5)      # kq = 10
+print(kq + 10)       # Chạy mượt -> 20!</textarea></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🏠</span> 3. Phạm Vi Biến: Cục Bộ (Local) vs Toàn Cục (Global) &amp; Hàm Có Sẵn</h2>
+        </div>
+        <div class="grid-2">
+          <div>
+            <h4 style="color:var(--navy); margin-bottom:8px;">Phòng khách (Global) vs Balo riêng (Local)</h4>
+            <ul style="padding-left:18px; line-height:1.75; font-size:14px;">
+              <li><strong>Biến Toàn Cục (Global):</strong> tạo ở <em>ngoài</em> mọi hàm (như Tivi ngoài phòng khách — mọi hàm đều xem được).</li>
+              <li><strong>Biến Cục Bộ (Local):</strong> tạo ở <em>trong</em> hàm (như đồ trong balo của riêng hàm — khi hàm chạy xong, biến cục bộ <strong>biến mất</strong>, gọi ở ngoài sẽ bị <code>NameError</code>).</li>
+            </ul>
+          </div>
+          <table class="testcase-table" style="margin:0;">
+            <thead><tr><th>Hàm có sẵn</th><th>Công dụng</th><th>Ví dụ</th></tr></thead>
+            <tbody>
+              <tr><td><code>abs(x)</code></td><td>Trị tuyệt đối</td><td><code>abs(-15) &rarr; 15</code></td></tr>
+              <tr><td><code>round(x, n)</code></td><td>Làm tròn <code>n</code> số lẻ</td><td><code>round(3.1415, 2) &rarr; 3.14</code></td></tr>
+              <tr><td><code>max()</code> / <code>min()</code></td><td>Lớn nhất / Nhỏ nhất</td><td><code>max(3, 9, 2) &rarr; 9</code></td></tr>
+              <tr><td><code>sum(ds)</code> / <code>len(ds)</code></td><td>Tổng / Độ dài</td><td><code>sum([1,2,3]) &rarr; 6</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bridge to Buổi 14 Hackathon -->
+      <div style="background:linear-gradient(135deg, #ccfbf1 0%, #eff6ff 100%); border:2px dashed #0d9488; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#0f766e; font-weight:800; font-size:16px; margin-bottom:8px;">🏆 Đích Đến Buổi 14: Chung Kết Hackathon &amp; Demo Day!</h3>
+        <p style="color:#134e4a; font-size:14px; line-height:1.6;">
+          Chúc mừng em đã đi trọn vẹn <strong>13 buổi học lập trình Python cơ bản</strong>! Từ những dòng <code>print()</code> đầu tiên ở Bài 1, đến ép kiểu (B2), toán tử (B3), câu điều kiện (B4), vòng lặp <code>for</code>/<code>while</code> (B6–7), giải quyết vấn đề (B8), danh sách (B9–10), xâu ký tự (B11) và hàm tham số/`return` (B12–13), em đã có đầy đủ hành trang để bước vào <strong>Hackathon Buổi 14</strong>!
+        </p>
+        <p style="color:#134e4a; font-size:14px; line-height:1.6; margin-top:6px;">
+          Hãy chọn 1 trong 3 đề tài Demo Day: <strong>(1) Game Text-RPG Đấu Boss</strong>, <strong>(2) Trợ Lý Ảo Chatbot</strong>, hoặc <strong>(3) Shop Tycoon Quản Lý Cửa Hàng</strong> và bắt tay thiết kế các hàm cho dự án của riêng mình ngay hôm nay!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: SCOPE & RETURN VISUALIZER & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔬</span> Scope &amp; Return Visualizer — Phòng Khách (Global) vs Balo (Local)</h2>
+          <span class="step-counter" id="sc-counter">Chưa bắt đầu</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">
+          Chọn kịch bản và bấm <strong>▶ Bước tiếp</strong> để thấy rõ sự khác biệt giữa <code>print()</code> và <code>return</code>, cũng như cách Python tạo và hủy <strong>biến cục bộ</strong> khi hàm chạy xong:
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>Kịch bản:
+            <select id="sc-mode" onchange="scReset()">
+              <option value="print_trap">1. Bẫy quên return (print trả về None -> TypeError)</option>
+              <option value="return_ok">2. Dùng return chuẩn xác (lưu và tính tiếp)</option>
+              <option value="scope">3. Biến Toàn Cục (Global) vs Cục Bộ (Local)</option>
+            </select>
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto;" onclick="scStep()">▶ Bước tiếp</button>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto; background:#0d9488;" onclick="scRunAll()">⏩ Chạy hết</button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto; background:#e2e8f0; color:#334155;" onclick="scReset()">🔄 Đặt lại</button>
+        </div>
+
+        <div class="grid-2" style="align-items:start;">
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Mã Python:</h4>
+            <div class="trace-code" id="sc-code"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Màn hình Terminal:</h4>
+            <div class="trace-console" id="sc-console"></div>
+          </div>
+
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Hai Vùng Bộ Nhớ Trong RAM:</h4>
+            <div style="display:grid; gap:12px;">
+              <div class="scope-box global">
+                <div class="scope-title" style="color:#1d4ed8;">🏠 Toàn Cục (Global Scope — Phòng khách)</div>
+                <div id="sc-global" style="font-family:var(--font-mono); font-size:13.5px; color:#1e3a8a;">(Trống)</div>
+              </div>
+              <div class="scope-box local" id="sc-local-wrap">
+                <div class="scope-title" style="color:#047857;">🎒 Cục Bộ (Local Scope — Balo của hàm)</div>
+                <div id="sc-local" style="font-family:var(--font-mono); font-size:13.5px; color:#065f46;">(Hàm chưa chạy)</div>
+              </div>
+            </div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Lời thầy giảng giải:</h4>
+            <div class="trace-explain" id="sc-explain">Bấm ▶ Bước tiếp để bắt đầu.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skulpt Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Động Cơ Đấu Boss (Combat Engine)</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL13(1)">Combat Engine Đấu Boss</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL13(2)">So sánh print vs return</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL13(3)">Tham số mặc định &amp; Hàm có sẵn</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l13-title">combat_engine.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson13-editor', 'lesson13-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson13-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson13-editor" style="min-height:200px;">import random
+
+def tinh_sat_thuong(cong, giap, chi_mang=1.5):
+    goc = max(1, cong - giap)
+    if random.randint(1, 4) == 1:
+        print("  -> BẠO KÍCH x1.5!")
+        return int(goc * chi_mang)
+    return goc
+
+hp_boss = 120
+for luot in range(1, 6):
+    dmg = tinh_sat_thuong(40, 10)
+    hp_boss = max(0, hp_boss - dmg)
+    print("Lượt", luot, ": Gây", dmg, "sát thương | Boss còn", hp_boss, "HP")
+    if hp_boss == 0:
+        print("CHIẾN THẮNG! Boss đã gục!")
+        break</textarea>
+          </div>
+          <div class="terminal-output" id="lesson13-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thử nghiệm Combat Engine...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 13</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu kiểm tra tham số, đối số, return vs print, hàm có sẵn và biến cục bộ / toàn cục</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l13q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Trong đoạn code <code>def chao(ten):</code> rồi gọi <code>chao("An")</code>, đâu là <strong>Tham số (Parameter)</strong> và đâu là <strong>Đối số (Argument)</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q1', 0, true, 'Chính xác! ten nằm ở phần định nghĩa def là Tham số; &quot;An&quot; truyền vào lúc gọi hàm là Đối số.')"><input type="radio" name="l13q1"><span>A. <code>ten</code> là Tham số; <code>"An"</code> là Đối số</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q1', 1, false, 'Ngược lại!')"><input type="radio" name="l13q1"><span>B. <code>"An"</code> là Tham số; <code>ten</code> là Đối số</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q1', 2, false, 'chao là tên hàm.')"><input type="radio" name="l13q1"><span>C. <code>chao</code> là Tham số</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q1', 3, false, 'Hai khái niệm này khác nhau.')"><input type="radio" name="l13q1"><span>D. Cả hai đều là Đối số</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Một hàm không có từ khóa <code>return</code> (chỉ có <code>print</code>) thì mặc định trả về giá trị gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q2', 0, false, 'Không trả về số 0.')"><input type="radio" name="l13q2"><span>A. <code>0</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q2', 1, false, 'Không trả về chuỗi rỗng.')"><input type="radio" name="l13q2"><span>B. <code>""</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q2', 2, true, 'Đúng! Hàm không có return luôn âm thầm trả về giá trị đặc biệt là None.')"><input type="radio" name="l13q2"><span>C. <code>None</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q2', 3, false, 'Không trả về True.')"><input type="radio" name="l13q2"><span>D. <code>True</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Đoạn code sau cho kết quả gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def cong(a, b):
+    print(a + b)
+
+kq = cong(3, 4)
+print(kq + 1)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q3', 0, false, 'Hàm cong() dùng print chứ không có return nên kq bằng None!')"><input type="radio" name="l13q3"><span>A. In <code>7</code> rồi <code>8</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q3', 1, true, 'Tuyệt vời! Hàm cong(3,4) in 7 và trả về kq = None -> sang dòng 5 tính None + 1 bị báo lỗi TypeError!')"><input type="radio" name="l13q3"><span>B. In <code>7</code> rồi báo lỗi <code>TypeError</code> vì <code>kq</code> là <code>None</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q3', 2, false, 'Không ra 1.')"><input type="radio" name="l13q3"><span>C. In <code>1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q3', 3, false, 'kq không phải số 7.')"><input type="radio" name="l13q3"><span>D. In <code>7</code> rồi <code>7</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Đoạn code sau in ra gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def thu():
+    return 10
+    print("Hello")
+
+print(thu())</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q4', 0, false, 'Khi gặp return 10, hàm thoát NGAY LẬP TỨC nên dòng print(&quot;Hello&quot;) không bao giờ chạy!')"><input type="radio" name="l13q4"><span>A. In <code>Hello</code> rồi <code>10</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q4', 1, true, 'Chính xác! return kết thúc hàm ngay lập tức -> chỉ in ra 10, bỏ qua print(&quot;Hello&quot;) phía dưới.')"><input type="radio" name="l13q4"><span>B. Chỉ in <code>10</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q4', 2, false, 'Không in Hello.')"><input type="radio" name="l13q4"><span>C. Chỉ in <code>Hello</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q4', 3, false, 'Không báo lỗi cú pháp.')"><input type="radio" name="l13q4"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Cho hàm có tham số mặc định: <code>def chao(ten, lop="PTB30"):</code>. Câu lệnh nào sau đây gọi hàm <strong>ĐÚNG</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q5', 0, false, 'Cả 2 cách chao(&quot;An&quot;) và chao(&quot;An&quot;, &quot;PTA21&quot;) đều hợp lệ!')"><input type="radio" name="l13q5"><span>A. Chỉ có <code>chao("An", "PTA21")</code> đúng</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q5', 1, true, 'Đúng! Có thể truyền 1 đối số (dùng lop mặc định &quot;PTB30&quot;) hoặc truyền đủ 2 đối số đều chạy tốt.')"><input type="radio" name="l13q5"><span>B. Cả <code>chao("An")</code> và <code>chao("An", "PTA21")</code> đều đúng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q5', 2, false, 'Tham số ten chưa có giá trị mặc định nên gọi chao() trống sẽ lỗi.')"><input type="radio" name="l13q5"><span>C. <code>chao()</code> không truyền gì cũng đúng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q5', 3, false, 'Cú pháp tham số mặc định chuẩn xác.')"><input type="radio" name="l13q5"><span>D. Cả hai đều sai</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text"><strong>Biến cục bộ (Local Variable)</strong> là biến được khai báo ở đâu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q6', 0, true, 'Chính xác! Biến khai báo bên trong thân hàm là biến cục bộ, chỉ tồn tại trong hàm đó.')"><input type="radio" name="l13q6"><span>A. Bên trong thân của một hàm</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q6', 1, false, 'Biến ở đầu file ngoài mọi hàm là biến toàn cục (Global).')"><input type="radio" name="l13q6"><span>B. Ở ngoài mọi hàm, ngay đầu file</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q6', 2, false, 'Chỉ cần trong hàm, không liên quan comment.')"><input type="radio" name="l13q6"><span>C. Trong dòng chú thích <code>#</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q6', 3, false, 'Không phải ở file khác.')"><input type="radio" name="l13q6"><span>D. Ở một file khác</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Đoạn code sau cho kết quả gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def tao_so():
+    bi_mat = 99
+
+tao_so()
+print(bi_mat)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q7', 0, false, 'bi_mat là biến cục bộ trong tao_so(), ra ngoài hàm là biến mất!')"><input type="radio" name="l13q7"><span>A. In ra <code>99</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q7', 1, true, 'Đúng! bi_mat chỉ sống bên trong tao_so(). Ở ngoài gọi print(bi_mat) sẽ báo lỗi NameError!')"><input type="radio" name="l13q7"><span>B. Báo lỗi <code>NameError: name 'bi_mat' is not defined</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q7', 2, false, 'Không in None.')"><input type="radio" name="l13q7"><span>C. In ra <code>None</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q7', 3, false, 'Không in 0.')"><input type="radio" name="l13q7"><span>D. In ra <code>0</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Đoạn code sau in ra số mấy ở dòng cuối?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">x = 10
+def doi():
+    x = 50
+doi()
+print(x)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q8', 0, true, 'Rất sắc bén! x = 50 trong doi() là một biến CỤC BỘ mới tinh nằm riêng trong balo của hàm, không làm thay đổi x = 10 ngoài phòng khách!')"><input type="radio" name="l13q8"><span>A. <code>10</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q8', 1, false, 'x = 50 chỉ tồn tại bên trong hàm doi() rồi biến mất.')"><input type="radio" name="l13q8"><span>B. <code>50</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q8', 2, false, 'Không cộng thành 60.')"><input type="radio" name="l13q8"><span>C. <code>60</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q8', 3, false, 'Không báo lỗi.')"><input type="radio" name="l13q8"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Hàm có sẵn <code>round(3.678, 1)</code> trả về kết quả nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q9', 0, false, 'round làm tròn chứ không cắt bỏ như int().')"><input type="radio" name="l13q9"><span>A. <code>3.6</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q9', 1, true, 'Chính xác! round(3.678, 1) làm tròn đến 1 chữ số thập phân -> 3.7.')"><input type="radio" name="l13q9"><span>B. <code>3.7</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q9', 2, false, 'Tham số thứ 2 là 1 chữ số thập phân chứ không phải số nguyên.')"><input type="radio" name="l13q9"><span>C. <code>4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q9', 3, false, '3.68 là round(3.678, 2).')"><input type="radio" name="l13q9"><span>D. <code>3.68</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Hàm có sẵn <code>abs(-42)</code> trả về giá trị nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q10', 0, false, 'abs là trị tuyệt đối (luôn không âm).')"><input type="radio" name="l13q10"><span>A. <code>-42</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q10', 1, true, 'Đúng! abs() tính giá trị tuyệt đối: |-42| = 42.')"><input type="radio" name="l13q10"><span>B. <code>42</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q10', 2, false, 'Không phải 0.')"><input type="radio" name="l13q10"><span>C. <code>0</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q10', 3, false, 'Không lỗi với số âm.')"><input type="radio" name="l13q10"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Khai báo hàm nào bị <strong>lỗi cú pháp</strong> về vị trí tham số mặc định?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q11', 0, false, 'Tham số mặc định b=2 đứng cuối -> hợp lệ.')"><input type="radio" name="l13q11"><span>A. <code>def f(a, b=2):</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q11', 1, true, 'Đúng! Python bắt buộc mọi tham số có giá trị mặc định phải nằm SAU các tham số bắt buộc -> def f(a=2, b): gây SyntaxError!')"><input type="radio" name="l13q11"><span>B. <code>def f(a=2, b):</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q11', 2, false, 'Cả hai đều có mặc định -> hợp lệ.')"><input type="radio" name="l13q11"><span>C. <code>def f(a=1, b=2):</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q11', 3, false, 'Không có tham số mặc định -> hợp lệ.')"><input type="radio" name="l13q11"><span>D. <code>def f(a, b):</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l13q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Trong dự án Combat Engine, viết <code>def tinh_sat_thuong(cong, giap):</code> nhận công 35, giáp 10 và <code>return cong - giap</code>. Lệnh <code>mau = 100 - tinh_sat_thuong(35, 10)</code> cho <code>mau</code> bằng mấy?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l13q12', 0, false, '25 là sát thương trả về từ hàm, sau đó 100 - 25 = 75.')"><input type="radio" name="l13q12"><span>A. <code>25</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l13q12', 1, true, 'Tuyệt vời! tinh_sat_thuong(35, 10) trả về 35 - 10 = 25, rồi 100 - 25 = 75 HP!')"><input type="radio" name="l13q12"><span>B. <code>75</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q12', 2, false, 'Không ra 125.')"><input type="radio" name="l13q12"><span>C. <code>125</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l13q12', 3, false, 'Hàm có return 25 nên tính trừ hoàn toàn hợp lệ.')"><input type="radio" name="l13q12"><span>D. Báo lỗi TypeError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Hàm Kiểm Tra Số Chẵn / Lẻ (Trả Về Boolean)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết hàm <code>la_so_chan(n)</code> nhận một số nguyên <code>n</code>, trả về <code>True</code> nếu chẵn và <code>False</code> nếu lẻ. Gọi thử với số <code>8</code> và <code>7</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_chan_le_ham.py</span><button class="btn-copy" data-target="l13-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l13-s1" readonly style="min-height:95px;">def la_so_chan(n):
+    return n % 2 == 0
+
+print("8 chẵn?", la_so_chan(8))
+print("7 chẵn?", la_so_chan(7))</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Hàm Xếp Loại Học Lực (Tham Số + <code>return</code>)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết hàm <code>xep_loai(diem)</code> trả về chuỗi <code>"Gioi"</code> (&ge;8.0), <code>"Kha"</code> (&ge;6.5), <code>"Trung binh"</code> (&ge;5.0), hoặc <code>"Yeu"</code>. Dùng vòng lặp duyệt danh sách điểm <code>[9.0, 7.2, 5.5, 4.0]</code> và gọi hàm cho từng bạn.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_xep_loai_ham.py</span><button class="btn-copy" data-target="l13-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l13-s2" readonly style="min-height:145px;">def xep_loai(diem):
+    if diem &gt;= 8.0: return "Gioi"
+    elif diem &gt;= 6.5: return "Kha"
+    elif diem &gt;= 5.0: return "Trung binh"
+    return "Yeu"
+
+for d in [9.0, 7.2, 5.5, 4.0]:
+    print("Điểm", d, "->", xep_loai(d))</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Hàm Tính Diện Tích Hình Chữ Nhật (Tham Số Mặc Định)</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết hàm <code>dien_tich(dai, rong=1)</code> trả về <code>dai * rong</code>. Thử gọi <code>dien_tich(5, 3)</code> và <code>dien_tich(5)</code> rồi cộng tổng diện tích 2 hình.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_dien_tich.py</span><button class="btn-copy" data-target="l13-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l13-s3" readonly style="min-height:105px;">def dien_tich(dai, rong=1):
+    return dai * rong
+
+tong = dien_tich(5, 3) + dien_tich(5)
+print("Tổng diện tích:", tong)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #0d9488;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#0f766e;">Bài 4: Boss Battle Engine (Chuẩn Bị Hackathon Buổi 14)</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Thiết kế 2 hàm <code>tinh_sat_thuong(cong, giap, chi_mang=1.5)</code> (tỉ lệ 20% chí mạng bằng <code>random.randint</code>) và <code>hoi_mau(hp, luong, toi_da=100)</code>. Ghép vào vòng lặp <code>while</code> đấu Boss Rồng 150 HP!</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#0f766e; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_boss_engine.py</span><button class="btn-copy" data-target="l13-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l13-s4" readonly style="min-height:215px;">import random
+def tinh_sat_thuong(cong, giap, chi_mang=1.5):
+    goc = max(1, cong - giap)
+    if random.randint(1, 5) == 1:
+        print("CHÍ MẠNG!")
+        return int(goc * chi_mang)
+    return goc
+
+def hoi_mau(hp, luong, toi_da=100):
+    return min(toi_da, hp + luong)
+
+hp_boss = 150
+hp_toi = 100
+while hp_boss &gt; 0 and hp_toi &gt; 0:
+    c = input("1.Đánh Boss | 2.Hồi máu: ")
+    if c == "1":
+        dmg = tinh_sat_thuong(35, 10)
+        hp_boss = max(0, hp_boss - dmg)
+        print("Boss mất", dmg, "HP -> còn", hp_boss)
+    elif c == "2":
+        hp_toi = hoi_mau(hp_toi, 25)
+    if hp_boss &gt; 0:
+        hp_toi = max(0, hp_toi - 20)
+        print("Boss phản đòn -20 -> Bạn còn", hp_toi, "HP")
+print("CHIẾN THẮNG!" if hp_boss == 0 else "THẤT BẠI!")</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 12/index.html" class="pager-btn">&larr; Bài Trước: Bài 12 - Hàm Cơ Bản (def)</a>
+      <a href="../index.html" class="pager-btn primary">&uarr; Về Cổng Tổng Quan Khóa Học (Sẵn Sàng Hackathon Buổi 14!)</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 13: Tham Số, Đối Số, return &amp; Phạm Vi Biến | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    const SC_DATA = {
+      print_trap: {
+        code: [
+          "def gap_doi(x):",
+          "    print(x * 2)",
+          "kq = gap_doi(5)",
+          "print(kq + 10)"
+        ],
+        steps: [
+          { line: 0, global: "(chưa có)", local: "(chưa chạy)", localGone: true, out: "", explain: "Định nghĩa hàm <code>gap_doi(x)</code>." },
+          { line: 2, global: "(chờ kết quả)", local: "x = 5", localGone: false, out: "", explain: "Gọi <code>gap_doi(5)</code>: tạo biến cục bộ <code>x = 5</code> trong balo của hàm." },
+          { line: 1, global: "(chờ kết quả)", local: "x = 5", localGone: false, out: "10\n", explain: "<code>print(x * 2)</code> chỉ in <b>10</b> lên màn hình rồi... không có <code>return</code>!" },
+          { line: 2, global: "kq = None", local: "(đã hủy khi thoát hàm)", localGone: true, out: "10\n", explain: "Vì không có <code>return</code>, hàm mặc định trả về <b>None</b> và gán <code>kq = None</code>!" },
+          { line: 3, global: "kq = None", local: "(không còn)", localGone: true, out: "10\n❌ TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'\n", explain: "Lỗi ngay lập tức! Không thể lấy <code>None + 10</code>!" }
+        ]
+      },
+      return_ok: {
+        code: [
+          "def gap_doi(x):",
+          "    return x * 2",
+          "kq = gap_doi(5)",
+          "print(kq + 10)"
+        ],
+        steps: [
+          { line: 0, global: "(chưa có)", local: "(chưa chạy)", localGone: true, out: "", explain: "Định nghĩa hàm <code>gap_doi(x)</code>." },
+          { line: 2, global: "(chờ kết quả)", local: "x = 5", localGone: false, out: "", explain: "Gọi <code>gap_doi(5)</code>: truyền đối số 5 vào tham số <code>x</code>." },
+          { line: 1, global: "(chờ kết quả)", local: "x = 5", localGone: false, out: "", explain: "Gặp <code>return x * 2</code> → đóng gói giá trị <b>10</b> gửi về nơi gọi hàm!" },
+          { line: 2, global: "kq = 10", local: "(đã hủy)", localGone: true, out: "", explain: "<code>kq</code> nhận được số nguyên <b>10</b>!" },
+          { line: 3, global: "kq = 10", local: "(không còn)", localGone: true, out: "20\n", explain: "Tính <code>10 + 10 = 20</code> và in ra <b>20</b> thành công!" }
+        ]
+      },
+      scope: {
+        code: [
+          "x = 10",
+          "def doi():",
+          "    x = 50",
+          "    bi_mat = 99",
+          "doi()",
+          "print(x)"
+        ],
+        steps: [
+          { line: 0, global: "x = 10", local: "(hàm chưa chạy)", localGone: true, out: "", explain: "Tạo biến <b>toàn cục</b> <code>x = 10</code> ở ngoài phòng khách." },
+          { line: 1, global: "x = 10", local: "(hàm chưa chạy)", localGone: true, out: "", explain: "Định nghĩa hàm <code>doi()</code>." },
+          { line: 4, global: "x = 10", local: "(mở balo mới)", localGone: false, out: "", explain: "Gọi <code>doi()</code> → Python mở một vùng nhớ Local riêng." },
+          { line: 2, global: "x = 10", local: "x = 50", localGone: false, out: "", explain: "<code>x = 50</code> tạo một biến <b>cục bộ</b> mới trùng tên trong balo, KHÔNG đụng tới <code>x = 10</code> ngoài phòng khách!" },
+          { line: 3, global: "x = 10", local: "x = 50, bi_mat = 99", localGone: false, out: "", explain: "<code>bi_mat = 99</code> cũng chỉ nằm trong balo của hàm." },
+          { line: 5, global: "x = 10", local: "(đã bị dọn sạch!)", localGone: true, out: "10\n", explain: "Thoát hàm → balo bị hủy (<code>bi_mat</code> và <code>x=50</code> biến mất). Ngoài phòng khách <code>print(x)</code> vẫn in <b>10</b>!" }
+        ]
+      }
+    };
+
+    let scIdx = -1;
+    function esc13(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function scReset() {
+      scIdx = -1;
+      scRender();
+    }
+
+    function scRender() {
+      const mode = document.getElementById("sc-mode").value;
+      const sc = SC_DATA[mode];
+      const step = sc.steps[scIdx];
+
+      document.getElementById("sc-code").innerHTML = sc.code.map((ln, k) =>
+        `<div class="trace-line ${step && step.line === k ? "active" : ""}"><span class="ln">${k + 1}</span>${esc13(ln)}</div>`
+      ).join("");
+
+      document.getElementById("sc-global").innerText = step ? step.global : "(Chưa chạy)";
+      document.getElementById("sc-local").innerText = step ? step.local : "(Hàm chưa chạy)";
+      document.getElementById("sc-local-wrap").className = "scope-box local" + (!step || step.localGone ? " gone" : "");
+      document.getElementById("sc-console").textContent = step ? step.out : "";
+      document.getElementById("sc-explain").innerHTML = step ? step.explain : "Bấm ▶ Bước tiếp để bắt đầu.";
+      document.getElementById("sc-counter").innerText = step ? `Bước ${scIdx + 1}/${sc.steps.length}` : "Chưa bắt đầu";
+    }
+
+    function scStep() {
+      const mode = document.getElementById("sc-mode").value;
+      const len = SC_DATA[mode].steps.length;
+      if (scIdx >= len - 1) scIdx = -1;
+      scIdx++;
+      scRender();
+    }
+
+    function scRunAll() {
+      const mode = document.getElementById("sc-mode").value;
+      scIdx = SC_DATA[mode].steps.length - 1;
+      scRender();
+    }
+
+    function loadL13(id) {
+      const ed = document.getElementById("lesson13-editor");
+      const t = document.getElementById("l13-title");
+      const samples = {
+        1: ["combat_engine.py", `import random\n\ndef tinh_sat_thuong(cong, giap, chi_mang=1.5):\n    goc = max(1, cong - giap)\n    if random.randint(1, 4) == 1:\n        print("  -> BẠO KÍCH x1.5!")\n        return int(goc * chi_mang)\n    return goc\n\nhp_boss = 120\nfor luot in range(1, 6):\n    dmg = tinh_sat_thuong(40, 10)\n    hp_boss = max(0, hp_boss - dmg)\n    print("Lượt", luot, ": Gây", dmg, "sát thương | Boss còn", hp_boss, "HP")\n    if hp_boss == 0:\n        print("CHIẾN THẮNG! Boss đã gục!")\n        break`],
+        2: ["print_vs_return.py", `def chi_print(x):\n    print("Trong hàm chỉ print:", x * 2)\n\ndef co_return(x):\n    return x * 2\n\nkq1 = chi_print(5)\nprint("kq1 nhận được:", kq1)\n\nkq2 = co_return(5)\nprint("kq2 nhận được:", kq2, "| kq2 + 10 =", kq2 + 10)`],
+        3: ["tham_so_mac_dinh.py", `def chao(ten, danh_hieu="Tân Binh"):\n    print("Xin chào", danh_hieu, ten)\n\nchao("Gia Huy")\nchao("Minh Anh", "Cao Thủ")\n\nprint("abs(-25) =", abs(-25))\nprint("round(3.14159, 2) =", round(3.14159, 2))\nprint("max(4, 9, 2) =", max(4, 9, 2))`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", scReset);
+  </script>
+</body>
+</html>

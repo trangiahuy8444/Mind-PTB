@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 11: Xâu Ký Tự (String) — Cắt Chuỗi &amp; Mật Mã | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .char-strip { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0; }
+    .char-box {
+      min-width:44px; padding:6px 6px; border-radius:8px; text-align:center;
+      background:white; border:2px solid #cbd5e1; font-family:var(--font-mono); transition:all .2s;
+    }
+    .char-box .ip { font-size:10px; color:#2563eb; font-weight:700; }
+    .char-box .ch { font-size:17px; font-weight:800; color:#0f172a; margin:3px 0; }
+    .char-box .in { font-size:10px; color:#b45309; font-weight:700; }
+    .char-box.picked { background:#ecfdf5; border-color:#10b981; transform:translateY(-3px); box-shadow:0 6px 12px rgba(16,185,129,.22); }
+    .slice-out { background:#0f172a; color:#38bdf8; font-family:var(--font-mono); font-size:18px; font-weight:800; padding:14px 18px; border-radius:var(--radius-md); }
+    .method-out { background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; padding:12px 14px; font-family:var(--font-mono); font-size:13.5px; color:#0f172a; }
+    .step-counter { font-size:13px; font-weight:700; color:#0e7490; background:#cffafe; padding:4px 10px; border-radius:20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="index.html" class="active" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 11</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(236, 72, 153, 0.22); color:#fbcfe8;">Cấp Độ: Xử Lý Văn Bản</span>
+          </div>
+          <h1 class="lesson-title">Bài 11: Xâu Ký Tự (String) — Cắt Chuỗi &amp; Mật Mã Điệp Viên</h1>
+          <p class="lesson-desc">
+            Khám phá tính bất biến (Immutable) của <code>str</code>, kỹ thuật cắt lát xâu <code>s[start:stop:step]</code>, đảo ngược <code>[::-1]</code>, các phương thức văn bản và mật mã Caesar.
+          </p>
+        </div>
+      </div>
+
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết &amp; Cắt Xâu</button>
+        <button type="button" class="tab-btn" data-tab="simulator">✂️ 2. String Slicer &amp; Mật Mã Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔒</span> 1. Xâu Ký Tự (String) &amp; Tính Bất Biến (Immutable)</h2>
+        </div>
+        <p>Giống như List (Bài 9), xâu ký tự <code>str</code> cũng có độ dài <code>len(s)</code>, truy cập <code>s[0]</code>, <code>s[-1]</code> và duyệt được bằng <code>for ch in s:</code>. Tuy nhiên, có một điểm khác biệt sống còn:</p>
+        <div class="grid-2" style="margin-top:14px;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#065f46; margin-bottom:6px;">✅ List là Mutable (Thay đổi được)</h4>
+            <code>ds = ["M", "i", "n", "d"]</code><br>
+            <code>ds[0] = "K"</code> &rarr; Hợp lệ: <code>["K", "i", "n", "d"]</code>
+          </div>
+          <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#991b1b; margin-bottom:6px;">❌ String là Immutable (Bất biến)</h4>
+            <code>s = "Mind"</code><br>
+            <code>s[0] = "K"</code> &rarr; <strong>TypeError!</strong> (Muốn đổi phải tạo chuỗi mới: <code>"K" + s[1:]</code>)
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">✂️</span> 2. Cắt Lát Xâu (Slicing): <code>s[start:stop:step]</code></h2>
+        </div>
+        <p>Tương tự <code>range(start, stop, step)</code> ở Bài 6, lát cắt <code>s[start:stop:step]</code> lấy từ vị trí <code>start</code> đến <strong>trước <code>stop</code></strong> (không bao gồm <code>stop</code>!).</p>
+        <table class="testcase-table">
+          <thead><tr><th>Cú pháp (với <code>s = "MindX Python"</code>)</th><th>Ý nghĩa</th><th>Kết quả</th></tr></thead>
+          <tbody>
+            <tr><td><code>s[0:5]</code> hoặc <code>s[:5]</code></td><td>Từ đầu (0) đến trước chỉ số 5</td><td><code>"MindX"</code></td></tr>
+            <tr><td><code>s[6:]</code></td><td>Từ chỉ số 6 đến hết chuỗi</td><td><code>"Python"</code></td></tr>
+            <tr><td><code>s[::2]</code></td><td>Từ đầu đến hết, nhảy bước 2</td><td><code>"MnXPto"</code></td></tr>
+            <tr><td><code>s[::-1]</code></td><td>Bước nhảy âm -1 → <strong>đảo ngược chuỗi</strong></td><td><code>"nohtyP XdniM"</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🛠️</span> 3. Bộ Công Cụ Xử Lý Văn Bản &amp; Mã ASCII</h2>
+        </div>
+        <div class="grid-2">
+          <table class="testcase-table" style="margin:0;">
+            <thead><tr><th>Phương thức</th><th>Công dụng (trả về chuỗi/list mới)</th></tr></thead>
+            <tbody>
+              <tr><td><code>s.strip()</code></td><td>Xóa khoảng trắng thừa ở 2 đầu</td></tr>
+              <tr><td><code>s.upper()</code> / <code>s.lower()</code></td><td>Chuyển toàn bộ sang HOA / thường</td></tr>
+              <tr><td><code>s.replace(cu, moi)</code></td><td>Thay thế chuỗi con <code>cu</code> thành <code>moi</code></td></tr>
+              <tr><td><code>s.split()</code></td><td>Tách chuỗi thành <strong>List các từ</strong></td></tr>
+              <tr><td><code>"-".join(ds)</code></td><td>Ghép List các chuỗi lại bằng dấu <code>"-"</code></td></tr>
+            </tbody>
+          </table>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>ma_ascii_ord_chr.py</span></div>
+            <div class="code-editor-area"><textarea readonly style="min-height:175px;"># ord(ký_tự) -> mã số ASCII
+print(ord("A"))   # 65
+print(ord("B"))   # 66
+
+# chr(mã_số) -> ký tự tương ứng
+print(chr(67))    # "C"
+
+# Dịch chữ cái tiến 3 bước (Mật mã Caesar):
+print(chr(ord("A") + 3))  # "D"</textarea></div>
+          </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top:14px;">
+          <span>⚠️</span>
+          <div><strong>Nhớ gán lại biến:</strong> Gọi <code>s.upper()</code> một mình sẽ <strong>không làm thay đổi <code>s</code></strong> vì chuỗi bất biến! Phải viết <code>s = s.upper()</code>.</div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #fdf2f8 0%, #eff6ff 100%); border:2px dashed #db2777; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#be185d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 12: Đóng Gói Thành Hàm (Function)</h3>
+        <p style="color:#831843; font-size:14px; line-height:1.6;">
+          Từ Bài 1 đến Bài 11, mỗi khi muốn vẽ viền trang trí, in menu hay mã hóa một đoạn mật thư, ta lại phải gõ lại cả chục dòng code!
+        </p>
+        <p style="color:#831843; font-size:14px; line-height:1.6; margin-top:6px;">
+          Ở <strong>Bài 12: Hàm — Chia Nhỏ Công Việc (<code>def</code>)</strong>, em sẽ học cách chế tạo những "cỗ máy" đặt tên riêng như <code>ma_hoa_caesar()</code> hoặc <code>combo_chieu_thuc()</code> để chỉ cần gọi tên 1 dòng là dùng lại được ở khắp mọi nơi!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: STRING SLICER, METHODS & CAESAR CIPHER LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <!-- String Slicer -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">✂️</span> String Slicer Visualizer — Cắt Lát Chuỗi Trực Quan</h2>
+          <span class="step-counter" id="slicer-expr">s[0:5:1]</span>
+        </div>
+
+        <div class="interactive-ctrls">
+          <label style="flex:1; min-width:190px;">Chuỗi gốc (<code>s</code>):
+            <input type="text" id="sl-text" value="MindX Python" oninput="updateSlicer()">
+          </label>
+          <label>start:
+            <input type="number" id="sl-start" value="0" placeholder="trống" style="width:85px;" oninput="updateSlicer()">
+          </label>
+          <label>stop:
+            <input type="number" id="sl-stop" value="5" placeholder="trống" style="width:85px;" oninput="updateSlicer()">
+          </label>
+          <label>step:
+            <input type="number" id="sl-step" value="1" style="width:85px;" oninput="updateSlicer()">
+          </label>
+          <button type="button" class="btn-run" style="margin-top:auto;" onclick="presetReverse()">🔁 Đảo ngược [::-1]</button>
+          <button type="button" class="btn-copy" style="margin-top:auto; background:#e2e8f0; color:#334155;" onclick="presetSlice(6, '', 1)">Lấy "Python" [6:]</button>
+        </div>
+
+        <div class="char-strip" id="char-strip"></div>
+        <div class="slice-out" id="slice-out">Kết quả: "MindX"</div>
+
+        <!-- Quick Method Tester -->
+        <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:20px 0 8px;">Thử nhanh các phương thức xử lý văn bản trên chuỗi <code>s</code>:</h4>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+          <button type="button" class="btn-copy" style="background:#e2e8f0; color:#1e293b;" onclick="testStrMethod('upper')">.upper()</button>
+          <button type="button" class="btn-copy" style="background:#e2e8f0; color:#1e293b;" onclick="testStrMethod('lower')">.lower()</button>
+          <button type="button" class="btn-copy" style="background:#e2e8f0; color:#1e293b;" onclick="testStrMethod('strip')">.strip()</button>
+          <button type="button" class="btn-copy" style="background:#e2e8f0; color:#1e293b;" onclick="testStrMethod('split')">.split()</button>
+          <button type="button" class="btn-copy" style="background:#e2e8f0; color:#1e293b;" onclick="testStrMethod('replace')">.replace(" ", "_")</button>
+        </div>
+        <div class="method-out" id="method-out">Bấm một phương thức phía trên để xem kết quả trên chuỗi <code>s</code>...</div>
+      </div>
+
+      <!-- Caesar Cipher Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🕵️</span> Phòng Mật Mã Điệp Viên — Caesar Cipher</h2>
+        </div>
+        <div class="interactive-ctrls">
+          <label style="flex:1; min-width:200px;">Thông điệp (tiếng Anh không dấu):
+            <input type="text" id="ca-text" value="HELLO MINDX" oninput="runCaesar()">
+          </label>
+          <label>Bước dịch <code>k</code>:
+            <input type="number" id="ca-shift" value="3" min="-25" max="25" style="width:90px;" oninput="runCaesar()">
+          </label>
+          <button type="button" class="btn-run" style="margin-top:auto;" onclick="runCaesar()">🔐 Mã Hóa</button>
+          <button type="button" class="btn-run" style="margin-top:auto; background:#7c3aed;" onclick="decodeCaesar()">🔓 Giải Mã Ngược</button>
+        </div>
+        <div class="slice-out" id="ca-out" style="font-size:16px;">Mã hóa (+3): "KHOOR PLQGA"</div>
+      </div>
+
+      <!-- Skulpt Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Xử Lý Chuỗi Với Skulpt</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL11(1)">Slicing &amp; Phương thức</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL11(2)">Kiểm tra Đối xứng</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL11(3)">Mã hóa Caesar</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l11-title">xu_ly_chuoi.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson11-editor', 'lesson11-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson11-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson11-editor" style="min-height:175px;">s = "   MindX Python 2026   "
+sach = s.strip()
+print("Sau strip:", sach)
+print("Viết hoa:", sach.upper())
+print("Đảo ngược:", sach[::-1])
+cac_tu = sach.split()
+print("Danh sách từ:", cac_tu, "| Số từ:", len(cac_tu))</textarea>
+          </div>
+          <div class="terminal-output" id="lesson11-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 11</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu kiểm tra slicing, tính bất biến, phương thức chuỗi và ord/chr</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l11q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Cho <code>s = "Python"</code>. Điều gì xảy ra khi chạy lệnh <code>s[0] = "K"</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q1', 0, false, 'Chuỗi khác List ở chỗ không sửa trực tiếp từng ký tự được.')"><input type="radio" name="l11q1"><span>A. Biến <code>s</code> đổi thành <code>"Kython"</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q1', 1, true, 'Chính xác! Kiểu str là bất biến (Immutable), gán trực tiếp s[0] = &quot;K&quot; gây TypeError.')"><input type="radio" name="l11q1"><span>B. Báo lỗi <code>TypeError</code> vì chuỗi là bất biến</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q1', 2, false, 'Không chèn K vào đầu.')"><input type="radio" name="l11q1"><span>C. Biến <code>s</code> thành <code>"KPython"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q1', 3, false, 'Không bị IndexError.')"><input type="radio" name="l11q1"><span>D. Báo lỗi <code>IndexError</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Cho <code>s = "MindX"</code>. Biểu thức <code>s[1:4]</code> cho ra chuỗi nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q2', 0, false, 'Chỉ số 0 là M, chỉ số 4 là X (không lấy stop=4).')"><input type="radio" name="l11q2"><span>A. <code>"Mind"</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q2', 1, true, 'Đúng! Lấy các ký tự ở chỉ số 1, 2, 3 (bỏ 4): &quot;i&quot;, &quot;n&quot;, &quot;d&quot; -> &quot;ind&quot;.')"><input type="radio" name="l11q2"><span>B. <code>"ind"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q2', 2, false, 'X ở vị trí 4 không được lấy.')"><input type="radio" name="l11q2"><span>C. <code>"indX"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q2', 3, false, 'Không bắt đầu từ M.')"><input type="radio" name="l11q2"><span>D. <code>"Min"</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Cách viết ngắn gọn nhất để <strong>đảo ngược</strong> một chuỗi <code>s</code> trong Python là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q3', 0, false, 'str không có phương thức .reverse() (chỉ list mới có).')"><input type="radio" name="l11q3"><span>A. <code>s.reverse()</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q3', 1, true, 'Tuyệt vời! Lát cắt s[::-1] với step = -1 đảo ngược toàn bộ chuỗi trong 1 nốt nhạc.')"><input type="radio" name="l11q3"><span>B. <code>s[::-1]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q3', 2, false, 's[-1] chỉ lấy 1 ký tự cuối cùng.')"><input type="radio" name="l11q3"><span>C. <code>s[-1]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q3', 3, false, 's[::1] giữ nguyên chiều xuôi.')"><input type="radio" name="l11q3"><span>D. <code>s[::1]</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Phương thức nào dùng để cắt bỏ khoảng trắng thừa ở <strong>đầu và cuối</strong> chuỗi?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q4', 0, true, 'Chính xác! s.strip() làm sạch dấu cách và ký tự xuống dòng ở 2 đầu chuỗi.')"><input type="radio" name="l11q4"><span>A. <code>s.strip()</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q4', 1, false, 'split() tách chuỗi thành list các từ.')"><input type="radio" name="l11q4"><span>B. <code>s.split()</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q4', 2, false, 'Python dùng strip(), không phải trim().')"><input type="radio" name="l11q4"><span>C. <code>s.trim()</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q4', 3, false, 'clean() không có sẵn.')"><input type="radio" name="l11q4"><span>D. <code>s.clean()</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Đoạn code sau in ra kết quả gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">s = "hello"
+s.upper()
+print(s)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q5', 0, false, 'Vì không viết s = s.upper(), biến s vẫn giữ nguyên &quot;hello&quot;!')"><input type="radio" name="l11q5"><span>A. <code>HELLO</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q5', 1, true, 'Cực kỳ tỉnh táo! s.upper() tạo ra chuỗi mới &quot;HELLO&quot; nhưng không gán vào đâu, nên s vẫn là &quot;hello&quot;!')"><input type="radio" name="l11q5"><span>B. <code>hello</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q5', 2, false, 'Không phải Hello.')"><input type="radio" name="l11q5"><span>C. <code>Hello</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q5', 3, false, 'Không báo lỗi.')"><input type="radio" name="l11q5"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Lệnh <code>"Học lập trình Python".split()</code> trả về kết quả có kiểu dữ liệu là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q6', 0, false, 'split() tách ra nhiều từ chứ không trả về 1 str.')"><input type="radio" name="l11q6"><span>A. Một chuỗi <code>str</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q6', 1, true, 'Đúng! .split() tách theo khoảng trắng và trả về List gồm 4 từ: [&quot;Học&quot;, &quot;lập&quot;, &quot;trình&quot;, &quot;Python&quot;].')"><input type="radio" name="l11q6"><span>B. Một danh sách <code>list</code> gồm 4 từ</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q6', 2, false, 'Không trả về số nguyên.')"><input type="radio" name="l11q6"><span>C. Số nguyên <code>4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q6', 3, false, 'Không trả về boolean.')"><input type="radio" name="l11q6"><span>D. Kiểu <code>bool</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Kết quả của biểu thức <code>"-".join(["2026", "11", "19"])</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q7', 0, true, 'Chính xác! join() ghép các phần tử chuỗi trong list bằng ký tự nối &quot;-&quot; -> &quot;2026-11-19&quot;.')"><input type="radio" name="l11q7"><span>A. <code>"2026-11-19"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q7', 1, false, 'Dấu nối là &quot;-&quot;.')"><input type="radio" name="l11q7"><span>B. <code>"20261119"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q7', 2, false, 'join trả về một chuỗi str, không phải list.')"><input type="radio" name="l11q7"><span>C. <code>["2026-11-19"]</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q7', 3, false, 'Không báo lỗi.')"><input type="radio" name="l11q7"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Để thay tất cả chữ <code>"a"</code> thành <code>"@"</code> trong chuỗi <code>s = "banana"</code>, ta dùng lệnh nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q8', 0, true, 'Đúng! s.replace(&quot;a&quot;, &quot;@&quot;) trả về &quot;b@n@n@&quot;.')"><input type="radio" name="l11q8"><span>A. <code>s.replace("a", "@")</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q8', 1, false, 'change() không tồn tại.')"><input type="radio" name="l11q8"><span>B. <code>s.change("a", "@")</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q8', 2, false, 'Thứ tự là (cũ, mới), không phải (@, a).')"><input type="radio" name="l11q8"><span>C. <code>s.replace("@", "a")</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q8', 3, false, 'swap() không tồn tại.')"><input type="radio" name="l11q8"><span>D. <code>s.swap("a", "@")</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Cho <code>s = "abcdef"</code>. Kết quả của <code>s[1::2]</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q9', 0, false, 'ace là s[::2] (bắt đầu từ 0).')"><input type="radio" name="l11q9"><span>A. <code>"ace"</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q9', 1, true, 'Chính xác! Bắt đầu từ index 1 (b), bước nhảy 2 -> index 1 (b), 3 (d), 5 (f) -> &quot;bdf&quot;.')"><input type="radio" name="l11q9"><span>B. <code>"bdf"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q9', 2, false, 'Không phải bcdef.')"><input type="radio" name="l11q9"><span>C. <code>"bcdef"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q9', 3, false, 'Không đảo ngược vì step = 2 dương.')"><input type="radio" name="l11q9"><span>D. <code>"fdb"</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Cho <code>ord("A") == 65</code>. Kết quả của <code>chr(ord("A") + 2)</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q10', 0, false, '65 + 2 = 67.')"><input type="radio" name="l11q10"><span>A. <code>"B"</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q10', 1, true, 'Đúng! A(65) + 2 = 67, và chr(67) chính là chữ cái &quot;C&quot;!')"><input type="radio" name="l11q10"><span>B. <code>"C"</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q10', 2, false, 'chr() biến mã số thành ký tự chứ không in số 67.')"><input type="radio" name="l11q10"><span>C. <code>67</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q10', 3, false, 'D là 68.')"><input type="radio" name="l11q10"><span>D. <code>"D"</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Biểu thức <code>"py" in "Python"</code> trả về giá trị gì? (Chú ý chữ hoa/thường!)</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q11', 0, false, 'Python có phân biệt chữ HOA và chữ thường!')"><input type="radio" name="l11q11"><span>A. <code>True</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q11', 1, true, 'Rất tinh mắt! &quot;py&quot; viết thường không khớp với &quot;Py&quot; viết hoa trong &quot;Python&quot; -> trả về False!')"><input type="radio" name="l11q11"><span>B. <code>False</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q11', 2, false, 'in trả về bool.')"><input type="radio" name="l11q11"><span>C. <code>0</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q11', 3, false, 'Không báo lỗi.')"><input type="radio" name="l11q11"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l11q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Độ dài <code>len("A B ")</code> (có 1 dấu cách ở giữa và 1 dấu cách ở cuối) bằng mấy?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l11q12', 0, false, 'Khoảng trắng cũng được tính là ký tự!')"><input type="radio" name="l11q12"><span>A. <code>2</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q12', 1, false, 'Đếm cả dấu cách ở cuối nữa.')"><input type="radio" name="l11q12"><span>B. <code>3</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l11q12', 2, true, 'Chính xác! A (1), dấu cách (2), B (3), dấu cách cuối (4) -> tổng cộng 4 ký tự.')"><input type="radio" name="l11q12"><span>C. <code>4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l11q12', 3, false, 'Không phải 5.')"><input type="radio" name="l11q12"><span>D. <code>5</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Đếm Số Từ &amp; Chuẩn Hóa Câu</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập một câu có khoảng trắng thừa hai đầu. Làm sạch khoảng trắng bằng <code>.strip()</code>, in câu viết hoa toàn bộ và đếm xem câu đó có bao nhiêu từ.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_dem_tu.py</span><button class="btn-copy" data-target="l11-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l11-s1" readonly style="min-height:110px;">cau = input("Nhập câu: ").strip()
+print("Viết hoa:", cau.upper())
+tu = cau.split()
+print("Số từ:", len(tu))</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Kiểm Tra Từ Đối Xứng (Palindrome)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập một từ (ví dụ <code>"Level"</code>, <code>"radar"</code>, <code>"Python"</code>). In <code>"Doi xung"</code> nếu đọc xuôi và ngược giống nhau (không phân biệt hoa/thường); ngược lại in <code>"Khong doi xung"</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_doi_xung.py</span><button class="btn-copy" data-target="l11-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l11-s2" readonly style="min-height:105px;">s = input("Nhập từ: ").strip().lower()
+if s == s[::-1]:
+    print("Doi xung")
+else:
+    print("Khong doi xung")</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Máy Biến Hình Teencode &amp; Bộ Lọc Chat</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập một đoạn tin nhắn. Dùng <code>.replace()</code> đổi <code>"a"</code> thành <code>"@"</code>, <code>"e"</code> thành <code>"3"</code>, <code>"o"</code> thành <code>"0"</code> và che từ <code>"ngoc"</code> thành <code>"***"</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_loc_chat.py</span><button class="btn-copy" data-target="l11-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l11-s3" readonly style="min-height:115px;">msg = input("Nhập tin nhắn: ")
+msg = msg.replace("ngoc", "***")
+msg = msg.replace("a", "@").replace("e", "3").replace("o", "0")
+print("Kết quả:", msg)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #db2777;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#be185d;">Bài 4: Mật Mã Dịch Chuyển Caesar (<code>ord</code> &amp; <code>chr</code>)</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập văn bản chữ HOA tiếng Anh (vd <code>"MINDX"</code>) và bước dịch <code>k</code> (vd <code>3</code>). Mã hóa mỗi chữ cái dịch tiến <code>k</code> vị trí trong bảng A–Z (vượt quá Z quay lại A bằng phép chia dư <code>% 26</code>).</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#be185d; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_caesar.py</span><button class="btn-copy" data-target="l11-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l11-s4" readonly style="min-height:150px;">van_ban = input("Nhập chữ HOA: ")
+k = int(input("Bước dịch k: "))
+kq = ""
+for ch in van_ban:
+    if "A" &lt;= ch &lt;= "Z":
+        vi_tri = (ord(ch) - ord("A") + k) % 26
+        kq += chr(vi_tri + ord("A"))
+    else:
+        kq += ch
+print("Mật thư:", kq)</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 10/index.html" class="pager-btn">&larr; Bài Trước: Bài 10 - Danh Sách &amp; Thao Tác CRUD</a>
+      <a href="../LESSON 12/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 12 - Hàm Cơ Bản (def) &rarr;</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 11: Xâu Ký Tự (String) — Cắt Chuỗi &amp; Mật Mã | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    function esc11(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function pySliceIndices(len, startRaw, stopRaw, stepRaw) {
+      const step = (stepRaw === "" || isNaN(Number(stepRaw))) ? 1 : parseInt(stepRaw, 10);
+      if (step === 0) return { error: "ValueError: slice step cannot be zero!" };
+
+      let start, stop;
+      if (step > 0) {
+        start = startRaw === "" ? 0 : parseInt(startRaw, 10);
+        stop = stopRaw === "" ? len : parseInt(stopRaw, 10);
+        if (start < 0) start = Math.max(0, len + start);
+        if (stop < 0) stop = Math.max(0, len + stop);
+        start = Math.max(0, Math.min(len, start));
+        stop = Math.max(0, Math.min(len, stop));
+        const idx = [];
+        for (let i = start; i < stop; i += step) idx.push(i);
+        return { indices: idx, step };
+      } else {
+        start = startRaw === "" ? len - 1 : parseInt(startRaw, 10);
+        stop = stopRaw === "" ? -len - 1 : parseInt(stopRaw, 10);
+        if (start < 0) start = len + start;
+        if (stop < 0 && stopRaw !== "") stop = len + stop;
+        if (start >= len) start = len - 1;
+        const limit = stopRaw === "" ? -1 : stop;
+        const idx = [];
+        for (let i = start; i > limit && i >= 0; i += step) {
+          if (i < len) idx.push(i);
+        }
+        return { indices: idx, step };
+      }
+    }
+
+    function updateSlicer() {
+      const s = document.getElementById("sl-text").value;
+      const startRaw = document.getElementById("sl-start").value.trim();
+      const stopRaw = document.getElementById("sl-stop").value.trim();
+      const stepRaw = document.getElementById("sl-step").value.trim();
+
+      document.getElementById("slicer-expr").innerText = `s[${startRaw}:${stopRaw}:${stepRaw || 1}]`;
+      const res = pySliceIndices(s.length, startRaw, stopRaw, stepRaw);
+      const strip = document.getElementById("char-strip");
+      const out = document.getElementById("slice-out");
+
+      if (res.error) {
+        strip.innerHTML = "";
+        out.innerText = "❌ " + res.error;
+        return;
+      }
+      const pickedSet = new Set(res.indices);
+      strip.innerHTML = Array.from(s).map((ch, i) => `
+        <div class="char-box ${pickedSet.has(i) ? "picked" : ""}">
+          <div class="ip">${i}</div>
+          <div class="ch">${ch === " " ? "␣" : esc11(ch)}</div>
+          <div class="in">${i - s.length}</div>
+        </div>
+      `).join("");
+
+      const sliced = res.indices.map(i => s[i]).join("");
+      out.innerText = `Kết quả: "${sliced}" (độ dài ${sliced.length})`;
+    }
+
+    function presetReverse() {
+      document.getElementById("sl-start").value = "";
+      document.getElementById("sl-stop").value = "";
+      document.getElementById("sl-step").value = "-1";
+      updateSlicer();
+    }
+
+    function presetSlice(a, b, c) {
+      document.getElementById("sl-start").value = a;
+      document.getElementById("sl-stop").value = b;
+      document.getElementById("sl-step").value = c;
+      updateSlicer();
+    }
+
+    function testStrMethod(m) {
+      const s = document.getElementById("sl-text").value;
+      const out = document.getElementById("method-out");
+      if (m === "upper") out.innerText = `s.upper() -> "${s.toUpperCase()}"`;
+      else if (m === "lower") out.innerText = `s.lower() -> "${s.toLowerCase()}"`;
+      else if (m === "strip") out.innerText = `s.strip() -> "${s.trim()}"`;
+      else if (m === "split") {
+        const parts = s.trim() ? s.trim().split(/\s+/) : [];
+        out.innerText = `s.split() -> ${JSON.stringify(parts)}`;
+      } else if (m === "replace") {
+        out.innerText = `s.replace(" ", "_") -> "${s.replace(/ /g, "_")}"`;
+      }
+    }
+
+    function caesarTransform(txt, k) {
+      let out = "";
+      const shift = ((k % 26) + 26) % 26;
+      for (const ch of txt) {
+        const code = ch.charCodeAt(0);
+        if (code >= 65 && code <= 90) out += String.fromCharCode((code - 65 + shift) % 26 + 65);
+        else if (code >= 97 && code <= 122) out += String.fromCharCode((code - 97 + shift) % 26 + 97);
+        else out += ch;
+      }
+      return out;
+    }
+
+    function runCaesar() {
+      const txt = document.getElementById("ca-text").value;
+      const k = parseInt(document.getElementById("ca-shift").value, 10) || 0;
+      document.getElementById("ca-out").innerText = `Mã hóa (${k >= 0 ? "+" : ""}${k}): "${caesarTransform(txt, k)}"`;
+    }
+
+    function decodeCaesar() {
+      const txt = document.getElementById("ca-text").value;
+      const k = parseInt(document.getElementById("ca-shift").value, 10) || 0;
+      document.getElementById("ca-out").innerText = `Giải mã (-${k}): "${caesarTransform(txt, -k)}"`;
+    }
+
+    function loadL11(id) {
+      const ed = document.getElementById("lesson11-editor");
+      const t = document.getElementById("l11-title");
+      const samples = {
+        1: ["xu_ly_chuoi.py", `s = "   MindX Python 2026   "\nsach = s.strip()\nprint("Sau strip:", sach)\nprint("Viết hoa:", sach.upper())\nprint("Đảo ngược:", sach[::-1])\ncac_tu = sach.split()\nprint("Danh sách từ:", cac_tu, "| Số từ:", len(cac_tu))`],
+        2: ["kiem_tra_doi_xung.py", `tu = input("Nhập 1 từ (vd radar, level): ").strip().lower()\nif tu == tu[::-1]:\n    print(tu, "là từ đối xứng!")\nelse:\n    print(tu, "không đối xứng.")`],
+        3: ["mat_ma_caesar.py", `van_ban = "HELLO MINDX"\nk = 3\nmat_thu = ""\nfor ch in van_ban:\n    if "A" <= ch <= "Z":\n        mat_thu += chr((ord(ch) - ord("A") + k) % 26 + ord("A"))\n    else:\n        mat_thu += ch\nprint("Gốc:", van_ban)\nprint("Mã hóa (+3):", mat_thu)`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateSlicer();
+      runCaesar();
+    });
+  </script>
+</body>
+</html>

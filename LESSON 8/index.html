@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 8: Lập Trình Giải Quyết Vấn Đề — Sinh Tồn Trên Hoang Đảo | Lập Trình Python</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .surv-panel { background:linear-gradient(135deg,#0f172a,#1e293b); color:white; border-radius:var(--radius-lg); padding:24px; }
+    .stat-bar-wrap { background:rgba(255,255,255,0.08); border-radius:10px; padding:12px 14px; }
+    .stat-bar-head { display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:6px; }
+    .stat-track { height:10px; background:rgba(255,255,255,0.12); border-radius:99px; overflow:hidden; }
+    .stat-fill { height:100%; border-radius:99px; transition:width .35s ease; }
+    .surv-btn { background:#1e40af; color:white; border:1px solid #3b82f6; padding:11px 14px; border-radius:10px; font-weight:700; font-size:13.5px; cursor:pointer; transition:all .2s; text-align:left; }
+    .surv-btn:hover:not(:disabled) { background:#2563eb; transform:translateY(-2px); }
+    .surv-btn:disabled { opacity:.45; cursor:not-allowed; }
+    .surv-log { background:#020617; color:#cbd5e1; font-family:var(--font-mono); font-size:12.5px; padding:12px; border-radius:8px; min-height:110px; max-height:170px; overflow-y:auto; white-space:pre-wrap; margin-top:14px; }
+    .trace-code { background:#111827; border-radius:var(--radius-md); padding:12px 0; font-family:var(--font-mono); font-size:13px; color:#e2e8f0; overflow-x:auto; }
+    .trace-line { display:flex; border-left:3px solid transparent; padding:3px 14px 3px 0; white-space:pre; }
+    .trace-line .ln { width:34px; text-align:right; padding-right:10px; color:#64748b; user-select:none; flex-shrink:0; }
+    .trace-line.active { background:#1e3a8a; border-left-color:#38bdf8; }
+    .step-counter { font-size:13px; font-weight:700; color:#047857; background:#d1fae5; padding:4px 10px; border-radius:20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="index.html" class="active" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 8</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(16, 185, 129, 0.22); color:#6ee7b7;">Cấp Độ: Tổng Hợp Dự Án</span>
+          </div>
+          <h1 class="lesson-title">Bài 8: Lập Trình Giải Quyết Vấn Đề — Dự Án "Sinh Tồn Trên Hoang Đảo"</h1>
+          <p class="lesson-desc">
+            Vận dụng toàn bộ 7 buổi đã học theo quy trình 4 bước của kỹ sư phần mềm: phân rã bài toán lớn, thiết kế trạng thái (Game State), dựng khung sườn và hoàn thiện tựa game Sinh Tồn.
+          </p>
+        </div>
+      </div>
+
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết &amp; Quy Trình 4 Bước</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🏝️ 2. Giả Lập Hoang Đảo &amp; Code Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (10 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧩</span> 1. Quy Trình 4 Bước Giải Quyết Bài Toán Lớn</h2>
+          <span style="font-size:12px; background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:20px; font-weight:600;">Tổng hợp Bài 1 → 7</span>
+        </div>
+        <p>Khi gặp một đề bài dài (như viết cả một trò chơi hoặc phần mềm bán hàng), người mới hay mắc lỗi <em>"ngồi gõ code ngay rồi rối tung lên"</em>. Kỹ sư phần mềm luôn đi qua 4 bước:</p>
+
+        <div class="grid-4" style="margin-top:18px;">
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:12px; font-weight:800; color:#2563eb;">BƯỚC 1</div>
+            <h4 style="margin:6px 0; color:#1e3a8a;">Hiểu Đề &amp; Xác Định State</h4>
+            <p style="font-size:13.5px; color:#1e40af;">Cần lưu những biến nào? Người chơi nhập gì? Điều kiện Thắng/Thua là gì?</p>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:12px; font-weight:800; color:#16a34a;">BƯỚC 2</div>
+            <h4 style="margin:6px 0; color:#14532d;">Phân Rã (Decomposition)</h4>
+            <p style="font-size:13.5px; color:#166534;">Chia bài toán lớn thành việc nhỏ: Khởi tạo → Vòng lặp ngày → Chọn hành động → Kiểm tra kết thúc.</p>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:12px; font-weight:800; color:#d97706;">BƯỚC 3</div>
+            <h4 style="margin:6px 0; color:#78350f;">Dựng Khung Sườn (Skeleton)</h4>
+            <p style="font-size:13.5px; color:#92400e;">Viết sẵn vòng lặp <code>while True</code> và bộ khung <code>if-elif-else</code> cho chạy được trước, rồi mới điền chi tiết.</p>
+          </div>
+          <div style="background:#fdf2f8; border:1px solid #fbcfe8; border-radius:var(--radius-md); padding:16px;">
+            <div style="font-size:12px; font-weight:800; color:#db2777;">BƯỚC 4</div>
+            <h4 style="margin:6px 0; color:#831843;">Nâng Cấp &amp; Kiểm Thử Biên</h4>
+            <p style="font-size:13.5px; color:#9d174d;">Thêm <code>random</code>, kẹp chỉ số trong khoảng <code>0..100</code>, thử nhập sai menu để bắt bug.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🦴</span> 2. Bản Thiết Kế Khung Sườn Game "Sinh Tồn Trên Hoang Đảo"</h2>
+        </div>
+        <div class="grid-2">
+          <div>
+            <h4 style="color:var(--navy); margin-bottom:10px;">Bảng Ánh Xạ Kiến Thức 7 Buổi Vào Dự Án:</h4>
+            <table class="testcase-table">
+              <thead><tr><th>Kiến thức</th><th>Ứng dụng trong game</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Bài 1 &amp; 2</strong></td><td>Biến trạng thái <code>mau = 100</code>, <code>thuc_an = 80</code>, <code>nuoc = 80</code>, <code>ngay = 1</code>, ép kiểu <code>int(input())</code>.</td></tr>
+                <tr><td><strong>Bài 3</strong></td><td>Cộng/trừ chỉ số, điều kiện thua <code>mau &lt;= 0 or thuc_an &lt;= 0</code>.</td></tr>
+                <tr><td><strong>Bài 4</strong></td><td><code>if - elif - else</code> phân nhánh 4 hành động mỗi ngày.</td></tr>
+                <tr><td><strong>Bài 7</strong></td><td>Vòng lặp <code>while True:</code>, nhập sai thì <code>continue</code>, thắng/thua thì <code>break</code>.</td></tr>
+                <tr><td><strong>Thư viện <code>random</code></strong></td><td><code>random.randint(1, 5) == 1</code> tạo 20% tỉ lệ gặp bão tố bất ngờ!</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>skeleton_hoang_dao.py</span><button class="btn-copy" data-target="th-skel">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-skel" readonly style="min-height:245px;">ngay = 1
+mau = 100
+thuc_an = 80
+nuoc = 80
+go = 0
+
+while True:
+    print("Ngày", ngay, "| Máu:", mau, "| Ăn:", thuc_an, "| Nước:", nuoc)
+    chon = input("1.Săn 2.Nước 3.Nghỉ 4.Chặt gỗ: ")
+    # Rẽ nhánh hành động (if-elif-else)
+    # Kiểm tra thắng (ngay > 7 or go >= 4) / thua (mau <= 0)
+    ngay += 1</textarea></div>
+          </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top:16px;">
+          <span>🛡️</span>
+          <div><strong>Kỹ thuật Kẹp Biên (Clamping):</strong> Chỉ số máu, thức ăn chỉ nằm từ <code>0</code> đến <code>100</code>. Nếu nghỉ ngơi lúc máu 95 (+20 thành 115), phải kẹp lại: <code>if mau &gt; 100: mau = 100</code>.</div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #f0fdf4 0%, #fef3c7 100%); border:2px dashed #16a34a; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#15803d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 9: Khi Nhân Vật Có Cả Balo 20 Món Đồ!</h3>
+        <p style="color:#14532d; font-size:14px; line-height:1.6;">
+          Trong game Hoang Đảo, ta mới chỉ theo dõi vài con số (<code>mau</code>, <code>thuc_an</code>, <code>nuoc</code>, <code>go</code>). Vậy nếu nhân vật nhặt được cả <strong>Dao găm, Bật lửa, Cá nướng, Thuốc, La bàn, Thuyền...</strong> — chẳng lẽ ta phải tạo 20 biến rời <code>mon_1</code>, <code>mon_2</code>, ..., <code>mon_20</code>?
+        </p>
+        <p style="color:#14532d; font-size:14px; line-height:1.6; margin-top:6px;">
+          Không cần! Ở <strong>Bài 9: Kiểm Tra Vòng Lặp &amp; Danh Sách (List)</strong>, ta chỉ cần đúng <strong>1 chiếc hộp chứa được nhiều món đồ</strong> mang tên <code>balo = ["Dao", "Bật lửa", "Cá"]</code>!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: GIẢ LẬP HOANG ĐẢO & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🏝️</span> Interactive Survival Island Simulator</h2>
+          <span class="step-counter" id="surv-status">Ngày 1 / 7 &bull; Đang sinh tồn</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">
+          Trải nghiệm game <strong>Sinh Tồn Trên Hoang Đảo</strong> và quan sát ngay bên phải đoạn code Python tương ứng đang kích hoạt theo mỗi lựa chọn của bạn! (Thắng khi qua hết <strong>7 ngày</strong> hoặc gom đủ <strong>4 gỗ</strong> đóng bè).
+        </p>
+
+        <div class="grid-2" style="align-items:start;">
+          <!-- Left: Game Dashboard -->
+          <div class="surv-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <strong style="font-size:16px;">📅 Ngày thứ <span id="s-day">1</span> / 7</strong>
+              <span style="background:rgba(250,204,21,0.18); color:#fde047; padding:4px 10px; border-radius:20px; font-size:12.5px; font-weight:700;">🪵 Gỗ đóng bè: <span id="s-wood">0</span> / 4</span>
+            </div>
+
+            <div style="display:grid; gap:10px; margin-bottom:16px;">
+              <div class="stat-bar-wrap">
+                <div class="stat-bar-head"><span>❤️ Máu (HP)</span><span id="s-hp-txt">100 / 100</span></div>
+                <div class="stat-track"><div class="stat-fill" id="s-hp-bar" style="width:100%; background:#ef4444;"></div></div>
+              </div>
+              <div class="stat-bar-wrap">
+                <div class="stat-bar-head"><span>🍖 Thức ăn</span><span id="s-food-txt">80 / 100</span></div>
+                <div class="stat-track"><div class="stat-fill" id="s-food-bar" style="width:80%; background:#f59e0b;"></div></div>
+              </div>
+              <div class="stat-bar-wrap">
+                <div class="stat-bar-head"><span>💧 Nước uống</span><span id="s-water-txt">80 / 100</span></div>
+                <div class="stat-track"><div class="stat-fill" id="s-water-bar" style="width:80%; background:#38bdf8;"></div></div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <button type="button" class="surv-btn" id="btn-act-1" onclick="survAct(1)">🏹 1. Săn bắn<br><small style="opacity:.8;">+30 Ăn, -15 Nước</small></button>
+              <button type="button" class="surv-btn" id="btn-act-2" onclick="survAct(2)">🚰 2. Tìm nước<br><small style="opacity:.8;">+35 Nước, -10 Ăn</small></button>
+              <button type="button" class="surv-btn" id="btn-act-3" onclick="survAct(3)">⛺ 3. Nghỉ ngơi<br><small style="opacity:.8;">+20 Máu, -15 Ăn/Nước</small></button>
+              <button type="button" class="surv-btn" id="btn-act-4" onclick="survAct(4)">🪓 4. Chặt gỗ<br><small style="opacity:.8;">+1 Gỗ, -10 Máu, -15 Ăn</small></button>
+            </div>
+
+            <button type="button" class="btn-copy" style="margin-top:12px; width:100%;" onclick="survReset()">🔄 Chơi Lại Từ Ngày 1</button>
+            <div class="surv-log" id="s-log">🏝️ Bạn vừa dạt vào hoang đảo! Hãy sống sót 7 ngày hoặc thu thập 4 gỗ đóng bè...</div>
+          </div>
+
+          <!-- Right: Live Python Branch Highlight -->
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Code Python đang chạy tương ứng:</h4>
+            <div class="trace-code" id="s-code-view"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skulpt Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Chạy Thử Bài Toán Tổng Hợp</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL8(1)">Game Hoang Đảo (Rút gọn)</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL8(2)">Máy Bán Nước Tự Động</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL8(3)">Đổi Giây → Giờ:Phút:Giây</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l8-title">hoang_dao_mini.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson8-editor', 'lesson8-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson8-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson8-editor" style="min-height:210px;"># Phiên bản rút gọn: Sinh tồn 3 ngày trên hoang đảo
+mau = 100
+ngay = 1
+while ngay &lt;= 3 and mau &gt; 0:
+    print("--- Ngày", ngay, "| Máu:", mau, "---")
+    chon = input("Chọn (1: Săn bắn +10 máu | 2: Chạy bộ -30 máu): ")
+    if chon == "1":
+        mau = min(100, mau + 10)
+    elif chon == "2":
+        mau -= 30
+    else:
+        print("Lựa chọn không hợp lệ!")
+        continue
+    ngay += 1
+
+if mau &gt; 0:
+    print("CHÚC MỪNG! Bạn đã sống sót!")
+else:
+    print("THUA CUỘC! Bạn đã kiệt sức.")</textarea>
+          </div>
+          <div class="terminal-output" id="lesson8-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thử nghiệm chương trình...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (10 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 8</h3>
+            <p style="font-size:13.5px; opacity:0.9;">10 câu hỏi tổng hợp kỹ năng phân tích bài toán, quản lý trạng thái và debug</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l8q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Trong quy trình giải quyết bài toán lập trình, việc chia một bài toán lớn thành các phần nhỏ hơn (khởi tạo, vòng lặp, kiểm tra thắng/thua) gọi là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q1', 0, true, 'Chính xác! Phân rã bài toán (Decomposition) giúp bài toán dài trở nên dễ viết và dễ sửa lỗi.')"><input type="radio" name="l8q1"><span>A. Phân rã bài toán (Decomposition)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q1', 1, false, 'Ép kiểu là chuyển đổi int/float/str.')"><input type="radio" name="l8q1"><span>B. Ép kiểu dữ liệu (Type Casting)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q1', 2, false, 'Lặp vô hạn là lỗi hoặc cơ chế lặp liên tục.')"><input type="radio" name="l8q1"><span>C. Lặp vô hạn</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q1', 3, false, 'Gán giá trị chỉ là 1 lệnh đơn.')"><input type="radio" name="l8q1"><span>D. Gán biến đồng loạt</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Khi viết game Sinh Tồn, tại sao ta nên dựng "khung sườn code" (Skeleton) trước khi viết chi tiết từng tình huống?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q2', 0, false, 'Python không bắt buộc viết khung sườn nhưng nên làm để tránh rối.')"><input type="radio" name="l8q2"><span>A. Vì Python báo lỗi nếu không có khung sườn</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q2', 1, true, 'Đúng! Dựng khung sườn giúp kiểm soát luồng chạy chính (menu, điều kiện dừng) ổn định trước rồi mới đắp thêm tính năng.')"><input type="radio" name="l8q2"><span>B. Để luồng chính hoạt động ổn định, dễ mở rộng và ít bug hơn</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q2', 2, false, 'File .py vẫn có kích thước bình thường.')"><input type="radio" name="l8q2"><span>C. Để file code nhẹ hơn</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q2', 3, false, 'Khung sườn vẫn có thể dùng while và if.')"><input type="radio" name="l8q2"><span>D. Để không cần dùng câu lệnh if</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Để tạo một sự kiện ngẫu nhiên có xác suất đúng 20% (1/5) bằng thư viện <code>random</code>, ta viết điều kiện nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q3', 0, true, 'Chính xác! randint(1, 5) trả về 1 trong 5 số (1, 2, 3, 4, 5) với xác suất đều nhau 1/5 = 20%.')"><input type="radio" name="l8q3"><span>A. <code>random.randint(1, 5) == 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q3', 1, false, 'randint(1, 2) == 1 là xác suất 50%.')"><input type="radio" name="l8q3"><span>B. <code>random.randint(1, 2) == 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q3', 2, false, 'randint(1, 10) == 1 là xác suất 10%.')"><input type="radio" name="l8q3"><span>C. <code>random.randint(1, 10) == 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q3', 3, false, 'randint(1, 100) <= 50 là xác suất 50%.')"><input type="radio" name="l8q3"><span>D. <code>random.randint(1, 100) &lt;= 50</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Nếu nhân vật có <code>mau = 90</code>, sau khi nghỉ ngơi được cộng thêm <code>25</code> máu nhưng không muốn vượt quá 100, đoạn code nào xử lý đúng?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q4', 0, false, 'Nếu mau = 90 thì mau += 25 thành 115 rồi mới gán... thiếu kiểm tra.')"><input type="radio" name="l8q4"><span>A. <code>mau += 25</code> (không cần kiểm tra gì thêm)</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q4', 1, true, 'Đúng! Cộng thêm rồi kiểm tra nếu vượt 100 thì đặt lại bằng 100.')"><input type="radio" name="l8q4"><span>B. <code>mau += 25</code> rồi <code>if mau &gt; 100: mau = 100</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q4', 2, false, 'Gán thẳng mau = 100 thì máu đang 20 cũng nhảy vọt lên 100!')"><input type="radio" name="l8q4"><span>C. <code>mau = 100</code> luôn cho gọn</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q4', 3, false, 'Nếu mau < 100: mau = 0 sẽ làm nhân vật chết oan.')"><input type="radio" name="l8q4"><span>D. <code>if mau &lt; 100: mau = 0</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Trong game Sinh Tồn có 4 lựa chọn (1, 2, 3, 4). Nếu người chơi gõ nhầm số <code>9</code>, ta nên xử lý ra sao để họ <strong>không bị mất oan 1 ngày</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q5', 0, false, 'break sẽ làm thoát luôn khỏi trò chơi!')"><input type="radio" name="l8q5"><span>A. Dùng lệnh <code>break</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q5', 1, true, 'Chính xác! Dùng continue ngay trong nhánh else để bỏ qua phần tăng ngày & trừ thức ăn của lượt đó, bắt chọn lại!')"><input type="radio" name="l8q5"><span>B. Báo nhập sai và dùng <code>continue</code> trước dòng <code>ngay += 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q5', 2, false, 'Trừ máu người chơi chỉ vì gõ nhầm là trải nghiệm tệ.')"><input type="radio" name="l8q5"><span>C. Cho qua ngày như bình thường</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q5', 3, false, 'Gán ngay = 1 sẽ làm mất tiến độ các ngày trước.')"><input type="radio" name="l8q5"><span>D. Đặt lại <code>ngay = 1</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Điều kiện nào kiểm tra chính xác nhân vật <strong>đã thua</strong> (hết máu HOẶC hết sạch cả thức ăn lẫn nước)?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q6', 0, false, 'Dùng and ở ngoài sẽ đòi cả máu <= 0 VÀ thức ăn <= 0 cùng lúc mới thua -> sai logic!')"><input type="radio" name="l8q6"><span>A. <code>mau &lt;= 0 and thuc_an &lt;= 0</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q6', 1, true, 'Chuẩn xác! Chỉ cần mau <= 0 hoặc (thuc_an <= 0 and nuoc <= 0) là điều kiện thua đã kích hoạt.')"><input type="radio" name="l8q6"><span>B. <code>mau &lt;= 0 or (thuc_an &lt;= 0 and nuoc &lt;= 0)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q6', 2, false, 'mau > 0 nghĩa là vẫn còn sống.')"><input type="radio" name="l8q6"><span>C. <code>mau &gt; 0</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q6', 3, false, 'Dùng dấu = là gán giá trị, gây SyntaxError trong if.')"><input type="radio" name="l8q6"><span>D. <code>mau = 0</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Để đổi <code>3665</code> giây thành <code>1 giờ 1 phút 5 giây</code> bằng phép toán Python (Bài 3), biểu thức tìm <strong>số phút</strong> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q7', 0, false, '3665 // 60 cho ra 61 phút, chưa trừ đi 1 giờ (3600 giây)!')"><input type="radio" name="l8q7"><span>A. <code>3665 // 60</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q7', 1, true, 'Đỉnh cao! (3665 % 3600) lấy phần giây lẻ sau khi tách giờ (= 65 giây), rồi // 60 được đúng 1 phút!')"><input type="radio" name="l8q7"><span>B. <code>(3665 % 3600) // 60</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q7', 2, false, '3665 % 60 cho ra số giây lẻ (= 5).')"><input type="radio" name="l8q7"><span>C. <code>3665 % 60</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q7', 3, false, '3665 / 3600 ra số thực 1.018.')"><input type="radio" name="l8q7"><span>D. <code>3665 / 3600</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Trong trò chơi Kéo – Búa – Bao (5 hiệp), muốn đếm số hiệp thắng của người chơi, ta cần đặt biến <code>diem_nguoi = 0</code> ở đâu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q8', 0, true, 'Đúng! Phải khởi tạo biến tích lũy TRƯỚC vòng lặp for 5 hiệp để không bị reset về 0 mỗi hiệp.')"><input type="radio" name="l8q8"><span>A. Đặt TRƯỚC vòng lặp <code>for</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q8', 1, false, 'Đặt trong vòng lặp sẽ xóa sạch điểm mỗi hiệp mới!')"><input type="radio" name="l8q8"><span>B. Đặt BÊN TRONG vòng lặp <code>for</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q8', 2, false, 'Đặt sau vòng lặp thì không đếm được trong lúc chơi.')"><input type="radio" name="l8q8"><span>C. Đặt SAU vòng lặp <code>for</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q8', 3, false, 'Không cần khai báo trước sẽ bị NameError khi cộng += 1.')"><input type="radio" name="l8q8"><span>D. Không cần khai báo trước</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Trong đoạn code menu máy bán nước dưới đây, biến <code>so_du</code> sau 2 lần mua nước giá 10000 và 12000 từ tiền nạp 30000 là bao nhiêu?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">so_du = 30000
+for gia in [10000, 12000, 15000]:
+    if so_du &gt;= gia:
+        so_du -= gia
+print(so_du)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q9', 0, true, 'Tuyệt vời! 30000 - 10000 = 20000; 20000 - 12000 = 8000; đến món 15000 thì 8000 >= 15000 là False nên không mua -> còn 8000!')"><input type="radio" name="l8q9"><span>A. <code>8000</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q9', 1, false, 'Món 15000 không đủ tiền nên điều kiện if bỏ qua, không bị âm.')"><input type="radio" name="l8q9"><span>B. <code>-7000</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q9', 2, false, 'Đã mua cả món 12000 vì 20000 >= 12000.')"><input type="radio" name="l8q9"><span>C. <code>20000</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q9', 3, false, 'Không còn 30000.')"><input type="radio" name="l8q9"><span>D. <code>30000</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l8q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Lỗi nào sau đây dễ xảy ra nhất nếu quên gọi <code>int()</code> khi đọc lựa chọn menu: <code>chon = input("Chọn 1-4: ")</code> rồi kiểm tra <code>if chon == 1:</code>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l8q10', 0, false, 'Python không báo lỗi cú pháp khi so sánh chuỗi với số bằng ==.')"><input type="radio" name="l8q10"><span>A. Báo lỗi <code>SyntaxError</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l8q10', 1, true, 'Chính xác! Chuỗi &quot;1&quot; == số 1 luôn trả về False (Bài 2), khiến menu luôn nhảy vào nhánh báo sai!')"><input type="radio" name="l8q10"><span>B. Điều kiện <code>"1" == 1</code> luôn cho kết quả <code>False</code> (lỗi logic)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q10', 2, false, 'Không bị lỗi ValueError.')"><input type="radio" name="l8q10"><span>C. Báo lỗi <code>ValueError</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l8q10', 3, false, 'Python không tự ép chuỗi sang số trong ==.')"><input type="radio" name="l8q10"><span>D. Chương trình tự hiểu "1" bằng 1</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Đổi Số Giây Sang Giờ : Phút : Giây</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập vào tổng số giây nguyên dương <code>s</code>. Quy đổi sang số giờ, số phút và số giây còn lại bằng toán tử <code>//</code> và <code>%</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>3665</code></td><td><code>1 gio 1 phut 5 giay</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_doi_giay.py</span><button class="btn-copy" data-target="l8-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l8-s1" readonly style="min-height:110px;">s = int(input())
+gio = s // 3600
+du = s % 3600
+phut = du // 60
+giay = du % 60
+print(gio, "gio", phut, "phut", giay, "giay")</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Máy Bán Nước Tự Động</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Người dùng nạp số tiền ban đầu. Chương trình lặp menu: <code>1. Coca (10000đ)</code>, <code>2. Trà xanh (12000đ)</code>, <code>3. Nước suối (6000đ)</code>, <code>0. Thoát &amp; nhận tiền thừa</code>. Kiểm tra đủ tiền mới trừ.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_ban_nuoc.py</span><button class="btn-copy" data-target="l8-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l8-s2" readonly style="min-height:220px;">tien = int(input("Nạp tiền (VNĐ): "))
+while True:
+    print("Số dư hiện tại:", tien, "đ")
+    chon = int(input("Chọn (1:Coca 10k | 2:Trà 12k | 3:Suối 6k | 0:Thoát): "))
+    if chon == 0:
+        print("Hoàn trả tiền thừa:", tien, "đ. Tạm biệt!")
+        break
+    gia = 0
+    if chon == 1: gia = 10000
+    elif chon == 2: gia = 12000
+    elif chon == 3: gia = 6000
+    else:
+        print("Lựa chọn không hợp lệ!")
+        continue
+    if tien &gt;= gia:
+        tien -= gia
+        print("Mua thành công!")
+    else:
+        print("Không đủ tiền!")</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Kéo – Búa – Bao Đấu Với Máy (5 Hiệp)</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Dùng vòng lặp <code>for</code> chạy 5 hiệp. Mỗi hiệp người chơi nhập <code>1</code> (Kéo), <code>2</code> (Búa), <code>3</code> (Bao); máy chọn ngẫu nhiên <code>random.randint(1, 3)</code>. Sau 5 hiệp in tổng số trận Thắng / Hòa / Thua.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_keo_bua_bao.py</span><button class="btn-copy" data-target="l8-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l8-s3" readonly style="min-height:210px;">import random
+thang = 0
+hoa = 0
+thua = 0
+for hiep in range(1, 6):
+    nguoi = int(input("Hiệp " + str(hiep) + " (1:Kéo 2:Búa 3:Bao): "))
+    may = random.randint(1, 3)
+    print("Máy chọn:", may)
+    if nguoi == may:
+        hoa += 1
+    elif (nguoi == 1 and may == 3) or (nguoi == 2 and may == 1) or (nguoi == 3 and may == 2):
+        thang += 1
+    else:
+        thua += 1
+print("Kết quả -> Thắng:", thang, "| Hòa:", hoa, "| Thua:", thua)</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #16a34a;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#15803d;">Bài 4: Hoàn Thiện Game "Sinh Tồn Trên Hoang Đảo"</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Xây dựng trọn vẹn game Hoang Đảo 7 ngày với 4 hành động (Săn, Tìm nước, Nghỉ, Chặt gỗ đóng bè), có bão tố ngẫu nhiên 20% và tự động kẹp chỉ số trong <code>0..100</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#15803d; cursor:pointer;">💡 Xem mã nguồn gợi ý</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_hoang_dao_full.py</span><button class="btn-copy" data-target="l8-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l8-s4" readonly style="min-height:260px;">import random
+ngay = 1
+mau = 100
+an = 80
+nuoc = 80
+go = 0
+
+while ngay &lt;= 7 and mau &gt; 0 and go &lt; 4:
+    print("Ngày", ngay, "| Máu:", mau, "| Ăn:", an, "| Nước:", nuoc, "| Gỗ:", go)
+    c = input("1.Săn  2.Nước  3.Nghỉ  4.Chặt gỗ: ")
+    if c == "1": an += 30; nuoc -= 15
+    elif c == "2": nuoc += 35; an -= 10
+    elif c == "3": mau += 20; an -= 15; nuoc -= 15
+    elif c == "4": go += 1; mau -= 10; an -= 15
+    else:
+        print("Chọn sai!"); continue
+    if random.randint(1, 5) == 1:
+        print("Bão tố bất ngờ! -15 máu")
+        mau -= 15
+    an = max(0, min(100, an - 5))
+    nuoc = max(0, min(100, nuoc - 5))
+    if an == 0 or nuoc == 0: mau -= 25
+    mau = max(0, min(100, mau))
+    ngay += 1
+
+if mau &lt;= 0: print("THUA! Bạn đã kiệt sức.")
+elif go &gt;= 4: print("THẮNG SỚM! Đóng xong bè gỗ vượt biển!")
+else: print("THẮNG! Bạn đã sống sót đủ 7 ngày!")</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 7/index.html" class="pager-btn">&larr; Bài Trước: Bài 7 - Vòng Lặp while, break &amp; continue</a>
+      <a href="../LESSON 9/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 9 - Kiểm Tra &amp; Danh Sách (List) &rarr;</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 8: Lập Trình Giải Quyết Vấn Đề — Sinh Tồn Trên Hoang Đảo | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    // =====================================================================
+    // SURVIVAL ISLAND SIMULATOR
+    // =====================================================================
+    const SURV_CODE = [
+      "while True:",
+      "    if chon == 1: thuc_an += 30; nuoc -= 15",
+      "    elif chon == 2: nuoc += 35; thuc_an -= 10",
+      "    elif chon == 3: mau += 20; thuc_an -= 15; nuoc -= 15",
+      "    elif chon == 4: go += 1; mau -= 10; thuc_an -= 15",
+      "    if random.randint(1, 5) == 1: mau -= 15  # Bão tố",
+      "    # Kiểm tra kết thúc (mau <= 0 / go >= 4 / ngay > 7)",
+      "    if mau <= 0 or go >= 4 or ngay >= 7: break"
+    ];
+
+    let surv = { day: 1, hp: 100, food: 80, water: 80, wood: 0, over: false };
+
+    function esc8(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderSurvCode(activeLine) {
+      document.getElementById("s-code-view").innerHTML = SURV_CODE.map((ln, idx) =>
+        `<div class="trace-line ${idx === activeLine ? "active" : ""}"><span class="ln">${idx + 1}</span>${esc8(ln)}</div>`
+      ).join("");
+    }
+
+    function updateSurvUI(activeLine) {
+      document.getElementById("s-day").innerText = Math.min(surv.day, 7);
+      document.getElementById("s-wood").innerText = surv.wood;
+      document.getElementById("s-hp-txt").innerText = `${surv.hp} / 100`;
+      document.getElementById("s-food-txt").innerText = `${surv.food} / 100`;
+      document.getElementById("s-water-txt").innerText = `${surv.water} / 100`;
+      document.getElementById("s-hp-bar").style.width = `${surv.hp}%`;
+      document.getElementById("s-food-bar").style.width = `${surv.food}%`;
+      document.getElementById("s-water-bar").style.width = `${surv.water}%`;
+
+      [1, 2, 3, 4].forEach(i => {
+        document.getElementById("btn-act-" + i).disabled = surv.over;
+      });
+      renderSurvCode(activeLine);
+    }
+
+    function survReset() {
+      surv = { day: 1, hp: 100, food: 80, water: 80, wood: 0, over: false };
+      document.getElementById("surv-status").innerText = "Ngày 1 / 7 • Đang sinh tồn";
+      document.getElementById("s-log").innerHTML = "🏝️ Bắt đầu hành trình mới! Chọn 1 hành động cho Ngày 1...";
+      updateSurvUI(0);
+    }
+
+    function survAct(choice) {
+      if (surv.over) return;
+      const log = document.getElementById("s-log");
+      let msg = "";
+      if (choice === 1) { surv.food += 30; surv.water -= 15; msg = "🏹 Săn bắn: +30 Thức ăn, -15 Nước"; }
+      else if (choice === 2) { surv.water += 35; surv.food -= 10; msg = "🚰 Tìm suối: +35 Nước, -10 Thức ăn"; }
+      else if (choice === 3) { surv.hp += 20; surv.food -= 15; surv.water -= 15; msg = "⛺ Nghỉ ngơi: +20 Máu, -15 Ăn, -15 Nước"; }
+      else if (choice === 4) { surv.wood += 1; surv.hp -= 10; surv.food -= 15; msg = "🪓 Chặt gỗ: +1 Gỗ, -10 Máu, -15 Ăn"; }
+
+      let storm = "";
+      if (Math.floor(Math.random() * 5) === 0) {
+        surv.hp -= 15;
+        storm = " | ⛈️ Gặp BÃO TỐ (-15 Máu)!";
+      }
+
+      surv.food = Math.max(0, Math.min(100, surv.food - 5));
+      surv.water = Math.max(0, Math.min(100, surv.water - 5));
+      if (surv.food === 0 || surv.water === 0) {
+        surv.hp -= 25;
+        storm += " | 🥀 Đói/Khát (-25 Máu)!";
+      }
+      surv.hp = Math.max(0, Math.min(100, surv.hp));
+
+      log.innerHTML += `\nNgày ${surv.day}: ${msg}${storm}`;
+
+      let activeLine = choice;
+      if (surv.hp <= 0) {
+        surv.over = true;
+        activeLine = 7;
+        document.getElementById("surv-status").innerText = "💥 THUA CUỘC!";
+        log.innerHTML += `\n💀 BẠN ĐÃ KIỆT SỨC Ở NGÀY ${surv.day}! (break thoát game)`;
+      } else if (surv.wood >= 4) {
+        surv.over = true;
+        activeLine = 7;
+        document.getElementById("surv-status").innerText = "⛵ CHIẾN THẮNG SỚM!";
+        log.innerHTML += `\n🎉 Đóng xong bè gỗ vượt biển ở Ngày ${surv.day}! CHIẾN THẮNG!`;
+      } else if (surv.day >= 7) {
+        surv.over = true;
+        activeLine = 7;
+        document.getElementById("surv-status").innerText = "🚁 CHIẾN THẮNG 7 NGÀY!";
+        log.innerHTML += `\n🎉 Tàu cứu hộ đã tới ở cuối Ngày 7! BẠN ĐÃ SỐNG SÓT!`;
+      } else {
+        surv.day++;
+        document.getElementById("surv-status").innerText = `Ngày ${surv.day} / 7 • Đang sinh tồn`;
+      }
+      log.scrollTop = log.scrollHeight;
+      updateSurvUI(activeLine);
+    }
+
+    // =====================================================================
+    // CODE LAB SAMPLES (Skulpt compatible - NO f-strings!)
+    // =====================================================================
+    function loadL8(id) {
+      const ed = document.getElementById("lesson8-editor");
+      const t = document.getElementById("l8-title");
+      const samples = {
+        1: ["hoang_dao_mini.py", `# Phiên bản rút gọn: Sinh tồn 3 ngày trên hoang đảo\nmau = 100\nngay = 1\nwhile ngay <= 3 and mau > 0:\n    print("--- Ngày", ngay, "| Máu:", mau, "---")\n    chon = input("Chọn (1: Săn bắn +10 máu | 2: Chạy bộ -30 máu): ")\n    if chon == "1":\n        mau = min(100, mau + 10)\n    elif chon == "2":\n        mau -= 30\n    else:\n        print("Lựa chọn không hợp lệ!")\n        continue\n    ngay += 1\n\nif mau > 0:\n    print("CHÚC MỪNG! Bạn đã sống sót!")\nelse:\n    print("THUA CUỘC! Bạn đã kiệt sức.")`],
+        2: ["may_ban_nuoc.py", `# Máy bán nước tự động\ntien = int(input("Nạp số tiền (vd 30000): "))\nwhile True:\n    print("Số dư:", tien, "đ")\n    c = int(input("1:Coca 10k | 2:Trà 12k | 0:Thoát -> "))\n    if c == 0:\n        print("Nhận lại tiền thừa:", tien, "đ")\n        break\n    gia = 10000 if c == 1 else (12000 if c == 2 else 0)\n    if gia == 0:\n        print("Chọn sai!"); continue\n    if tien >= gia:\n        tien -= gia\n        print("Đã ra nước! Còn", tien, "đ")\n    else:\n        print("Không đủ tiền!")`],
+        3: ["doi_giay_sang_gio.py", `# Quy đổi tổng số giây -> Giờ : Phút : Giây\ns = int(input("Nhập tổng số giây (vd 3665): "))\ngio = s // 3600\nphan_du = s % 3600\nphut = phan_du // 60\ngiay = phan_du % 60\nprint(s, "giây =", gio, "giờ", phut, "phút", giay, "giây")`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", survReset);
+  </script>
+</body>
+</html>

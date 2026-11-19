@@ -99,16 +99,17 @@ body {
 .course-quick-nav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
 }
 .course-quick-nav a {
   color: #cbd5e1;
   text-decoration: none;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
+  white-space: nowrap;
   transition: all 0.2s;
   border: 1px solid transparent;
 }

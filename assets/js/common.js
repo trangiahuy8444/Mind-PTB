@@ -50,12 +50,20 @@ function switchTab(tabId) {
 // 2. NAV HIGHLIGHTER
 // ==============================================================================
 function initNavHighlight() {
-  const currentPath = window.location.pathname;
-  document.querySelectorAll(".course-quick-nav a").forEach(link => {
+  const nav = document.querySelector(".course-quick-nav");
+  if (!nav) return;
+  if (nav.querySelector("a.active")) return;
+
+  const currentPath = decodeURIComponent(window.location.pathname).replace(/\/$/, "");
+  nav.querySelectorAll("a").forEach(link => {
     const href = link.getAttribute("href");
-    if (href && currentPath.includes(href.replace("../", "").replace("./", ""))) {
-      link.classList.add("active");
-    }
+    if (!href) return;
+    try {
+      const linkPath = decodeURIComponent(new URL(href, window.location.href).pathname).replace(/\/$/, "");
+      if (linkPath === currentPath) {
+        link.classList.add("active");
+      }
+    } catch (e) {}
   });
 }
 

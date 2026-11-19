@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 12: Hàm (Function) — Chia Nhỏ Công Việc | Lập Trình Python Cơ Bản</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    .trace-code { background:var(--code-bg); border-radius:var(--radius-md); padding:12px 0; font-family:var(--font-mono); font-size:13.5px; color:#e2e8f0; overflow-x:auto; }
+    .trace-line { display:flex; border-left:3px solid transparent; padding:3px 14px 3px 0; white-space:pre; }
+    .trace-line .ln { width:36px; text-align:right; padding-right:12px; color:#64748b; user-select:none; flex-shrink:0; }
+    .trace-line.active { background:#1e3a8a; border-left-color:#38bdf8; }
+    .trace-console { background:#030712; color:#a7f3d0; font-family:var(--font-mono); font-size:13px; padding:12px 14px; border-radius:var(--radius-md); min-height:110px; max-height:220px; overflow-y:auto; white-space:pre-wrap; }
+    .trace-explain { background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; border-radius:6px; font-size:14px; color:#78350f; min-height:68px; }
+    .stack-bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:10px 14px; background:#0f172a; border-radius:var(--radius-md); color:white; font-family:var(--font-mono); font-size:13px; }
+    .stack-pill { background:#2563eb; padding:3px 10px; border-radius:6px; font-weight:700; }
+    .step-counter { font-size:13px; font-weight:700; color:#4f46e5; background:#e0e7ff; padding:4px 10px; border-radius:20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="index.html" class="active" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 12</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(99, 102, 241, 0.22); color:#c7d2fe;">Cấp Độ: Kiến Trúc Code</span>
+          </div>
+          <h1 class="lesson-title">Bài 12: Hàm (Function) — Chia Nhỏ Công Việc &amp; Tái Sử Dụng</h1>
+          <p class="lesson-desc">
+            Áp dụng triết lý DRY (Don't Repeat Yourself), phân biệt rõ <strong>Định nghĩa hàm (<code>def</code>)</strong> với <strong>Gọi hàm (<code>ten_ham()</code>)</strong> và theo dõi dòng nhảy lệnh của CPU.
+          </p>
+        </div>
+      </div>
+
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết &amp; Triết Lý DRY</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🪄 2. Mô Phỏng Luồng Gọi Hàm &amp; Code Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🥪</span> 1. Hàm Là Gì? &amp; Triết Lý DRY (Don't Repeat Yourself)</h2>
+        </div>
+        <p>Hãy tưởng tượng em làm bánh mì kẹp mỗi sáng: nếu hôm nào cũng làm lại từ đầu từng bước (lấy bánh → phết bơ → kẹp thịt → nướng) thì rất mất công. Thay vào đó, ta chế tạo một <strong>chiếc máy làm bánh</strong>: làm một lần, sau này mỗi khi cần chỉ việc <strong>bấm nút</strong>! Chiếc máy đó trong lập trình gọi là <strong>Hàm (Function)</strong>.</p>
+        <div class="grid-2" style="margin-top:14px;">
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-md); padding:16px;">
+            <h4 style="color:#1e40af; margin-bottom:6px;">🎯 3 Lợi Ích Lớn Của Hàm:</h4>
+            <ul style="padding-left:18px; font-size:13.5px; line-height:1.7; color:#1e3a8a;">
+              <li><strong>DRY (Không lặp code):</strong> Viết 1 lần, gọi dùng lại ở mọi chỗ.</li>
+              <li><strong>Dễ sửa lỗi:</strong> Muốn đổi đường viền từ <code>*</code> sang <code>=</code>, chỉ sửa đúng 1 chỗ trong hàm.</li>
+              <li><strong>Chia để trị:</strong> Biến chương trình hàng trăm dòng thành các khối nhỏ dễ đọc.</li>
+            </ul>
+          </div>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>cu_phap_def.py</span><button class="btn-copy" data-target="th-l12-def">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-l12-def" readonly style="min-height:135px;"># 1. ĐỊNH NGHĨA HÀM (Chế tạo máy - chưa chạy!)
+def chao_mung():
+    print("====================")
+    print("XIN CHÀO LỚP PTB30!")
+    print("====================")
+
+# 2. GỌI HÀM (Bấm nút - bây giờ mới chạy!)
+chao_mung()</textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">⚡</span> 2. Định Nghĩa vs Gọi Hàm &amp; Hàm Gọi Hàm</h2>
+        </div>
+        <p>Một hàm có thể gọi một hàm khác bên trong nó — rất tiện để ghép nhiều chiêu thức nhỏ thành một <strong>Combo liên hoàn</strong>:</p>
+        <div class="code-box">
+          <div class="code-header"><span>combo_chieu_thuc.py</span><button class="btn-copy" data-target="th-l12-combo">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="th-l12-combo" readonly style="min-height:155px;">def danh_thuong():
+    print("Chém thường -20 HP!")
+
+def chieu_cuoi():
+    print("Bão lửa hủy diệt -100 HP!")
+
+def combo_huy_diet():     # Hàm gọi lại 2 hàm ở trên
+    danh_thuong()
+    chieu_cuoi()
+
+combo_huy_diet()          # Kích hoạt cả combo chỉ với 1 dòng!</textarea></div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px;">
+          <div class="alert alert-danger" style="margin:0;">
+            <div><strong>Lỗi 1 — Quên gọi hàm:</strong><br>Chỉ viết <code>def chao(): ...</code> mà không viết <code>chao()</code> ở dưới → màn hình trống trơn!</div>
+          </div>
+          <div class="alert alert-danger" style="margin:0;">
+            <div><strong>Lỗi 2 — Thiếu cặp ngoặc <code>()</code>:</strong><br>Viết <code>chao</code> không có <code>()</code> thì Python <strong>không chạy hàm</strong>!</div>
+          </div>
+          <div class="alert alert-danger" style="margin:0;">
+            <div><strong>Lỗi 3 — Gọi trước khi <code>def</code>:</strong><br>Gọi <code>chao()</code> ở dòng trên dòng <code>def chao():</code> → báo lỗi <code>NameError</code>!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 100%); border:2px dashed #4f46e5; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#4338ca; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 13: Nâng Cấp Hàm Biết Nhận Đầu Vào &amp; Trả Kết Quả</h3>
+        <p style="color:#312e81; font-size:14px; line-height:1.6;">
+          Ở Bài 12, hàm <code>danh_thuong()</code> luôn làm một việc cứng nhắc: lúc nào cũng in đúng <code>-20 HP</code>. Làm sao để chiếc máy làm bánh nhận nguyên liệu khác nhau (ví dụ: <code>danh_boss(50)</code> thì trừ 50, <code>danh_boss(120)</code> thì trừ 120) và <strong>trả về số máu còn lại (<code>return</code>)</strong> để tính tiếp?
+        </p>
+        <p style="color:#312e81; font-size:14px; line-height:1.6; margin-top:6px;">
+          Tất cả bí mật về <strong>Tham số, Đối số, <code>return</code> vs <code>print()</code> và Biến Cục Bộ / Toàn Cục</strong> đang chờ ở <strong>Bài 13</strong>!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: FUNCTION CALL FLOW VISUALIZER & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🪄</span> Function Call Flow Visualizer — Dòng Nhảy Lệnh Của CPU</h2>
+          <span class="step-counter" id="fn-counter">Chưa bắt đầu</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">
+          Chọn kịch bản và bấm <strong>▶ Bước tiếp</strong> để tận mắt thấy Python đọc qua <code>def</code> (nhưng chưa chạy), chỉ nhảy vào thân hàm khi gặp lời gọi <code>ten_ham()</code>, rồi quay lại đúng dòng tiếp theo!
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>Kịch bản minh họa:
+            <select id="fn-mode" onchange="fnReset()">
+              <option value="forgot">1. Bẫy: Định nghĩa xong nhưng QUÊN gọi hàm</option>
+              <option value="dry">2. Gọi hàm 2 lần (Thứ tự nhảy lệnh)</option>
+              <option value="nested">3. Hàm gọi hàm (Combo chiêu thức)</option>
+            </select>
+          </label>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto;" onclick="fnStep()">▶ Bước tiếp</button>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto; background:#4f46e5;" onclick="fnRunAll()">⏩ Chạy hết</button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto; background:#e2e8f0; color:#334155;" onclick="fnReset()">🔄 Đặt lại</button>
+        </div>
+
+        <div class="stack-bar" id="fn-stack" style="margin-bottom:14px;">
+          <span style="color:#94a3b8;">Ngăn xếp gọi hàm (Call Stack):</span>
+          <span class="stack-pill">&lt;chương trình chính&gt;</span>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Mã Python:</h4>
+            <div class="trace-code" id="fn-code"></div>
+          </div>
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Màn hình Terminal:</h4>
+            <div class="trace-console" id="fn-console"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Lời thầy giảng giải:</h4>
+            <div class="trace-explain" id="fn-explain">Bấm ▶ Bước tiếp để quan sát thứ tự thực thi hàm.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skulpt Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Xưởng Phép Thuật</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL12(1)">Combo Chiêu Thức</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL12(2)">Menu + Hàm Trang Trí</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL12(3)">Bàn Phím Macro Q/W/E</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l12-title">combo_skill.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson12-editor', 'lesson12-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson12-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson12-editor" style="min-height:190px;">def ke_vien():
+    print("================================")
+
+def danh_thuong():
+    print("-> Chém thường (-20 HP)")
+
+def hoi_mau():
+    print("-> Uống bình hồi phục (+30 HP)")
+
+def chieu_cuoi():
+    print("-> BÃO LỬA HỦY DIỆT (-100 HP)")
+
+def combo_huy_diet():
+    ke_vien()
+    danh_thuong()
+    hoi_mau()
+    chieu_cuoi()
+    ke_vien()
+
+combo_huy_diet()</textarea>
+          </div>
+          <div class="terminal-output" id="lesson12-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 12</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu kiểm tra từ khóa def, gọi hàm, thứ tự chạy, triết lý DRY và các lỗi hay gặp</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l12q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Từ khóa nào dùng để <strong>khai báo (định nghĩa)</strong> một hàm mới trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q1', 0, false, 'function dùng trong JavaScript.')"><input type="radio" name="l12q1"><span>A. <code>function</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q1', 1, true, 'Chính xác! def (viết tắt của define) dùng để định nghĩa hàm trong Python.')"><input type="radio" name="l12q1"><span>B. <code>def</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q1', 2, false, 'func dùng trong Go/Swift.')"><input type="radio" name="l12q1"><span>C. <code>func</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q1', 3, false, 'define không phải từ khóa Python.')"><input type="radio" name="l12q1"><span>D. <code>define</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Chương trình sau in ra màn hình gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def xin_chao():
+    print("Hello MindX")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q2', 0, false, 'Hàm mới chỉ được định nghĩa chứ CHƯA hề được gọi!')"><input type="radio" name="l12q2"><span>A. <code>Hello MindX</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q2', 1, true, 'Tuyệt vời! Đây là bẫy QUÊN GỌI HÀM: def chỉ mới tạo ra hàm, chưa có lời gọi xin_chao() nên không in gì!')"><input type="radio" name="l12q2"><span>B. Không in ra gì cả</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q2', 2, false, 'Cú pháp hoàn toàn hợp lệ.')"><input type="radio" name="l12q2"><span>C. Báo lỗi SyntaxError</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q2', 3, false, 'Không in xin_chao.')"><input type="radio" name="l12q2"><span>D. <code>xin_chao</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Cách gọi hàm <code>hoi_mau</code> đã định nghĩa trước đó nào là <strong>ĐÚNG</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q3', 0, false, 'call không tồn tại trong Python.')"><input type="radio" name="l12q3"><span>A. <code>call hoi_mau()</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q3', 1, true, 'Chính xác! Gọi hàm chỉ cần viết tên hàm kèm cặp ngoặc tròn ().')"><input type="radio" name="l12q3"><span>B. <code>hoi_mau()</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q3', 2, false, 'Thiếu cặp ngoặc tròn () nên hàm không chạy.')"><input type="radio" name="l12q3"><span>C. <code>hoi_mau</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q3', 3, false, 'def là để định nghĩa, không phải để gọi.')"><input type="radio" name="l12q3"><span>D. <code>def hoi_mau()</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Triết lý <strong>DRY (Don't Repeat Yourself)</strong> trong lập trình khuyên chúng ta điều gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q4', 0, true, 'Đúng! Tránh sao chép lặp đi lặp lại cùng một đoạn code ở nhiều nơi; hãy gói nó vào Hàm để tái sử dụng!')"><input type="radio" name="l12q4"><span>A. Không lặp lại code giống nhau ở nhiều chỗ; hãy đóng gói vào Hàm</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q4', 1, false, 'Vòng lặp for và while vẫn cực kỳ quan trọng.')"><input type="radio" name="l12q4"><span>B. Cấm sử dụng vòng lặp <code>for</code> và <code>while</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q4', 2, false, 'Vẫn cần biến lưu dữ liệu.')"><input type="radio" name="l12q4"><span>C. Không được khai báo quá 2 biến</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q4', 3, false, 'Comment rất hữu ích để đọc hiểu code.')"><input type="radio" name="l12q4"><span>D. Không viết chú thích code</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Chương trình sau in theo thứ tự nào? (dấu / biểu thị xuống dòng)</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def a():
+    print("2")
+
+print("1")
+a()
+print("3")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q5', 0, false, 'def a() ở trên chưa chạy thân hàm, phải tới khi gọi a() ở dòng 5 mới in 2!')"><input type="radio" name="l12q5"><span>A. 2 / 1 / 3</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q5', 1, true, 'Chính xác! Chạy print(&quot;1&quot;) -> gọi a() nhảy vào in &quot;2&quot; -> quay về chạy print(&quot;3&quot;) -> thứ tự 1 / 2 / 3!')"><input type="radio" name="l12q5"><span>B. <code>1 / 2 / 3</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q5', 2, false, 'print(&quot;3&quot;) chạy sau khi a() kết thúc.')"><input type="radio" name="l12q5"><span>C. 1 / 3 / 2</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q5', 3, false, 'In cả 3 dòng.')"><input type="radio" name="l12q5"><span>D. 1 / 3</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Điều gì xảy ra nếu ta <strong>gọi hàm ở phía trên</strong> dòng <code>def</code> định nghĩa hàm đó?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">chao()
+def chao():
+    print("Hi")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q6', 0, false, 'Python đọc từ trên xuống dưới, tại dòng 1 máy chưa biết chao là gì!')"><input type="radio" name="l12q6"><span>A. In ra <code>Hi</code> bình thường</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q6', 1, true, 'Đúng! Python thực thi tuần tự từ trên xuống -> báo NameError: name \'chao\' is not defined!')"><input type="radio" name="l12q6"><span>B. Báo lỗi <code>NameError</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q6', 2, false, 'Không phải IndentationError.')"><input type="radio" name="l12q6"><span>C. Báo lỗi <code>IndentationError</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q6', 3, false, 'Python báo lỗi chứ không bỏ qua.')"><input type="radio" name="l12q6"><span>D. Không in gì và không báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Dòng code <code>def tinh_tong()</code> bị lỗi gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q7', 0, false, 'Tên tinh_tong hoàn toàn hợp lệ.')"><input type="radio" name="l12q7"><span>A. Tên hàm không hợp lệ</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q7', 1, true, 'Chính xác! Cũng giống if, for, while — dòng def bắt buộc phải kết thúc bằng dấu hai chấm :')"><input type="radio" name="l12q7"><span>B. Thiếu dấu hai chấm <code>:</code> ở cuối dòng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q7', 2, false, 'def không cần chữ function.')"><input type="radio" name="l12q7"><span>C. Sai từ khóa def</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q7', 3, false, 'Không cần dấu chấm phẩy.')"><input type="radio" name="l12q7"><span>D. Thiếu dấu <code>;</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Một hàm <code>combo()</code> có thể gọi một hàm khác bên trong nó được không?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q8', 0, true, 'Chính xác! Hàm gọi hàm là kỹ thuật cực kỳ phổ biến để ghép nhiều bước nhỏ thành chức năng lớn.')"><input type="radio" name="l12q8"><span>A. Có, hoàn toàn được phép</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q8', 1, false, 'Không bị giới hạn như vậy.')"><input type="radio" name="l12q8"><span>B. Không, hàm chỉ được chứa lệnh print</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q8', 2, false, 'Không giới hạn số hàm.')"><input type="radio" name="l12q8"><span>C. Chỉ được gọi tối đa 1 hàm</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q8', 3, false, 'Chỉ lỗi nếu gọi vô tận chính nó mà không dừng.')"><input type="radio" name="l12q8"><span>D. Luôn gây lỗi crash chương trình</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Chương trình sau in ra chữ <code>"Bum!"</code> bao nhiêu lần?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def no():
+    print("Bum!")
+
+for i in range(3):
+    no()</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q9', 0, false, 'Vòng lặp for gọi hàm no() tận 3 lần.')"><input type="radio" name="l12q9"><span>A. 1 lần</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q9', 1, true, 'Đúng! Hàm no() hoàn toàn có thể đặt trong vòng lặp for để gọi lại 3 lần liên tiếp!')"><input type="radio" name="l12q9"><span>B. 3 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q9', 2, false, 'for i in range(3) chạy 3 lần.')"><input type="radio" name="l12q9"><span>C. 0 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q9', 3, false, 'Cú pháp hoàn toàn đúng.')"><input type="radio" name="l12q9"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Tên hàm nào sau đây được đặt <strong>ĐÚNG QUY TẮC</strong> trong Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q10', 0, false, 'Không được bắt đầu bằng số.')"><input type="radio" name="l12q10"><span>A. <code>def 2_tinh_diem():</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q10', 1, false, 'Không được có khoảng trắng trong tên hàm.')"><input type="radio" name="l12q10"><span>B. <code>def tinh diem():</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q10', 2, true, 'Chính xác! Dùng kiểu snake_case (chữ thường nối bằng dấu gạch dưới _) là chuẩn Python.')"><input type="radio" name="l12q10"><span>C. <code>def tinh_diem():</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q10', 3, false, 'Dấu trừ - bị hiểu là phép toán trừ.')"><input type="radio" name="l12q10"><span>D. <code>def tinh-diem():</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Trong đoạn code sau, dòng <code>print("Ngoài hàm")</code> có thuộc khối lệnh của hàm <code>test()</code> không?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def test():
+    print("Trong hàm")
+print("Ngoài hàm")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l12q11', 0, false, 'Dòng 3 viết sát lề trái (không thụt lề) nên nằm NGOÀI hàm.')"><input type="radio" name="l12q11"><span>A. Có, vì nó nằm ngay dưới</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q11', 1, true, 'Đúng! Python dựa vào thụt lề. Dòng không thụt lề nằm ngoài hàm nên sẽ tự chạy ngay cả khi chưa gọi test()!')"><input type="radio" name="l12q11"><span>B. Không, vì không thụt lề nên nó nằm ngoài hàm</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q11', 2, false, 'Không báo lỗi.')"><input type="radio" name="l12q11"><span>C. Báo lỗi IndentationError</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q11', 3, false, 'Cần viết sát lề thì là ngoài hàm.')"><input type="radio" name="l12q11"><span>D. Cả hai dòng đều nằm ngoài</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l12q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Chương trình sau in ra những gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">def f1():
+    print("A")
+def f2():
+    f1()
+    print("B")
+f2()</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l12q12', 0, true, 'Tuyệt vời! Gọi f2() -> dòng đầu của f2() gọi f1() in &quot;A&quot; -> xong f1() quay lại f2() in tiếp &quot;B&quot;!')"><input type="radio" name="l12q12"><span>A. <code>A</code> rồi <code>B</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q12', 1, false, 'f1() chạy trước print(&quot;B&quot;).')"><input type="radio" name="l12q12"><span>B. <code>B</code> rồi <code>A</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q12', 2, false, 'f1() có chạy.')"><input type="radio" name="l12q12"><span>C. Chỉ in <code>B</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l12q12', 3, false, 'Không bị lặp vô tận.')"><input type="radio" name="l12q12"><span>D. Lặp vô tận</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Hàm Kẻ Viền &amp; Tiêu Đề Đẹp Mắt</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết hàm <code>ke_vien()</code> in ra 30 dấu <code>=</code>, và hàm <code>tieu_de()</code> gọi <code>ke_vien()</code> ở trên và dưới dòng <code>"   BẢNG ĐIỂM LỚP PTB30   "</code>. Gọi <code>tieu_de()</code> để kiểm tra.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1_tieu_de.py</span><button class="btn-copy" data-target="l12-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l12-s1" readonly style="min-height:110px;">def ke_vien():
+    print("=" * 30)
+
+def tieu_de():
+    ke_vien()
+    print("   BẢNG ĐIỂM LỚP PTB30   ")
+    ke_vien()
+
+tieu_de()</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Hàm Vẽ Hình Vuông Sao 4×4</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết hàm <code>ve_hinh_vuong()</code> sử dụng vòng lặp <code>for</code> vẽ 4 hàng, mỗi hàng 4 dấu <code>*</code>. Gọi hàm 2 lần cách nhau 1 dòng trống.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2_hinh_vuong.py</span><button class="btn-copy" data-target="l12-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l12-s2" readonly style="min-height:110px;">def ve_hinh_vuong():
+    for i in range(4):
+        print("* " * 4)
+
+ve_hinh_vuong()
+print()
+ve_hinh_vuong()</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Lời Chào Theo Khung Giờ</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Viết 3 hàm <code>chao_sang()</code>, <code>chao_chieu()</code>, <code>chao_toi()</code>. Nhập giờ hiện tại (0–23), nếu &lt; 12 gọi <code>chao_sang()</code>, 12–17 gọi <code>chao_chieu()</code>, từ 18 trở lên gọi <code>chao_toi()</code>.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3_chao_gio.py</span><button class="btn-copy" data-target="l12-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l12-s3" readonly style="min-height:175px;">def chao_sang(): print("Chào buổi sáng năng động!")
+def chao_chieu(): print("Chào buổi chiều tập trung!")
+def chao_toi(): print("Chào buổi tối thư giãn!")
+
+gio = int(input("Nhập giờ hiện tại (0-23): "))
+if gio &lt; 12: chao_sang()
+elif gio &lt; 18: chao_chieu()
+else: chao_toi()</textarea></div></div>
+        </details>
+      </div>
+
+      <div class="exercise-box" style="border:2px solid #4f46e5;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#4338ca;">Bài 4: Bàn Phím Macro Chiêu Thức Q / W / E / R</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Tạo các hàm <code>chieu_q()</code>, <code>chieu_w()</code>, <code>chieu_e()</code> và <code>combo_r()</code> (gọi cả Q+W+E). Người chơi có <code>100</code> năng lượng (Mana); lặp cho bấm phím <code>Q</code> (-10 mana), <code>W</code> (-15 mana), <code>E</code> (-20 mana), <code>R</code> (-45 mana) hoặc <code>X</code> để thoát.</p>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#4338ca; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4_macro_skill.py</span><button class="btn-copy" data-target="l12-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l12-s4" readonly style="min-height:220px;">def chieu_q(): print("-> [Q] Chém gió!")
+def chieu_w(): print("-> [W] Khiên chắn!")
+def chieu_e(): print("-> [E] Lướt nhanh!")
+def combo_r():
+    print("=== [R] COMBO TỐI THƯỢNG ===")
+    chieu_q(); chieu_w(); chieu_e()
+
+mana = 100
+while True:
+    print("Mana hiện tại:", mana)
+    phim = input("Bấm Q/W/E/R (hoặc X thoát): ").upper()
+    if phim == "X": break
+    elif phim == "Q" and mana &gt;= 10: chieu_q(); mana -= 10
+    elif phim == "W" and mana &gt;= 15: chieu_w(); mana -= 15
+    elif phim == "E" and mana &gt;= 20: chieu_e(); mana -= 20
+    elif phim == "R" and mana &gt;= 45: combo_r(); mana -= 45
+    else: print("Không đủ mana hoặc phím sai!")</textarea></div></div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 11/index.html" class="pager-btn">&larr; Bài Trước: Bài 11 - Xâu Ký Tự (String)</a>
+      <a href="../LESSON 13/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 13 - Tham Số, return &amp; Phạm Vi Biến &rarr;</a>
+    </div>
+
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 12: Hàm (Function) — Chia Nhỏ Công Việc | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    const FN_SCENARIOS = {
+      forgot: {
+        code: [
+          "def chao():",
+          '    print("Xin chào MindX!")',
+          'print("Kết thúc chương trình")'
+        ],
+        steps: [
+          { line: 0, stack: ["<chính>"], out: "", explain: "Python đọc dòng <code>def chao():</code> → chỉ ghi nhớ hàm tên <code>chao</code>, <b>chưa chạy thân hàm</b>!" },
+          { line: 2, stack: ["<chính>"], out: "Kết thúc chương trình\n", explain: "Nhảy qua dòng 2 thẳng xuống dòng 3: in <b>Kết thúc chương trình</b>. Hàm <code>chao()</code> không hề chạy vì bạn quên gọi nó!" }
+        ]
+      },
+      dry: {
+        code: [
+          "def chao():",
+          '    print("Xin chào!")',
+          'print("Bắt đầu")',
+          "chao()",
+          "chao()",
+          'print("Xong")'
+        ],
+        steps: [
+          { line: 0, stack: ["<chính>"], out: "", explain: "Định nghĩa xong hàm <code>chao</code> (chưa thực thi)." },
+          { line: 2, stack: ["<chính>"], out: "Bắt đầu\n", explain: "Chạy dòng 3: in <b>Bắt đầu</b>." },
+          { line: 3, stack: ["<chính>", "chao()"], out: "Bắt đầu\n", explain: "Gặp lời gọi <code>chao()</code> lần 1 → CPU <b>nhảy vào thân hàm chao</b>." },
+          { line: 1, stack: ["<chính>", "chao()"], out: "Bắt đầu\nXin chào!\n", explain: "Thực thi thân hàm: in <b>Xin chào!</b>, rồi quay về dòng ngay sau lời gọi." },
+          { line: 4, stack: ["<chính>", "chao()"], out: "Bắt đầu\nXin chào!\n", explain: "Gặp lời gọi <code>chao()</code> lần 2 → lại nhảy lên thân hàm." },
+          { line: 1, stack: ["<chính>", "chao()"], out: "Bắt đầu\nXin chào!\nXin chào!\n", explain: "In <b>Xin chào!</b> lần 2 rồi quay lại luồng chính." },
+          { line: 5, stack: ["<chính>"], out: "Bắt đầu\nXin chào!\nXin chào!\nXong\n", explain: "Chạy dòng cuối cùng: in <b>Xong</b>." }
+        ]
+      },
+      nested: {
+        code: [
+          "def danh():",
+          '    print("Chém -20 HP")',
+          "def chieu_cuoi():",
+          '    print("Bão lửa -100 HP")',
+          "def combo():",
+          "    danh()",
+          "    chieu_cuoi()",
+          "combo()"
+        ],
+        steps: [
+          { line: 0, stack: ["<chính>"], out: "", explain: "Ghi nhớ định nghĩa hàm <code>danh</code>." },
+          { line: 2, stack: ["<chính>"], out: "", explain: "Ghi nhớ định nghĩa hàm <code>chieu_cuoi</code>." },
+          { line: 4, stack: ["<chính>"], out: "", explain: "Ghi nhớ định nghĩa hàm <code>combo</code> (vẫn chưa có dòng nào in ra!)." },
+          { line: 7, stack: ["<chính>", "combo()"], out: "", explain: "Gặp <code>combo()</code> ở dòng 8 → nhảy vào hàm <code>combo</code>!" },
+          { line: 5, stack: ["<chính>", "combo()", "danh()"], out: "", explain: "Bên trong <code>combo()</code> gọi <code>danh()</code> → nhảy lên hàm <code>danh</code>." },
+          { line: 1, stack: ["<chính>", "combo()", "danh()"], out: "Chém -20 HP\n", explain: "In <b>Chém -20 HP</b>, xong <code>danh()</code> quay về dòng tiếp theo trong <code>combo()</code>." },
+          { line: 6, stack: ["<chính>", "combo()", "chieu_cuoi()"], out: "Chém -20 HP\n", explain: "<code>combo()</code> gọi tiếp <code>chieu_cuoi()</code> → nhảy lên hàm <code>chieu_cuoi</code>." },
+          { line: 3, stack: ["<chính>", "combo()", "chieu_cuoi()"], out: "Chém -20 HP\nBão lửa -100 HP\n", explain: "In <b>Bão lửa -100 HP</b> → kết thúc <code>chieu_cuoi()</code> → kết thúc <code>combo()</code>!" }
+        ]
+      }
+    };
+
+    let fnIdx = -1;
+    function esc12(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function fnReset() {
+      fnIdx = -1;
+      fnRender();
+    }
+
+    function fnRender() {
+      const mode = document.getElementById("fn-mode").value;
+      const sc = FN_SCENARIOS[mode];
+      const step = sc.steps[fnIdx];
+
+      document.getElementById("fn-code").innerHTML = sc.code.map((ln, k) =>
+        `<div class="trace-line ${step && step.line === k ? "active" : ""}"><span class="ln">${k + 1}</span>${esc12(ln)}</div>`
+      ).join("");
+
+      const stack = step ? step.stack : ["<chính>"];
+      document.getElementById("fn-stack").innerHTML = `<span style="color:#94a3b8;">Ngăn xếp gọi hàm (Call Stack):</span>` +
+        stack.map(s => `<span class="stack-pill">${esc12(s)}</span>`).join(" &rarr; ");
+
+      document.getElementById("fn-console").textContent = step ? step.out : "";
+      document.getElementById("fn-explain").innerHTML = step ? step.explain : "Bấm ▶ Bước tiếp để quan sát thứ tự thực thi hàm.";
+      document.getElementById("fn-counter").innerText = step ? `Bước ${fnIdx + 1}/${sc.steps.length}` : "Chưa bắt đầu";
+    }
+
+    function fnStep() {
+      const mode = document.getElementById("fn-mode").value;
+      const len = FN_SCENARIOS[mode].steps.length;
+      if (fnIdx >= len - 1) fnIdx = -1;
+      fnIdx++;
+      fnRender();
+    }
+
+    function fnRunAll() {
+      const mode = document.getElementById("fn-mode").value;
+      fnIdx = FN_SCENARIOS[mode].steps.length - 1;
+      fnRender();
+    }
+
+    function loadL12(id) {
+      const ed = document.getElementById("lesson12-editor");
+      const t = document.getElementById("l12-title");
+      const samples = {
+        1: ["combo_skill.py", `def ke_vien():\n    print("================================")\n\ndef danh_thuong():\n    print("-> Chém thường (-20 HP)")\n\ndef hoi_mau():\n    print("-> Uống bình hồi phục (+30 HP)")\n\ndef chieu_cuoi():\n    print("-> BÃO LỬA HỦY DIỆT (-100 HP)")\n\ndef combo_huy_diet():\n    ke_vien()\n    danh_thuong()\n    hoi_mau()\n    chieu_cuoi()\n    ke_vien()\n\ncombo_huy_diet()`],
+        2: ["menu_trang_tri.py", `def ke_ngang():\n    print("+------------------------------+")\n\ndef hien_thi_menu():\n    ke_ngang()\n    print("| 1. Xem túi đồ                |")\n    print("| 2. Mua trang bị              |")\n    print("| 0. Thoát                     |")\n    ke_ngang()\n\nhien_thi_menu()`],
+        3: ["macro_ban_phim.py", `def q(): print("[Q] Quả cầu lửa!")\ndef w(): print("[W] Tường băng!")\ndef e(): print("[E] Tốc biến!")\n\nfor i in range(2):\n    q()\n    w()\ne()`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", fnReset);
+  </script>
+</body>
+</html>

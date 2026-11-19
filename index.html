@@ -117,6 +117,13 @@
     .b4 { background: #fee2e2; color: #b91c1c; }
     .b5 { background: #f3e8ff; color: #6b21a8; }
     .b6 { background: #cffafe; color: #0e7490; }
+    .b7 { background: #e0f2fe; color: #0369a1; }
+    .b8 { background: #d1fae5; color: #047857; }
+    .b9 { background: #ede9fe; color: #6d28d9; }
+    .b10 { background: #fef3c7; color: #b45309; }
+    .b11 { background: #fce7f3; color: #be185d; }
+    .b12 { background: #e0e7ff; color: #4338ca; }
+    .b13 { background: #ccfbf1; color: #0f766e; }
     .lesson-card-title {
       font-size: 19px;
       font-weight: 700;
@@ -224,12 +231,19 @@
       </div>
       <div class="course-quick-nav">
         <a href="index.html" class="active">🏠 Trang chủ</a>
-        <a href="LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
-        <a href="LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
-        <a href="LESSON 3/index.html">Bài 3: Toán Tử</a>
-        <a href="LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
-        <a href="LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
-        <a href="LESSON 6/index.html">Bài 6: Vòng Lặp for</a>
+        <a href="LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
+        <a href="LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
+        <a href="LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
+        <a href="LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
+        <a href="LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
+        <a href="LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
+        <a href="LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
+        <a href="LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
+        <a href="LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
+        <a href="LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
+        <a href="LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
+        <a href="LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
+        <a href="LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
       </div>
     </div>
   </div>
@@ -245,7 +259,7 @@
         Cổng Học Tập &bull; Thực Nghiệm <span>Python Tương Tác</span>
       </h1>
       <p class="hero-subtitle">
-        Chào mừng các em học sinh đến với hệ thống học liệu thông minh của lớp <strong>TT-C4K-PTB30</strong>! Toàn bộ 6 bài học được tích hợp công cụ chạy code trực tiếp trên trình duyệt, mô phỏng sơ đồ khối động, kiểm tra biến bộ nhớ RAM và hệ thống trắc nghiệm phản xạ giúp nắm vững tư duy lập trình cốt lõi.
+        Chào mừng các em học sinh đến với hệ thống học liệu thông minh của lớp <strong>TT-C4K-PTB30</strong>! Toàn bộ 13 bài học được tích hợp công cụ chạy code trực tiếp trên trình duyệt, mô phỏng sơ đồ khối động, kiểm tra biến bộ nhớ RAM và hệ thống trắc nghiệm phản xạ giúp nắm vững tư duy lập trình cốt lõi.
       </p>
 
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
@@ -253,13 +267,13 @@
           ▶ Bắt đầu với Bài 1
         </a>
         <a href="#roadmap" class="btn-enter-lesson" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);">
-          🧭 Xem Lộ Trình 6 Buổi
+          🧭 Xem Lộ Trình 13 Buổi
         </a>
       </div>
 
       <div class="hero-stats">
         <div class="stat-item">
-          <h4>6</h4>
+          <h4>13</h4>
           <p>Buổi Học Trọng Tâm</p>
         </div>
         <div class="stat-item">
@@ -267,7 +281,7 @@
           <p>Mô Phỏng Trực Quan</p>
         </div>
         <div class="stat-item">
-          <h4>80+</h4>
+          <h4>160+</h4>
           <p>Câu Hỏi Trắc Nghiệm</p>
         </div>
         <div class="stat-item">
@@ -422,6 +436,167 @@
         </a>
       </div>
 
+      <!-- Lesson 7 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b7">Buổi 7 &bull; Vòng Lặp Điều Kiện</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Vòng Lặp Vô Hạn (while), break &amp; continue</h3>
+          <p class="lesson-card-desc">
+            Lặp theo điều kiện khi chưa biết trước số lần lặp; làm chủ Game Loop <code>while True:</code>, thoát khẩn cấp bằng <code>break</code> và bỏ qua lượt bằng <code>continue</code>.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Phân biệt <code>for</code> vs <code>while</code> &amp; phím cứu hộ <code>Ctrl + C</code></li>
+            <li>While-Loop Tracer 4 kịch bản theo từng dòng</li>
+            <li>Mini Game Casino Đoán Số Bí Mật 1–50 trực quan</li>
+            <li>12 câu trắc nghiệm &amp; bài tập ATM / Đếm chữ số</li>
+          </ul>
+        </div>
+        <a href="LESSON 7/index.html" class="btn-enter-lesson" style="background:#0284c7;">
+          Vào Bài Học Số 7 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 8 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b8">Buổi 8 &bull; Dự Án Studio</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Giải Quyết Vấn Đề — Sinh Tồn Trên Hoang Đảo</h3>
+          <p class="lesson-card-desc">
+            Tổng hợp 7 buổi đầu theo quy trình 4 bước của kỹ sư phần mềm: phân rã bài toán, quản lý trạng thái game và lắp ghép <code>random</code>.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Quy trình 4 bước phân rã &amp; dựng Skeleton Code</li>
+            <li>Chơi thử giả lập Sinh Tồn Hoang Đảo kèm code live</li>
+            <li>10 câu trắc nghiệm quản lý trạng thái &amp; kẹp biên</li>
+            <li>4 bài tập lớn: Đổi giây, Máy bán nước, Kéo-Búa-Bao</li>
+          </ul>
+        </div>
+        <a href="LESSON 8/index.html" class="btn-enter-lesson" style="background:#059669;">
+          Vào Bài Học Số 8 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 9 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b9">Buổi 9 &bull; Checkpoint 2 &amp; List</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Kiểm Tra Vòng Lặp &amp; Nhập Môn Danh Sách (List)</h3>
+          <p class="lesson-card-desc">
+            Ôn tập Checkpoint 2 và khám phá kiểu dữ liệu <code>list</code>: mô hình "Toa tàu số 0", chỉ số dương/âm, <code>len()</code> và 2 cách duyệt bằng <code>for</code>.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Mô phỏng Toa Tàu tra cứu chỉ số &amp; bẫy <code>IndexError</code></li>
+            <li>So sánh trực quan 2 cách duyệt danh sách</li>
+            <li>12 câu trắc nghiệm chuẩn hóa về chỉ số &amp; duyệt List</li>
+            <li>5 bài thực hành tìm max/min &amp; thanh tra túi đồ</li>
+          </ul>
+        </div>
+        <a href="LESSON 9/index.html" class="btn-enter-lesson" style="background:#7c3aed;">
+          Vào Bài Học Số 9 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 10 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b10">Buổi 10 &bull; List CRUD</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Danh Sách &amp; Thao Tác CRUD (Thêm, Xóa, Sửa)</h3>
+          <p class="lesson-card-desc">
+            Biến đổi danh sách động với <code>.append()</code>, <code>.insert()</code>, <code>.remove()</code>, <code>.pop()</code>, <code>.sort()</code> và phòng tránh bẫy <code>ValueError</code>.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Sandbox Balo Minecraft CRUD trực quan theo thời gian thực</li>
+            <li>Phân biệt <code>.remove()</code> vs <code>.pop()</code> &amp; bẫy <code>None</code></li>
+            <li>12 câu trắc nghiệm &amp; chấm điểm tự động</li>
+            <li>Dự án Shop Trang Bị Minecraft có ví xu</li>
+          </ul>
+        </div>
+        <a href="LESSON 10/index.html" class="btn-enter-lesson" style="background:#d97706;">
+          Vào Bài Học Số 10 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 11 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b11">Buổi 11 &bull; Xử Lý Chuỗi</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Xâu Ký Tự (String) — Cắt Chuỗi &amp; Mật Mã</h3>
+          <p class="lesson-card-desc">
+            Nắm vững tính bất biến (Immutable) của <code>str</code>, kỹ thuật cắt lát <code>s[start:stop:step]</code>, đảo ngược <code>[::-1]</code> và mật mã Caesar.
+          </p>
+          <ul class="lesson-card-features">
+            <li>String Slicer Visualizer sáng ký tự theo lát cắt</li>
+            <li>Phòng mật mã điệp viên Caesar (<code>ord</code> &amp; <code>chr</code>)</li>
+            <li>12 câu trắc nghiệm cắt xâu &amp; phương thức chuỗi</li>
+            <li>Bài tập Palindrome, lọc chat &amp; đếm từ</li>
+          </ul>
+        </div>
+        <a href="LESSON 11/index.html" class="btn-enter-lesson" style="background:#db2777;">
+          Vào Bài Học Số 11 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 12 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b12">Buổi 12 &bull; Kiến Trúc Hàm</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Hàm (Function) — Chia Nhỏ Công Việc</h3>
+          <p class="lesson-card-desc">
+            Áp dụng triết lý DRY với từ khóa <code>def</code>, phân biệt rõ Định nghĩa hàm với Gọi hàm và xây dựng tổ hợp hàm gọi hàm.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Function Call Flow Visualizer + Call Stack trực quan</li>
+            <li>Phân tích 3 lỗi: quên gọi, thiếu <code>()</code>, gọi trước <code>def</code></li>
+            <li>12 câu trắc nghiệm luồng nhảy lệnh CPU</li>
+            <li>Xưởng Phép Thuật &amp; Bàn phím Macro Q/W/E/R</li>
+          </ul>
+        </div>
+        <a href="LESSON 12/index.html" class="btn-enter-lesson" style="background:#4f46e5;">
+          Vào Bài Học Số 12 &rarr;
+        </a>
+      </div>
+
+      <!-- Lesson 13 -->
+      <div class="lesson-card">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-number b13">Buổi 13 &bull; Hàm Nâng Cao</span>
+            <span style="font-size:12px; color:#64748b;">⏱ 120 phút</span>
+          </div>
+          <h3 class="lesson-card-title">Tham Số, Đối Số, return &amp; Phạm Vi Biến</h3>
+          <p class="lesson-card-desc">
+            Phân biệt Tham số vs Đối số, đập tan nhầm lẫn <code>print()</code> vs <code>return</code>, làm chủ vùng nhớ Local vs Global để sẵn sàng Hackathon Buổi 14.
+          </p>
+          <ul class="lesson-card-features">
+            <li>Scope &amp; Return Visualizer (Phòng khách vs Balo)</li>
+            <li>Thí nghiệm máy ép hoa quả (<code>NoneType</code> vs <code>return</code>)</li>
+            <li>12 câu trắc nghiệm chuyên sâu về hàm &amp; phạm vi</li>
+            <li>Dự án Boss Battle Combat Engine tiền Hackathon</li>
+          </ul>
+        </div>
+        <a href="LESSON 13/index.html" class="btn-enter-lesson" style="background:#0d9488;">
+          Vào Bài Học Số 13 &rarr;
+        </a>
+      </div>
+
     </div>
 
     <!-- Knowledge Continuity Roadmap -->
@@ -493,6 +668,76 @@
         </div>
       </div>
 
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">7</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 7: Vòng Lặp while, break &amp; continue &bull; Lặp Theo Điều Kiện</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Làm chủ vòng lặp lặp chừng nào điều kiện còn đúng và mô hình Game Loop <code>while True:</code> + <code>break</code>. Khi đã đủ cả <code>if</code>, <code>for</code>, <code>while</code>, ta sẵn sàng tổng hợp thành một trò chơi hoàn chỉnh ở Buổi 8!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">8</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 8: Giải Quyết Vấn Đề &bull; Dự Án "Sinh Tồn Trên Hoang Đảo"</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Học cách phân rã bài toán lớn, dựng khung sườn và quản lý trạng thái game. Nhưng muốn nhân vật chứa được <em>cả balo nhiều vật phẩm</em> thay vì từng biến lẻ, ta cần cấu trúc <strong>Danh sách (List)</strong> ở Buổi 9!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">9</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 9: Kiểm Tra Vòng Lặp &amp; Nhập Môn Danh Sách (List)</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Củng cố Checkpoint 2 và nắm vững chỉ số bắt đầu từ <code>0</code>, chỉ số âm <code>-1</code> cùng 2 cách duyệt List. Tiếp theo, Buổi 10 sẽ mở khóa khả năng Thêm, Xóa, Sửa danh sách linh hoạt!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">10</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 10: Danh Sách &amp; Thao Tác CRUD &bull; Shop Trang Bị Minecraft</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Thành thạo <code>.append()</code>, <code>.insert()</code>, <code>.remove()</code>, <code>.pop()</code>, <code>.sort()</code>. Từ List (sửa được tại chỗ), Buổi 11 dẫn sang <strong>Xâu ký tự (String)</strong> mang tính bất biến và kỹ thuật cắt chuỗi!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">11</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 11: Xâu Ký Tự (String) &bull; Slicing &amp; Mật Mã Caesar</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Làm chủ lát cắt <code>s[start:stop:step]</code>, đảo ngược <code>[::-1]</code>, xử lý văn bản và mã hóa mật thư. Khi các đoạn code tiện ích ngày càng dài, Buổi 12 sẽ dạy cách đóng gói chúng thành <strong>Hàm (<code>def</code>)</strong>!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">12</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 12: Hàm (Function) &bull; Chia Nhỏ Công Việc &amp; Xưởng Phép Thuật</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Áp dụng triết lý DRY với <code>def</code> và mô hình hàm gọi hàm. Sau khi biết đóng gói thao tác, Buổi 13 sẽ nâng cấp hàm biết nhận đầu vào linh hoạt và trả kết quả về!
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-step-item">
+        <div class="roadmap-step-icon">13</div>
+        <div>
+          <h3 style="font-size:16px; font-weight:700; color:var(--navy);">Buổi 13: Tham Số, Đối Số, return &amp; Phạm Vi Biến &bull; Tiền Hackathon</h3>
+          <p style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+            Hoàn thiện kiến thức lập trình cấu trúc với Tham số mặc định, phân biệt <code>print()</code> vs <code>return</code>, biến Cục bộ vs Toàn cục và Combat Engine — sẵn sàng cho <strong>Chung Kết Hackathon Buổi 14</strong>!
+          </p>
+        </div>
+      </div>
+
     </section>
 
   </main>
@@ -515,6 +760,13 @@
         <a href="LESSON 4/index.html">Bài 4</a>
         <a href="LESSON 5/index.html">Bài 5</a>
         <a href="LESSON 6/index.html">Bài 6</a>
+        <a href="LESSON 7/index.html">Bài 7</a>
+        <a href="LESSON 8/index.html">Bài 8</a>
+        <a href="LESSON 9/index.html">Bài 9</a>
+        <a href="LESSON 10/index.html">Bài 10</a>
+        <a href="LESSON 11/index.html">Bài 11</a>
+        <a href="LESSON 12/index.html">Bài 12</a>
+        <a href="LESSON 13/index.html">Bài 13</a>
       </div>
     </div>
   </footer>
