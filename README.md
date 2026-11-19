@@ -31,44 +31,53 @@ Chương trình học được thiết kế theo lộ trình xoắn ốc liên h
             │
             ▼ (Tổng hợp 4 trụ cột -> Chinh phục bài toán lũy tiến bậc thang ngoài thực tế)
 [Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp 4 Trụ Cột Nền Tảng]
+            │
+            ▼ (Tự động hóa công việc lặp lại & mở rộng bài toán sang nhiều lượt lặp)
+[Buổi 6: Vòng Lặp for & Hàm range()]
 ```
 
 ---
 
 ## 📚 Danh Sách Các Buổi Học & Tính Năng Tương Tác
 
-### 🏠 [Trang Chủ Cổng Học Tập (index.html)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/index.html)
-- Tổng quan khóa học, bản đồ lộ trình học tập và bảng điều hướng 1-click tới toàn bộ 5 buổi học.
+### 🏠 [Trang Chủ Cổng Học Tập (index.html)](index.html)
+- Tổng quan khóa học, bản đồ lộ trình học tập và bảng điều hướng 1-click tới toàn bộ 6 buổi học.
 
-### 📘 [Buổi 1: Làm Quen Python, print(), input() & Biến Số](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%201/index.html)
+### 📘 [Buổi 1: Làm Quen Python, print(), input() & Biến Số](LESSON%201/index.html)
 - **Lý thuyết:** Lệnh `print()`, lệnh `input()`, biến số là chiếc hộp dán nhãn trong RAM, quy tắc đặt tên biến snake_case.
 - **Tương tác:** Mô phỏng cấp phát ô nhớ RAM (Interactive RAM Allocator), trình chạy code Skulpt (bài toán hỏi tên tuổi và bảng cửu chương 98).
 - **Trắc nghiệm:** 10 câu hỏi phản xạ nhanh có chấm điểm và giải thích.
 - **Thực hành:** Thiệp giới thiệu cá nhân, bảng cửu chương tùy biến.
 
-### 📗 [Buổi 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%202/index.html)
+### 📗 [Buổi 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu (Type Casting)](LESSON%202/index.html)
 - **Lý thuyết:** 4 kiểu dữ liệu kinh điển (`int`, `float`, `str`, `bool`), hàm `type()`, giải mã cạm bẫy nối chuỗi `"10" + "20" = "1020"`, lỗi `ValueError`.
 - **Tương tác:** Bộ phân tích chuyển đổi kiểu dữ liệu đa năng (Type Inspector Lab), máy tính tuổi 10 năm nữa có mô phỏng biến đổi kiểu.
 - **Trắc nghiệm:** 10 câu hỏi trắc nghiệm kiểm tra độ hiểu sâu về ép kiểu.
 - **Thực hành:** Cỗ máy thời gian dự đoán tuổi, máy đổi ngoại tệ USD sang VNĐ.
 
-### 📙 [Buổi 3: Sức Mạnh Toán Tử (Số Học, Quan Hệ, Logic)](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%203/index.html)
+### 📙 [Buổi 3: Sức Mạnh Toán Tử (Số Học, Quan Hệ, Logic)](LESSON%203/index.html)
 - **Lý thuyết:** Toán tử số học (`//`, `%`, `**`), toán tử quan hệ (`==`, `!=`, `<`, `>`, `<=`, `>=`), cổng logic (`and`, `or`, `not`), thứ tự ưu tiên PEMDAS.
 - **Tương tác:** Máy tính toán tử tương tác (Operator Expression Evaluator), trình chạy code chia đội hình và điểm trung bình.
 - **Trắc nghiệm:** Trọn bộ **20 câu hỏi trắc nghiệm** chuẩn hóa từ `Bai3_Trắc Nghiệm Toán Tử.pdf`.
 - **Thực hành:** 4 bài tập thực hành tại lớp (Lũy thừa diện tích/thể tích, chia đội hình, điểm TB, chẵn lẻ).
 
-### 📕 [Buổi 4: Cấu Trúc Rẽ Nhánh (if - elif - else) & Sơ Đồ Khối](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%204/index.html)
+### 📕 [Buổi 4: Cấu Trúc Rẽ Nhánh (if - elif - else) & Sơ Đồ Khối](LESSON%204/index.html)
 - **Lý thuyết:** Cú pháp `if`, `if-else`, `if-elif-else`, 4 ký hiệu sơ đồ khối Flowchart quốc tế, 3 lỗi cấm kỵ: quên `:`, lỗi thụt lề `IndentationError`, nhầm `=` với `==`.
 - **Tương tác:** Trình mô phỏng sơ đồ khối động (Flowchart Stepper Simulator) sáng viền từng bước và đồng bộ với giải thích.
 - **Trắc nghiệm:** Trọn bộ **20 câu hỏi trắc nghiệm Wayground** có hình ảnh mã code thực tế từ `Trac_nghiem_Python_Hoc_sinh.pdf`.
 - **Thực hành:** Trọn bộ 10 bài toán rẽ nhánh kinh điển (có tiền đề bài toán tiền điện 2 bậc).
 
-### 🎓 [Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp 4 Trụ Cột](file:///Users/huytran/Library/CloudStorage/GoogleDrive-trangiahuy8444@gmail.com/My%20Drive/01_Giang_day/TT-C4K-PTB30/LESSON%205/index.html)
+### 🎓 [Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp 4 Trụ Cột](LESSON%205/index.html)
 - **Lý thuyết:** Rà soát 4 trụ cột, phân tích bản chất mô hình "xô nước bậc thang" EVN (5 bậc + 8% VAT).
 - **Tương tác:** Phòng thí nghiệm Trace Code Flowchart & Bộ nhớ RAM cho 4 bài toán thực tế, công cụ tính tiền điện EVN trực quan.
 - **Trắc nghiệm:** 8 câu hỏi phản xạ bẫy logic sâu.
 - **Thực hành:** Bộ mã nguồn mẫu chuẩn `bai5_on_tap.py` và bài tập về nhà.
+
+### 🔁 [Buổi 6: Vòng Lặp for & Hàm range()](LESSON%206/index.html)
+- **Lý thuyết:** Cú pháp vòng lặp `for`, 3 cách viết `range()` (kể cả step âm), biến tích lũy (tổng, đếm, tích/giai thừa), duyệt từng ký tự chuỗi và các bẫy hụt 1 / dãy rỗng.
+- **Tương tác:** Trình mô phỏng từng lượt lặp (For-Loop Tracer) trực quan hóa dãy `range()`, dòng code đang chạy, biến trong RAM và Code Lab chạy Python trực tiếp với Skulpt.
+- **Trắc nghiệm:** 12 câu hỏi trắc nghiệm phản xạ kiểm tra `for`, `range()`, biến tích lũy và lỗi cú pháp.
+- **Thực hành:** 6 bài tập thực hành từ bảng cửu chương bất kỳ, tổng 1→n, đếm số chẵn (`for` + `if`), giai thừa `n!`, tam giác sao đến tổng tiền điện cả năm (12 tháng).
 
 ---
 
@@ -111,11 +120,16 @@ TT-C4K-PTB30/
 │       ├── Huong_dan.html
 │       └── Anh_code/
 │
-└── LESSON 5/                       # Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp
-    ├── index.html                  # Web tương tác Buổi 5 hoàn chỉnh (2800+ dòng)
-    ├── interactive_review_lesson5.html
-    ├── Giao_An_Bai_5.md            # Kế hoạch bài dạy chi tiết 60 phút
-    └── bai5_on_tap.py              # Mã nguồn hoàn chỉnh bài toán EVN & hình học
+├── LESSON 5/                       # Buổi 5: Dự Án EVN & Ôn Tập Tổng Hợp
+│   ├── index.html                  # Web tương tác Buổi 5 hoàn chỉnh (2800+ dòng)
+│   ├── interactive_review_lesson5.html
+│   ├── Giao_An_Bai_5.md            # Kế hoạch bài dạy chi tiết 60 phút
+│   └── bai5_on_tap.py              # Mã nguồn hoàn chỉnh bài toán EVN & hình học
+│
+└── LESSON 6/                       # Buổi 6: Vòng Lặp for & Hàm range()
+    ├── index.html                  # Web tương tác Buổi 6 (Tracer + 12 câu + 6 bài)
+    ├── Giao_An_Bai_6.md            # Kế hoạch bài dạy chi tiết 120 phút
+    └── bai6_vong_lap_for.py        # Mã nguồn mẫu vòng lặp for & range()
 ```
 
 ---

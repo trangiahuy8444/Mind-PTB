@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 6: Vòng Lặp for & Hàm range() | Lập Trình Python Cơ Bản</title>
+  <link rel="stylesheet" href="../assets/css/template.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <style>
+    /* ---------- Range visualizer ---------- */
+    .range-strip { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; min-height:52px; }
+    .range-cell {
+      min-width:48px; padding:8px 10px; border-radius:10px; text-align:center;
+      background:white; border:2px solid #cbd5e1; font-family:var(--font-mono);
+      font-weight:700; font-size:16px; color:#334155; transition:all .25s;
+    }
+    .range-cell small { display:block; font-size:10px; color:#94a3b8; font-weight:600; }
+    .range-cell.done { background:#ecfdf5; border-color:#10b981; color:#047857; }
+    .range-cell.current { background:#2563eb; border-color:#1d4ed8; color:white; transform:translateY(-3px); box-shadow:0 6px 14px rgba(37,99,235,.35); }
+    .range-cell.current small { color:#bfdbfe; }
+    .range-empty { color:#b91c1c; font-weight:700; font-size:14px; padding:10px 0; }
+
+    /* ---------- Code trace panel ---------- */
+    .trace-code { background:var(--code-bg); border-radius:var(--radius-md); padding:12px 0; font-family:var(--font-mono); font-size:14px; color:#e2e8f0; }
+    .trace-line { display:flex; border-left:3px solid transparent; padding:3px 14px 3px 0; white-space:pre; }
+    .trace-line .ln { width:36px; text-align:right; padding-right:12px; color:#64748b; user-select:none; flex-shrink:0; }
+    .trace-line.active { background:#1e3a8a; border-left-color:#60a5fa; }
+    .trace-console { background:#030712; color:#a7f3d0; font-family:var(--font-mono); font-size:13px; padding:12px 14px; border-radius:var(--radius-md); min-height:110px; max-height:220px; overflow-y:auto; white-space:pre-wrap; }
+    .trace-explain { background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; border-radius:6px; font-size:14px; color:#78350f; min-height:64px; }
+    .step-counter { font-size:13px; font-weight:700; color:#1d4ed8; background:#eff6ff; padding:4px 10px; border-radius:20px; }
+
+    /* ---------- Anatomy ---------- */
+    .anatomy { background:#0f172a; color:#e2e8f0; border-radius:var(--radius-md); padding:22px; font-family:var(--font-mono); font-size:18px; line-height:2; }
+    .anatomy .kw { color:#c084fc; font-weight:700; }
+    .anatomy .var { color:#7dd3fc; font-weight:700; }
+    .anatomy .fn { color:#fde68a; }
+    .anatomy .num { color:#86efac; }
+    .anatomy .colon { color:#f87171; font-weight:800; font-size:22px; }
+    .anatomy-legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:14px; }
+    .anatomy-legend div { background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; padding:10px 12px; font-size:13.5px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Bar -->
+  <div class="global-topbar">
+    <div class="global-topbar-inner">
+      <a href="../index.html" class="brand-badge">
+        <span class="logo-pill">MindX</span>
+        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
+      </a>
+      <div class="course-quick-nav">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1: Biến & Nhập/Xuất</a>
+        <a href="../LESSON 2/index.html">Bài 2: Kiểu Dữ Liệu</a>
+        <a href="../LESSON 3/index.html">Bài 3: Toán Tử</a>
+        <a href="../LESSON 4/index.html">Bài 4: Rẽ Nhánh</a>
+        <a href="../LESSON 5/index.html">Bài 5: Ôn Tập & EVN</a>
+        <a href="index.html" class="active">Bài 6: Vòng Lặp for</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Header -->
+  <header class="lesson-header">
+    <div class="header-container">
+      <div class="header-top">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-pill">Buổi Học Số 6</span>
+            <span class="duration-pill">⏱ 120 Phút</span>
+            <span class="duration-pill" style="background:rgba(6, 182, 212, 0.2); color:#67e8f9;">Cấp Độ: Vòng Lặp</span>
+          </div>
+          <h1 class="lesson-title">Bài 6: Vòng Lặp for & Hàm range()</h1>
+          <p class="lesson-desc">
+            Dạy máy tính làm đi làm lại một việc mà không cần gõ lại code: làm chủ cú pháp <code>for</code>, ba cách viết <code>range()</code>, biến tích lũy (tính tổng, đếm) và kết hợp vòng lặp với câu điều kiện.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết & Trọng Tâm</button>
+        <button type="button" class="tab-btn" data-tab="simulator">🔬 2. Mô Phỏng Vòng Lặp & Code Lab</button>
+        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
+        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- =========================================================================
+         TAB 1: LÝ THUYẾT & TRỌNG TÂM
+         ========================================================================= -->
+    <div id="pane-theory" class="tab-pane active">
+
+      <!-- Hook: recall Lesson 1 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔁</span> 1. Khởi Động: Nhớ Lại Bảng Cửu Chương 98 Ở Bài 1</h2>
+          <span style="font-size:12px; background:#ecfeff; color:#0e7490; padding:4px 10px; border-radius:20px; font-weight:600;">Kết nối Bài 1</span>
+        </div>
+        <p>Ở Bài 1, để in bảng nhân 98 chúng ta đã phải gõ <strong>10 dòng <code>print()</code> gần như giống hệt nhau</strong>. Nếu thầy yêu cầu in đến <code>98 x 1000</code> thì sao? Gõ 1000 dòng? 😱</p>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div>
+            <div class="alert alert-danger" style="margin:0 0 8px;"><span>❌</span><div><strong>Cách cũ (Bài 1):</strong> 10 dòng, dễ gõ sai, không mở rộng được.</div></div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>bangcuuchuong.py (Bài 1)</span></div>
+              <div class="code-editor-area"><textarea readonly style="min-height:200px;">print("98 x 1 = ", 98 * 1)
+print("98 x 2 = ", 98 * 2)
+print("98 x 3 = ", 98 * 3)
+print("98 x 4 = ", 98 * 4)
+print("98 x 5 = ", 98 * 5)
+print("98 x 6 = ", 98 * 6)
+print("98 x 7 = ", 98 * 7)
+print("98 x 8 = ", 98 * 8)
+print("98 x 9 = ", 98 * 9)
+print("98 x 10 = ", 98 * 10)</textarea></div>
+            </div>
+          </div>
+          <div>
+            <div class="alert alert-success" style="margin:0 0 8px;"><span>✅</span><div><strong>Cách mới (Bài 6):</strong> chỉ 2 dòng, muốn in đến 1000 chỉ cần sửa một con số!</div></div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>bangcuuchuong_for.py (Bài 6)</span></div>
+              <div class="code-editor-area"><textarea readonly style="min-height:200px;">for i in range(1, 11):
+    print("98 x", i, "=", 98 * i)</textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span>💡</span>
+          <div><strong>Vòng lặp (Loop)</strong> là cấu trúc giúp máy tính <strong>thực hiện lặp đi lặp lại một khối lệnh</strong> nhiều lần. Mỗi lần lặp được gọi là một <strong>lượt lặp (iteration)</strong>.</div>
+        </div>
+      </div>
+
+      <!-- Anatomy -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧬</span> 2. Giải Phẫu Cú Pháp Vòng Lặp for</h2>
+        </div>
+        <div class="anatomy">
+          <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>)<span class="colon">:</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;"># khối lệnh lặp (thụt lề 4 dấu cách)</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">print</span>(<span class="var">i</span>)<br>
+          <span class="fn">print</span>(<span style="color:#fdba74;">"Xong!"</span>) <span style="color:#94a3b8;"># không thụt lề → chạy 1 lần SAU vòng lặp</span>
+        </div>
+        <div class="anatomy-legend">
+          <div><strong style="color:#7c3aed;">for ... in</strong><br>Từ khóa: "với mỗi giá trị ... trong ..."</div>
+          <div><strong style="color:#0284c7;">i</strong> — biến lặp<br>Tự động nhận lần lượt từng giá trị.</div>
+          <div><strong style="color:#a16207;">range(1, 11)</strong><br>Dãy số 1, 2, ..., 10 (không có 11!).</div>
+          <div><strong style="color:#dc2626;">dấu :</strong> và <strong>thụt lề</strong><br>Giống hệt quy tắc của <code>if</code> ở Bài 4.</div>
+        </div>
+        <div class="alert alert-warning">
+          <span>🔗</span>
+          <div><strong>Kết nối Bài 4:</strong> Hai lỗi kinh điển của <code>if</code> (quên dấu <code>:</code> và thụt lề sai → <code>IndentationError</code>) xuất hiện y hệt với <code>for</code>. Dòng nào thụt lề thì nằm <em>trong</em> vòng lặp và chạy nhiều lần; dòng không thụt lề chỉ chạy 1 lần sau khi lặp xong.</div>
+        </div>
+      </div>
+
+      <!-- range -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">📏</span> 3. Ba Cách Viết Hàm range()</h2>
+        </div>
+        <table class="testcase-table">
+          <thead><tr><th>Cách viết</th><th>Ý nghĩa</th><th>Ví dụ</th><th>Dãy số tạo ra</th></tr></thead>
+          <tbody>
+            <tr><td><code>range(stop)</code></td><td>Từ 0 đến <strong>stop − 1</strong></td><td><code>range(5)</code></td><td><code>0, 1, 2, 3, 4</code></td></tr>
+            <tr><td><code>range(start, stop)</code></td><td>Từ start đến <strong>stop − 1</strong></td><td><code>range(1, 6)</code></td><td><code>1, 2, 3, 4, 5</code></td></tr>
+            <tr><td><code>range(start, stop, step)</code></td><td>Từ start, mỗi lần cộng thêm step</td><td><code>range(2, 11, 2)</code></td><td><code>2, 4, 6, 8, 10</code></td></tr>
+            <tr><td><code>range(start, stop, step)</code> với step âm</td><td>Đếm ngược</td><td><code>range(10, 0, -3)</code></td><td><code>10, 7, 4, 1</code></td></tr>
+          </tbody>
+        </table>
+        <div class="grid-3">
+          <div class="alert alert-danger" style="margin:0;"><div><strong>Bẫy 1 – "Hụt 1":</strong> <code>range(1, 10)</code> chỉ đến <strong>9</strong>. Muốn đến n phải viết <code>range(1, n + 1)</code>.</div></div>
+          <div class="alert alert-danger" style="margin:0;"><div><strong>Bẫy 2 – Dãy rỗng:</strong> <code>range(5, 1)</code> không có số nào (step mặc định là +1) → vòng lặp chạy <strong>0 lần</strong>.</div></div>
+          <div class="alert alert-danger" style="margin:0;"><div><strong>Bẫy 3 – step = 0:</strong> <code>range(1, 10, 0)</code> báo lỗi <code>ValueError</code>.</div></div>
+        </div>
+      </div>
+
+      <!-- Accumulator -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🧺</span> 4. Biến Tích Lũy: Tính Tổng & Đếm</h2>
+        </div>
+        <p>Muốn tính <code>1 + 2 + ... + 100</code>, ta dùng một biến làm "chiếc giỏ": <strong>khởi tạo trước vòng lặp</strong>, <strong>cập nhật trong vòng lặp</strong>, <strong>dùng kết quả sau vòng lặp</strong>.</p>
+        <div class="grid-2">
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>tinh_tong.py</span><button class="btn-copy" data-target="th-sum">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-sum" readonly style="min-height:150px;">tong = 0                    # 1. Khởi tạo giỏ rỗng
+for i in range(1, 101):     # 2. i = 1, 2, ..., 100
+    tong = tong + i         # 3. Bỏ i vào giỏ (viết gọn: tong += i)
+print("Tổng =", tong)       # 4. In SAU vòng lặp -> 5050</textarea></div>
+          </div>
+          <div class="code-box" style="margin:0;">
+            <div class="code-header"><span>dem_so_chan.py (for + if)</span><button class="btn-copy" data-target="th-count">Sao chép</button></div>
+            <div class="code-editor-area"><textarea id="th-count" readonly style="min-height:150px;">dem = 0
+for i in range(1, 11):
+    if i % 2 == 0:          # Toán tử % (Bài 3) + if (Bài 4)
+        dem += 1
+print("Có", dem, "số chẵn")  # -> 5</textarea></div>
+          </div>
+        </div>
+        <table class="testcase-table" style="margin-top:16px;">
+          <thead><tr><th>Toán tử gán kết hợp</th><th>Viết đầy đủ</th><th>Dùng khi</th></tr></thead>
+          <tbody>
+            <tr><td><code>tong += i</code></td><td><code>tong = tong + i</code></td><td>Tính tổng (khởi tạo <code>0</code>)</td></tr>
+            <tr><td><code>dem += 1</code></td><td><code>dem = dem + 1</code></td><td>Đếm số lần (khởi tạo <code>0</code>)</td></tr>
+            <tr><td><code>tich *= i</code></td><td><code>tich = tich * i</code></td><td>Tính tích / giai thừa (khởi tạo <code>1</code>, không phải 0!)</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-warning"><span>⚠️</span><div><strong>Lỗi hay gặp:</strong> đặt <code>tong = 0</code> <em>bên trong</em> vòng lặp → mỗi lượt giỏ bị đổ sạch; hoặc thụt lề <code>print</code> vào trong → in ra rất nhiều dòng tổng dở dang.</div></div>
+      </div>
+
+      <!-- for over string -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔤</span> 5. Mở Rộng: Duyệt Từng Ký Tự Của Chuỗi</h2>
+        </div>
+        <p><code>for</code> không chỉ duyệt dãy số. Nó có thể đi qua <strong>từng ký tự</strong> của một chuỗi <code>str</code> (Bài 2):</p>
+        <div class="code-box">
+          <div class="code-header"><span>duyet_chuoi.py</span></div>
+          <div class="code-editor-area"><textarea readonly style="min-height:90px;">for ky_tu in "MindX":
+    print(ky_tu)
+# In ra 5 dòng: M  i  n  d  X</textarea></div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div style="background:linear-gradient(135deg, #ecfeff 0%, #e0e7ff 100%); border:2px dashed #0891b2; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#0e7490; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 7: Khi Không Biết Trước Số Lần Lặp?</h3>
+        <p style="color:#164e63; font-size:14px; line-height:1.6;">
+          <code>for</code> + <code>range()</code> rất tuyệt khi ta <strong>biết trước số lần lặp</strong> (10 dòng bảng nhân, 12 tháng tiền điện...). Nhưng nếu bài toán là: <em>"Cho người dùng nhập mật khẩu cho đến khi đúng thì thôi"</em> hay <em>"Chơi đoán số đến khi đoán trúng"</em> — ta không thể biết trước họ sẽ nhập sai bao nhiêu lần!
+        </p>
+        <p style="color:#164e63; font-size:14px; line-height:1.6; margin-top:6px;">
+          Đó là lúc cần đến vòng lặp lặp <strong>theo điều kiện</strong> — <code>while</code> — cùng hai lệnh điều khiển <code>break</code>, <code>continue</code> ở <strong>Bài 7</strong>!
+        </p>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: MÔ PHỎNG VÒNG LẶP & CODE LAB
+         ========================================================================= -->
+    <div id="pane-simulator" class="tab-pane" hidden>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">🔬</span> Mô Phỏng Từng Lượt Lặp (For-Loop Tracer)</h2>
+          <span class="step-counter" id="sim-counter">Chưa bắt đầu</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">
+          Chọn chương trình, chỉnh 3 tham số của <code>range(start, stop, step)</code>, rồi bấm <strong>▶ Bước tiếp</strong> để xem biến <code>i</code> nhảy qua từng giá trị, dòng code đang chạy sáng lên và kết quả in ra màn hình.
+        </p>
+
+        <div class="interactive-ctrls">
+          <label>Chương trình:
+            <select id="sim-mode" onchange="simReset()">
+              <option value="print">1. In ra từng giá trị i</option>
+              <option value="sum">2. Tính tổng (biến tích lũy)</option>
+              <option value="table">3. Bảng nhân 98</option>
+              <option value="even">4. Đếm số chẵn (for + if)</option>
+            </select>
+          </label>
+          <label>start:<input type="number" id="sim-start" value="1" style="width:80px;" onchange="simReset()"></label>
+          <label>stop:<input type="number" id="sim-stop" value="6" style="width:80px;" onchange="simReset()"></label>
+          <label>step:<input type="number" id="sim-step" value="1" style="width:80px;" onchange="simReset()"></label>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto;" onclick="simStep()">▶ Bước tiếp</button>
+          <button type="button" class="btn-run" style="padding:10px 16px; margin-top:auto; background:#2563eb;" onclick="simRunAll()">⏩ Chạy hết</button>
+          <button type="button" class="btn-copy" style="padding:10px 14px; margin-top:auto; background:#e2e8f0; color:#334155;" onclick="simReset()">🔄 Đặt lại</button>
+        </div>
+
+        <div id="sim-error" class="alert alert-danger" style="display:none;"></div>
+
+        <h4 style="font-size:14px; font-weight:700; color:var(--navy);">Dãy số do <code id="sim-range-label">range(1, 6, 1)</code> tạo ra:</h4>
+        <div class="range-strip" id="sim-strip"></div>
+
+        <div class="grid-2" style="margin-top:12px;">
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Mã Python (dòng đang chạy sáng lên):</h4>
+            <div class="trace-code" id="sim-code"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Bộ nhớ RAM:</h4>
+            <div class="memory-grid" id="sim-ram" style="margin:0;"></div>
+          </div>
+          <div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:8px;">Màn hình kết quả:</h4>
+            <div class="trace-console" id="sim-console"></div>
+            <h4 style="font-size:14px; font-weight:700; color:var(--navy); margin:14px 0 8px;">Lời thầy giảng giải:</h4>
+            <div class="trace-explain" id="sim-explain">Bấm ▶ Bước tiếp để bắt đầu.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Lab -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">▶️</span> Code Lab: Tự Viết Vòng Lặp</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL6(1)">Bảng nhân n</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL6(2)">Tổng 1→n</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL6(3)">Tam giác sao</button>
+            <button type="button" class="btn-copy" style="background:#e2e8f0; color:#334155;" onclick="loadL6(4)">Đếm ngược</button>
+          </div>
+        </div>
+        <div class="code-box">
+          <div class="code-header">
+            <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span id="l6-title">bang_nhan.py</span>
+            <div class="code-actions">
+              <button type="button" class="btn-run" onclick="runPythonCode('lesson6-editor', 'lesson6-terminal')">▶ Chạy Code</button>
+              <button type="button" class="btn-copy" data-target="lesson6-editor">Sao chép</button>
+            </div>
+          </div>
+          <div class="code-editor-area">
+            <textarea id="lesson6-editor" style="min-height:160px;"># In bảng nhân của số n bất kỳ
+n = int(input("Nhập số n: "))
+for i in range(1, 11):
+    print(n, "x", i, "=", n * i)</textarea>
+          </div>
+          <div class="terminal-output" id="lesson6-terminal"><span class="prompt-sign">terminal &gt;</span> Bấm [▶ Chạy Code] để thực thi chương trình...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: TRẮC NGHIỆM (12 CÂU)
+         ========================================================================= -->
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 6</h3>
+            <p style="font-size:13.5px; opacity:0.9;">12 câu kiểm tra for, range(), biến tích lũy và các bẫy kinh điển</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l6q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text"><code>range(5)</code> tạo ra dãy số nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q1', 0, false, 'range không bắt đầu từ 1 khi chỉ có 1 tham số.')"><input type="radio" name="l6q1"><span>A. <code>1, 2, 3, 4, 5</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q1', 1, true, 'range(stop) bắt đầu từ 0 và dừng TRƯỚC stop: 0, 1, 2, 3, 4 (đủ 5 số).')"><input type="radio" name="l6q1"><span>B. <code>0, 1, 2, 3, 4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q1', 2, false, 'range không bao gồm giá trị stop = 5.')"><input type="radio" name="l6q1"><span>C. <code>0, 1, 2, 3, 4, 5</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q1', 3, false, 'range(5) tạo dãy 5 số chứ không phải chỉ số 5.')"><input type="radio" name="l6q1"><span>D. <code>5</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Để <code>i</code> chạy từ 1 đến <code>n</code> (có cả n), ta viết:</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q2', 0, false, 'range(1, n) dừng ở n − 1 → bị hụt 1.')"><input type="radio" name="l6q2"><span>A. <code>range(1, n)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q2', 1, false, 'range(n) chạy từ 0 đến n − 1.')"><input type="radio" name="l6q2"><span>B. <code>range(n)</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q2', 2, true, 'Đúng! Vì stop không được tính nên phải viết n + 1.')"><input type="radio" name="l6q2"><span>C. <code>range(1, n + 1)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q2', 3, false, 'range(0, n + 1) bắt đầu từ 0, thừa số 0.')"><input type="radio" name="l6q2"><span>D. <code>range(0, n + 1)</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text"><code>range(2, 11, 2)</code> tạo ra dãy số nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q3', 0, true, 'Bắt đầu 2, mỗi lần +2, dừng trước 11: 2, 4, 6, 8, 10.')"><input type="radio" name="l6q3"><span>A. <code>2, 4, 6, 8, 10</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q3', 1, false, 'Thiếu số 10: 10 vẫn nhỏ hơn 11 nên được tính.')"><input type="radio" name="l6q3"><span>B. <code>2, 4, 6, 8</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q3', 2, false, 'Số đầu tiên là start = 2, không phải 1.')"><input type="radio" name="l6q3"><span>C. <code>1, 3, 5, 7, 9</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q3', 3, false, 'step = 2 nghĩa là nhảy 2 đơn vị mỗi lần.')"><input type="radio" name="l6q3"><span>D. <code>2, 3, 4, ..., 10</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Đoạn code sau in chữ <code>Hi</code> bao nhiêu lần?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">for i in range(3):
+    print("Hi")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q4', 0, false, 'Vòng lặp chạy đủ số phần tử của range(3).')"><input type="radio" name="l6q4"><span>A. 1 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q4', 1, false, 'range(3) có 3 phần tử (0, 1, 2), không phải 2.')"><input type="radio" name="l6q4"><span>B. 2 lần</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q4', 2, true, 'range(3) = 0, 1, 2 → 3 lượt lặp → in 3 lần.')"><input type="radio" name="l6q4"><span>C. 3 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q4', 3, false, 'range(3) không bao gồm 3, nên chỉ có 3 lượt.')"><input type="radio" name="l6q4"><span>D. 4 lần</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text"><code>range(10, 0, -3)</code> tạo ra dãy số nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q5', 0, false, 'stop = 0 không được tính, và 1 − 3 = −2 đã vượt qua 0.')"><input type="radio" name="l6q5"><span>A. <code>10, 7, 4, 1, 0</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q5', 1, true, 'step âm → đếm ngược: 10, 7, 4, 1 (lần sau là −2 đã vượt qua 0 nên dừng).')"><input type="radio" name="l6q5"><span>B. <code>10, 7, 4, 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q5', 2, false, 'step âm cho phép đếm ngược, dãy không rỗng.')"><input type="radio" name="l6q5"><span>C. Dãy rỗng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q5', 3, false, 'step âm hoàn toàn hợp lệ, chỉ step = 0 mới lỗi.')"><input type="radio" name="l6q5"><span>D. Báo lỗi</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Chương trình sau in ra gì?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">s = 0
+for i in range(1, 5):
+    s += i
+print(s)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q6', 0, false, '15 = 1+2+3+4+5, nhưng range(1, 5) không có số 5.')"><input type="radio" name="l6q6"><span>A. <code>15</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q6', 1, true, 'i = 1, 2, 3, 4 → s = 1 + 2 + 3 + 4 = 10.')"><input type="radio" name="l6q6"><span>B. <code>10</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q6', 2, false, '4 là giá trị cuối của i, không phải tổng.')"><input type="radio" name="l6q6"><span>C. <code>4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q6', 3, false, 'print(s) không thụt lề nên chỉ in 1 lần sau vòng lặp.')"><input type="radio" name="l6q6"><span>D. <code>1 3 6 10</code> (4 dòng)</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Chương trình sau in ra những gì? (dấu / biểu thị xuống dòng)</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">for i in range(3):
+    print(i)
+print("Xong")</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q7', 0, false, 'print(&quot;Xong&quot;) không thụt lề nên chỉ chạy 1 lần.')"><input type="radio" name="l6q7"><span>A. 0 / Xong / 1 / Xong / 2 / Xong</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q7', 1, true, 'print(i) nằm trong vòng lặp (3 lần), print(&quot;Xong&quot;) nằm ngoài (1 lần sau cùng).')"><input type="radio" name="l6q7"><span>B. 0 / 1 / 2 / Xong</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q7', 2, false, 'range(3) bắt đầu từ 0.')"><input type="radio" name="l6q7"><span>C. 1 / 2 / 3 / Xong</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q7', 3, false, 'Thụt lề hoàn toàn đúng, không có lỗi.')"><input type="radio" name="l6q7"><span>D. Báo lỗi IndentationError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Vòng lặp <code>for i in range(5, 1):</code> chạy bao nhiêu lần?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q8', 0, true, 'step mặc định +1 mà start (5) đã lớn hơn stop (1) → dãy rỗng → lặp 0 lần, không báo lỗi.')"><input type="radio" name="l6q8"><span>A. 0 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q8', 1, false, 'Muốn đếm ngược phải ghi rõ step âm: range(5, 1, -1).')"><input type="radio" name="l6q8"><span>B. 4 lần (5, 4, 3, 2)</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q8', 2, false, 'Python không tự đếm ngược.')"><input type="radio" name="l6q8"><span>C. 5 lần</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q8', 3, false, 'Không có lỗi, chỉ là dãy rỗng.')"><input type="radio" name="l6q8"><span>D. Báo lỗi ValueError</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q9">
+          <div class="quiz-q-num">Câu 9</div>
+          <div class="quiz-q-text">Dòng code nào sau đây <strong>bị lỗi cú pháp</strong>?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q9', 0, false, 'Dòng này hợp lệ.')"><input type="radio" name="l6q9"><span>A. <code>for i in range(10):</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q9', 1, true, 'Thiếu dấu hai chấm : ở cuối dòng tiêu đề for → SyntaxError (giống lỗi của if ở Bài 4).')"><input type="radio" name="l6q9"><span>B. <code>for i in range(10)</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q9', 2, false, 'Duyệt chuỗi bằng for là hợp lệ.')"><input type="radio" name="l6q9"><span>C. <code>for c in "abc":</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q9', 3, false, 'step âm hợp lệ.')"><input type="radio" name="l6q9"><span>D. <code>for k in range(9, 0, -1):</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q10">
+          <div class="quiz-q-num">Câu 10</div>
+          <div class="quiz-q-text">Chương trình đếm bao nhiêu số? <code>dem</code> cuối cùng bằng mấy?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">dem = 0
+for i in range(1, 21):
+    if i % 5 == 0:
+        dem += 1
+print(dem)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q10', 0, false, 'Xem lại: các số chia hết cho 5 từ 1 đến 20 là 5, 10, 15, 20.')"><input type="radio" name="l6q10"><span>A. <code>3</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q10', 1, true, 'range(1, 21) có cả số 20 → 5, 10, 15, 20 → 4 số.')"><input type="radio" name="l6q10"><span>B. <code>4</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q10', 2, false, '20 là số lượt lặp, không phải số lần thỏa điều kiện.')"><input type="radio" name="l6q10"><span>C. <code>20</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q10', 3, false, '5 là số chia, không phải kết quả đếm.')"><input type="radio" name="l6q10"><span>D. <code>5</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q11">
+          <div class="quiz-q-num">Câu 11</div>
+          <div class="quiz-q-text">Để tính giai thừa <code>5! = 1 × 2 × 3 × 4 × 5</code>, biến tích lũy <code>tich</code> phải được khởi tạo bằng bao nhiêu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q11', 0, false, 'Nếu tich = 0 thì nhân với bất cứ số nào cũng ra 0!')"><input type="radio" name="l6q11"><span>A. <code>tich = 0</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q11', 1, true, 'Số 1 là phần tử trung hòa của phép nhân: 1 × a = a. Tổng khởi tạo 0, tích khởi tạo 1.')"><input type="radio" name="l6q11"><span>B. <code>tich = 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q11', 2, false, 'Khởi tạo bằng 5 sẽ nhân thừa thêm 5.')"><input type="radio" name="l6q11"><span>C. <code>tich = 5</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q11', 3, false, 'Chuỗi rỗng không dùng được cho phép nhân số.')"><input type="radio" name="l6q11"><span>D. <code>tich = ""</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l6q12">
+          <div class="quiz-q-num">Câu 12</div>
+          <div class="quiz-q-text">Chương trình sau in ra bao nhiêu dòng?</div>
+          <pre style="background:#0f172a; color:#e2e8f0; padding:12px 16px; border-radius:8px; font-family:var(--font-mono); font-size:14px; margin-bottom:14px;">for ky_tu in "Python":
+    print(ky_tu)</pre>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l6q12', 0, false, 'for duyệt TỪNG ký tự, mỗi ký tự in trên 1 dòng.')"><input type="radio" name="l6q12"><span>A. 1 dòng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q12', 1, false, 'Đếm lại: P-y-t-h-o-n.')"><input type="radio" name="l6q12"><span>B. 5 dòng</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q12', 2, true, '&quot;Python&quot; có 6 ký tự: P, y, t, h, o, n → 6 dòng.')"><input type="radio" name="l6q12"><span>C. 6 dòng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l6q12', 3, false, 'for duyệt được chuỗi, không lỗi.')"><input type="radio" name="l6q12"><span>D. Báo lỗi vì chuỗi không phải range</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: BÀI TẬP THỰC HÀNH
+         ========================================================================= -->
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="alert alert-info"><span>📌</span><div>Nhập mỗi giá trị trên một dòng. Hãy tự viết code trong <strong>Code Lab</strong> (Tab 2) hoặc VS Code/Thonny trước khi mở lời giải.</div></div>
+
+      <!-- P1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Bảng Cửu Chương Bất Kỳ (Nâng cấp Bài 1)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số nguyên <code>n</code>. In bảng nhân của n từ 1 đến 10.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>7</code></td><td><code>7 x 1 = 7</code><br><code>7 x 2 = 14</code><br>...<br><code>7 x 10 = 70</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1.py</span><button class="btn-copy" data-target="l6-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s1" readonly style="min-height:80px;">n = int(input())
+for i in range(1, 11):
+    print(n, "x", i, "=", n * i)</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Tổng Từ 1 Đến n</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số nguyên dương <code>n</code>. Tính và in tổng <code>1 + 2 + ... + n</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>10</code></td><td><code>55</code></td></tr><tr><td><code>100</code></td><td><code>5050</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2.py</span><button class="btn-copy" data-target="l6-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s2" readonly style="min-height:100px;">n = int(input())
+tong = 0
+for i in range(1, n + 1):
+    tong += i
+print(tong)</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P3 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Đếm Và Tính Tổng Số Chẵn (for + if)</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số nguyên dương <code>n</code>. Đếm có bao nhiêu số chẵn từ 1 đến n và tính tổng của chúng. In ra 2 dòng: số lượng, rồi tổng.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>10</code></td><td><code>5</code><br><code>30</code></td></tr><tr><td><code>7</code></td><td><code>3</code><br><code>12</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải (2 cách)</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3.py</span><button class="btn-copy" data-target="l6-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s3" readonly style="min-height:200px;"># Cách 1: for + if
+n = int(input())
+dem = 0
+tong = 0
+for i in range(1, n + 1):
+    if i % 2 == 0:
+        dem += 1
+        tong += i
+print(dem)
+print(tong)
+
+# Cách 2: dùng step = 2, không cần if
+# for i in range(2, n + 1, 2):
+#     dem += 1
+#     tong += i</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P4 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 4: Giai Thừa n!</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số nguyên <code>n</code> (0 ≤ n ≤ 20). Tính <code>n! = 1 × 2 × ... × n</code>. Quy ước <code>0! = 1</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>5</code></td><td><code>120</code></td></tr><tr><td><code>0</code></td><td><code>1</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4.py</span><button class="btn-copy" data-target="l6-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s4" readonly style="min-height:110px;">n = int(input())
+tich = 1                 # Tích khởi tạo bằng 1!
+for i in range(1, n + 1):
+    tich *= i
+print(tich)
+# Khi n = 0: range(1, 1) rỗng -> không lặp -> in 1 (đúng quy ước 0! = 1)</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P5 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 5: Vẽ Tam Giác Sao</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập chiều cao <code>h</code>. In tam giác vuông gồm h dòng, dòng thứ i có i dấu <code>*</code>. Gợi ý: <code>"*" * 3</code> cho ra <code>"***"</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>4</code></td><td><code>*</code><br><code>**</code><br><code>***</code><br><code>****</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai5.py</span><button class="btn-copy" data-target="l6-s5">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s5" readonly style="min-height:80px;">h = int(input())
+for i in range(1, h + 1):
+    print("*" * i)</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P6 -->
+      <div class="exercise-box" style="border:2px solid #0891b2;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:#0e7490;">Bài 6: Tổng Tiền Điện Cả Năm (Liên kết Bài 4 & Bài 5)</h3>
+          <span class="badge-level badge-hard">Thử thách</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập số kWh của 12 tháng (mỗi tháng một dòng). Tính tiền mỗi tháng theo biểu giá 2 bậc của Bài 4 (50 kWh đầu: 1500 đ/kWh; phần vượt: 2000 đ/kWh). In tổng tiền điện cả năm và tháng tốn tiền nhiều nhất.</p>
+        <div class="alert alert-warning" style="margin:10px 0;"><span>🧠</span><div>Bài này hội tụ <strong>cả 5 bài trước</strong>: biến & <code>input()</code> (B1), ép kiểu <code>float()</code> (B2), toán tử (B3), <code>if-else</code> (B4), tư duy bậc thang (B5) — và nay thêm <code>for</code>!</div></div>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#0e7490; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai6.py</span><button class="btn-copy" data-target="l6-s6">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l6-s6" readonly style="min-height:300px;">tong_nam = 0
+tien_max = 0
+thang_max = 0
+
+for thang in range(1, 13):
+    kwh = float(input())
+    if kwh <= 50:
+        tien = kwh * 1500
+    else:
+        tien = 50 * 1500 + (kwh - 50) * 2000
+
+    tong_nam += tien
+    if tien > tien_max:      # Kỹ thuật "tìm max" của Bài 4
+        tien_max = tien
+        thang_max = thang
+
+print("Tong tien ca nam:", tong_nam)
+print("Thang ton nhieu nhat:", thang_max, "-", tien_max)</textarea></div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Pager -->
+    <div class="lesson-pager">
+      <a href="../LESSON 5/index.html" class="pager-btn">&larr; Bài Trước: Bài 5 - Ôn Tập & Dự Án EVN</a>
+      <a href="../index.html" class="pager-btn primary">&uarr; Về Cổng Tổng Quan Khóa Học</a>
+    </div>
+  </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 6: Vòng Lặp for & Hàm range() | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="../LESSON 5/index.html">Bài 5</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 6</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    // =====================================================================
+    // FOR-LOOP TRACER
+    // =====================================================================
+    const MAX_ITEMS = 30;
+    let simSteps = [];
+    let simIdx = -1;
+    let simSeq = [];
+
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function pyRange(a, b, c) {
+      const out = [];
+      if (c > 0) { for (let v = a; v < b && out.length <= MAX_ITEMS; v += c) out.push(v); }
+      else { for (let v = a; v > b && out.length <= MAX_ITEMS; v += c) out.push(v); }
+      return out;
+    }
+
+    function getCode(mode, r) {
+      if (mode === "print") return [`for i in ${r}:`, `    print(i)`, `print("Xong!")`];
+      if (mode === "sum")   return [`tong = 0`, `for i in ${r}:`, `    tong = tong + i`, `print("Tổng =", tong)`];
+      if (mode === "table") return [`n = 98`, `for i in ${r}:`, `    print(n, "x", i, "=", n * i)`];
+      return [`dem = 0`, `for i in ${r}:`, `    if i % 2 == 0:`, `        dem = dem + 1`, `print("Số chẵn:", dem)`];
+    }
+
+    function buildSteps(mode, seq, r) {
+      const steps = [];
+      let out = "";
+      const n = seq.length;
+      const push = (line, ram, explain, item) => steps.push({ line, ram: { ...ram }, out, explain, item });
+
+      if (mode === "print") {
+        seq.forEach((v, k) => {
+          push(0, { i: v }, `Lượt ${k + 1}/${n}: lấy giá trị tiếp theo trong dãy → gán <b>i = ${v}</b>.`, k);
+          out += v + "\n";
+          push(1, { i: v }, `Dòng thụt lề nằm TRONG vòng lặp → in ra <b>${v}</b>.`, k);
+        });
+        push(0, n ? { i: seq[n - 1] } : {}, n ? `Dãy đã hết giá trị → <b>thoát vòng lặp</b>. (i vẫn giữ giá trị cuối là ${seq[n - 1]})` : `Dãy <b>rỗng</b> → khối lệnh bên trong chạy <b>0 lần</b>!`, n);
+        out += "Xong!\n";
+        push(2, n ? { i: seq[n - 1] } : {}, `Dòng không thụt lề → chỉ chạy <b>1 lần</b> sau khi lặp xong.`, n);
+      } else if (mode === "sum") {
+        let tong = 0;
+        push(0, { tong }, `Khởi tạo biến tích lũy <b>tong = 0</b> (chiếc giỏ rỗng) — đặt TRƯỚC vòng lặp.`, -1);
+        seq.forEach((v, k) => {
+          push(1, { tong, i: v }, `Lượt ${k + 1}/${n}: gán <b>i = ${v}</b>.`, k);
+          const old = tong; tong += v;
+          push(2, { tong, i: v }, `tong = ${old} + ${v} = <b>${tong}</b>.`, k);
+        });
+        const ram = n ? { tong, i: seq[n - 1] } : { tong };
+        push(1, ram, n ? `Dãy đã hết → thoát vòng lặp.` : `Dãy rỗng → không lặp lần nào, tong vẫn bằng 0.`, n);
+        out += `Tổng = ${tong}\n`;
+        push(3, ram, `In kết quả SAU vòng lặp: <b>Tổng = ${tong}</b>.`, n);
+      } else if (mode === "table") {
+        push(0, { n: 98 }, `Gán <b>n = 98</b>.`, -1);
+        seq.forEach((v, k) => {
+          push(1, { n: 98, i: v }, `Lượt ${k + 1}/${n}: gán <b>i = ${v}</b>.`, k);
+          out += `98 x ${v} = ${98 * v}\n`;
+          push(2, { n: 98, i: v }, `Tính n * i = 98 × ${v} = <b>${98 * v}</b> và in ra.`, k);
+        });
+        push(1, n ? { n: 98, i: seq[n - 1] } : { n: 98 }, n ? `Dãy đã hết → kết thúc. Chỉ 2 dòng code mà in được ${n} dòng!` : `Dãy rỗng → không in gì cả.`, n);
+      } else {
+        let dem = 0;
+        push(0, { dem }, `Khởi tạo biến đếm <b>dem = 0</b>.`, -1);
+        seq.forEach((v, k) => {
+          push(1, { dem, i: v }, `Lượt ${k + 1}/${n}: gán <b>i = ${v}</b>.`, k);
+          const ok = ((v % 2) + 2) % 2 === 0;
+          push(2, { dem, i: v }, `Kiểm tra ${v} % 2 == 0 → <b>${ok ? "True" : "False"}</b>${ok ? "" : " → bỏ qua dòng tăng dem"}.`, k);
+          if (ok) { dem += 1; push(3, { dem, i: v }, `${v} là số chẵn → dem tăng lên <b>${dem}</b>.`, k); }
+        });
+        const ram = n ? { dem, i: seq[n - 1] } : { dem };
+        push(1, ram, n ? `Dãy đã hết → thoát vòng lặp.` : `Dãy rỗng → dem vẫn bằng 0.`, n);
+        out += `Số chẵn: ${dem}\n`;
+        push(4, ram, `In kết quả: <b>Số chẵn: ${dem}</b>.`, n);
+      }
+      return steps;
+    }
+
+    function simReset() {
+      const mode = document.getElementById("sim-mode").value;
+      const a = parseInt(document.getElementById("sim-start").value, 10);
+      const b = parseInt(document.getElementById("sim-stop").value, 10);
+      const c = parseInt(document.getElementById("sim-step").value, 10);
+      const err = document.getElementById("sim-error");
+      const r = `range(${a}, ${b}, ${c})`;
+      document.getElementById("sim-range-label").innerText = r;
+      err.style.display = "none";
+      simIdx = -1;
+      simSteps = [];
+
+      if ([a, b, c].some(isNaN)) {
+        err.style.display = "flex"; err.innerHTML = "⚠️ Vui lòng nhập đủ 3 số nguyên start, stop, step.";
+        simSeq = []; renderAll(); return;
+      }
+      if (c === 0) {
+        err.style.display = "flex"; err.innerHTML = "<div><strong>ValueError:</strong> range() arg 3 must not be zero — step không được bằng 0!</div>";
+        simSeq = []; renderAll(); return;
+      }
+      simSeq = pyRange(a, b, c);
+      if (simSeq.length > MAX_ITEMS) {
+        err.style.display = "flex"; err.innerHTML = `<div>Dãy có hơn ${MAX_ITEMS} giá trị — hãy thu nhỏ khoảng để dễ quan sát nhé!</div>`;
+        simSeq = []; renderAll(); return;
+      }
+      simSteps = buildSteps(mode, simSeq, r);
+      renderAll();
+    }
+
+    function renderAll() {
+      const mode = document.getElementById("sim-mode").value;
+      const step = simSteps[simIdx];
+      const r = document.getElementById("sim-range-label").innerText;
+
+      // Range strip
+      const strip = document.getElementById("sim-strip");
+      if (!simSeq.length) {
+        strip.innerHTML = `<div class="range-empty">∅ Dãy rỗng — vòng lặp sẽ chạy 0 lần</div>`;
+      } else {
+        strip.innerHTML = simSeq.map((v, k) => {
+          let cls = "range-cell";
+          if (step && step.item !== undefined) {
+            if (k < step.item) cls += " done";
+            else if (k === step.item) cls += " current";
+          }
+          return `<div class="${cls}"><small>lượt ${k + 1}</small>${v}</div>`;
+        }).join("");
+      }
+
+      // Code
+      const lines = getCode(mode, r);
+      document.getElementById("sim-code").innerHTML = lines.map((ln, k) =>
+        `<div class="trace-line ${step && step.line === k ? "active" : ""}"><span class="ln">${k + 1}</span>${esc(ln)}</div>`).join("");
+
+      // RAM
+      const ram = step ? step.ram : {};
+      const keys = Object.keys(ram);
+      document.getElementById("sim-ram").innerHTML = keys.length ? keys.map(k => `
+        <div class="ram-slot"><div class="ram-header"><span>${k === "i" ? "Biến lặp" : "Biến"}</span><span>int</span></div>
+        <div class="ram-body"><div class="ram-var-name">${k}</div><div class="ram-var-val">${ram[k]}</div></div></div>`).join("")
+        : `<div style="color:#94a3b8; font-size:13px;">(Chưa có biến nào)</div>`;
+
+      // Console & explain
+      document.getElementById("sim-console").textContent = step ? (step.out || "") : "";
+      document.getElementById("sim-explain").innerHTML = step ? step.explain : (simSteps.length ? "Bấm ▶ Bước tiếp để bắt đầu." : "—");
+      document.getElementById("sim-counter").innerText = step ? `Bước ${simIdx + 1}/${simSteps.length}` : "Chưa bắt đầu";
+    }
+
+    function simStep() {
+      if (!simSteps.length) return;
+      if (simIdx >= simSteps.length - 1) { simIdx = -1; }
+      simIdx++;
+      renderAll();
+    }
+
+    function simRunAll() {
+      if (!simSteps.length) return;
+      simIdx = simSteps.length - 1;
+      renderAll();
+    }
+
+    // =====================================================================
+    // CODE LAB SAMPLES
+    // =====================================================================
+    function loadL6(id) {
+      const ed = document.getElementById("lesson6-editor");
+      const t = document.getElementById("l6-title");
+      const samples = {
+        1: ["bang_nhan.py", `# In bảng nhân của số n bất kỳ\nn = int(input("Nhập số n: "))\nfor i in range(1, 11):\n    print(n, "x", i, "=", n * i)`],
+        2: ["tong_1_den_n.py", `n = int(input("Nhập n: "))\ntong = 0\nfor i in range(1, n + 1):\n    tong += i\nprint("Tổng từ 1 đến", n, "là:", tong)`],
+        3: ["tam_giac_sao.py", `h = int(input("Chiều cao tam giác: "))\nfor i in range(1, h + 1):\n    print("*" * i)`],
+        4: ["dem_nguoc.py", `# Đếm ngược phóng tên lửa với step âm\nfor i in range(10, 0, -1):\n    print(i, "...")\nprint("🚀 Phóng!")`]
+      };
+      t.innerText = samples[id][0];
+      ed.value = samples[id][1];
+    }
+
+    document.addEventListener("DOMContentLoaded", simReset);
+  </script>
+</body>
+</html>
