@@ -11,6 +11,8 @@
   <!-- Skulpt In-browser Python Engine -->
   <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+  <link rel="stylesheet" href="../assets/css/ptb-visuals.css">
+  <script src="../assets/js/ptb-flow.js" defer></script>
 </head>
 <body>
 
@@ -263,6 +265,26 @@ print(a + b)                # In ra: 30 (PHÉP CỘNG TOÁN HỌC!)</textarea>
         </p>
       </div>
 
+    
+      <!-- PTB-VISUALS -->
+      <div class="card">
+        <div class="card-header"><h2 class="card-title"><span class="icon-box">🖼️</span> Minh Họa Trực Quan &amp; Sơ Đồ Khối Mô Phỏng</h2></div>
+        <p class="ptb-hint">Xem hình để hiểu ý tưởng, sau đó bấm <strong>▶ Bước tiếp</strong> để xem máy tính chạy từng bước trên sơ đồ khối.</p>
+<figure class="ptb-fig"><svg class="ptb-svg" viewBox="0 0 640 222" xmlns="http://www.w3.org/2000/svg" role="img"><rect x="20" y="14" width="140" height="100" rx="12" fill="#fff" stroke="#2563eb" stroke-width="3"/><rect x="20" y="14" width="140" height="28" rx="12" fill="#2563eb" stroke="#2563eb" stroke-width="2"/><text x="90" y="34" class="t-md t-w mono" text-anchor="middle" font-weight="700">int</text><text x="90" y="80" class="t-lg mono" text-anchor="middle" >10</text><text x="90" y="104" class="t-sm t-mute" text-anchor="middle" >Số nguyên</text><rect x="175" y="14" width="140" height="100" rx="12" fill="#fff" stroke="#16a34a" stroke-width="3"/><rect x="175" y="14" width="140" height="28" rx="12" fill="#16a34a" stroke="#16a34a" stroke-width="2"/><text x="245" y="34" class="t-md t-w mono" text-anchor="middle" font-weight="700">float</text><text x="245" y="80" class="t-lg mono" text-anchor="middle" >3.14</text><text x="245" y="104" class="t-sm t-mute" text-anchor="middle" >Số thực</text><rect x="330" y="14" width="140" height="100" rx="12" fill="#fff" stroke="#dc2626" stroke-width="3"/><rect x="330" y="14" width="140" height="28" rx="12" fill="#dc2626" stroke="#dc2626" stroke-width="2"/><text x="400" y="34" class="t-md t-w mono" text-anchor="middle" font-weight="700">str</text><text x="400" y="80" class="t-lg mono" text-anchor="middle" >&quot;10&quot;</text><text x="400" y="104" class="t-sm t-mute" text-anchor="middle" >Chuỗi (chữ)</text><rect x="485" y="14" width="140" height="100" rx="12" fill="#fff" stroke="#7c3aed" stroke-width="3"/><rect x="485" y="14" width="140" height="28" rx="12" fill="#7c3aed" stroke="#7c3aed" stroke-width="2"/><text x="555" y="34" class="t-md t-w mono" text-anchor="middle" font-weight="700">bool</text><text x="555" y="80" class="t-lg mono" text-anchor="middle" >True</text><text x="555" y="104" class="t-sm t-mute" text-anchor="middle" >Đúng / Sai</text><rect x="20" y="130" width="290" height="76" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/><text x="165" y="154" class="t-md" text-anchor="middle" font-weight="700">Chưa ép kiểu</text><text x="165" y="178" class="t-md mono" text-anchor="middle" >&quot;10&quot; + &quot;20&quot;  →  &quot;1020&quot;</text><text x="165" y="196" class="t-sm t-mute" text-anchor="middle" >Cộng chuỗi = NỐI chữ</text><rect x="330" y="130" width="290" height="76" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="475" y="154" class="t-md" text-anchor="middle" font-weight="700">Đã ép kiểu int()</text><text x="475" y="178" class="t-md mono" text-anchor="middle" >10 + 20  →  30</text><text x="475" y="196" class="t-sm t-mute" text-anchor="middle" >Cộng số = phép cộng toán học</text></svg><figcaption><strong>Bốn kiểu dữ liệu nền tảng.</strong> Giá trị <code>10</code> và <code>"10"</code> nhìn giống nhau nhưng khác kiểu: dấu <code>+</code> với chuỗi thì nối chữ, với số thì cộng. Vì <code>input()</code> luôn trả về chuỗi nên cần <code>int()</code> hoặc <code>float()</code> để đổi sang số.</figcaption></figure>
+        <div class="ptb-sub">Sơ đồ khối chạy từng bước</div>
+<div class="ptb-flow">
+  <div class="ptb-flow-title">🔬 Mô phỏng ép kiểu với int()</div>
+  <div class="ptb-ctrl"><select class="ptb-sc" aria-label="Chọn tình huống chạy"></select>
+    <button type="button" class="prev">◀ Lùi</button><button type="button" class="go">▶ Bước tiếp</button><button type="button" class="reset">↺ Làm lại</button>
+    <span class="ptb-step"></span></div>
+  <div class="ptb-flow-grid">
+    <div class="ptb-flow-svg"><svg viewBox="0 0 400 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ khối"><defs><marker id="ar-l2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs><polyline class="ptb-edge" points="200,308.0 200,342.0" marker-end="url(#ar-l2)"/><polyline class="ptb-edge" points="200,228.0 200,262.0" marker-end="url(#ar-l2)"/><polyline class="ptb-edge" points="200,148.0 200,182.0" marker-end="url(#ar-l2)"/><polyline class="ptb-edge" points="200,53.0 200,102.0" marker-end="url(#ar-l2)"/><g class="ptb-node ptb-oval" data-node="s"><rect class="shp" x="115.0" y="15.0" width="170" height="38" rx="19.0"/><text><tspan x="200" y="38.0">Bắt đầu</tspan></text></g><g class="ptb-node ptb-io" data-node="a"><polygon class="shp" points="64.0,102.0 350.0,102.0 336.0,148.0 50.0,148.0"/><text><tspan x="200" y="129.0">a = int(input(&quot;Nhập a: &quot;))</tspan></text></g><g class="ptb-node ptb-io" data-node="b"><polygon class="shp" points="64.0,182.0 350.0,182.0 336.0,228.0 50.0,228.0"/><text><tspan x="200" y="209.0">b = int(input(&quot;Nhập b: &quot;))</tspan></text></g><g class="ptb-node ptb-proc" data-node="c"><rect class="shp" x="50.0" y="262.0" width="300" height="46" rx="6"/><text><tspan x="200" y="289.0">print(a + b)</tspan></text></g><g class="ptb-node ptb-oval" data-node="e"><rect class="shp" x="115.0" y="342.0" width="170" height="38" rx="19.0"/><text><tspan x="200" y="365.0">Kết thúc</tspan></text></g></svg></div>
+    <div><div class="ptb-note"></div><div class="ptb-box-h">Giá trị biến (RAM)</div><div class="ptb-vars"></div>
+      <div class="ptb-box-h">Màn hình kết quả</div><pre class="ptb-out"></pre></div>
+  </div>
+  <script type="application/json">{"scenarios": [{"name": "Gõ 10 rồi 20", "steps": [{"n": "s", "v": "", "t": "Bắt đầu chạy.", "o": null}, {"n": "a", "v": "a = 10   (kiểu int)", "t": "input() trả về chuỗi \"10\". int() đổi chuỗi đó thành số nguyên 10 rồi mới cất vào hộp a.", "o": null}, {"n": "b", "v": "a = 10   (int)\nb = 20   (int)", "t": "Tương tự, \"20\" được đổi thành số nguyên 20.", "o": null}, {"n": "c", "v": "a = 10\nb = 20", "t": "a và b đều là số nên dấu + là phép cộng toán học: 10 + 20 = 30.", "o": "30"}, {"n": "e", "v": "a = 10\nb = 20", "t": "Kết thúc. Nếu bỏ int() thì kết quả sẽ là \"1020\" (nối chuỗi).", "o": null}]}]}</script>
+</div>
+      </div>
     </div>
 
     <!-- =========================================================================

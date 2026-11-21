@@ -22,6 +22,8 @@
     .stack-pill { background:#2563eb; padding:3px 10px; border-radius:6px; font-weight:700; }
     .step-counter { font-size:13px; font-weight:700; color:#4f46e5; background:#e0e7ff; padding:4px 10px; border-radius:20px; }
   </style>
+  <link rel="stylesheet" href="../assets/css/ptb-visuals.css">
+  <script src="../assets/js/ptb-flow.js" defer></script>
 </head>
 <body>
 
@@ -154,6 +156,26 @@ combo_huy_diet()          # Kích hoạt cả combo chỉ với 1 dòng!</textar
         <p style="color:#312e81; font-size:14px; line-height:1.6; margin-top:6px;">
           Tất cả bí mật về <strong>Tham số, Đối số, <code>return</code> vs <code>print()</code> và Biến Cục Bộ / Toàn Cục</strong> đang chờ ở <strong>Bài 13</strong>!
         </p>
+      </div>
+    
+      <!-- PTB-VISUALS -->
+      <div class="card">
+        <div class="card-header"><h2 class="card-title"><span class="icon-box">🖼️</span> Minh Họa Trực Quan &amp; Sơ Đồ Khối Mô Phỏng</h2></div>
+        <p class="ptb-hint">Xem hình để hiểu ý tưởng, sau đó bấm <strong>▶ Bước tiếp</strong> để xem máy tính chạy từng bước trên sơ đồ khối.</p>
+<figure class="ptb-fig"><svg class="ptb-svg" viewBox="0 0 640 206" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker></defs><rect x="20" y="20" width="270" height="170" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2" stroke-dasharray="6 4"/><text x="155" y="44" class="t-md" text-anchor="middle" font-weight="800">1. ĐỊNH NGHĨA (def)</text><text x="155" y="62" class="t-sm t-mute" text-anchor="middle" >chế tạo máy, CHƯA chạy</text><rect x="45" y="76" width="220" height="100" rx="10" fill="#fff" stroke="#2563eb" stroke-width="3"/><text x="155" y="100" class="t-sm mono" text-anchor="middle" font-weight="700">def chao_mung():</text><text x="155" y="124" class="t-sm mono" text-anchor="middle" >    print(&quot;=====&quot;)</text><text x="155" y="144" class="t-sm mono" text-anchor="middle" >    print(&quot;XIN CHÀO PTB30!&quot;)</text><text x="155" y="164" class="t-sm mono" text-anchor="middle" >    print(&quot;=====&quot;)</text><rect x="350" y="20" width="270" height="170" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="485" y="44" class="t-md" text-anchor="middle" font-weight="800">2. GỌI HÀM</text><text x="485" y="62" class="t-sm t-mute" text-anchor="middle" >bấm nút, bây giờ mới chạy</text><rect x="400" y="90" width="170" height="44" rx="22" fill="#16a34a" stroke="#16a34a" stroke-width="2"/><text x="485" y="118" class="t-md t-w mono" text-anchor="middle" font-weight="700">chao_mung()</text><text x="485" y="168" class="t-sm" text-anchor="middle" font-weight="700">Gọi 3 lần = chạy 3 lần</text><path d="M400 112 C340 112 320 112 292 112" fill="none" stroke="#16a34a" stroke-width="3" marker-end="url(#arw)"/><text x="346" y="104" class="t-sm" text-anchor="middle" fill="#15803d" font-weight="700">nhảy tới</text></svg><figcaption><strong>Định nghĩa khác với gọi hàm.</strong> <code>def</code> chỉ mô tả cách làm, chưa chạy dòng nào. Mỗi lần gõ tên hàm kèm <code>()</code>, Python nhảy vào thân hàm chạy hết rồi quay về dòng sau lệnh gọi. Viết một lần dùng nhiều lần là triết lý DRY.</figcaption></figure>
+        <div class="ptb-sub">Sơ đồ khối chạy từng bước</div>
+<div class="ptb-flow">
+  <div class="ptb-flow-title">🔬 Mô phỏng luồng chạy khi gọi hàm</div>
+  <div class="ptb-ctrl"><select class="ptb-sc" aria-label="Chọn tình huống chạy"></select>
+    <button type="button" class="prev">◀ Lùi</button><button type="button" class="go">▶ Bước tiếp</button><button type="button" class="reset">↺ Làm lại</button>
+    <span class="ptb-step"></span></div>
+  <div class="ptb-flow-grid">
+    <div class="ptb-flow-svg"><svg viewBox="0 0 400 484.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ khối"><defs><marker id="ar-l12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs><polyline class="ptb-edge" points="200,388.0 200,422.0" marker-end="url(#ar-l12)"/><polyline class="ptb-edge" points="200,308.0 200,342.0" marker-end="url(#ar-l12)"/><polyline class="ptb-edge" points="200,228.0 200,262.0" marker-end="url(#ar-l12)"/><polyline class="ptb-edge" points="200,148.0 200,182.0" marker-end="url(#ar-l12)"/><polyline class="ptb-edge" points="200,53.0 200,102.0" marker-end="url(#ar-l12)"/><g class="ptb-node ptb-oval" data-node="s"><rect class="shp" x="115.0" y="15.0" width="170" height="38" rx="19.0"/><text><tspan x="200" y="38.0">Bắt đầu</tspan></text></g><g class="ptb-node ptb-proc" data-node="call"><rect class="shp" x="50.0" y="102.0" width="300" height="46" rx="6"/><text><tspan x="200" y="129.0">chao_mung()   ← dòng gọi hàm</tspan></text></g><g class="ptb-node ptb-proc" data-node="p1"><rect class="shp" x="50.0" y="182.0" width="300" height="46" rx="6"/><text><tspan x="200" y="209.0">print(&quot;====================&quot;)</tspan></text></g><g class="ptb-node ptb-proc" data-node="p2"><rect class="shp" x="50.0" y="262.0" width="300" height="46" rx="6"/><text><tspan x="200" y="289.0">print(&quot;XIN CHÀO LỚP PTB30!&quot;)</tspan></text></g><g class="ptb-node ptb-proc" data-node="ret"><rect class="shp" x="50.0" y="342.0" width="300" height="46" rx="6"/><text><tspan x="200" y="369.0">Hết thân hàm → quay về dòng sau lệnh gọi</tspan></text></g><g class="ptb-node ptb-oval" data-node="e"><rect class="shp" x="115.0" y="422.0" width="170" height="38" rx="19.0"/><text><tspan x="200" y="445.0">Kết thúc</tspan></text></g></svg></div>
+    <div><div class="ptb-note"></div><div class="ptb-box-h">Giá trị biến (RAM)</div><div class="ptb-vars"></div>
+      <div class="ptb-box-h">Màn hình kết quả</div><pre class="ptb-out"></pre></div>
+  </div>
+  <script type="application/json">{"scenarios": [{"name": "Gọi chao_mung() một lần", "steps": [{"n": "s", "v": "def chao_mung() đã nạp\nvào bộ nhớ, chưa chạy", "t": "Python đọc def chỉ để ghi nhớ hàm, chưa chạy gì bên trong.", "o": null}, {"n": "call", "v": "", "t": "Dòng chao_mung() là LỆNH GỌI: Python nhảy vào thân hàm.", "o": null}, {"n": "p1", "v": "", "t": "Chạy dòng đầu tiên trong thân hàm.", "o": "===================="}, {"n": "p2", "v": "", "t": "Chạy dòng tiếp theo trong thân hàm.", "o": "XIN CHÀO LỚP PTB30!"}, {"n": "ret", "v": "", "t": "Hết thân hàm, Python quay về ngay sau chỗ đã gọi.", "o": null}, {"n": "e", "v": "", "t": "Chương trình kết thúc.", "o": null}]}]}</script>
+</div>
       </div>
     </div>
 
