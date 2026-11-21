@@ -21,58 +21,49 @@
   </style>
   <link rel="stylesheet" href="../assets/css/ptb-visuals.css">
   <script src="../assets/js/ptb-flow.js" defer></script>
+  <link rel="stylesheet" href="../assets/css/ptb-header.css">
+  <script src="../assets/js/ptb-header.js" defer></script>
 </head>
 <body>
 
-  <!-- Top Global Bar -->
-  <div class="global-topbar">
-    <div class="global-topbar-inner">
-      <a href="../index.html" class="brand-badge">
-        <span class="logo-pill">MindX</span>
-        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
-      </a>
-      <div class="course-quick-nav">
-        <a href="../index.html">🏠 Trang chủ</a>
-        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
-        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
-        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
-        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
-        <a href="../LESSON 5/index.html" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
-        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
-        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
-        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
-        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
-        <a href="index.html" class="active" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
-        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
-        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
-        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lesson Header -->
-  <header class="lesson-header">
-    <div class="header-container">
-      <div class="header-top">
-        <div>
-          <div class="lesson-meta">
-            <span class="lesson-pill">Buổi Học Số 10</span>
-            <span class="duration-pill">⏱ 120 Phút</span>
-            <span class="duration-pill" style="background:rgba(245, 158, 11, 0.22); color:#fde68a;">Cấp Độ: Thao Tác Dữ Liệu CRUD</span>
-          </div>
-          <h1 class="lesson-title">Bài 10: Danh Sách Và Hơn Thế Nữa — Thêm, Xóa, Sửa (CRUD)</h1>
-          <p class="lesson-desc">
-            Làm chủ toàn bộ các phương thức biến đổi danh sách: <code>.append()</code>, <code>.insert()</code>, sửa <code>ds[i]</code>, <code>.remove()</code>, <code>.pop()</code>, <code>.sort()</code> và phòng tránh bẫy <code>ValueError</code>.
-          </p>
+  <!-- Thanh đầu trang gọn (ptb-header.css / ptb-header.js) -->
+  <header class="lesson-header ptb-bar">
+    <div class="header-container ptb-bar-inner">
+      <a class="ptb-home" href="../index.html" title="Về trang chủ khóa học"><span class="logo-pill">MindX</span><small>PTB30</small></a>
+      <div class="ptb-picker">
+        <button type="button" class="ptb-picker-btn" aria-haspopup="true" aria-expanded="false" title="Chọn bài học">Bài 10 ▾</button>
+        <div class="ptb-menu" role="menu">
+          <a href="../index.html"><b>🏠</b><span>Trang chủ khóa học</span></a>
+          <hr>
+          <a href="../LESSON 1/index.html"><b>Bài 1</b><span>Biến &amp; Nhập/Xuất</span></a>
+          <a href="../LESSON 2/index.html"><b>Bài 2</b><span>Kiểu Dữ Liệu &amp; Ép Kiểu</span></a>
+          <a href="../LESSON 3/index.html"><b>Bài 3</b><span>Toán Tử</span></a>
+          <a href="../LESSON 4/index.html"><b>Bài 4</b><span>Rẽ Nhánh &amp; Sơ Đồ Khối</span></a>
+          <a href="../LESSON 5/index.html"><b>Bài 5</b><span>Ôn Tập &amp; EVN</span></a>
+          <a href="../LESSON 6/index.html"><b>Bài 6</b><span>Vòng Lặp for &amp; range()</span></a>
+          <a href="../LESSON 7/index.html"><b>Bài 7</b><span>Vòng Lặp while, break &amp; continue</span></a>
+          <a href="../LESSON 8/index.html"><b>Bài 8</b><span>Giải Quyết Vấn Đề</span></a>
+          <a href="../LESSON 9/index.html"><b>Bài 9</b><span>Kiểm Tra &amp; Danh Sách (List)</span></a>
+          <a href="index.html" class="active"><b>Bài 10</b><span>Thao Tác Danh Sách</span></a>
+          <a href="../LESSON 11/index.html"><b>Bài 11</b><span>Xâu Ký Tự (String)</span></a>
+          <a href="../LESSON 12/index.html"><b>Bài 12</b><span>Hàm Cơ Bản (def)</span></a>
+          <a href="../LESSON 13/index.html"><b>Bài 13</b><span>Tham Số, return &amp; Phạm Vi Biến</span></a>
         </div>
       </div>
-
+      <a class="ptb-step" href="../LESSON 9/index.html" title="Bài 9 (bài trước)" aria-label="Bài trước">‹</a><a class="ptb-step" href="../LESSON 11/index.html" title="Bài 11 (bài sau)" aria-label="Bài sau">›</a>
+      <h1 class="lesson-title" title="Làm chủ toàn bộ các phương thức biến đổi danh sách: .append(), .insert(), sửa ds[i], .remove(), .pop(), .sort() và phòng tránh bẫy ValueError.
+⏱ 120 phút · Cấp Độ: Thao Tác Dữ Liệu CRUD">Danh Sách Và Hơn Thế Nữa — Thêm, Xóa, Sửa (CRUD)</h1>
       <nav class="lesson-tabs" aria-label="Điều hướng bài học">
-        <button type="button" class="tab-btn active" data-tab="theory">📖 1. Lý Thuyết CRUD &amp; Bẫy</button>
-        <button type="button" class="tab-btn" data-tab="simulator">🎒 2. Balo Minecraft Sandbox &amp; Code Lab</button>
-        <button type="button" class="tab-btn" data-tab="quiz">🎯 3. Thử Thách Trắc Nghiệm (12 Câu)</button>
-        <button type="button" class="tab-btn" data-tab="practice">💻 4. Bài Tập Thực Hành</button>
+          <button type="button" class="tab-btn active" data-tab="theory" title="Lý Thuyết CRUD &amp; Bẫy">📖 Lý thuyết</button>
+          <button type="button" class="tab-btn" data-tab="simulator" title="Balo Minecraft Sandbox &amp; Code Lab">🎒 Mô phỏng</button>
+          <button type="button" class="tab-btn" data-tab="quiz" title="Thử Thách Trắc Nghiệm (12 Câu)">🎯 Trắc nghiệm · 12 câu</button>
+          <button type="button" class="tab-btn" data-tab="practice" title="Bài Tập Thực Hành">💻 Thực hành</button>
       </nav>
+      <div class="ptb-tools">
+        <button type="button" class="ptb-tool ptb-timer" data-min="120">⏱ 120:00</button>
+        <button type="button" class="ptb-tool ptb-timer-reset" title="Đặt lại đồng hồ">↺</button>
+        <button type="button" class="ptb-tool ptb-zoom" title="Phóng to chữ cho cả lớp xem (100% / 115% / 130%)">🔍 100%</button>
+      </div>
     </div>
   </header>
 
