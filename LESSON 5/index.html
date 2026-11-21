@@ -1,15 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bài 5: Ôn tập Biến, Kiểu dữ liệu, Toán tử & Câu điều kiện | Lập trình Python</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 5: Ôn Tập Tổng Hợp & Dự Án Tiền Điện EVN | Lập Trình Python Cơ Bản</title>
   <link rel="stylesheet" href="../assets/css/template.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skulpt In-browser Python Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
   <style>
-    :root {
+.l5{
       --primary: #1d4ed8;
       --primary-hover: #1e40af;
       --primary-light: #eff6ff;
@@ -32,19 +35,8 @@
       --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'Fira Code', 'Courier New', monospace;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--body-bg);
-      color: var(--text-main);
-      font-family: var(--font-main);
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button, input, select { font-family: inherit; }
-    button {
+.l5 button, .l5 input, .l5 select{ font-family: inherit; }
+.l5 button{
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -58,129 +50,20 @@
       line-height: 1.4;
       transition: all 0.2s ease;
     }
-    button:disabled { cursor: not-allowed; opacity: 0.45; }
-    button:focus-visible, input:focus-visible, select:focus-visible {
+.l5 button:disabled{ cursor: not-allowed; opacity: 0.45; }
+.l5 button:focus-visible, .l5 input:focus-visible, .l5 select:focus-visible{
       outline: 3px solid #f59e0b;
       outline-offset: 2px;
     }
-
-    .primary { background: var(--primary); color: white; }
-    .primary:hover:not(:disabled) { background: var(--primary-hover); }
-    .secondary {
+.l5 .primary{ background: var(--primary); color: white; }
+.l5 .primary:hover:not(:disabled){ background: var(--primary-hover); }
+.l5 .secondary{
       background: #f1f5f9;
       color: #334155;
       border: 1px solid #cbd5e1;
     }
-    .secondary:hover:not(:disabled) { background: #e2e8f0; }
-
-    .app {
-      max-width: 1460px;
-      margin: 16px auto 40px;
-      background: var(--card-bg);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 45px rgba(15, 23, 42, 0.08);
-      border: 1px solid #e2e8f0;
-    }
-
-    /* HEADER */
-    header {
-      background: var(--header-bg);
-      color: white;
-      padding: 18px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-      flex-wrap: wrap;
-    }
-    .brand {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .brand-icon {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-      flex-shrink: 0;
-    }
-    .brand-info h1 {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      margin: 0 0 3px;
-      color: #ffffff;
-    }
-    .brand-info p {
-      font-size: 13px;
-      color: #94a3b8;
-      margin: 0;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    /* TIMER WIDGET */
-    .timer-widget {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 5px 14px;
-      border-radius: 10px;
-      font-size: 12px;
-      color: #cbd5e1;
-    }
-    .timer-display {
-      font-family: var(--font-mono);
-      font-size: 16px;
-      font-weight: 800;
-      color: #38bdf8;
-      min-width: 48px;
-    }
-    .timer-btn {
-      padding: 4px 9px;
-      font-size: 11.5px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-    .timer-btn:hover { background: rgba(255, 255, 255, 0.2); }
-
-    nav {
-      display: flex;
-      gap: 6px;
-      background: var(--nav-bg);
-      padding: 5px;
-      border-radius: 14px;
-    }
-    nav button {
-      background: transparent;
-      color: #94a3b8;
-      font-size: 14px;
-      white-space: nowrap;
-      padding: 9px 18px;
-      border-radius: 10px;
-    }
-    nav button:hover:not(.active) { color: #f8fafc; background: rgba(255,255,255,0.05); }
-    nav button.active {
-      background: var(--nav-active);
-      color: white;
-      box-shadow: 0 4px 12px rgba(40, 100, 208, 0.35);
-    }
-
-    /* TIMELINE BAR - 60 MINUTE 3 PHASES */
-    .timeline-bar {
+.l5 .secondary:hover:not(:disabled){ background: #e2e8f0; }
+.l5 .timeline-bar{
       background: #f8fafc;
       border-bottom: 1px solid var(--border-color);
       padding: 12px 32px;
@@ -189,7 +72,7 @@
       gap: 18px;
       overflow-x: auto;
     }
-    .timeline-title {
+.l5 .timeline-title{
       font-size: 12px;
       font-weight: 800;
       color: #475569;
@@ -197,14 +80,14 @@
       letter-spacing: 0.8px;
       white-space: nowrap;
     }
-    .timeline-steps {
+.l5 .timeline-steps{
       display: flex;
       gap: 12px;
       align-items: center;
       flex: 1;
       min-width: 600px;
     }
-    .tl-step {
+.l5 .tl-step{
       display: flex;
       align-items: center;
       gap: 8px;
@@ -220,19 +103,19 @@
       transition: all 0.2s ease;
       user-select: none;
     }
-    .tl-step:hover {
+.l5 .tl-step:hover{
       border-color: #3b82f6;
       background: #eff6ff;
       color: #1d4ed8;
       transform: translateY(-1px);
     }
-    .tl-step.active {
+.l5 .tl-step.active{
       background: #eff6ff;
       border-color: #2563eb;
       color: #1d4ed8;
       box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
     }
-    .tl-step .tl-min {
+.l5 .tl-step .tl-min{
       background: #e2e8f0;
       color: #475569;
       font-size: 11px;
@@ -240,18 +123,12 @@
       padding: 2px 7px;
       border-radius: 4px;
     }
-    .tl-step.active .tl-min {
+.l5 .tl-step.active .tl-min{
       background: #2563eb;
       color: white;
     }
-
-    /* MAIN SECTIONS */
-    .tab-pane { padding: 32px; background: #f8fafc; }
-    .tab-pane[hidden] { display: none; }
-
-    /* CARDS & GRIDS */
-    .section-title { margin-bottom: 24px; }
-    .section-title .eyebrow {
+.l5 .section-title{ margin-bottom: 24px; }
+.l5 .section-title .eyebrow{
       display: block;
       color: #2563eb;
       font-size: 11.5px;
@@ -260,31 +137,28 @@
       text-transform: uppercase;
       margin-bottom: 6px;
     }
-    .section-title h2 {
+.l5 .section-title h2{
       font-size: 26px;
       font-weight: 800;
       color: #0f172a;
       letter-spacing: -0.5px;
     }
-    .section-title p {
+.l5 .section-title p{
       color: var(--text-muted);
       font-size: 15px;
       margin-top: 4px;
     }
-
-    .card {
+.l5 .card{
       background: white;
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 24px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-
-    /* PILLARS OF PYTHON */
-    .pillar-card {
+.l5 .grid-2{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.l5 .grid-3{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.l5 .grid-4{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.l5 .pillar-card{
       background: white;
       border: 1px solid #e2e8f0;
       border-radius: 14px;
@@ -293,12 +167,11 @@
       overflow: hidden;
       border-top: 4px solid #3b82f6;
     }
-    .pillar-card.p-var { border-top-color: #3b82f6; }
-    .pillar-card.p-type { border-top-color: #10b981; }
-    .pillar-card.p-op { border-top-color: #f59e0b; }
-    .pillar-card.p-if { border-top-color: #8b5cf6; }
-
-    .pillar-card h3 {
+.l5 .pillar-card.p-var{ border-top-color: #3b82f6; }
+.l5 .pillar-card.p-type{ border-top-color: #10b981; }
+.l5 .pillar-card.p-op{ border-top-color: #f59e0b; }
+.l5 .pillar-card.p-if{ border-top-color: #8b5cf6; }
+.l5 .pillar-card h3{
       font-size: 17px;
       font-weight: 700;
       color: #0f172a;
@@ -307,18 +180,18 @@
       align-items: center;
       gap: 8px;
     }
-    .pillar-card p {
+.l5 .pillar-card p{
       font-size: 13.5px;
       color: #475569;
       margin-bottom: 12px;
     }
-    .pillar-card ul {
+.l5 .pillar-card ul{
       padding-left: 18px;
       font-size: 13px;
       color: #334155;
     }
-    .pillar-card li { margin-bottom: 6px; }
-    .pillar-card code {
+.l5 .pillar-card li{ margin-bottom: 6px; }
+.l5 .pillar-card code{
       background: #f1f5f9;
       color: #0f172a;
       padding: 2px 5px;
@@ -327,9 +200,7 @@
       font-size: 12px;
       font-weight: 600;
     }
-
-    /* COMMON PITFALLS */
-    .pitfall-box {
+.l5 .pitfall-box{
       background: #fffbeb;
       border-left: 4px solid #f59e0b;
       padding: 16px 20px;
@@ -338,7 +209,7 @@
       font-size: 13.5px;
       color: #78350f;
     }
-    .pitfall-box h4 {
+.l5 .pitfall-box h4{
       font-size: 14.5px;
       font-weight: 700;
       margin-bottom: 6px;
@@ -346,36 +217,32 @@
       align-items: center;
       gap: 6px;
     }
-
-    /* FLOWCHART SYMBOLS GUIDE */
-    .symbol-card {
+.l5 .symbol-card{
       background: white;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 18px;
       text-align: center;
     }
-    .symbol-svg {
+.l5 .symbol-svg{
       height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 10px;
     }
-    .symbol-card h4 {
+.l5 .symbol-card h4{
       font-size: 14px;
       font-weight: 700;
       color: #0f172a;
       margin-bottom: 4px;
     }
-    .symbol-card p {
+.l5 .symbol-card p{
       font-size: 12px;
       color: #64748b;
       line-height: 1.4;
     }
-
-    /* ELECTRICITY BANNER */
-    .electricity-banner {
+.l5 .electricity-banner{
       background: linear-gradient(135deg, #1e3a8a, #0f172a);
       color: white;
       border-radius: 16px;
@@ -383,21 +250,19 @@
       margin-top: 28px;
       position: relative;
     }
-    .electricity-banner h3 {
+.l5 .electricity-banner h3{
       font-size: 22px;
       font-weight: 800;
       margin-bottom: 8px;
       color: #f8fafc;
     }
-    .electricity-banner p {
+.l5 .electricity-banner p{
       font-size: 14.5px;
       color: #cbd5e1;
       max-width: 900px;
       line-height: 1.6;
     }
-
-    /* TARIFF TABLE & DYNAMIC TIERS - FIX VISIBILITY & INTERACTION */
-    .tariff-table {
+.l5 .tariff-table{
       width: 100%;
       border-collapse: collapse;
       margin: 16px 0;
@@ -409,13 +274,13 @@
       color: #1e293b !important;
       box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
-    .tariff-table th, .tariff-table td {
+.l5 .tariff-table th, .l5 .tariff-table td{
       padding: 12px 14px;
       text-align: left;
       border-bottom: 1px solid #e2e8f0;
       color: #1e293b !important;
     }
-    .tariff-table th {
+.l5 .tariff-table th{
       background: #f8fafc;
       font-weight: 700;
       color: #0f172a !important;
@@ -424,10 +289,10 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .tariff-table td strong {
+.l5 .tariff-table td strong{
       color: #0f172a !important;
     }
-    .tariff-table td code {
+.l5 .tariff-table td code{
       color: #0284c7 !important;
       background: #f1f5f9;
       padding: 2px 6px;
@@ -435,37 +300,36 @@
       font-weight: 600;
       font-family: "Fira Code", monospace;
     }
-    .tariff-table tr.tier-full td {
+.l5 .tariff-table tr.tier-full td{
       background: #f0fdf4 !important;
     }
-    .tariff-table tr.tier-active td {
+.l5 .tariff-table tr.tier-active td{
       background: #eff6ff !important;
       font-weight: 600;
     }
-    .tariff-table tr.tier-empty td {
+.l5 .tariff-table tr.tier-empty td{
       background: #fafafa !important;
       opacity: 0.75;
     }
-    .tariff-table tfoot td {
+.l5 .tariff-table tfoot td{
       background: #f1f5f9 !important;
       border-top: 2px solid #94a3b8;
       font-weight: 700;
       color: #0f172a !important;
     }
-    .badge-tier {
+.l5 .badge-tier{
       display: inline-block;
       padding: 3px 8px;
       border-radius: 6px;
       font-weight: 700;
       font-size: 11px;
     }
-    .tier-1 { background: #dbeafe; color: #1e40af !important; }
-    .tier-2 { background: #d1fae5; color: #065f46 !important; }
-    .tier-3 { background: #fef3c7; color: #92400e !important; }
-    .tier-4 { background: #fed7aa; color: #9a3412 !important; }
-    .tier-5 { background: #fee2e2; color: #991b1b !important; }
-
-    .status-badge {
+.l5 .tier-1{ background: #dbeafe; color: #1e40af !important; }
+.l5 .tier-2{ background: #d1fae5; color: #065f46 !important; }
+.l5 .tier-3{ background: #fef3c7; color: #92400e !important; }
+.l5 .tier-4{ background: #fed7aa; color: #9a3412 !important; }
+.l5 .tier-5{ background: #fee2e2; color: #991b1b !important; }
+.l5 .status-badge{
       display: inline-block;
       padding: 3px 8px;
       border-radius: 12px;
@@ -473,12 +337,10 @@
       font-weight: 700;
       white-space: nowrap;
     }
-    .status-full { background: #dcfce7; color: #15803d !important; border: 1px solid #86efac; }
-    .status-active { background: #dbeafe; color: #1d4ed8 !important; border: 1px solid #93c5fd; }
-    .status-empty { background: #f1f5f9; color: #64748b !important; border: 1px solid #e2e8f0; }
-
-    /* TASK BOX BANNER (ĐỀ BÀI CỤ THỂ TRONG CHUYÊN ĐỀ ĐIỆN) */
-    .task-box-banner {
+.l5 .status-full{ background: #dcfce7; color: #15803d !important; border: 1px solid #86efac; }
+.l5 .status-active{ background: #dbeafe; color: #1d4ed8 !important; border: 1px solid #93c5fd; }
+.l5 .status-empty{ background: #f1f5f9; color: #64748b !important; border: 1px solid #e2e8f0; }
+.l5 .task-box-banner{
       background: rgba(255, 255, 255, 0.09);
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 12px;
@@ -487,7 +349,7 @@
       color: #f8fafc;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     }
-    .task-box-banner .badge-title {
+.l5 .task-box-banner .badge-title{
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -501,7 +363,7 @@
       letter-spacing: 0.6px;
       margin-bottom: 10px;
     }
-    .task-box-banner h4 {
+.l5 .task-box-banner h4{
       font-size: 18px;
       font-weight: 800;
       color: #ffffff;
@@ -510,25 +372,25 @@
       align-items: center;
       gap: 8px;
     }
-    .task-box-banner p {
+.l5 .task-box-banner p{
       font-size: 14.5px;
       line-height: 1.6;
       color: #e2e8f0;
       margin-bottom: 14px;
     }
-    .task-box-specs {
+.l5 .task-box-specs{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 12px;
     }
-    .task-box-specs .spec-card {
+.l5 .task-box-specs .spec-card{
       background: rgba(15, 23, 42, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 8px;
       padding: 12px 16px;
       font-size: 13px;
     }
-    .task-box-specs .spec-card strong {
+.l5 .task-box-specs .spec-card strong{
       color: #93c5fd;
       display: block;
       margin-bottom: 5px;
@@ -536,16 +398,14 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .task-box-specs .spec-card code {
+.l5 .task-box-specs .spec-card code{
       background: rgba(255, 255, 255, 0.18);
       color: #fde047;
       padding: 2px 6px;
       border-radius: 4px;
       font-weight: 600;
     }
-
-    /* INTERACTIVE CONTROL STRIP ON TABLE */
-    .table-control-strip {
+.l5 .table-control-strip{
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-bottom: none;
@@ -559,13 +419,13 @@
       color: #1e293b;
       margin-top: 18px;
     }
-    .quick-chips {
+.l5 .quick-chips{
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       align-items: center;
     }
-    .chip-btn {
+.l5 .chip-btn{
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
       color: #334155;
@@ -576,37 +436,35 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .chip-btn:hover {
+.l5 .chip-btn:hover{
       background: #e2e8f0;
       color: #0f172a;
     }
-    .chip-btn.active {
+.l5 .chip-btn.active{
       background: #2563eb;
       color: white;
       border-color: #2563eb;
     }
-
-    /* WATER BUCKET / TIER VISUALIZER */
-    .tier-visualizer {
+.l5 .tier-visualizer{
       background: #f8fafc;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
       padding: 20px;
       margin: 20px 0;
     }
-    .tier-visualizer h4 {
+.l5 .tier-visualizer h4{
       font-size: 15px;
       font-weight: 700;
       color: #0f172a;
       margin-bottom: 14px;
     }
-    .bucket-row {
+.l5 .bucket-row{
       display: flex;
       gap: 12px;
       margin-bottom: 12px;
       flex-wrap: wrap;
     }
-    .bucket-col {
+.l5 .bucket-col{
       flex: 1;
       min-width: 135px;
       background: white;
@@ -618,11 +476,11 @@
       overflow: hidden;
       transition: all 0.25s ease;
     }
-    .bucket-col.active {
+.l5 .bucket-col.active{
       border-color: #2563eb;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
     }
-    .bucket-water {
+.l5 .bucket-water{
       position: absolute;
       bottom: 0;
       left: 0;
@@ -632,21 +490,19 @@
       transition: height 0.4s ease;
       z-index: 1;
     }
-    .bucket-content { position: relative; z-index: 2; }
-    .bucket-col .b-name { font-size: 12px; font-weight: 700; color: #1e293b; }
-    .bucket-col .b-range { font-size: 11px; color: #64748b; margin-bottom: 6px; }
-    .bucket-col .b-price { font-size: 13px; font-weight: 800; color: #1d4ed8; }
-    .bucket-col .b-calc { font-size: 11.5px; color: #0f172a; margin-top: 6px; font-weight: 700; }
-
-    /* TARIFF CALCULATOR WIDGET */
-    .quick-calc {
+.l5 .bucket-content{ position: relative; z-index: 2; }
+.l5 .bucket-col .b-name{ font-size: 12px; font-weight: 700; color: #1e293b; }
+.l5 .bucket-col .b-range{ font-size: 11px; color: #64748b; margin-bottom: 6px; }
+.l5 .bucket-col .b-price{ font-size: 13px; font-weight: 800; color: #1d4ed8; }
+.l5 .bucket-col .b-calc{ font-size: 11.5px; color: #0f172a; margin-top: 6px; font-weight: 700; }
+.l5 .quick-calc{
       background: white;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
       padding: 24px;
       margin-top: 24px;
     }
-    .quick-calc h4 {
+.l5 .quick-calc h4{
       font-size: 16px;
       font-weight: 800;
       color: #0f172a;
@@ -655,14 +511,14 @@
       align-items: center;
       gap: 8px;
     }
-    .calc-input-group {
+.l5 .calc-input-group{
       display: flex;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 16px;
     }
-    .calc-input-group input {
+.l5 .calc-input-group input{
       padding: 10px 14px;
       border: 1px solid #94a3b8;
       border-radius: 8px;
@@ -670,23 +526,21 @@
       width: 180px;
       font-weight: 600;
     }
-    .calc-result-box {
+.l5 .calc-result-box{
       background: #f8fafc;
       border-radius: 10px;
       padding: 16px;
       border: 1px solid #e2e8f0;
       font-size: 14px;
     }
-    .calc-breakdown {
+.l5 .calc-breakdown{
       margin-top: 10px;
       padding-top: 10px;
       border-top: 1px dashed #cbd5e1;
       font-size: 13px;
       color: #475569;
     }
-
-    /* LAB CALLOUT SECTION IN TAB 1 */
-    .lab-handoff {
+.l5 .lab-handoff{
       background: #ffffff;
       border: 2px solid #3b82f6;
       border-radius: 16px;
@@ -699,7 +553,7 @@
       flex-wrap: wrap;
       box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
     }
-    .lab-handoff h3 {
+.l5 .lab-handoff h3{
       font-size: 22px;
       font-weight: 800;
       color: #0f172a;
@@ -708,18 +562,13 @@
       align-items: center;
       gap: 10px;
     }
-    .lab-handoff p {
+.l5 .lab-handoff p{
       font-size: 14.5px;
       color: #475569;
       max-width: 800px;
       margin: 0;
     }
-
-    /* ========================================================== */
-    /* SIMULATOR TAB STYLING - EXPANDED & LARGER DIAGRAMS         */
-    /* ========================================================== */
-    /* PROBLEM STATEMENT CARD (ĐỀ BÀI CỤ THỂ) */
-    .task-card {
+.l5 .task-card{
       background: #ffffff;
       border: 1.5px solid #bfdbfe;
       border-left: 6px solid #2563eb;
@@ -728,7 +577,7 @@
       margin-bottom: 22px;
       box-shadow: 0 4px 16px rgba(37, 99, 235, 0.06);
     }
-    .task-header {
+.l5 .task-header{
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -736,7 +585,7 @@
       margin-bottom: 12px;
       flex-wrap: wrap;
     }
-    .task-badge {
+.l5 .task-badge{
       background: #eff6ff;
       color: #1d4ed8;
       border: 1px solid #bfdbfe;
@@ -747,20 +596,20 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
     }
-    .task-title {
+.l5 .task-title{
       font-size: 21px;
       font-weight: 800;
       color: #0f172a;
       margin-top: 4px;
       line-height: 1.35;
     }
-    .task-desc {
+.l5 .task-desc{
       font-size: 15px;
       color: #334155;
       line-height: 1.65;
       margin-bottom: 14px;
     }
-    .task-specs {
+.l5 .task-specs{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 12px;
@@ -770,10 +619,8 @@
       border: 1px solid #e2e8f0;
       font-size: 13.5px;
     }
-    .spec-item strong { color: #1e40af; }
-
-    /* CONTROLS BAR */
-    .sim-controls {
+.l5 .spec-item strong{ color: #1e40af; }
+.l5 .sim-controls{
       background: white;
       border: 1px solid var(--border-color);
       border-radius: 14px;
@@ -781,25 +628,25 @@
       margin-bottom: 24px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
     }
-    .sim-form-row {
+.l5 .sim-form-row{
       display: flex;
       gap: 16px;
       align-items: flex-end;
       flex-wrap: wrap;
     }
-    .sim-field {
+.l5 .sim-field{
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .sim-field label {
+.l5 .sim-field label{
       font-size: 12px;
       font-weight: 700;
       color: #475569;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .sim-select {
+.l5 .sim-select{
       padding: 9px 12px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -809,7 +656,7 @@
       color: #0f172a;
       min-width: 320px;
     }
-    .sim-input {
+.l5 .sim-input{
       padding: 9px 12px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -818,13 +665,13 @@
       color: #0f172a;
       width: 170px;
     }
-    .sim-buttons {
+.l5 .sim-buttons{
       display: flex;
       gap: 8px;
       align-items: center;
       flex-wrap: wrap;
     }
-    .speed-select {
+.l5 .speed-select{
       padding: 9px 8px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -833,7 +680,7 @@
       font-weight: 600;
       color: #334155;
     }
-    .sim-chips {
+.l5 .sim-chips{
       display: flex;
       gap: 8px;
       align-items: center;
@@ -844,7 +691,7 @@
       color: #64748b;
       flex-wrap: wrap;
     }
-    .chip-btn {
+.l5 .chip-btn{
       padding: 5px 12px;
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
@@ -853,27 +700,24 @@
       font-weight: 600;
       color: #334155;
     }
-    .chip-btn:hover { background: #e2e8f0; color: #0f172a; border-color: #94a3b8; }
-
-    /* WORKSPACE: 2-COLUMN LAYOUT - FLOWCHART GETS HUGE & SPACIOUS */
-    .sim-workspace-2col {
+.l5 .chip-btn:hover{ background: #e2e8f0; color: #0f172a; border-color: #94a3b8; }
+.l5 .sim-workspace-2col{
       display: grid;
       grid-template-columns: 1.25fr 1fr;
       gap: 24px;
       align-items: start;
     }
-    @media (max-width: 1100px) {
-      .sim-workspace-2col { grid-template-columns: 1fr; }
-    }
-
-    .sim-panel {
+@media (max-width: 1100px){
+.l5 .sim-workspace-2col{ grid-template-columns: 1fr; }
+}
+.l5 .sim-panel{
       background: white;
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 22px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
-    .sim-panel h3 {
+.l5 .sim-panel h3{
       font-size: 17px;
       font-weight: 800;
       color: #0f172a;
@@ -882,9 +726,7 @@
       justify-content: space-between;
       align-items: center;
     }
-
-    /* LARGE SVG FLOWCHART STYLING */
-    .flow-canvas-large {
+.l5 .flow-canvas-large{
       width: 100%;
       background: #ffffff;
       border: 1.5px solid #cbd5e1;
@@ -893,21 +735,19 @@
       overflow-x: auto;
       box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
     }
-    .flow-canvas-large svg {
+.l5 .flow-canvas-large svg{
       display: block;
       margin: 0 auto;
       max-width: 100%;
       height: auto;
     }
-
-    /* SVG NODES - LARGE, HIGH CONTRAST */
-    .node-bg {
+.l5 .node-bg{
       fill: #ffffff;
       stroke: #475569;
       stroke-width: 2.2;
       transition: all 0.25s ease;
     }
-    .node-text {
+.l5 .node-text{
       font-family: var(--font-main);
       font-size: 13.5px;
       font-weight: 700;
@@ -916,39 +756,37 @@
       dominant-baseline: central;
       pointer-events: none;
     }
-    .node-active .node-bg {
+.l5 .node-active .node-bg{
       fill: #eff6ff;
       stroke: #2563eb;
       stroke-width: 3.6;
       filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.45));
     }
-    .node-active .node-text {
+.l5 .node-active .node-text{
       font-weight: 800;
       fill: #1d4ed8;
       font-size: 14px;
     }
-    .edge-line {
+.l5 .edge-line{
       stroke: #64748b;
       stroke-width: 2.2;
       fill: none;
       transition: all 0.25s ease;
     }
-    .edge-line.active {
+.l5 .edge-line.active{
       stroke: #2563eb;
       stroke-width: 3.6;
     }
-    .label-pill {
+.l5 .label-pill{
       font-family: var(--font-main);
       font-size: 12px;
       font-weight: 800;
       text-anchor: middle;
       dominant-baseline: central;
     }
-    .label-pill.yes { fill: #15803d; }
-    .label-pill.no { fill: #b91c1c; }
-
-    /* CODE BOXES */
-    .code-box {
+.l5 .label-pill.yes{ fill: #15803d; }
+.l5 .label-pill.no{ fill: #b91c1c; }
+.l5 .code-box{
       background: var(--code-bg);
       border-radius: 12px;
       overflow: hidden;
@@ -956,7 +794,7 @@
       border: 1px solid #1f2937;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     }
-    .code-header {
+.l5 .code-header{
       background: var(--code-title);
       padding: 10px 16px;
       font-size: 12px;
@@ -966,15 +804,15 @@
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .copy-btn {
+.l5 .copy-btn{
       padding: 4px 10px;
       font-size: 11.5px;
       border-radius: 5px;
       background: rgba(255, 255, 255, 0.1);
       color: #e2e8f0;
     }
-    .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
-    .code-content {
+.l5 .copy-btn:hover{ background: rgba(255, 255, 255, 0.2); }
+.l5 .code-content{
       padding: 14px 0;
       overflow-x: auto;
       font-family: var(--font-mono);
@@ -982,17 +820,17 @@
       line-height: 1.75;
       color: var(--code-text);
     }
-    .code-row {
+.l5 .code-row{
       display: flex;
       padding: 2px 16px;
       border-left: 3px solid transparent;
       white-space: pre;
     }
-    .code-row.active {
+.l5 .code-row.active{
       background: #1e3a5f;
       border-left-color: #60a5fa;
     }
-    .code-num {
+.l5 .code-num{
       width: 34px;
       text-align: right;
       padding-right: 14px;
@@ -1000,23 +838,21 @@
       user-select: none;
       font-size: 12px;
     }
-    .code-text { flex: 1; }
-    .kw { color: #f472b6; font-weight: 600; }
-    .fn { color: #60a5fa; }
-    .str { color: #34d399; }
-    .num { color: #fbbf24; }
-    .op { color: #38bdf8; font-weight: 600; }
-    .cm { color: #94a3b8; font-style: italic; }
-
-    /* TEACHER COMMENTARY & MEMORY WATCH */
-    .commentary-card {
+.l5 .code-text{ flex: 1; }
+.l5 .kw{ color: #f472b6; font-weight: 600; }
+.l5 .fn{ color: #60a5fa; }
+.l5 .str{ color: #34d399; }
+.l5 .num{ color: #fbbf24; }
+.l5 .op{ color: #38bdf8; font-weight: 600; }
+.l5 .cm{ color: #94a3b8; font-style: italic; }
+.l5 .commentary-card{
       background: #eff6ff;
       border: 1px solid #bfdbfe;
       border-radius: 10px;
       padding: 16px;
       margin-bottom: 18px;
     }
-    .commentary-card h4 {
+.l5 .commentary-card h4{
       font-size: 14px;
       font-weight: 800;
       color: #1e40af;
@@ -1025,13 +861,12 @@
       align-items: center;
       gap: 6px;
     }
-    .commentary-text {
+.l5 .commentary-text{
       font-size: 14px;
       color: #1e3a8a;
       line-height: 1.6;
     }
-
-    .memory-table {
+.l5 .memory-table{
       width: 100%;
       border-collapse: collapse;
       font-size: 13.5px;
@@ -1041,30 +876,29 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    .memory-table th, .memory-table td {
+.l5 .memory-table th, .l5 .memory-table td{
       padding: 8px 12px;
       text-align: left;
       border-bottom: 1px solid #e2e8f0;
     }
-    .memory-table th {
+.l5 .memory-table th{
       background: #f8fafc;
       font-size: 11px;
       color: #64748b;
       text-transform: uppercase;
       font-weight: 700;
     }
-    .memory-table td.var-name {
+.l5 .memory-table td.var-name{
       font-family: var(--font-mono);
       font-weight: 600;
       color: #0f172a;
     }
-    .memory-table td.var-val {
+.l5 .memory-table td.var-val{
       font-family: var(--font-mono);
       font-weight: 700;
       color: #2563eb;
     }
-
-    .terminal-window {
+.l5 .terminal-window{
       background: #090d16;
       border-radius: 10px;
       padding: 14px 18px;
@@ -1075,7 +909,7 @@
       margin-top: 18px;
       box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
     }
-    .term-title {
+.l5 .term-title{
       color: #64748b;
       font-size: 11px;
       text-transform: uppercase;
@@ -1084,98 +918,62 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 4px;
     }
-
-    /* FOOTER */
-    footer {
-      background: white;
-      border-top: 1px solid #e2e8f0;
-      padding: 22px 32px;
-      text-align: center;
-      font-size: 13px;
-      color: #64748b;
-    }
-
-    @media (max-width: 768px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-      header { padding: 16px 20px; }
-      .tab-pane { padding: 18px; }
-      .timeline-bar { padding: 12px 18px; }
-      .sim-controls { padding: 16px; }
-      .task-card { padding: 16px; }
-    }
+@media (max-width: 768px){
+.l5 .grid-2, .l5 .grid-3, .l5 .grid-4{ grid-template-columns: 1fr; }
+.l5 .timeline-bar{ padding: 12px 18px; }
+.l5 .sim-controls{ padding: 16px; }
+.l5 .task-card{ padding: 16px; }
+}
   </style>
+  <link rel="stylesheet" href="../assets/css/ptb-header.css">
+  <script src="../assets/js/ptb-header.js" defer></script>
 </head>
 <body>
 
-  <!-- Top Global Bar -->
-  <div class="global-topbar">
-    <div class="global-topbar-inner">
-      <a href="../index.html" class="brand-badge">
-        <span class="logo-pill">MindX</span>
-        <span>Lập trình Python Cơ Bản &bull; TT-C4K-PTB30</span>
-      </a>
-      <div class="course-quick-nav">
-        <a href="../index.html">🏠 Trang chủ</a>
-        <a href="../LESSON 1/index.html" title="Bài 1: Biến & Nhập/Xuất">Bài 1</a>
-        <a href="../LESSON 2/index.html" title="Bài 2: Kiểu Dữ Liệu & Ép Kiểu">Bài 2</a>
-        <a href="../LESSON 3/index.html" title="Bài 3: Toán Tử">Bài 3</a>
-        <a href="../LESSON 4/index.html" title="Bài 4: Rẽ Nhánh & Sơ Đồ Khối">Bài 4</a>
-        <a href="index.html" class="active" title="Bài 5: Ôn Tập & EVN">Bài 5</a>
-        <a href="../LESSON 6/index.html" title="Bài 6: Vòng Lặp for & range()">Bài 6</a>
-        <a href="../LESSON 7/index.html" title="Bài 7: Vòng Lặp while, break & continue">Bài 7</a>
-        <a href="../LESSON 8/index.html" title="Bài 8: Giải Quyết Vấn Đề">Bài 8</a>
-        <a href="../LESSON 9/index.html" title="Bài 9: Kiểm Tra & Danh Sách (List)">Bài 9</a>
-        <a href="../LESSON 10/index.html" title="Bài 10: Thao Tác Danh Sách">Bài 10</a>
-        <a href="../LESSON 11/index.html" title="Bài 11: Xâu Ký Tự (String)">Bài 11</a>
-        <a href="../LESSON 12/index.html" title="Bài 12: Hàm Cơ Bản (def)">Bài 12</a>
-        <a href="../LESSON 13/index.html" title="Bài 13: Tham Số, return & Phạm Vi Biến">Bài 13</a>
+  <!-- Thanh đầu trang gọn (ptb-header.css / ptb-header.js) -->
+    <header class="lesson-header ptb-bar">
+    <div class="header-container ptb-bar-inner">
+      <a class="ptb-home" href="../index.html" title="Về trang chủ khóa học"><span class="logo-pill">MindX</span><small>PTB30</small></a>
+      <div class="ptb-picker">
+        <button type="button" class="ptb-picker-btn" aria-haspopup="true" aria-expanded="false" title="Chọn bài học">Bài 5 ▾</button>
+        <div class="ptb-menu" role="menu">
+          <a href="../index.html"><b>🏠</b><span>Trang chủ khóa học</span></a>
+          <hr>
+          <a href="../LESSON 1/index.html"><b>Bài 1</b><span>Biến &amp; Nhập/Xuất</span></a>
+          <a href="../LESSON 2/index.html"><b>Bài 2</b><span>Kiểu Dữ Liệu &amp; Ép Kiểu</span></a>
+          <a href="../LESSON 3/index.html"><b>Bài 3</b><span>Toán Tử</span></a>
+          <a href="../LESSON 4/index.html"><b>Bài 4</b><span>Rẽ Nhánh &amp; Sơ Đồ Khối</span></a>
+          <a href="index.html" class="active"><b>Bài 5</b><span>Ôn Tập &amp; EVN</span></a>
+          <a href="../LESSON 6/index.html"><b>Bài 6</b><span>Vòng Lặp for &amp; range()</span></a>
+          <a href="../LESSON 7/index.html"><b>Bài 7</b><span>Vòng Lặp while, break &amp; continue</span></a>
+          <a href="../LESSON 8/index.html"><b>Bài 8</b><span>Giải Quyết Vấn Đề</span></a>
+          <a href="../LESSON 9/index.html"><b>Bài 9</b><span>Kiểm Tra &amp; Danh Sách (List)</span></a>
+          <a href="../LESSON 10/index.html"><b>Bài 10</b><span>Thao Tác Danh Sách</span></a>
+          <a href="../LESSON 11/index.html"><b>Bài 11</b><span>Xâu Ký Tự (String)</span></a>
+          <a href="../LESSON 12/index.html"><b>Bài 12</b><span>Hàm Cơ Bản (def)</span></a>
+          <a href="../LESSON 13/index.html"><b>Bài 13</b><span>Tham Số, return &amp; Phạm Vi Biến</span></a>
+        </div>
+      </div>
+      <a class="ptb-step" href="../LESSON 4/index.html" title="Bài 4 (bài trước)" aria-label="Bài trước">‹</a><a class="ptb-step" href="../LESSON 6/index.html" title="Bài 6 (bài sau)" aria-label="Bài sau">›</a>
+      <h1 class="lesson-title" title="Ôn tập 4 trụ cột (biến, kiểu dữ liệu, toán tử, điều kiện) và giải bài toán tiền điện EVN bậc thang.
+⏱ 60 phút · Cấp Độ: Ôn Tập Tổng Hợp">Ôn tập Biến, Kiểu dữ liệu, Toán tử &amp; Rẽ nhánh · Dự án tiền điện EVN</h1>
+      <nav class="lesson-tabs" aria-label="Điều hướng bài học">
+          <button type="button" class="tab-btn active" data-tab="theory" title="Lý Thuyết &amp; Trọng Tâm">📖 Lý thuyết</button>
+          <button type="button" class="tab-btn" data-tab="simulator" title="Phòng Thí Nghiệm Mô Phỏng Trace Code">🔬 Mô phỏng</button>
+          <button type="button" class="tab-btn" data-tab="quiz" title="Thử Thách Trắc Nghiệm (8 Câu)">🎯 Trắc nghiệm · 8 câu</button>
+          <button type="button" class="tab-btn" data-tab="practice" title="Bài Tập Thực Hành &amp; Về Nhà (5 Bài)">💻 Thực hành · 5 bài</button>
+      </nav>
+      <div class="ptb-tools">
+        <button type="button" class="ptb-tool ptb-timer" data-min="60">⏱ 60:00</button>
+        <button type="button" class="ptb-tool ptb-timer-reset" title="Đặt lại đồng hồ">↺</button>
+        <button type="button" class="ptb-tool ptb-zoom" title="Phóng to chữ cho cả lớp xem (100% / 115% / 130%)">🔍 100%</button>
       </div>
     </div>
-  </div>
-
-
-<div class="app">
-  <!-- HEADER -->
-  <header>
-    <div class="brand">
-      <div class="brand-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="16 18 22 12 16 6"></polyline>
-          <polyline points="8 6 2 12 8 18"></polyline>
-        </svg>
-      </div>
-      <div class="brand-info">
-        <h1>Bài 5: Ôn tập Biến, Kiểu dữ liệu, Toán tử & Rẽ nhánh</h1>
-        <p>
-          <span>Khóa học: Lập trình Python Cơ Bản (TT-C4K-PTB30)</span>
-          <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">Thời lượng: 60 Phút</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- CLASSROOM TIMER FOR TEACHER -->
-    <div class="timer-widget">
-      <span>⏱ Tiết học:</span>
-      <span id="class-timer-display" class="timer-display">60:00</span>
-      <button type="button" class="timer-btn" id="btn-timer-toggle" onclick="toggleTimer()">Bắt đầu</button>
-      <button type="button" class="timer-btn" onclick="resetTimer()">Đặt lại</button>
-    </div>
-
-    <!-- TABS NAVIGATION (CLEAN 2 TABS - MINITEST REMOVED) -->
-    <nav aria-label="Điều hướng bài học">
-      <button type="button" class="tab-btn active" data-tab="theory">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-        Lý Thuyết & Trọng Tâm
-      </button>
-      <button type="button" class="tab-btn" data-tab="simulator">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-        Phòng Thí Nghiệm Mô Phỏng Trace Code
-      </button>
-    </nav>
   </header>
 
-  <!-- 60-MINUTE TIMELINE BAR - 3 CLEAR PHASES -->
-  <div class="timeline-bar">
+  <main class="main-content">
+    <div class="l5">
+    <div class="timeline-bar">
     <div class="timeline-title">Lộ trình 60 phút:</div>
     <div class="timeline-steps">
       <div class="tl-step active" id="tl-step-1" onclick="navToStep(1)">
@@ -1195,8 +993,16 @@
 
   <!-- =================================================================== -->
   <!-- TAB 1: LÝ THUYẾT & TRỌNG TÂM                                       -->
-  <!-- =================================================================== -->
-  <main id="pane-theory" class="tab-pane">
+    </div>
+
+    <div id="pane-theory" class="tab-pane active l5">
+      <!-- PTB-ROADMAP -->
+      <div class="ptb-roadmap" aria-label="Liên kết kiến thức giữa các bài">
+        <div class="ptb-rm-col ptb-rm-prev"><h4>⬅ Nhớ lại từ <a href="../LESSON 4/index.html">Bài 4</a></h4><p><code>if-elif-else</code> chọn đúng một nhánh theo điều kiện; sơ đồ khối mô tả luồng chạy.</p><details><summary>Câu hỏi khởi động</summary><p><strong>Điểm 7.0 với <code>if &gt;= 8</code>, <code>elif &gt;= 6.5</code>, <code>else</code> sẽ chạy nhánh nào?</strong></p><p>Nhánh <code>elif</code> (Khá).</p></details></div>
+        <div class="ptb-rm-col ptb-rm-now"><h4>🎯 Hôm nay học</h4><ul><li>Ôn 4 trụ cột: biến, kiểu dữ liệu, toán tử, câu điều kiện</li><li>Bài toán tiền điện EVN bậc thang kèm thuế VAT 8%</li></ul></div>
+        <div class="ptb-rm-col ptb-rm-next"><h4>➡ <a href="../LESSON 6/index.html">Bài 6</a> sẽ dùng</h4><p>Chương trình hôm nay chỉ chạy một lần cho một số kWh. Muốn lặp lại việc nhiều lần ta cần vòng lặp <code>for</code>.</p></div>
+      </div>
+
     <div class="section-title" id="sec-pillars">
       <span class="eyebrow">Trạm 1: Tổng quan kiến thức (00' - 15')</span>
       <h2>Bốn Trụ Cột Nền Tảng Của Lập Trình Python</h2>
@@ -1445,12 +1251,9 @@
         Bắt Đầu Chạy Mô Phỏng Ngay
       </button>
     </div>
-  </main>
+  </div>
 
-  <!-- =================================================================== -->
-  <!-- TAB 2: MÔ PHỎNG SƠ ĐỒ KHỐI & CODE                                 -->
-  <!-- =================================================================== -->
-  <main id="pane-simulator" class="tab-pane" hidden>
+    <div id="pane-simulator" class="tab-pane l5" hidden>
     <div class="section-title">
       <span class="eyebrow">Trạm 3: Thực hành tương tác (35' - 60')</span>
       <h2>Phòng Thí Nghiệm Mô Phỏng Trace Code & Sơ Đồ Khối</h2>
@@ -1608,74 +1411,283 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Giáo án & Học liệu tương tác môn Tin học - Lập trình Python Cơ Bản · Tiết 5: Ôn tập tổng hợp · Hỗ trợ hoạt động ngoại tuyến (Offline-ready).</p>
+    <div id="pane-quiz" class="tab-pane" hidden>
+      <div class="quiz-container">
+        <div class="quiz-score-banner">
+          <div>
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:4px;">🎯 Thử Thách Trắc Nghiệm Bài 5</h3>
+            <p style="font-size:13.5px; opacity:0.9;">8 câu ôn 4 trụ cột: kiểu dữ liệu, toán tử, điều kiện và bài toán tiền điện</p>
+          </div>
+          <div>
+            <span style="font-size:14px; opacity:0.9;">Điểm của em: </span>
+            <span class="quiz-score-val" id="quiz-score-display">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="l5q1">
+          <div class="quiz-q-num">Câu 1</div>
+          <div class="quiz-q-text">Người dùng gõ <code>5</code> vào <code>x = input("Nhập: ")</code>. Kiểu dữ liệu của <code>x</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q1', 0, false, 'input() không tự đổi sang số nguyên.')"><input type="radio" name="l5q1"><span>A. <code>int</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q1', 1, false, 'input() không tự đổi sang số thực.')"><input type="radio" name="l5q1"><span>B. <code>float</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q1', 2, true, 'input() luôn trả về chuỗi (str), kể cả khi gõ số. Muốn tính toán phải ép kiểu bằng int() hoặc float() (Bài 2).')"><input type="radio" name="l5q1"><span>C. <code>str</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q1', 3, false, 'bool chỉ có True hoặc False.')"><input type="radio" name="l5q1"><span>D. <code>bool</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q2">
+          <div class="quiz-q-num">Câu 2</div>
+          <div class="quiz-q-text">Kết quả của <code>print(7 // 2, 7 % 2)</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q2', 0, false, '// là chia lấy phần nguyên nên không ra 3.5.')"><input type="radio" name="l5q2"><span>A. <code>3.5 1</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q2', 1, true, '7 // 2 = 3 (thương nguyên), 7 % 2 = 1 (số dư). Hai toán tử này học ở Bài 3.')"><input type="radio" name="l5q2"><span>B. <code>3 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q2', 2, false, '// không làm tròn lên: 7 // 2 = 3.')"><input type="radio" name="l5q2"><span>C. <code>4 1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q2', 3, false, 'Thứ tự bị đảo: 7 // 2 = 3 rồi mới đến 7 % 2 = 1.')"><input type="radio" name="l5q2"><span>D. <code>1 3</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q3">
+          <div class="quiz-q-num">Câu 3</div>
+          <div class="quiz-q-text">Kết quả của <code>print("5" + "3")</code> là gì?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q3', 0, false, '"5" và "3" là chuỗi nên dấu + nối chữ, không cộng số.')"><input type="radio" name="l5q3"><span>A. <code>8</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q3', 1, false, 'Hai chuỗi cộng với nhau hợp lệ, không báo lỗi.')"><input type="radio" name="l5q3"><span>B. <code>TypeError</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q3', 2, false, 'Phép + không tự thêm dấu cách.')"><input type="radio" name="l5q3"><span>C. <code>5 3</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q3', 3, true, 'Dấu + giữa hai chuỗi là phép nối chuỗi nên ra 53. Muốn ra 8 phải ép kiểu: int("5") + int("3").')"><input type="radio" name="l5q3"><span>D. <code>53</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q4">
+          <div class="quiz-q-num">Câu 4</div>
+          <div class="quiz-q-text">Với <code>a = 10</code> và <code>b = 3</code>, biểu thức <code>a % b == 1</code> cho kết quả nào?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q4', 0, true, '10 % 3 = 1, rồi 1 == 1 là True. Biểu thức so sánh luôn cho giá trị True/False để dùng làm điều kiện.')"><input type="radio" name="l5q4"><span>A. <code>True</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q4', 1, false, '10 % 3 = 1 nên 1 == 1 là True.')"><input type="radio" name="l5q4"><span>B. <code>False</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q4', 2, false, 'Phép so sánh == trả về True/False chứ không trả về số.')"><input type="radio" name="l5q4"><span>C. <code>1</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q4', 3, false, '3 là thương nguyên 10 // 3, không phải kết quả của phép so sánh.')"><input type="radio" name="l5q4"><span>D. <code>3</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q5">
+          <div class="quiz-q-num">Câu 5</div>
+          <div class="quiz-q-text">Dòng nào là câu điều kiện viết ĐÚNG cú pháp Python?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q5', 0, false, 'Thiếu dấu : ở cuối dòng.')"><input type="radio" name="l5q5"><span>A. <code>if x &gt; 0</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q5', 1, true, 'Câu if cần điều kiện so sánh và dấu : ở cuối. Dòng bên trong phải thụt lề.')"><input type="radio" name="l5q5"><span>B. <code>if x &gt; 0:</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q5', 2, false, 'Dấu = là gán; so sánh bằng phải dùng ==.')"><input type="radio" name="l5q5"><span>C. <code>if x = 0:</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q5', 3, false, 'elif không thể đứng riêng, phải đi sau một câu if.')"><input type="radio" name="l5q5"><span>D. <code>elif x &gt; 0:</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q6">
+          <div class="quiz-q-num">Câu 6</div>
+          <div class="quiz-q-text">Cho <code>diem = 7</code>. Đoạn code dưới in ra gì?<br><code style="display:block;white-space:pre;margin-top:8px;">if diem &gt;= 8:
+    print("Giỏi")
+elif diem &gt;= 6.5:
+    print("Khá")
+else:
+    print("Trung bình")</code></div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q6', 0, false, '7 &gt;= 8 là False nên nhánh Giỏi bị bỏ qua.')"><input type="radio" name="l5q6"><span>A. <code>Giỏi</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q6', 1, false, 'Nhánh elif đã đúng nên không xuống else.')"><input type="radio" name="l5q6"><span>B. <code>Trung bình</code></span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q6', 2, true, '7 &gt;= 8 sai, đến elif: 7 &gt;= 6.5 đúng, in "Khá" và bỏ qua phần còn lại.')"><input type="radio" name="l5q6"><span>C. <code>Khá</code></span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q6', 3, false, 'if-elif-else chỉ chạy đúng một nhánh.')"><input type="radio" name="l5q6"><span>D. <code>Giỏi rồi Khá</code></span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q7">
+          <div class="quiz-q-num">Câu 7</div>
+          <div class="quiz-q-text">Theo mô hình "xô nước bậc thang" (bậc 1: 50 kWh, bậc 2: 50 kWh, bậc 3: 100 kWh), một hộ dùng 120 kWh có bao nhiêu kWh tính theo giá bậc 3?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q7', 0, true, '120 = 50 (bậc 1) + 50 (bậc 2) + 20 (bậc 3). Mỗi xô đổ đầy rồi phần dư mới tràn sang xô kế tiếp.')"><input type="radio" name="l5q7"><span>A. <code>20</code> kWh</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q7', 1, false, '70 là phần vượt 50 kWh đầu, nhưng 50 kWh nữa đã tính ở bậc 2.')"><input type="radio" name="l5q7"><span>B. <code>70</code> kWh</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q7', 2, false, 'Chỉ phần vượt 100 kWh mới tính giá bậc 3.')"><input type="radio" name="l5q7"><span>C. <code>120</code> kWh</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q7', 3, false, '100 là dung lượng tối đa của bậc 3, hộ này chưa dùng đầy.')"><input type="radio" name="l5q7"><span>D. <code>100</code> kWh</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="l5q8">
+          <div class="quiz-q-num">Câu 8</div>
+          <div class="quiz-q-text">Tiền điện chưa thuế là 200000 đồng, thuế VAT 8%. Tổng phải trả là bao nhiêu?</div>
+          <div class="quiz-options">
+            <label class="quiz-option" onclick="selectQuizOption('l5q8', 0, false, '8% là 0.08 lần tiền điện, không phải cộng thêm 8 đồng.')"><input type="radio" name="l5q8"><span>A. <code>200008</code> đồng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q8', 1, false, '208000 là tăng 4%, không phải 8%.')"><input type="radio" name="l5q8"><span>B. <code>208000</code> đồng</span></label>
+            <label class="quiz-option" onclick="selectQuizOption('l5q8', 2, false, 'VAT là khoản cộng thêm, không phải trừ đi.')"><input type="radio" name="l5q8"><span>C. <code>160000</code> đồng</span></label>
+            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l5q8', 3, true, 'vat = 200000 * 0.08 = 16000, tong = 200000 + 16000 = 216000.')"><input type="radio" name="l5q8"><span>D. <code>216000</code> đồng</span></label>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pane-practice" class="tab-pane" hidden>
+
+      <div class="alert alert-info"><span>📌</span><div>Nhập mỗi giá trị trên một dòng. Hãy tự viết code trong <strong>Code Lab</strong> (Tab 2) hoặc VS Code/Thonny trước khi mở lời giải. Bài 3 và Bài 5 làm ở nhà nếu hết giờ trên lớp.</div></div>
+
+      <!-- P1 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 1: Xếp Loại Học Lực (if - elif - else)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập điểm trung bình <code>diem</code> (số thực). In xếp loại: từ 8 trở lên là <code>Giỏi</code>, từ 6.5 là <code>Khá</code>, từ 5 là <code>Trung bình</code>, còn lại là <code>Yếu</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>9.0</code></td><td><code>Giỏi</code></td></tr><tr><td><code>7</code></td><td><code>Khá</code></td></tr><tr><td><code>5.5</code></td><td><code>Trung bình</code></td></tr><tr><td><code>3.2</code></td><td><code>Yếu</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai1.py</span><button class="btn-copy" data-target="l5-s1">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l5-s1" readonly style="min-height:213px;">diem = float(input())
+if diem &gt;= 8:
+    print("Giỏi")
+elif diem &gt;= 6.5:
+    print("Khá")
+elif diem &gt;= 5:
+    print("Trung bình")
+else:
+    print("Yếu")</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P2 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 2: Tiền Điện 2 Bậc (bài toán giả định)</h3>
+          <span class="badge-level badge-easy">Cơ bản</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Giả sử 50 kWh đầu giá <code>1800</code> đồng/kWh, từ kWh thứ 51 giá <code>2000</code> đồng/kWh. Nhập số kWh, in tiền điện (chưa thuế). Đây là bài khởi động cho bài EVN 5 bậc.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>40</code></td><td><code>72000</code></td></tr><tr><td><code>80</code></td><td><code>150000</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai2.py</span><button class="btn-copy" data-target="l5-s2">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l5-s2" readonly style="min-height:150px;">kwh = int(input())
+if kwh &lt;= 50:
+    tien = kwh * 1800
+else:
+    tien = 50 * 1800 + (kwh - 50) * 2000
+print(tien)</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P3 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 3: Tiền Điện EVN 5 Bậc + VAT 8%</h3>
+          <span class="badge-level badge-hard">Nâng cao</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Dùng đúng biểu giá trong tab Lý thuyết: 50 kWh đầu 1806đ; 50 kWh kế 1866đ; 100 kWh kế 2167đ; 100 kWh kế 2729đ; trên 300 kWh 3050đ. Nhập số kWh, in tiền điện, VAT 8% và tổng. Hãy vẽ sơ đồ khối trước khi viết code.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>40</code></td><td><code>Tien: 72,240d, VAT: 5,779d, Tong: 78,019d</code></td></tr><tr><td><code>125</code></td><td><code>Tien: 237,775d, VAT: 19,022d, Tong: 256,797d</code></td></tr><tr><td><code>350</code></td><td><code>Tien: 825,700d, VAT: 66,056d, Tong: 891,756d</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai3.py</span><button class="btn-copy" data-target="l5-s3">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l5-s3" readonly style="min-height:318px;">kwh = int(input())
+if kwh &lt;= 50:
+    tien = kwh * 1806
+elif kwh &lt;= 100:
+    tien = 50 * 1806 + (kwh - 50) * 1866
+elif kwh &lt;= 200:
+    tien = 50 * 1806 + 50 * 1866 + (kwh - 100) * 2167
+elif kwh &lt;= 300:
+    tien = 50 * 1806 + 50 * 1866 + 100 * 2167 + (kwh - 200) * 2729
+else:
+    tien = 50 * 1806 + 50 * 1866 + 100 * 2167 + 100 * 2729 + (kwh - 300) * 3050
+vat = tien * 0.08
+tong = tien + vat
+print(f"Tien: {tien:,.0f}d, VAT: {vat:,.0f}d, Tong: {tong:,.0f}d")</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P4 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 4: Năm Nhuận (toán tử logic + chia dư)</h3>
+          <span class="badge-level badge-medium">Trung bình</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập năm <code>nam</code>. Năm nhuận khi chia hết cho 4 mà không chia hết cho 100, hoặc chia hết cho 400. In <code>Nam nhuan</code> hoặc <code>Khong nhuan</code>.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>2024</code></td><td><code>Nam nhuan</code></td></tr><tr><td><code>1900</code></td><td><code>Khong nhuan</code></td></tr><tr><td><code>2000</code></td><td><code>Nam nhuan</code></td></tr><tr><td><code>2023</code></td><td><code>Khong nhuan</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai4.py</span><button class="btn-copy" data-target="l5-s4">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l5-s4" readonly style="min-height:129px;">nam = int(input())
+if (nam % 4 == 0 and nam % 100 != 0) or nam % 400 == 0:
+    print("Nam nhuan")
+else:
+    print("Khong nhuan")</textarea></div></div>
+        </details>
+      </div>
+
+      <!-- P5 -->
+      <div class="exercise-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-size:18px; font-weight:800; color:var(--navy);">Bài 5: Hóa Đơn Cửa Hàng (tổng hợp 4 trụ cột)</h3>
+          <span class="badge-level badge-hard">Nâng cao</span>
+        </div>
+        <p style="font-size:14px; color:#475569;">Nhập tên khách (chuỗi), số lượng (số nguyên), đơn giá (số thực), mỗi giá trị một dòng. Tính thành tiền. Từ 1.000.000đ giảm 10%, từ 500.000đ giảm 5%, dưới đó không giảm. In theo mẫu trong bảng.</p>
+        <table class="testcase-table"><thead><tr><th>Input</th><th>Output</th></tr></thead>
+          <tbody><tr><td><code>An</code><br><code>2</code><br><code>300000</code></td><td><code>An: tong 600,000d, giam 30,000d, phai tra 570,000d</code></td></tr><tr><td><code>Binh</code><br><code>3</code><br><code>400000</code></td><td><code>Binh: tong 1,200,000d, giam 120,000d, phai tra 1,080,000d</code></td></tr><tr><td><code>Chi</code><br><code>1</code><br><code>150000</code></td><td><code>Chi: tong 150,000d, giam 0d, phai tra 150,000d</code></td></tr></tbody></table>
+        <details style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+          <summary style="font-weight:700; color:#2563eb; cursor:pointer;">💡 Xem lời giải</summary>
+          <div class="code-box" style="margin-top:10px;"><div class="code-header"><span>bai5.py</span><button class="btn-copy" data-target="l5-s5">Sao chép</button></div>
+          <div class="code-editor-area"><textarea id="l5-s5" readonly style="min-height:276px;">ten = input()
+so_luong = int(input())
+don_gia = float(input())
+thanh_tien = so_luong * don_gia
+if thanh_tien &gt;= 1000000:
+    giam = thanh_tien * 0.10
+elif thanh_tien &gt;= 500000:
+    giam = thanh_tien * 0.05
+else:
+    giam = 0
+phai_tra = thanh_tien - giam
+print(f"{ten}: tong {thanh_tien:,.0f}d, giam {giam:,.0f}d, phai tra {phai_tra:,.0f}d")</textarea></div></div>
+        </details>
+      </div>
+    </div>
+
+    <div class="lesson-pager">
+      <a href="../LESSON 4/index.html" class="pager-btn">&larr; Bài Trước: Bài 4 - Cấu Trúc Rẽ Nhánh</a>
+      <a href="../LESSON 6/index.html" class="pager-btn primary">Bài Tiếp Theo: Bài 6 - Vòng Lặp for &amp; range() &rarr;</a>
+    </div>
+    </main>
+
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">MindX Technology School &bull; TT-C4K-PTB30</div>
+        <p style="font-size:13px; color:#94a3b8;">Bài 5: Ôn Tập Tổng Hợp &amp; Dự Án EVN | Thầy Huy Trần</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Trang chủ</a>
+        <a href="../LESSON 1/index.html">Bài 1</a>
+        <a href="../LESSON 2/index.html">Bài 2</a>
+        <a href="../LESSON 3/index.html">Bài 3</a>
+        <a href="../LESSON 4/index.html">Bài 4</a>
+        <a href="index.html" style="color:white; font-weight:700;">Bài 5</a>
+        <a href="../LESSON 6/index.html">Bài 6</a>
+        <a href="../LESSON 7/index.html">Bài 7</a>
+        <a href="../LESSON 8/index.html">Bài 8</a>
+        <a href="../LESSON 9/index.html">Bài 9</a>
+        <a href="../LESSON 10/index.html">Bài 10</a>
+        <a href="../LESSON 11/index.html">Bài 11</a>
+        <a href="../LESSON 12/index.html">Bài 12</a>
+        <a href="../LESSON 13/index.html">Bài 13</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- Lesson Bottom Pager -->
-  <div class="lesson-pager" style="margin: 32px 28px 24px; padding-top:20px; border-top:1px solid #dce4ed;">
-    <a href="../LESSON 4/index.html" class="pager-btn">
-      &larr; Bài Trước: Bài 4 - Cấu Trúc Rẽ Nhánh
-    </a>
-    <a href="../LESSON 6/index.html" class="pager-btn primary" style="background:#0891b2; border-color:#0891b2;">
-      Bài Tiếp Theo: Bài 6 - Vòng Lặp for &amp; range() &rarr;
-    </a>
-  </div>
-</div>
-
-<script>
-// =====================================================================
-// CLASSROOM 60-MINUTE TIMER
-// =====================================================================
-let timerSeconds = 60 * 60;
-let timerInterval = null;
-
-function formatTimer(sec) {
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-}
-
-function updateTimerDisplay() {
-  const el = document.getElementById("class-timer-display");
-  if (el) el.textContent = formatTimer(timerSeconds);
-}
-
-function toggleTimer() {
-  const btn = document.getElementById("btn-timer-toggle");
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    if (btn) btn.textContent = "Tiếp tục";
-  } else {
-    timerInterval = setInterval(() => {
-      if (timerSeconds > 0) {
-        timerSeconds--;
-        updateTimerDisplay();
-      } else {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        if (btn) btn.textContent = "Hết giờ";
-        alert("⏰ Đã kết thúc thời lượng 60 phút của tiết ôn tập!");
-      }
-    }, 1000);
-    if (btn) btn.textContent = "Tạm dừng";
-  }
-}
-
-function resetTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  timerSeconds = 60 * 60;
-  updateTimerDisplay();
-  const btn = document.getElementById("btn-timer-toggle");
-  if (btn) btn.textContent = "Bắt đầu";
-}
+  <script src="../assets/js/common.js"></script>
+  <script>
 
 // =====================================================================
 // TIMELINE NAVIGATION
@@ -2315,31 +2327,6 @@ let currentStepIdx = -1;
 let autoPlayTimer = null;
 let playSpeedMs = 1200;
 
-function switchTab(tabId) {
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-  document.querySelectorAll(".tab-pane").forEach(p => p.hidden = true);
-
-  const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
-  if (activeBtn) activeBtn.classList.add("active");
-  const targetPane = document.getElementById(`pane-${tabId}`);
-  if (targetPane) targetPane.hidden = false;
-
-  if (tabId === "theory") {
-    document.querySelectorAll(".tl-step").forEach((el, idx) => el.classList.toggle("active", idx === 0));
-  } else if (tabId === "simulator") {
-    document.querySelectorAll(".tl-step").forEach((el, idx) => el.classList.toggle("active", idx === 2));
-    if (currentStepIdx < 0) {
-      startSim();
-    }
-  }
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => switchTab(btn.dataset.tab));
-});
-
 function updateTaskCard() {
   document.getElementById("task-badge").textContent = currentExample.badge;
   document.getElementById("task-title").textContent = currentExample.title;
@@ -2828,40 +2815,21 @@ window.addEventListener("DOMContentLoaded", () => {
   renderChips();
   startSim();
   runQuickCalc();
-  updateTimerDisplay();
 });
-</script>
 
+// Đồng bộ lộ trình 60 phút + khởi động mô phỏng khi đổi tab (switchTab nằm trong common.js)
+(function () {
+  var base = window.switchTab;
+  window.switchTab = function (tabId) {
+    base(tabId);
+    var idx = tabId === 'simulator' ? 2 : 0;
+    if (tabId === 'theory' || tabId === 'simulator')
+      document.querySelectorAll('.tl-step').forEach(function (el, i) { el.classList.toggle('active', i === idx); });
+    else document.querySelectorAll('.tl-step').forEach(function (el) { el.classList.remove('active'); });
+    if (tabId === 'simulator' && typeof currentStepIdx !== 'undefined' && currentStepIdx < 0) startSim();
+  };
+})();
 
-  <!-- Global Footer -->
-  <footer class="global-footer" style="margin-top:40px;">
-    <div class="footer-container">
-      <div>
-        <div style="font-weight:700; color:white; font-size:15px; margin-bottom:4px;">
-          MindX Technology School &bull; TT-C4K-PTB30
-        </div>
-        <p style="font-size:13px; color:#94a3b8;">
-          Bài 5: Ôn Tập 4 Trụ Cột & Dự Án Tiền Điện EVN | Thầy Huy Trần
-        </p>
-      </div>
-      <div class="footer-links">
-        <a href="../index.html">Trang chủ</a>
-        <a href="../LESSON 1/index.html">Bài 1</a>
-        <a href="../LESSON 2/index.html">Bài 2</a>
-        <a href="../LESSON 3/index.html">Bài 3</a>
-        <a href="../LESSON 4/index.html">Bài 4</a>
-        <a href="index.html" style="color:white; font-weight:700;">Bài 5</a>
-        <a href="../LESSON 6/index.html">Bài 6</a>
-        <a href="../LESSON 7/index.html">Bài 7</a>
-        <a href="../LESSON 8/index.html">Bài 8</a>
-        <a href="../LESSON 9/index.html">Bài 9</a>
-        <a href="../LESSON 10/index.html">Bài 10</a>
-        <a href="../LESSON 11/index.html">Bài 11</a>
-        <a href="../LESSON 12/index.html">Bài 12</a>
-        <a href="../LESSON 13/index.html">Bài 13</a>
-      </div>
-    </div>
-  </footer>
-
+  </script>
 </body>
 </html>

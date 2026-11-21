@@ -36,3 +36,17 @@ html[data-ptbzoom="2"] main.main-content{zoom:1.3}
 }
 @media(max-width:560px){.ptb-home small{display:none}.ptb-tools,header.ptb-bar .lesson-title{display:none}}
 @media print{header.ptb-bar{position:static}.ptb-tools,.ptb-picker,.ptb-step{display:none}}
+
+/* Khối liên kết kiến thức giữa các bài: Nhớ lại - Hôm nay - Bài sau */
+.ptb-roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0 0 20px;background:#fff;border:1px solid #dce4ed;border-radius:14px;overflow:hidden}
+.ptb-rm-col{padding:14px 18px;font-size:14px;line-height:1.55;color:#334155;border-right:1px solid #e2e8f0}
+.ptb-rm-col:last-child{border-right:0}
+.ptb-rm-col h4{margin:0 0 6px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.ptb-rm-prev h4{color:#7c3aed}.ptb-rm-now h4{color:#2563eb}.ptb-rm-next h4{color:#0891b2}
+.ptb-rm-now{background:#eff6ff}
+.ptb-rm-col ul{margin:0;padding-left:18px}.ptb-rm-col li{margin-bottom:2px}
+.ptb-rm-col a{font-weight:700;color:#1d4ed8;text-decoration:none}.ptb-rm-col a:hover{text-decoration:underline}
+.ptb-rm-col details{margin-top:6px;font-size:13px}
+.ptb-rm-col summary{cursor:pointer;font-weight:700;color:#7c3aed}
+.ptb-rm-col details p{margin:6px 0 0;padding:6px 10px;background:#f5f3ff;border-radius:6px;color:#4c1d95}
+@media(max-width:900px){.ptb-roadmap{grid-template-columns:1fr}.ptb-rm-col{border-right:0;border-bottom:1px solid #e2e8f0}.ptb-rm-col:last-child{border-bottom:0}}
