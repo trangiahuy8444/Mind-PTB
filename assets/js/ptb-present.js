@@ -73,6 +73,11 @@
       if (cur.length && used + it.h > room) { chunks.push([]); cur = chunks[chunks.length - 1]; used = headH; }
       cur.push(it); used += it.h;
     });
+    /* tiêu đề mục không được bị bỏ lại cuối slide: chuyển sang slide sau cùng với nội dung của nó */
+    for (var ci = 0; ci < chunks.length - 1; ci++) {
+      var cc = chunks[ci];
+      while (cc.length > 1 && /^H[1-6]$/.test(cc[cc.length - 1].node.tagName)) chunks[ci + 1].unshift(cc.pop());
+    }
     if (chunks.length < 2) return;
     var rec = { moved: [], made: [] }, anchor = slide;
     chunks.slice(1).forEach(function (ch) {

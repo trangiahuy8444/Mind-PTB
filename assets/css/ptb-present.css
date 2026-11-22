@@ -8,7 +8,7 @@
 
 html[data-ptbtv]{zoom:var(--ptb-z,1);scroll-snap-type:y proximity;scroll-padding-top:var(--ptb-hh,48px);scroll-behavior:smooth}
 html[data-ptbtv] main.main-content{padding:0 14px 40px!important;max-width:none}
-html[data-ptbtv] .ptb-slide{min-height:var(--ptb-sh,600px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:18px 0;scroll-snap-align:start;scroll-margin-top:var(--ptb-hh,48px)}
+html[data-ptbtv] .ptb-slide{min-height:var(--ptb-sh,600px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:18px 0;scroll-snap-align:start}
 html[data-ptbtv] .ptb-slide>*{margin-top:0!important;margin-bottom:0!important}
 html[data-ptbtv] .ptb-slide>.card,html[data-ptbtv] .ptb-slide>.exercise-box,html[data-ptbtv] .ptb-slide>.quiz-card{width:100%}
 html[data-ptbtv] .quiz-container{max-width:none}
@@ -29,3 +29,10 @@ html[data-ptbtv] .ptb-hud:hover,html[data-ptbtv] .ptb-hud:focus-within{opacity:1
 html[data-ptbtv] .sim-panel svg,html[data-ptbtv] .l5 .flow-wrap svg{max-height:calc(var(--ptb-sh,600px) - 150px);width:auto;max-width:100%;margin:0 auto;display:block}
 html[data-ptbtv] .visual-fig img{max-height:calc(var(--ptb-sh,600px) - 230px);width:auto;max-width:100%;object-fit:contain;margin:0 auto;display:block}
 html[data-ptbtv] .l5 .code-content{max-height:calc(var(--ptb-sh,600px) * .5);overflow-y:auto}
+
+/* mọi ảnh trong slide phải vừa trong một màn hình (kể cả ảnh nằm thẳng trong .card) */
+html[data-ptbtv] .ptb-slide img{max-height:calc(var(--ptb-sh,600px) - 170px);width:auto;max-width:100%;height:auto;object-fit:contain;margin:0 auto;display:block}
+html[data-ptbtv] .ptb-slide .card>img{max-height:calc(var(--ptb-sh,600px) - 210px)}
+
+/* hai cột có code → xếp một cột để chú thích trong code không bị cắt */
+html[data-ptbtv] .ptb-slide .grid-2:has(.code-box),html[data-ptbtv] .ptb-slide .grid-3:has(.code-box){grid-template-columns:1fr}

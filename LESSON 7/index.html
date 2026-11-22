@@ -99,6 +99,50 @@
       </div>
 
 
+      <!-- PTB-DISCUSS: tình huống khởi động bài 7 -->
+      <style>
+        .disc-pair{display:flex;align-items:center;gap:18px;margin-top:14px}
+        .disc-ic{font-size:44px;width:70px;text-align:center;flex:none}
+        .disc-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .disc-s{position:relative;border-radius:14px;padding:16px 20px;font-size:17px;line-height:1.6;color:#fff;font-weight:600}
+        .disc-a{background:#1d4ed8}.disc-b{background:#b91c1c}
+        .disc-s code{background:rgba(255,255,255,.2);color:#fff;border:0}
+        .disc-tag{display:none;margin-top:10px;font-size:14px;font-weight:700;background:#fff;color:#111827;border-radius:999px;padding:4px 12px;width:fit-content}
+        .disc-tag code{background:#f1f5f9;color:#0f172a}
+        #disc-card.show .disc-tag{display:block}
+        .disc-btn{margin-top:16px;border:0;border-radius:10px;background:#0ea5e9;color:#fff;font-weight:700;padding:10px 18px;font-size:15px;cursor:pointer}
+        @media(max-width:700px){.disc-body{grid-template-columns:1fr}.disc-ic{display:none}}
+      </style>
+      <div class="card" id="disc-card">
+        <div class="card-header">
+          <h2 class="card-title"><span class="icon-box">💬</span> Thảo luận: Nhận xét các cặp câu</h2>
+          <span style="font-size:12px; background:#fee2e2; color:#b91c1c; padding:4px 10px; border-radius:20px; font-weight:600;">Khởi động</span>
+        </div>
+        <p>Mỗi cặp câu dưới đây nói về cùng một việc. Hãy nhận xét: hai câu trong cặp khác nhau ở điểm nào?</p>
+        <div class="disc-pair">
+          <div class="disc-ic">📝</div>
+          <div class="disc-body">
+            <div class="disc-s disc-a"><b>Cặp 1:</b> Em học từ vựng bằng cách ghi chép lại 20 lần.<span class="disc-tag">Biết trước số lần → <code>for</code></span></div>
+            <div class="disc-s disc-b">Em ghi chép từng vựng đến khi nào thuộc được từ đó.<span class="disc-tag">Lặp đến khi điều kiện đổi → <code>while</code></span></div>
+          </div>
+        </div>
+        <div class="disc-pair">
+          <div class="disc-ic">🏃</div>
+          <div class="disc-body">
+            <div class="disc-s disc-a"><b>Cặp 2:</b> Em chạy 3 vòng quanh công viên để tập thể dục.<span class="disc-tag">Biết trước số lần → <code>for</code></span></div>
+            <div class="disc-s disc-b">Em chạy nhiều vòng quanh công viên trong 60p.<span class="disc-tag">Lặp đến khi điều kiện đổi → <code>while</code></span></div>
+          </div>
+        </div>
+        <div class="disc-pair">
+          <div class="disc-ic">🎬</div>
+          <div class="disc-body">
+            <div class="disc-s disc-a"><b>Cặp 3:</b> Em xem 2 tập phim hoạt hình.<span class="disc-tag">Biết trước số lần → <code>for</code></span></div>
+            <div class="disc-s disc-b">Em xem phim hoạt hình đến giờ đi ngủ thì dừng lại.<span class="disc-tag">Lặp đến khi điều kiện đổi → <code>while</code></span></div>
+          </div>
+        </div>
+        <button type="button" class="disc-btn" onclick="document.getElementById('disc-card').classList.toggle('show');this.textContent=document.getElementById('disc-card').classList.contains('show')?'🙈 Ẩn đáp án':'👀 Hiện đáp án'">👀 Hiện đáp án</button>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <h2 class="card-title"><span class="icon-box">♾️</span> 1. Khi Nào Cần Dùng while Thay Cho for?</h2>
