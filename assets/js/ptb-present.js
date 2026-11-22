@@ -43,6 +43,7 @@
       r.made.forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); });
     }
     splits = [];
+    document.querySelectorAll('.ptb-slide[data-ptbfit]').forEach(function (e) { e.style.zoom = ''; e.removeAttribute('data-ptbfit'); });
   }
   function stripIds(n) { if (n.removeAttribute) n.removeAttribute('id'); n.querySelectorAll && n.querySelectorAll('[id]').forEach(function (e) { e.removeAttribute('id'); }); return n; }
   function splitSlide(slide) {
@@ -50,6 +51,8 @@
     var kids = Array.prototype.filter.call(slide.children, isEl);
     var natural = kids.reduce(function (a, k) { return a + k.getBoundingClientRect().height + gap; }, -gap);   /* chiều cao nội dung thật, không tính min-height */
     if (natural <= cap) return;
+    /* hơi dài hơn màn hình (≤ 1,35 lần): thu nhỏ vừa đủ để cả phần nằm trọn một màn hình, không tách đôi */
+    if (natural <= cap * 1.35) { slide.style.zoom = (cap / natural).toFixed(3); slide.setAttribute('data-ptbfit', ''); return; }
     var card = (kids.length === 1 && /(^|\s)(card|exercise-box)(\s|$)/.test(kids[0].className)) ? kids[0] : null;
     var host = card || slide;
     var top = Array.prototype.filter.call(host.children, isEl);
@@ -67,10 +70,12 @@
     })(top, 0);
     if (items.length < 2) return;
     var headH = head ? head.getBoundingClientRect().height + gap : 0;
+    var limit = room * 1.1;   /* lấp đầy từng slide, cho phép vượt nhẹ 10% thay vì để slide thưa */
     var chunks = [[]], used = 0;
     items.forEach(function (it) {
       var cur = chunks[chunks.length - 1];
-      if (cur.length && used + it.h > room) { chunks.push([]); cur = chunks[chunks.length - 1]; used = headH; }
+      if (cur.length && used + it.h > limit && !(used < room * 0.5 && used + it.h <= room * 1.5)) {   /* slide đang quá thưa thì nhận thêm khối kế tiếp */
+        chunks.push([]); cur = chunks[chunks.length - 1]; used = headH; }
       cur.push(it); used += it.h;
     });
     /* tiêu đề mục không được bị bỏ lại cuối slide: chuyển sang slide sau cùng với nội dung của nó */
