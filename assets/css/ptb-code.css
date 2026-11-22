@@ -64,7 +64,7 @@ pre.ptb-code.anatomy code{padding:14px 18px!important}
 .trace-console{color:#cccccc!important}
 
 /* Code ngắn trong câu chữ: bảng màu Light+ của VS Code */
-code.ptb-ic{background:#f3f3f3;color:#000;border:1px solid #e6e6e6;border-radius:4px;padding:1px 6px;font-family:var(--vs-font);font-size:.92em;font-variant-ligatures:none;white-space:nowrap}
+code.ptb-ic{background:#f3f3f3;color:#000;border:1px solid #e6e6e6;border-radius:4px;padding:1px 6px;font-family:var(--vs-font);font-size:.92em;font-variant-ligatures:none;white-space:normal;overflow-wrap:anywhere}
 .ptb-ic .tk-ctl{color:#af00db}.ptb-ic .tk-kw{color:#0000ff}.ptb-ic .tk-fn{color:#795e26}.ptb-ic .tk-type{color:#267f99}
 .ptb-ic .tk-var,.ptb-ic .tk-prop{color:#001080}.ptb-ic .tk-num{color:#098658}.ptb-ic .tk-str{color:#a31515}
 .ptb-ic .tk-brace{color:#0000ff}.ptb-ic .tk-cm{color:#008000}.ptb-ic .tk-op,.ptb-ic .tk-pun{color:#000}
