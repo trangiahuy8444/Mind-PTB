@@ -46,6 +46,8 @@
   <script src="../assets/js/ptb-header.js" defer></script>
   <link rel="stylesheet" href="../assets/css/ptb-code.css">
   <script src="../assets/js/ptb-code.js" defer></script>
+  <link rel="stylesheet" href="../assets/css/ptb-present.css">
+  <script src="../assets/js/ptb-present.js" defer></script>
 </head>
 <body>
 
@@ -548,12 +550,16 @@ print(dem)</pre>
 
         <div class="quiz-card" id="l6q11">
           <div class="quiz-q-num">Câu 11</div>
-          <div class="quiz-q-text">Để tính giai thừa <code>5! = 1 × 2 × 3 × 4 × 5</code>, biến tích lũy <code>tich</code> phải được khởi tạo bằng bao nhiêu?</div>
+          <div class="quiz-q-text">Điền vào chỗ trống để chương trình in ra giai thừa <code>5! = 1 × 2 × 3 × 4 × 5 = 120</code>:</div>
+          <pre>tich = ____
+for i in range(1, 6):
+    tich = tich * i
+print(tich)</pre>
           <div class="quiz-options">
-            <label class="quiz-option" onclick="selectQuizOption('l6q11', 0, false, 'Nếu tich = 0 thì nhân với bất cứ số nào cũng ra 0!')"><input type="radio" name="l6q11"><span>A. <code>tich = 0</code></span></label>
-            <label class="quiz-option" data-correct="true" onclick="selectQuizOption('l6q11', 1, true, 'Số 1 là phần tử trung hòa của phép nhân: 1 × a = a. Tổng khởi tạo 0, tích khởi tạo 1.')"><input type="radio" name="l6q11"><span>B. <code>tich = 1</code></span></label>
-            <label class="quiz-option" onclick="selectQuizOption('l6q11', 2, false, 'Khởi tạo bằng 5 sẽ nhân thừa thêm 5.')"><input type="radio" name="l6q11"><span>C. <code>tich = 5</code></span></label>
-            <label class="quiz-option" onclick="selectQuizOption('l6q11', 3, false, 'Chuỗi rỗng không dùng được cho phép nhân số.')"><input type="radio" name="l6q11"><span>D. <code>tich = ""</code></span></label>
+            <label class="quiz-option" data-fill="0" onclick="selectQuizOption('l6q11', 0, false, 'Nếu tich = 0 thì nhân với bất cứ số nào cũng ra 0, kết quả in ra là 0!')"><input type="radio" name="l6q11"><span>A. <code>0</code></span></label>
+            <label class="quiz-option" data-fill="1" data-correct="true" onclick="selectQuizOption('l6q11', 1, true, 'Số 1 là phần tử trung hòa của phép nhân: 1 × a = a. Tổng khởi tạo 0, tích khởi tạo 1.')"><input type="radio" name="l6q11"><span>B. <code>1</code></span></label>
+            <label class="quiz-option" data-fill="5" onclick="selectQuizOption('l6q11', 2, false, 'Khởi tạo bằng 5 sẽ nhân thừa thêm 5, kết quả thành 600.')"><input type="radio" name="l6q11"><span>C. <code>5</code></span></label>
+            <label class="quiz-option" data-fill="&quot;&quot;" onclick="selectQuizOption('l6q11', 3, false, 'Chuỗi rỗng không dùng được cho phép nhân với số nguyên theo cách này.')"><input type="radio" name="l6q11"><span>D. <code>""</code></span></label>
           </div>
           <div class="quiz-feedback"></div>
         </div>

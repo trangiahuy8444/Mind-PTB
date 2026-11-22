@@ -1,0 +1,31 @@
+/* Chế độ trình chiếu: mỗi phần chiếm trọn màn hình, chữ lớn (xem ptb-present.js) */
+.ptb-hud{position:fixed;right:14px;bottom:14px;z-index:60;display:none;align-items:center;gap:6px;background:rgba(15,23,42,.92);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:6px 8px;box-shadow:0 6px 20px rgba(0,0,0,.35);font:700 14px/1 'Plus Jakarta Sans',system-ui,sans-serif}
+.ptb-hud button{min-width:40px;height:38px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;font:inherit;cursor:pointer}
+.ptb-hud button:hover{background:rgba(255,255,255,.2)}
+.ptb-hud .sep{width:1px;height:24px;background:rgba(255,255,255,.2);margin:0 2px}
+.ptb-hud-n{min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+@media print{.ptb-hud{display:none!important}}
+
+html[data-ptbtv]{zoom:var(--ptb-z,1);scroll-snap-type:y proximity;scroll-padding-top:var(--ptb-hh,48px);scroll-behavior:smooth}
+html[data-ptbtv] main.main-content{padding:0 14px 40px!important;max-width:none}
+html[data-ptbtv] .ptb-slide{min-height:var(--ptb-sh,600px);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:18px 0;scroll-snap-align:start;scroll-margin-top:var(--ptb-hh,48px)}
+html[data-ptbtv] .ptb-slide>*{margin-top:0!important;margin-bottom:0!important}
+html[data-ptbtv] .ptb-slide>.card,html[data-ptbtv] .ptb-slide>.exercise-box,html[data-ptbtv] .ptb-slide>.quiz-card{width:100%}
+html[data-ptbtv] .quiz-container{max-width:none}
+
+/* thanh đầu trang gọn lại để vừa bề ngang "ảo" ~1080px */
+html[data-ptbtv] header.ptb-bar .lesson-title,html[data-ptbtv] .ptb-home small,html[data-ptbtv] .ptb-timer-reset{display:none}
+html[data-ptbtv] header.ptb-bar .tab-btn{padding:13px 9px;font-size:13px}
+html[data-ptbtv] .l5 .timeline-bar{display:none}
+
+/* sơ đồ khối + code vừa trong một màn hình */
+html[data-ptbtv] .ptb-flow-svg svg{max-height:calc(var(--ptb-sh,600px) - 200px);width:auto;max-width:100%;margin:0 auto;display:block}
+html[data-ptbtv] .ptb-codeview{max-height:calc(var(--ptb-sh,600px) * .40);overflow-y:auto}
+html[data-ptbtv] .ptb-fig svg{max-height:calc(var(--ptb-sh,600px) - 140px);width:auto;max-width:100%;margin:0 auto;display:block}
+html[data-ptbtv] .ptb-slide>.card>.ptb-flow,html[data-ptbtv] .ptb-slide .ptb-flow{margin-top:0}
+/* bảng điều khiển luôn có cỡ vừa phải (không bị phóng theo chữ), mờ đi khi không dùng */
+html[data-ptbtv] .ptb-hud{zoom:calc(1 / var(--ptb-z,1));opacity:.5;transition:opacity .2s}
+html[data-ptbtv] .ptb-hud:hover,html[data-ptbtv] .ptb-hud:focus-within{opacity:1}
+html[data-ptbtv] .sim-panel svg,html[data-ptbtv] .l5 .flow-wrap svg{max-height:calc(var(--ptb-sh,600px) - 150px);width:auto;max-width:100%;margin:0 auto;display:block}
+html[data-ptbtv] .visual-fig img{max-height:calc(var(--ptb-sh,600px) - 230px);width:auto;max-width:100%;object-fit:contain;margin:0 auto;display:block}
+html[data-ptbtv] .l5 .code-content{max-height:calc(var(--ptb-sh,600px) * .5);overflow-y:auto}

@@ -71,3 +71,8 @@ code.ptb-ic{background:#f3f3f3;color:#000;border:1px solid #e6e6e6;border-radius
 pre.ptb-code.anatomy{line-height:30px!important}
 pre.ptb-code.anatomy .ptb-gut{line-height:30px}
 pre.ptb-code.anatomy code{line-height:30px}
+
+/* ô đục lỗ trong code mẫu */
+.ptb-blank{display:inline-block;min-width:3.2em;text-align:center;border-bottom:3px solid #facc15;background:rgba(250,204,21,.18);color:#facc15;border-radius:4px 4px 0 0;font-weight:700}
+.ptb-blank-ok{border-color:#4ade80;background:rgba(74,222,128,.2);color:#86efac}
+.ptb-blank-bad{border-color:#f87171;background:rgba(248,113,113,.2);color:#fca5a5}

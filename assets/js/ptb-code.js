@@ -92,8 +92,17 @@
     pre.dataset.ptbPre = '1';
     var code = pre.textContent.replace(/\n$/, '');
     pre.removeAttribute('style'); pre.classList.add('ptb-code');
-    pre.innerHTML = '<span class="ptb-gut" aria-hidden="true">' + lineNums(code.split('\n').length) + '</span><code>' + highlight(code) + '</code>';
+    pre.innerHTML = '<span class="ptb-gut" aria-hidden="true">' + lineNums(code.split('\n').length) + '</span><code>' + highlight(code).replace(/(?:<span[^>]*>)?_{3,}(?:<\/span>)?/g, '<span class="ptb-blank" data-blank>&nbsp;&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;&nbsp;</span>') + '</code>';
   }
+
+  /* chọn đáp án → điền vào ô trống của đoạn code trong cùng câu hỏi */
+  document.addEventListener('click', function (e) {
+    var lb = e.target.closest && e.target.closest('.quiz-option[data-fill]'); if (!lb) return;
+    var card = lb.closest('.quiz-card'); if (!card) return;
+    var b = card.querySelector('[data-blank]'); if (!b) return;
+    var txt = lb.getAttribute('data-fill'), ok = lb.hasAttribute('data-correct');
+    setTimeout(function () { b.textContent = txt; b.classList.add(ok ? 'ptb-blank-ok' : 'ptb-blank-bad'); }, 0);
+  });
 
   /* ---------- mô phỏng từng dòng ---------- */
   function enhanceTrace(root) {

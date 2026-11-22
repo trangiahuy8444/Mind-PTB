@@ -14,12 +14,6 @@
       document.addEventListener('click', function (e) { if (!menu.contains(e.target)) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     }
-    // Zoom
-    var zb = document.querySelector('.ptb-zoom'), levels = ['100%', '115%', '130%'], z = 0;
-    try { z = parseInt(localStorage.getItem('ptbZoom') || '0', 10) || 0; } catch (e) {}
-    function applyZoom() { if (z) root.setAttribute('data-ptbzoom', z); else root.removeAttribute('data-ptbzoom'); if (zb) zb.textContent = '🔍 ' + levels[z]; }
-    applyZoom();
-    if (zb) zb.addEventListener('click', function () { z = (z + 1) % 3; try { localStorage.setItem('ptbZoom', z); } catch (e) {} applyZoom(); });
     // Timer
     var tb = document.querySelector('.ptb-timer'), rb = document.querySelector('.ptb-timer-reset');
     if (tb) {

@@ -27,6 +27,12 @@
       if (l == null) return;
       var a = Array.isArray(l) ? l[0] : l, b = Array.isArray(l) ? l[1] : l;
       for (var i = a; i <= b; i++) if (rows[i - 1]) rows[i - 1].classList.add('on');
+      var f = rows[a - 1];
+      if (f && cv.scrollHeight > cv.clientHeight) {
+        var top = f.offsetTop, bot = rows[Math.min(b, rows.length) - 1].offsetTop + f.offsetHeight;
+        if (top < cv.scrollTop + 8) cv.scrollTop = Math.max(0, top - 8);
+        else if (bot > cv.scrollTop + cv.clientHeight - 8) cv.scrollTop = bot - cv.clientHeight + 8;
+      }
     }
     data.scenarios.forEach(function (s, i) {
       var o = document.createElement('option'); o.value = i; o.textContent = s.name; sel.appendChild(o);
