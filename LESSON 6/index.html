@@ -35,6 +35,8 @@
     .step-counter { font-size:13px; font-weight:700; color:#1d4ed8; background:#eff6ff; padding:4px 10px; border-radius:20px; }
 
     /* ---------- Anatomy ---------- */
+    .range-demos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-bottom:16px; }
+    @media (max-width:760px) { .range-demos { grid-template-columns:minmax(0,1fr); } }
     .anatomy-legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:14px; }
     .anatomy-legend div { background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; padding:10px 12px; font-size:13.5px; }
   </style>
@@ -185,6 +187,45 @@ print("Xong!")  # không thụt lề → chạy 1 lần SAU vòng lặp</pre>
             <tr><td><code>range(start, stop, step)</code> với step âm</td><td>Đếm ngược</td><td><code>range(10, 0, -3)</code></td><td><code>10, 7, 4, 1</code></td></tr>
           </tbody>
         </table>
+        <h3 style="font-size:15px; font-weight:800; color:var(--navy); margin:18px 0 10px;">💻 Code mẫu cho từng cách viết <small style="font-weight:500; color:#64748b;">(sửa số rồi bấm Chạy thử để tự kiểm chứng)</small></h3>
+        <div class="range-demos">
+          <div>
+            <div style="font-size:13.5px; margin:0 0 6px;"><strong><code>range(stop)</code></strong> · Một tham số: bắt đầu từ 0</div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>range_stop.py</span><div class="code-actions"><button class="btn-run" onclick="runPythonCode('th-range1', 'th-range1-out')">▶ Chạy thử</button><button class="btn-copy" data-target="th-range1">Sao chép</button></div></div>
+              <div class="code-editor-area"><textarea id="th-range1" spellcheck="false">for i in range(5):      # i = 0, 1, 2, 3, 4  (không có 5!)
+    print(i)</textarea></div>
+              <div class="terminal-output" id="th-range1-out"><span class="prompt-sign">$</span> Bấm ▶ Chạy thử để xem kết quả: 0 1 2 3 4</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13.5px; margin:0 0 6px;"><strong><code>range(start, stop)</code></strong> · Hai tham số: chọn số bắt đầu</div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>range_start_stop.py</span><div class="code-actions"><button class="btn-run" onclick="runPythonCode('th-range2', 'th-range2-out')">▶ Chạy thử</button><button class="btn-copy" data-target="th-range2">Sao chép</button></div></div>
+              <div class="code-editor-area"><textarea id="th-range2" spellcheck="false">for i in range(1, 6):   # i = 1, 2, 3, 4, 5  (dừng trước 6)
+    print(i)</textarea></div>
+              <div class="terminal-output" id="th-range2-out"><span class="prompt-sign">$</span> Bấm ▶ Chạy thử để xem kết quả: 1 2 3 4 5</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13.5px; margin:0 0 6px;"><strong><code>range(start, stop, step)</code></strong> · Ba tham số: bước nhảy dương</div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>range_step.py</span><div class="code-actions"><button class="btn-run" onclick="runPythonCode('th-range3', 'th-range3-out')">▶ Chạy thử</button><button class="btn-copy" data-target="th-range3">Sao chép</button></div></div>
+              <div class="code-editor-area"><textarea id="th-range3" spellcheck="false">for i in range(2, 11, 2):   # bắt đầu 2, mỗi lần cộng 2
+    print(i)</textarea></div>
+              <div class="terminal-output" id="th-range3-out"><span class="prompt-sign">$</span> Bấm ▶ Chạy thử để xem kết quả: 2 4 6 8 10</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13.5px; margin:0 0 6px;"><strong><code>range(start, stop, step) với step âm</code></strong> · Bước nhảy âm: đếm ngược</div>
+            <div class="code-box" style="margin:0;">
+              <div class="code-header"><span>range_dem_nguoc.py</span><div class="code-actions"><button class="btn-run" onclick="runPythonCode('th-range4', 'th-range4-out')">▶ Chạy thử</button><button class="btn-copy" data-target="th-range4">Sao chép</button></div></div>
+              <div class="code-editor-area"><textarea id="th-range4" spellcheck="false">for i in range(10, 0, -3):  # bắt đầu 10, mỗi lần trừ 3
+    print(i)</textarea></div>
+              <div class="terminal-output" id="th-range4-out"><span class="prompt-sign">$</span> Bấm ▶ Chạy thử để xem kết quả: 10 7 4 1</div>
+            </div>
+          </div>
+        </div>
         <div class="grid-3">
           <div class="alert alert-danger" style="margin:0;"><div><strong>Bẫy 1 – "Hụt 1":</strong> <code>range(1, 10)</code> chỉ đến <strong>9</strong>. Muốn đến n phải viết <code>range(1, n + 1)</code>.</div></div>
           <div class="alert alert-danger" style="margin:0;"><div><strong>Bẫy 2 – Dãy rỗng:</strong> <code>range(5, 1)</code> không có số nào (step mặc định là +1) → vòng lặp chạy <strong>0 lần</strong>.</div></div>
