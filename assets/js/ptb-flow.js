@@ -11,6 +11,23 @@
     var nodes = {};
     root.querySelectorAll('[data-node]').forEach(function (g) { nodes[g.getAttribute('data-node')] = g; });
     var sc = 0, st = -1;
+    var cv = root.querySelector('.ptb-codeview'), rows = [];
+    function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    if (cv && data.code) {
+      data.code.split('\n').forEach(function (ln, i) {
+        var r = document.createElement('div'); r.className = 'ptb-cl';
+        r.innerHTML = '<span class="ptb-cn">' + (i + 1) + '</span><span class="ptb-ct">' + (window.ptbHighlight ? window.ptbHighlight(ln) : esc(ln)) + '</span>';
+        cv.appendChild(r); rows.push(r);
+      });
+    } else if (cv) { var h = cv.previousElementSibling; if (h) h.style.display = 'none'; cv.style.display = 'none'; }
+    function mark(s) {
+      rows.forEach(function (r) { r.classList.remove('on'); });
+      if (!s || !rows.length) return;
+      var l = s.l !== undefined ? s.l : (data.map ? data.map[s.n] : null);
+      if (l == null) return;
+      var a = Array.isArray(l) ? l[0] : l, b = Array.isArray(l) ? l[1] : l;
+      for (var i = a; i <= b; i++) if (rows[i - 1]) rows[i - 1].classList.add('on');
+    }
     data.scenarios.forEach(function (s, i) {
       var o = document.createElement('option'); o.value = i; o.textContent = s.name; sel.appendChild(o);
     });
@@ -19,10 +36,11 @@
       Object.keys(nodes).forEach(function (k) { nodes[k].classList.remove('on'); });
       if (st < 0) {
         note.textContent = 'Bấm ▶ Bước tiếp để bắt đầu chạy sơ đồ.';
-        vars.textContent = ''; out.textContent = '';
+        vars.textContent = ''; out.textContent = ''; mark(null);
       } else {
         var s = steps[st];
         if (nodes[s.n]) nodes[s.n].classList.add('on');
+        mark(s);
         note.textContent = s.t;
         vars.textContent = s.v || '';
         var lines = [];
@@ -39,5 +57,6 @@
     render();
   }
   function boot() { document.querySelectorAll('.ptb-flow').forEach(init); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  /* chờ DOMContentLoaded để ptb-code.js (tô màu cú pháp) đã sẵn sàng */
+  if (document.readyState === 'complete') boot(); else document.addEventListener('DOMContentLoaded', boot);
 })();
