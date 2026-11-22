@@ -167,16 +167,6 @@ print(chr(ord("A") + 3))  # "D"</textarea></div>
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #fdf2f8 0%, #eff6ff 100%); border:2px dashed #db2777; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#be185d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 12: Đóng Gói Thành Hàm (Function)</h3>
-        <p style="color:#831843; font-size:14px; line-height:1.6;">
-          Từ Bài 1 đến Bài 11, mỗi khi muốn vẽ viền trang trí, in menu hay mã hóa một đoạn mật thư, ta lại phải gõ lại cả chục dòng code!
-        </p>
-        <p style="color:#831843; font-size:14px; line-height:1.6; margin-top:6px;">
-          Ở <strong>Bài 12: Hàm — Chia Nhỏ Công Việc (<code>def</code>)</strong>, em sẽ học cách chế tạo những "cỗ máy" đặt tên riêng như <code>ma_hoa_caesar()</code> hoặc <code>combo_chieu_thuc()</code> để chỉ cần gọi tên 1 dòng là dùng lại được ở khắp mọi nơi!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -196,6 +186,18 @@ print(chr(ord("A") + 3))  # "D"</textarea></div>
   </div>
   <script type="application/json">{"scenarios": [{"name": "Mã hóa chuỗi \"A!\"", "steps": [{"n": "s", "v": "", "t": "Bắt đầu mã hóa Caesar (dịch 3 chữ cái).", "o": null}, {"n": "k", "v": "ky_tu = \"A\"", "t": "for lấy ký tự đầu tiên là \"A\".", "o": null}, {"n": "d0", "v": "ky_tu = \"A\"", "t": "\"A\".isalpha() là True → nhánh Đúng.", "o": null}, {"n": "a0", "v": "ord(\"A\") = 65\n65 + 3 = 68\nchr(68) = \"D\"", "t": "ord() đổi chữ sang mã ASCII, cộng 3, chr() đổi ngược lại thành chữ.", "o": null}, {"n": "k", "v": "ky_tu = \"!\"", "t": "Ký tự kế tiếp là \"!\".", "o": null}, {"n": "d0", "v": "ky_tu = \"!\"", "t": "\"!\".isalpha() là False → nhánh Sai.", "o": null}, {"n": "el", "v": "ky_tu = \"!\"", "t": "Dấu chấm than không phải chữ nên giữ nguyên.", "o": null}, {"n": "e", "v": "ket_qua = \"D!\"", "t": "Kết quả mã hóa của \"A!\" là \"D!\".", "o": null}]}], "code": "ket_qua = \"\"\nfor ky_tu in \"A!\":\n    if ky_tu.isalpha():\n        ket_qua += chr(ord(ky_tu) + 3)\n    else:\n        ket_qua += ky_tu\nprint(ket_qua)", "map": {"k": 2, "d0": 3, "a0": 4, "el": 6, "e": 7}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #fdf2f8 0%, #eff6ff 100%); border:2px dashed #db2777; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#be185d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 12: Đóng Gói Thành Hàm (Function)</h3>
+        <p style="color:#831843; font-size:14px; line-height:1.6;">
+          Từ Bài 1 đến Bài 11, mỗi khi muốn vẽ viền trang trí, in menu hay mã hóa một đoạn mật thư, ta lại phải gõ lại cả chục dòng code!
+        </p>
+        <p style="color:#831843; font-size:14px; line-height:1.6; margin-top:6px;">
+          Ở <strong>Bài 12: Hàm — Chia Nhỏ Công Việc (<code>def</code>)</strong>, em sẽ học cách chế tạo những "cỗ máy" đặt tên riêng như <code>ma_hoa_caesar()</code> hoặc <code>combo_chieu_thuc()</code> để chỉ cần gọi tên 1 dòng là dùng lại được ở khắp mọi nơi!
+        </p>
       </div>
     </div>
 

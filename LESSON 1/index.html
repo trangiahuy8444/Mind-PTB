@@ -244,23 +244,6 @@ grade = input("Bạn học lớp mấy: ")
 print("Bạn đang học lớp:", grade)</textarea>
           </div>
         </div>
-
-        <!-- CONTINUITY BRIDGE TO LESSON 2 -->
-        <div style="background:linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px; margin-top:20px;">
-          <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
-            <span>🌉</span> Cầu Nối Tư Duy Sang Bài 2: Bí Ẩn Về Hàm input()
-          </h3>
-          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
-            Thử tưởng tượng: Thầy viết chương trình nhập vào 2 số <code>a</code> và <code>b</code> rồi in ra <code>a + b</code>:
-          </p>
-          <pre>a = input("Nhập số thứ nhất: ")  # Nhập vào 10
-b = input("Nhập số thứ hai: ")  # Nhập vào 20
-print(a + b)                    # KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)</pre>
-          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
-            <strong>Tại sao lại như vậy?</strong> Bởi vì hàm <code>input()</code> luôn luôn coi tất cả những gì em gõ là một chuỗi chữ (Text). Dấu cộng lúc này biến thành <em>"phép nối chuỗi"</em> dán hai chữ lại với nhau! Để giải mã và dạy máy tính hiểu đây là con số thực sự, chúng ta sẽ bước sang <strong>Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu</strong>!
-          </p>
-        </div>
-
       </div>
 
     
@@ -283,6 +266,22 @@ print(a + b)                    # KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)</p
   <script type="application/json">{"scenarios": [{"name": "Người dùng gõ: An", "steps": [{"n": "s", "v": "", "t": "Chương trình bắt đầu và chạy lần lượt từ trên xuống dưới.", "o": null}, {"n": "a", "v": "name = \"An\"", "t": "input() dừng lại chờ bạn gõ, rồi cất chữ \"An\" vào hộp có nhãn name.", "o": null}, {"n": "b", "v": "name = \"An\"", "t": "print() mở hộp name, lấy giá trị ra và in cùng chữ \"Xin chào\".", "o": "Xin chào An"}, {"n": "e", "v": "name = \"An\"", "t": "Hết lệnh, chương trình kết thúc.", "o": null}]}, {"name": "Người dùng gõ: Bình", "steps": [{"n": "s", "v": "", "t": "Chương trình bắt đầu và chạy lần lượt từ trên xuống dưới.", "o": null}, {"n": "a", "v": "name = \"Bình\"", "t": "input() dừng lại chờ bạn gõ, rồi cất chữ \"Bình\" vào hộp có nhãn name.", "o": null}, {"n": "b", "v": "name = \"Bình\"", "t": "print() mở hộp name, lấy giá trị ra và in cùng chữ \"Xin chào\".", "o": "Xin chào Bình"}, {"n": "e", "v": "name = \"Bình\"", "t": "Hết lệnh, chương trình kết thúc.", "o": null}]}], "code": "name = input(\"Bạn tên là gì: \")\nprint(\"Xin chào\", name)", "map": {"a": 1, "b": 2}}</script>
 </div>
       </div>
+
+      <!-- CONTINUITY BRIDGE TO LESSON 2 -->
+      <div style="background:linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px; margin-top:20px;">
+          <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+            <span>🌉</span> Cầu Nối Tư Duy Sang Bài 2: Bí Ẩn Về Hàm input()
+          </h3>
+          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+            Thử tưởng tượng: Thầy viết chương trình nhập vào 2 số <code>a</code> và <code>b</code> rồi in ra <code>a + b</code>:
+          </p>
+          <pre>a = input("Nhập số thứ nhất: ")  # Nhập vào 10
+b = input("Nhập số thứ hai: ")  # Nhập vào 20
+print(a + b)                    # KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)</pre>
+          <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+            <strong>Tại sao lại như vậy?</strong> Bởi vì hàm <code>input()</code> luôn luôn coi tất cả những gì em gõ là một chuỗi chữ (Text). Dấu cộng lúc này biến thành <em>"phép nối chuỗi"</em> dán hai chữ lại với nhau! Để giải mã và dạy máy tính hiểu đây là con số thực sự, chúng ta sẽ bước sang <strong>Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu</strong>!
+          </p>
+        </div>
     </div>
 
     <!-- =========================================================================

@@ -171,16 +171,6 @@ while True:
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #f0fdf4 0%, #fef3c7 100%); border:2px dashed #16a34a; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#15803d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 9: Khi Nhân Vật Có Cả Balo 20 Món Đồ!</h3>
-        <p style="color:#14532d; font-size:14px; line-height:1.6;">
-          Trong game Hoang Đảo, ta mới chỉ theo dõi vài con số (<code>mau</code>, <code>thuc_an</code>, <code>nuoc</code>, <code>go</code>). Vậy nếu nhân vật nhặt được cả <strong>Dao găm, Bật lửa, Cá nướng, Thuốc, La bàn, Thuyền...</strong> — chẳng lẽ ta phải tạo 20 biến rời <code>mon_1</code>, <code>mon_2</code>, ..., <code>mon_20</code>?
-        </p>
-        <p style="color:#14532d; font-size:14px; line-height:1.6; margin-top:6px;">
-          Không cần! Ở <strong>Bài 9: Kiểm Tra Vòng Lặp &amp; Danh Sách (List)</strong>, ta chỉ cần đúng <strong>1 chiếc hộp chứa được nhiều món đồ</strong> mang tên <code>balo = ["Dao", "Bật lửa", "Cá"]</code>!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -200,6 +190,18 @@ while True:
   </div>
   <script type="application/json">{"scenarios": [{"name": "Một ván chơi rút gọn", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "init", "v": "ngay = 1  mau = 100\nthuc_an = 80  nuoc = 80  go = 0", "t": "Bước khởi tạo: tạo các biến State trước vòng lặp.", "o": null}, {"n": "b0", "v": "ngay = 1", "t": "In trạng thái ngày 1.", "o": "Ngày 1 | Máu: 100 | Ăn: 80 | Nước: 80"}, {"n": "b1", "v": "chon = \"4\"", "t": "Người chơi chọn hành động từ menu.", "o": null}, {"n": "b2", "v": "ngay = 2", "t": "Rẽ nhánh if-elif-else theo lựa chọn. Chặt gỗ: go tăng thêm 1. Cuối lượt ngay += 1.", "o": null}, {"n": "dec", "v": "ngay = 2  go = 1", "t": "Kiểm tra: chưa thắng và máu vẫn lớn hơn 0 → nhánh Sai, quay lại đầu vòng lặp.", "o": null}, {"n": "b0", "v": "ngay = 2", "t": "In trạng thái ngày 2.", "o": "Ngày 2 | Máu: 100 | Ăn: 90 | Nước: 70"}, {"n": "b1", "v": "chon = \"1\"", "t": "Người chơi chọn hành động từ menu.", "o": null}, {"n": "b2", "v": "ngay = 3", "t": "Rẽ nhánh if-elif-else theo lựa chọn. Săn bắn: thức ăn tăng, nước giảm. Cuối lượt ngay += 1.", "o": null}, {"n": "dec", "v": "ngay = 3  go = 1", "t": "Kiểm tra: chưa thắng và máu vẫn lớn hơn 0 → nhánh Sai, quay lại đầu vòng lặp.", "o": null}, {"n": "b0", "v": "ngay = 3", "t": "(Giả sử các ngày sau cũng không thắng/thua) ... đến khi ngay > 7.", "o": null}, {"n": "dec", "v": "ngay = 8", "t": "ngay > 7 là True → nhánh Đúng.", "o": null}, {"n": "yes", "v": "ngay = 8", "t": "break thoát vòng lặp, in thông báo chiến thắng.", "o": "Bạn đã sống sót!"}, {"n": "e", "v": "", "t": "Kết thúc game.", "o": null}]}], "code": "ngay = 1\nmau = 100\nthuc_an = 80\nnuoc = 80\ngo = 0\n\nwhile True:\n    print(\"Ngày\", ngay, \"| Máu:\", mau, \"| Ăn:\", thuc_an, \"| Nước:\", nuoc)\n    chon = input(\"1.Săn 2.Nước 3.Nghỉ 4.Chặt gỗ: \")\n    if chon == \"1\":\n        thuc_an += 10\n        nuoc -= 10\n    elif chon == \"2\":\n        nuoc += 20\n    elif chon == \"3\":\n        mau += 20\n    else:\n        go += 1\n    ngay += 1\n    if ngay > 7 or go >= 4 or mau <= 0:\n        print(\"Bạn đã sống sót!\")\n        break", "map": {"init": [1, 5], "b0": 8, "b1": 9, "b2": [10, 19], "dec": 20, "yes": [21, 22]}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #f0fdf4 0%, #fef3c7 100%); border:2px dashed #16a34a; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#15803d; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 9: Khi Nhân Vật Có Cả Balo 20 Món Đồ!</h3>
+        <p style="color:#14532d; font-size:14px; line-height:1.6;">
+          Trong game Hoang Đảo, ta mới chỉ theo dõi vài con số (<code>mau</code>, <code>thuc_an</code>, <code>nuoc</code>, <code>go</code>). Vậy nếu nhân vật nhặt được cả <strong>Dao găm, Bật lửa, Cá nướng, Thuốc, La bàn, Thuyền...</strong> — chẳng lẽ ta phải tạo 20 biến rời <code>mon_1</code>, <code>mon_2</code>, ..., <code>mon_20</code>?
+        </p>
+        <p style="color:#14532d; font-size:14px; line-height:1.6; margin-top:6px;">
+          Không cần! Ở <strong>Bài 9: Kiểm Tra Vòng Lặp &amp; Danh Sách (List)</strong>, ta chỉ cần đúng <strong>1 chiếc hộp chứa được nhiều món đồ</strong> mang tên <code>balo = ["Dao", "Bật lửa", "Cá"]</code>!
+        </p>
       </div>
     </div>
 

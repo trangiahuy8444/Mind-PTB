@@ -183,16 +183,6 @@ for i in range(len(tui_do)):
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #f3e8ff 0%, #eff6ff 100%); border:2px dashed #7c3aed; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#6d28d9; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 10: Biến Đổi Danh Sách Động (Thêm, Xóa, Sửa)</h3>
-        <p style="color:#4c1d95; font-size:14px; line-height:1.6;">
-          Bài 9 đã giúp em tạo được danh sách, tra cứu theo chỉ số và duyệt qua từng phần tử. Nhưng trong thực tế, giỏ hàng hay túi đồ game <strong>luôn thay đổi</strong>: người chơi nhặt thêm vật phẩm mới, ăn mất một món hay sắp xếp lại balo cho gọn!
-        </p>
-        <p style="color:#4c1d95; font-size:14px; line-height:1.6; margin-top:6px;">
-          Ở <strong>Bài 10: Danh Sách Và Hơn Thế Nữa</strong>, chúng ta sẽ làm chủ các tuyệt chiêu <code>.append()</code>, <code>.insert()</code>, <code>.remove()</code>, <code>.pop()</code> và xây dựng <strong>Shop Trang Bị Minecraft</strong>!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -212,6 +202,18 @@ for i in range(len(tui_do)):
   </div>
   <script type="application/json">{"scenarios": [{"name": "Duyệt túi đồ", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "init", "v": "tui_do có 4 phần tử", "t": "Tạo danh sách. for sẽ lấy lần lượt từng phần tử từ trái sang phải.", "o": null}, {"n": "dec", "v": "mon = \"Dao găm\"", "t": "Còn phần tử chưa duyệt → nhánh Đúng. mon nhận toa số 0: \"Dao găm\".", "o": null}, {"n": "b0", "v": "mon = \"Dao găm\"", "t": "Chạy thân vòng lặp với phần tử hiện tại.", "o": "Đang cầm: Dao găm"}, {"n": "upd", "v": "đã duyệt 1/4", "t": "Chuyển sang phần tử kế tiếp.", "o": null}, {"n": "dec", "v": "mon = \"Bật lửa\"", "t": "Còn phần tử chưa duyệt → nhánh Đúng. mon nhận toa số 1: \"Bật lửa\".", "o": null}, {"n": "b0", "v": "mon = \"Bật lửa\"", "t": "Chạy thân vòng lặp với phần tử hiện tại.", "o": "Đang cầm: Bật lửa"}, {"n": "upd", "v": "đã duyệt 2/4", "t": "Chuyển sang phần tử kế tiếp.", "o": null}, {"n": "dec", "v": "mon = \"Cá nướng\"", "t": "Còn phần tử chưa duyệt → nhánh Đúng. mon nhận toa số 2: \"Cá nướng\".", "o": null}, {"n": "b0", "v": "mon = \"Cá nướng\"", "t": "Chạy thân vòng lặp với phần tử hiện tại.", "o": "Đang cầm: Cá nướng"}, {"n": "upd", "v": "đã duyệt 3/4", "t": "Chuyển sang phần tử kế tiếp.", "o": null}, {"n": "dec", "v": "mon = \"Bản đồ\"", "t": "Còn phần tử chưa duyệt → nhánh Đúng. mon nhận toa số 3: \"Bản đồ\".", "o": null}, {"n": "b0", "v": "mon = \"Bản đồ\"", "t": "Chạy thân vòng lặp với phần tử hiện tại.", "o": "Đang cầm: Bản đồ"}, {"n": "upd", "v": "đã duyệt 4/4", "t": "Đã đi hết toa cuối.", "o": null}, {"n": "dec", "v": "Hết phần tử", "t": "Không còn phần tử nào → nhánh Sai, thoát vòng lặp.", "o": null}, {"n": "e", "v": "", "t": "Vòng lặp chạy đúng 4 lần (bằng len(tui_do)).", "o": null}]}], "code": "tui_do = [\"Dao găm\", \"Bật lửa\", \"Cá nướng\", \"Bản đồ\"]\nfor mon in tui_do:\n    print(\"Đang cầm:\", mon)", "map": {"init": 1, "dec": 2, "b0": 3, "upd": 2}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #f3e8ff 0%, #eff6ff 100%); border:2px dashed #7c3aed; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#6d28d9; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 10: Biến Đổi Danh Sách Động (Thêm, Xóa, Sửa)</h3>
+        <p style="color:#4c1d95; font-size:14px; line-height:1.6;">
+          Bài 9 đã giúp em tạo được danh sách, tra cứu theo chỉ số và duyệt qua từng phần tử. Nhưng trong thực tế, giỏ hàng hay túi đồ game <strong>luôn thay đổi</strong>: người chơi nhặt thêm vật phẩm mới, ăn mất một món hay sắp xếp lại balo cho gọn!
+        </p>
+        <p style="color:#4c1d95; font-size:14px; line-height:1.6; margin-top:6px;">
+          Ở <strong>Bài 10: Danh Sách Và Hơn Thế Nữa</strong>, chúng ta sẽ làm chủ các tuyệt chiêu <code>.append()</code>, <code>.insert()</code>, <code>.remove()</code>, <code>.pop()</code> và xây dựng <strong>Shop Trang Bị Minecraft</strong>!
+        </p>
       </div>
     </div>
 

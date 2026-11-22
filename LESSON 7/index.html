@@ -255,16 +255,6 @@ while i &lt; 5:
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 8: Kết Hợp Toàn Bộ Vũ Khí Vào Dự Án Lớn</h3>
-        <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
-          Đến hết Bài 7, em đã có trong tay đủ bộ công cụ lập trình cấu trúc: <strong>Biến (B1) + Ép kiểu (B2) + Toán tử (B3) + Câu điều kiện (B4) + Vòng lặp <code>for</code> (B6) + <code>while True</code> &amp; <code>break</code> (B7)</strong>!
-        </p>
-        <p style="color:#0c4a6e; font-size:14px; line-height:1.6; margin-top:6px;">
-          Ở <strong>Bài 8: Lập Trình Giải Quyết Vấn Đề</strong>, chúng ta sẽ đóng vai kỹ sư phần mềm xây dựng một tựa game hoàn chỉnh: <strong>Sinh Tồn Trên Hoang Đảo</strong>!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -296,6 +286,18 @@ while i &lt; 5:
   </div>
   <script type="application/json">{"scenarios": [{"name": "Gõ sai 1 lần rồi gõ đúng", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "init", "v": "", "t": "while True: điều kiện luôn đúng nên vòng lặp chạy mãi, chỉ có break mới thoát được.", "o": null}, {"n": "b0", "v": "mk = \"abc\"", "t": "Người dùng gõ mật khẩu sai.", "o": null}, {"n": "dec", "v": "mk = \"abc\"", "t": "\"abc\" khác \"Mindx2026\" → nhánh Sai. In thông báo rồi quay lại nhập tiếp.", "o": "Sai rồi, nhập lại!", "l": 6}, {"n": "b0", "v": "mk = \"Mindx2026\"", "t": "Lần này người dùng gõ đúng.", "o": null}, {"n": "dec", "v": "mk = \"Mindx2026\"", "t": "Hai chuỗi bằng nhau → nhánh Đúng.", "o": null}, {"n": "yes", "v": "mk = \"Mindx2026\"", "t": "In thông báo rồi gặp break: thoát vòng lặp ngay lập tức.", "o": "Đăng nhập thành công!"}, {"n": "e", "v": "", "t": "Kết thúc.", "o": null}]}], "code": "while True:\n    mk = input(\"Nhập mật khẩu: \")\n    if mk == \"Mindx2026\":\n        print(\"Đăng nhập thành công!\")\n        break\n    print(\"Sai rồi, nhập lại!\")", "map": {"init": 1, "b0": 2, "dec": 3, "yes": [4, 5]}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border:2px dashed #0284c7; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#0369a1; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 8: Kết Hợp Toàn Bộ Vũ Khí Vào Dự Án Lớn</h3>
+        <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
+          Đến hết Bài 7, em đã có trong tay đủ bộ công cụ lập trình cấu trúc: <strong>Biến (B1) + Ép kiểu (B2) + Toán tử (B3) + Câu điều kiện (B4) + Vòng lặp <code>for</code> (B6) + <code>while True</code> &amp; <code>break</code> (B7)</strong>!
+        </p>
+        <p style="color:#0c4a6e; font-size:14px; line-height:1.6; margin-top:6px;">
+          Ở <strong>Bài 8: Lập Trình Giải Quyết Vấn Đề</strong>, chúng ta sẽ đóng vai kỹ sư phần mềm xây dựng một tựa game hoàn chỉnh: <strong>Sinh Tồn Trên Hoang Đảo</strong>!
+        </p>
       </div>
     </div>
 

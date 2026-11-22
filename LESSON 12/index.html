@@ -156,16 +156,6 @@ combo_huy_diet()          # Kích hoạt cả combo chỉ với 1 dòng!</textar
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 100%); border:2px dashed #4f46e5; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#4338ca; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 13: Nâng Cấp Hàm Biết Nhận Đầu Vào &amp; Trả Kết Quả</h3>
-        <p style="color:#312e81; font-size:14px; line-height:1.6;">
-          Ở Bài 12, hàm <code>danh_thuong()</code> luôn làm một việc cứng nhắc: lúc nào cũng in đúng <code>-20 HP</code>. Làm sao để chiếc máy làm bánh nhận nguyên liệu khác nhau (ví dụ: <code>danh_boss(50)</code> thì trừ 50, <code>danh_boss(120)</code> thì trừ 120) và <strong>trả về số máu còn lại (<code>return</code>)</strong> để tính tiếp?
-        </p>
-        <p style="color:#312e81; font-size:14px; line-height:1.6; margin-top:6px;">
-          Tất cả bí mật về <strong>Tham số, Đối số, <code>return</code> vs <code>print()</code> và Biến Cục Bộ / Toàn Cục</strong> đang chờ ở <strong>Bài 13</strong>!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -185,6 +175,18 @@ combo_huy_diet()          # Kích hoạt cả combo chỉ với 1 dòng!</textar
   </div>
   <script type="application/json">{"scenarios": [{"name": "Gọi chao_mung() một lần", "steps": [{"n": "s", "v": "def chao_mung() đã nạp\nvào bộ nhớ, chưa chạy", "t": "Python đọc def chỉ để ghi nhớ hàm, chưa chạy gì bên trong.", "o": null, "l": [1, 3]}, {"n": "call", "v": "", "t": "Dòng chao_mung() là LỆNH GỌI: Python nhảy vào thân hàm.", "o": null}, {"n": "p1", "v": "", "t": "Chạy dòng đầu tiên trong thân hàm.", "o": "===================="}, {"n": "p2", "v": "", "t": "Chạy dòng tiếp theo trong thân hàm.", "o": "XIN CHÀO LỚP PTB30!"}, {"n": "ret", "v": "", "t": "Hết thân hàm, Python quay về ngay sau chỗ đã gọi.", "o": null}, {"n": "e", "v": "", "t": "Chương trình kết thúc.", "o": null}]}], "code": "def chao_mung():\n    print(\"====================\")\n    print(\"XIN CHÀO LỚP PTB30!\")\n\nchao_mung()", "map": {"call": 5, "p1": 2, "p2": 3, "ret": 5}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 100%); border:2px dashed #4f46e5; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#4338ca; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 13: Nâng Cấp Hàm Biết Nhận Đầu Vào &amp; Trả Kết Quả</h3>
+        <p style="color:#312e81; font-size:14px; line-height:1.6;">
+          Ở Bài 12, hàm <code>danh_thuong()</code> luôn làm một việc cứng nhắc: lúc nào cũng in đúng <code>-20 HP</code>. Làm sao để chiếc máy làm bánh nhận nguyên liệu khác nhau (ví dụ: <code>danh_boss(50)</code> thì trừ 50, <code>danh_boss(120)</code> thì trừ 120) và <strong>trả về số máu còn lại (<code>return</code>)</strong> để tính tiếp?
+        </p>
+        <p style="color:#312e81; font-size:14px; line-height:1.6; margin-top:6px;">
+          Tất cả bí mật về <strong>Tham số, Đối số, <code>return</code> vs <code>print()</code> và Biến Cục Bộ / Toàn Cục</strong> đang chờ ở <strong>Bài 13</strong>!
+        </p>
       </div>
     </div>
 

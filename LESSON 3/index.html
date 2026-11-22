@@ -188,17 +188,7 @@
       </div>
 
       <!-- CONTINUITY BRIDGE TO LESSON 4 -->
-      <div style="background:linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border:2px dashed #ef4444; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#991b1b; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
-          <span>🌉</span> Cầu Nối Tư Duy Sang Bài 4: "Chiếc Chìa Khóa" Mở Ra Cấu Trúc Rẽ Nhánh
-        </h3>
-        <p style="color:#7f1d1d; font-size:14px; line-height:1.6;">
-          Hãy để ý kỹ: Tất cả các biểu thức so sánh và logic trong Bài 3 như <code>age &gt;= 18</code>, <code>diem &gt;= 8.0</code>, hay <code>n % 2 == 0</code> chỉ có thể trả về đúng 2 kết quả: <strong>True</strong> hoặc <strong>False</strong>!
-        </p>
-        <p style="color:#7f1d1d; font-size:14px; line-height:1.6; margin-top:6px;">
-          Chính hai giá trị <code>True/False</code> này sẽ là ngã rẽ đèn xanh / đèn đỏ để máy tính quyết định: <em>"Nếu True thì đi đường này (if), ngược lại False thì đi đường kia (else)"</em>. Đó chính là nội dung đỉnh cao của <strong>Bài 4: Cấu Trúc Rẽ Nhánh Bằng Câu Điều Kiện</strong>!
-        </p>
-      </div>
+      
 
     
       <!-- PTB-VISUALS -->
@@ -219,6 +209,18 @@
   </div>
   <script type="application/json">{"scenarios": [{"name": "Gõ n = 6", "steps": [{"n": "s", "v": "", "t": "Bắt đầu chạy.", "o": null}, {"n": "n", "v": "n = 6", "t": "Cất số 6 (kiểu int) vào hộp n.", "o": null}, {"n": "d0", "v": "n % 2 = 0", "t": "6 % 2 = 0, nên điều kiện n % 2 == 0 là True → đi nhánh Đúng.", "o": null}, {"n": "a0", "v": "n = 6", "t": "Chạy lệnh in của nhánh được chọn. Nhánh còn lại bị bỏ qua.", "o": "Số chẵn"}, {"n": "e", "v": "n = 6", "t": "Kết thúc.", "o": null}]}, {"name": "Gõ n = 7", "steps": [{"n": "s", "v": "", "t": "Bắt đầu chạy.", "o": null}, {"n": "n", "v": "n = 7", "t": "Cất số 7 (kiểu int) vào hộp n.", "o": null}, {"n": "d0", "v": "n % 2 = 1", "t": "7 % 2 = 1, nên điều kiện n % 2 == 0 là False → đi nhánh Sai.", "o": null}, {"n": "el", "v": "n = 7", "t": "Chạy lệnh in của nhánh được chọn. Nhánh còn lại bị bỏ qua.", "o": "Số lẻ"}, {"n": "e", "v": "n = 7", "t": "Kết thúc.", "o": null}]}], "code": "n = int(input(\"Nhập n: \"))\nif n % 2 == 0:\n    print(\"Số chẵn\")\nelse:\n    print(\"Số lẻ\")", "map": {"n": 1, "d0": 2, "a0": 3, "el": 5}}</script>
 </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border:2px dashed #ef4444; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#991b1b; font-weight:800; font-size:16px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+          <span>🌉</span> Cầu Nối Tư Duy Sang Bài 4: "Chiếc Chìa Khóa" Mở Ra Cấu Trúc Rẽ Nhánh
+        </h3>
+        <p style="color:#7f1d1d; font-size:14px; line-height:1.6;">
+          Hãy để ý kỹ: Tất cả các biểu thức so sánh và logic trong Bài 3 như <code>age &gt;= 18</code>, <code>diem &gt;= 8.0</code>, hay <code>n % 2 == 0</code> chỉ có thể trả về đúng 2 kết quả: <strong>True</strong> hoặc <strong>False</strong>!
+        </p>
+        <p style="color:#7f1d1d; font-size:14px; line-height:1.6; margin-top:6px;">
+          Chính hai giá trị <code>True/False</code> này sẽ là ngã rẽ đèn xanh / đèn đỏ để máy tính quyết định: <em>"Nếu True thì đi đường này (if), ngược lại False thì đi đường kia (else)"</em>. Đó chính là nội dung đỉnh cao của <strong>Bài 4: Cấu Trúc Rẽ Nhánh Bằng Câu Điều Kiện</strong>!
+        </p>
       </div>
     </div>
 

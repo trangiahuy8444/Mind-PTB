@@ -171,16 +171,6 @@ print(kq + 10)       # Chạy mượt -> 20!</textarea></div></div>
         </div>
       </div>
 
-      <!-- Bridge to Buổi 14 Hackathon -->
-      <div style="background:linear-gradient(135deg, #ccfbf1 0%, #eff6ff 100%); border:2px dashed #0d9488; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#0f766e; font-weight:800; font-size:16px; margin-bottom:8px;">🏆 Đích Đến Buổi 14: Chung Kết Hackathon &amp; Demo Day!</h3>
-        <p style="color:#134e4a; font-size:14px; line-height:1.6;">
-          Chúc mừng em đã đi trọn vẹn <strong>13 buổi học lập trình Python cơ bản</strong>! Từ những dòng <code>print()</code> đầu tiên ở Bài 1, đến ép kiểu (B2), toán tử (B3), câu điều kiện (B4), vòng lặp <code>for</code>/<code>while</code> (B6–7), giải quyết vấn đề (B8), danh sách (B9–10), xâu ký tự (B11) và hàm tham số/`return` (B12–13), em đã có đầy đủ hành trang để bước vào <strong>Hackathon Buổi 14</strong>!
-        </p>
-        <p style="color:#134e4a; font-size:14px; line-height:1.6; margin-top:6px;">
-          Hãy chọn 1 trong 3 đề tài Demo Day: <strong>(1) Game Text-RPG Đấu Boss</strong>, <strong>(2) Trợ Lý Ảo Chatbot</strong>, hoặc <strong>(3) Shop Tycoon Quản Lý Cửa Hàng</strong> và bắt tay thiết kế các hàm cho dự án của riêng mình ngay hôm nay!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -200,6 +190,18 @@ print(kq + 10)       # Chạy mượt -> 20!</textarea></div></div>
   </div>
   <script type="application/json">{"scenarios": [{"name": "gap_doi(5) có return", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "call", "v": "", "t": "Gặp lệnh gọi gap_doi(5): Python nhảy vào hàm, chuẩn bị gán kết quả cho kq.", "o": null}, {"n": "par", "v": "x = 5", "t": "Đối số 5 được truyền vào tham số x.", "o": null}, {"n": "ret", "v": "x = 5\nx * 2 = 10", "t": "return tính x * 2 = 10, đưa giá trị 10 về chỗ gọi và thoát hàm.", "o": null}, {"n": "kq", "v": "kq = 10", "t": "Giá trị trả về được cất vào hộp kq. Hộp x của hàm đã biến mất.", "o": null}, {"n": "pr", "v": "kq = 10", "t": "kq là số 10 nên kq + 10 = 20.", "o": "20"}, {"n": "e", "v": "kq = 10", "t": "Kết thúc. Nếu hàm dùng print thay cho return thì kq = None và dòng này lỗi.", "o": null}]}], "code": "def gap_doi(x):\n    return x * 2\n\nkq = gap_doi(5)\nprint(kq + 10)", "map": {"call": 4, "par": 1, "ret": 2, "kq": 4, "pr": 5, "e": 5}}</script>
 </div>
+      </div>
+
+      <!-- Bridge to Buổi 14 Hackathon -->
+      
+      <div style="background:linear-gradient(135deg, #ccfbf1 0%, #eff6ff 100%); border:2px dashed #0d9488; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#0f766e; font-weight:800; font-size:16px; margin-bottom:8px;">🏆 Đích Đến Buổi 14: Chung Kết Hackathon &amp; Demo Day!</h3>
+        <p style="color:#134e4a; font-size:14px; line-height:1.6;">
+          Chúc mừng em đã đi trọn vẹn <strong>13 buổi học lập trình Python cơ bản</strong>! Từ những dòng <code>print()</code> đầu tiên ở Bài 1, đến ép kiểu (B2), toán tử (B3), câu điều kiện (B4), vòng lặp <code>for</code>/<code>while</code> (B6–7), giải quyết vấn đề (B8), danh sách (B9–10), xâu ký tự (B11) và hàm tham số/`return` (B12–13), em đã có đầy đủ hành trang để bước vào <strong>Hackathon Buổi 14</strong>!
+        </p>
+        <p style="color:#134e4a; font-size:14px; line-height:1.6; margin-top:6px;">
+          Hãy chọn 1 trong 3 đề tài Demo Day: <strong>(1) Game Text-RPG Đấu Boss</strong>, <strong>(2) Trợ Lý Ảo Chatbot</strong>, hoặc <strong>(3) Shop Tycoon Quản Lý Cửa Hàng</strong> và bắt tay thiết kế các hàm cho dự án của riêng mình ngay hôm nay!
+        </p>
       </div>
     </div>
 

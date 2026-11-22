@@ -143,16 +143,6 @@ print("Tổng:", sum(diem), "| Min:", min(diem), "| Max:", max(diem))</textarea>
         </div>
       </div>
 
-      <!-- Bridge -->
-      <div style="background:linear-gradient(135deg, #fffbeb 0%, #fef2f2 100%); border:2px dashed #f59e0b; border-radius:var(--radius-lg); padding:20px;">
-        <h3 style="color:#b45309; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 11: Chuỗi Ký Tự (String) Có Sửa Được Như List Không?</h3>
-        <p style="color:#78350f; font-size:14px; line-height:1.6;">
-          Cả <code>list</code> (Bài 9–10) và <code>str</code> (Bài 11) đều đánh chỉ số từ <code>0</code> và dùng được <code>len()</code>, <code>in</code>, <code>for</code>. Thế nhưng nếu em thử viết <code>s = "MindX"</code> rồi sửa <code>s[0] = "K"</code> giống List, điều gì sẽ xảy ra?
-        </p>
-        <p style="color:#78350f; font-size:14px; line-height:1.6; margin-top:6px;">
-          Python sẽ báo lỗi vì chuỗi mang tính <strong>bất biến (Immutable)</strong>! Hãy khám phá cách cắt lát chuỗi <code>[::]</code> và giải mã mật thư điệp viên trong <strong>Bài 11: Xâu Ký Tự (String)</strong>!
-        </p>
-      </div>
     
       <!-- PTB-VISUALS -->
       <div class="card">
@@ -172,6 +162,18 @@ print("Tổng:", sum(diem), "| Min:", min(diem), "| Max:", max(diem))</textarea>
   </div>
   <script type="application/json">{"scenarios": [{"name": "Chọn 1 (Thêm)", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "m", "v": "chon = \"1\"", "t": "Người dùng chọn 1.", "o": null}, {"n": "d0", "v": "chon = \"1\"", "t": "chon == \"1\" là True → rẽ sang nhánh Đúng.", "o": null}, {"n": "a0", "v": "ds: [\"Kiếm\", \"Cuốc\", \"Giáp\", \"Cung\"]", "t": "Thêm phần tử vào cuối danh sách.", "o": null}, {"n": "e", "v": "ds: [\"Kiếm\", \"Cuốc\", \"Giáp\", \"Cung\"]", "t": "Kết thúc.", "o": null}]}, {"name": "Chọn 3 (Xóa)", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "m", "v": "chon = \"3\"", "t": "Người dùng chọn 3.", "o": null}, {"n": "d0", "v": "chon = \"3\"", "t": "chon == \"1\" là False → sang nhánh Sai, xét tiếp.", "o": null}, {"n": "d1", "v": "chon = \"3\"", "t": "chon == \"2\" là False → sang nhánh Sai, xét tiếp.", "o": null}, {"n": "d2", "v": "chon = \"3\"", "t": "chon == \"3\" là True → rẽ sang nhánh Đúng.", "o": null}, {"n": "a2", "v": "ds: [\"Kiếm\", \"Giáp\"]", "t": "Xóa phần tử được chọn khỏi danh sách.", "o": null}, {"n": "e", "v": "ds: [\"Kiếm\", \"Giáp\"]", "t": "Kết thúc.", "o": null}]}, {"name": "Chọn 0 (Thoát)", "steps": [{"n": "s", "v": "", "t": "Bắt đầu.", "o": null}, {"n": "m", "v": "chon = \"0\"", "t": "Người dùng chọn 0.", "o": null}, {"n": "d0", "v": "chon = \"0\"", "t": "chon == \"1\" là False → xét điều kiện tiếp theo.", "o": null}, {"n": "d1", "v": "chon = \"0\"", "t": "chon == \"2\" là False → xét điều kiện tiếp theo.", "o": null}, {"n": "d2", "v": "chon = \"0\"", "t": "chon == \"3\" là False → xét điều kiện tiếp theo.", "o": null}, {"n": "el", "v": "ds không đổi", "t": "Không điều kiện nào đúng nên chạy nhánh cuối cùng.", "o": null}, {"n": "e", "v": "ds không đổi", "t": "Kết thúc.", "o": null}]}], "code": "chon = input(\"Chọn: \")\nif chon == \"1\":\n    ds.append(item)\nelif chon == \"2\":\n    ds[i] = item_moi\nelif chon == \"3\":\n    ds.remove(item)\nelse:\n    print(\"Thoát\")", "map": {"m": 1, "d0": 2, "a0": 3, "d1": 4, "a1": 5, "d2": 6, "a2": 7, "el": 9}}</script>
 </div>
+      </div>
+
+      <!-- Bridge -->
+      
+      <div style="background:linear-gradient(135deg, #fffbeb 0%, #fef2f2 100%); border:2px dashed #f59e0b; border-radius:var(--radius-lg); padding:20px;">
+        <h3 style="color:#b45309; font-weight:800; font-size:16px; margin-bottom:8px;">🌉 Cầu Nối Tư Duy Sang Bài 11: Chuỗi Ký Tự (String) Có Sửa Được Như List Không?</h3>
+        <p style="color:#78350f; font-size:14px; line-height:1.6;">
+          Cả <code>list</code> (Bài 9–10) và <code>str</code> (Bài 11) đều đánh chỉ số từ <code>0</code> và dùng được <code>len()</code>, <code>in</code>, <code>for</code>. Thế nhưng nếu em thử viết <code>s = "MindX"</code> rồi sửa <code>s[0] = "K"</code> giống List, điều gì sẽ xảy ra?
+        </p>
+        <p style="color:#78350f; font-size:14px; line-height:1.6; margin-top:6px;">
+          Python sẽ báo lỗi vì chuỗi mang tính <strong>bất biến (Immutable)</strong>! Hãy khám phá cách cắt lát chuỗi <code>[::]</code> và giải mã mật thư điệp viên trong <strong>Bài 11: Xâu Ký Tự (String)</strong>!
+        </p>
       </div>
     </div>
 
