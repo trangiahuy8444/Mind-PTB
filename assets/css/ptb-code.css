@@ -1,0 +1,53 @@
+/* Giao diện code giống Visual Studio Code (Dark+) */
+:root{
+  --vs-bg:#1e1e1e; --vs-bar:#252526; --vs-tab:#1e1e1e; --vs-border:#2b2b2b; --vs-fg:#d4d4d4; --vs-gut:#858585; --vs-sel:#264f78; --vs-line:#2a2d2e;
+  --vs-font:'Fira Code','Cascadia Code',Consolas,'Courier New',monospace;
+}
+/* khung + thanh tiêu đề giống tab của VS Code */
+.code-box{background:var(--vs-bg)!important;border:1px solid #333!important;border-radius:8px!important;box-shadow:0 4px 14px rgba(0,0,0,.25)!important}
+.code-box .code-header{background:var(--vs-bar)!important;border-bottom:1px solid #1a1a1a!important;padding:0 10px 0 0!important;min-height:36px;color:#9d9d9d!important}
+.code-box .code-header>span{display:inline-flex;align-items:center;gap:8px;align-self:stretch;padding:0 16px;background:var(--vs-tab);color:#fff;border-top:2px solid #3794ff;font-size:12.5px;font-family:var(--vs-font)}
+.code-box .code-header>span::before{content:"";width:14px;height:14px;border-radius:3px;background:linear-gradient(135deg,#3776ab 50%,#ffd43b 50%);flex:0 0 auto}
+.code-box .code-header .window-dots{display:none}
+.code-box .code-actions{gap:6px}
+.code-box .btn-copy{background:transparent!important;color:#c5c5c5!important;border:1px solid #454545!important;border-radius:4px!important;padding:4px 10px!important}
+.code-box .btn-copy:hover{background:#3a3d41!important;color:#fff!important}
+.code-box .btn-run{background:#0e639c!important;border-radius:4px!important}
+.code-box .btn-run:hover{background:#1177bb!important}
+.code-box .terminal-output{background:#181818!important;color:#cccccc!important;border-top:1px solid #333!important;font-family:var(--vs-font)}
+.code-box .terminal-output::before{content:"TERMINAL";display:block;font-size:10.5px;letter-spacing:.8px;color:#9d9d9d;margin-bottom:6px;border-bottom:1px solid #333;padding-bottom:4px}
+.code-editor-area{background:var(--vs-bg)!important}
+
+/* trình soạn thảo: số dòng + lớp tô màu nằm dưới textarea trong suốt */
+.ptb-ed{display:flex;font-family:var(--vs-font);font-size:14px;line-height:22px;background:var(--vs-bg);max-height:520px;overflow:auto}
+.ptb-gut{flex:0 0 auto;min-width:48px;padding:12px 14px 12px 8px;text-align:right;color:var(--vs-gut);white-space:pre;user-select:none;background:var(--vs-bg);border-right:1px solid #2b2b2b;font-size:13px;position:sticky;left:0;z-index:2}
+.ptb-stack{flex:1 1 auto;display:grid;grid-template-columns:minmax(100%,max-content);position:relative}
+.ptb-hl,.code-editor-area textarea.ptb-ta{grid-area:1/1;margin:0;padding:12px 18px 12px 16px;border:0;border-radius:0;font:inherit;line-height:inherit;white-space:pre;tab-size:4;letter-spacing:0;overflow:visible;min-height:0}
+.ptb-hl{color:var(--vs-fg);pointer-events:none;background:transparent}
+.code-editor-area textarea.ptb-ta{background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent;caret-color:#aeafad;resize:none;outline:none;width:100%;overflow:hidden;z-index:1}
+.code-editor-area textarea.ptb-ta::selection{background:var(--vs-sel);-webkit-text-fill-color:transparent}
+.ptb-ed:focus-within{box-shadow:inset 0 0 0 1px #3794ff55}
+.ptb-ed.is-ro .ptb-ta{cursor:text}
+
+/* <pre> tĩnh: câu hỏi trắc nghiệm, ví dụ trong lý thuyết */
+pre.ptb-code{display:flex;margin:10px 0 14px;padding:0;background:var(--vs-bg);color:var(--vs-fg);border:1px solid #333;border-radius:8px;font-family:var(--vs-font);font-size:14px;line-height:22px;overflow-x:auto;white-space:pre;tab-size:4}
+pre.ptb-code .ptb-gut{padding:10px 12px 10px 10px;position:static}
+pre.ptb-code code{padding:10px 16px;font:inherit;background:transparent;color:inherit;display:block}
+
+/* mô phỏng từng dòng */
+.trace-code.ptb-trace{background:var(--vs-bg)!important;color:var(--vs-fg)!important;font-family:var(--vs-font)!important;border:1px solid #333;line-height:22px}
+.ptb-trace .trace-line.active{background:#2a3d56!important;border-left-color:#3794ff!important}
+.ptb-trace .trace-line .ln{color:var(--vs-gut)!important}
+
+/* bảng màu Dark+ */
+.tk-ctl{color:#c586c0}.tk-kw{color:#569cd6}.tk-fn{color:#dcdcaa}.tk-type{color:#4ec9b0}
+.tk-var{color:#9cdcfe}.tk-prop{color:#9cdcfe}.tk-num{color:#b5cea8}.tk-str{color:#ce9178}
+.tk-brace{color:#569cd6}.tk-cm{color:#6a9955;font-style:italic}.tk-op{color:#d4d4d4}.tk-pun{color:#d4d4d4}
+
+/* Bài 5 dùng bộ tô màu riêng: đổi sang cùng bảng màu */
+.l5 .code-content,.l5 .code-text{color:var(--vs-fg)}
+.l5 .kw{color:#c586c0;font-weight:400}.l5 .fn{color:#dcdcaa}.l5 .str{color:#ce9178}.l5 .num{color:#b5cea8}.l5 .op{color:#d4d4d4;font-weight:400}.l5 .cm{color:#6a9955;font-style:italic}
+@media(max-width:560px){.ptb-ed,pre.ptb-code{font-size:12.5px}.code-box .code-header>span{padding:0 10px;font-size:11.5px}}
+
+/* Không dùng chữ ghép: học viên phải thấy đúng các ký tự "<=" ">=" "==" "!=" như khi gõ */
+.ptb-ed,.ptb-hl,.ptb-ta,pre.ptb-code,.ptb-trace,.l5 .code-content,.code-box .terminal-output{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
