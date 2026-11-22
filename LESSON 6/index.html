@@ -35,12 +35,6 @@
     .step-counter { font-size:13px; font-weight:700; color:#1d4ed8; background:#eff6ff; padding:4px 10px; border-radius:20px; }
 
     /* ---------- Anatomy ---------- */
-    .anatomy { background:#0f172a; color:#e2e8f0; border-radius:var(--radius-md); padding:22px; font-family:var(--font-mono); font-size:18px; line-height:2; }
-    .anatomy .kw { color:#c084fc; font-weight:700; }
-    .anatomy .var { color:#7dd3fc; font-weight:700; }
-    .anatomy .fn { color:#fde68a; }
-    .anatomy .num { color:#86efac; }
-    .anatomy .colon { color:#f87171; font-weight:800; font-size:22px; }
     .anatomy-legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:14px; }
     .anatomy-legend div { background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; padding:10px 12px; font-size:13.5px; }
   </style>
@@ -161,12 +155,10 @@ print("98 x 10 = ", 98 * 10)</textarea></div>
         <div class="card-header">
           <h2 class="card-title"><span class="icon-box">🧬</span> 2. Giải Phẫu Cú Pháp Vòng Lặp for</h2>
         </div>
-        <div class="anatomy">
-          <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>)<span class="colon">:</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;"># khối lệnh lặp (thụt lề 4 dấu cách)</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">print</span>(<span class="var">i</span>)<br>
-          <span class="fn">print</span>(<span style="color:#fdba74;">"Xong!"</span>) <span style="color:#94a3b8;"># không thụt lề → chạy 1 lần SAU vòng lặp</span>
-        </div>
+        <pre class="anatomy">for i in range(1, 11):
+    # khối lệnh lặp (thụt lề 4 dấu cách)
+    print(i)
+print("Xong!")  # không thụt lề → chạy 1 lần SAU vòng lặp</pre>
         <div class="anatomy-legend">
           <div><strong style="color:#7c3aed;">for ... in</strong><br>Từ khóa: "với mỗi giá trị ... trong ..."</div>
           <div><strong style="color:#0284c7;">i</strong> — biến lặp<br>Tự động nhận lần lượt từng giá trị.</div>

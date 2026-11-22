@@ -251,11 +251,9 @@ print("Bạn đang học lớp:", grade)</textarea>
           <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
             Thử tưởng tượng: Thầy viết chương trình nhập vào 2 số <code>a</code> và <code>b</code> rồi in ra <code>a + b</code>:
           </p>
-          <div style="background:#0f172a; color:#f8fafc; font-family:var(--font-mono); padding:12px; border-radius:8px; margin:10px 0; font-size:13px;">
-            a = input("Nhập số thứ nhất: ") &nbsp;# Nhập vào 10<br>
-            b = input("Nhập số thứ hai: ") &nbsp;&nbsp;# Nhập vào 20<br>
-            print(a + b) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)
-          </div>
+          <pre>a = input("Nhập số thứ nhất: ")  # Nhập vào 10
+b = input("Nhập số thứ hai: ")  # Nhập vào 20
+print(a + b)                    # KẾT QUẢ IN RA: 1020 (KHÔNG PHẢI 30!)</pre>
           <p style="color:#0c4a6e; font-size:14px; line-height:1.6;">
             <strong>Tại sao lại như vậy?</strong> Bởi vì hàm <code>input()</code> luôn luôn coi tất cả những gì em gõ là một chuỗi chữ (Text). Dấu cộng lúc này biến thành <em>"phép nối chuỗi"</em> dán hai chữ lại với nhau! Để giải mã và dạy máy tính hiểu đây là con số thực sự, chúng ta sẽ bước sang <strong>Bài 2: Kiểu Dữ Liệu & Bản Chất Ép Kiểu</strong>!
           </p>

@@ -51,3 +51,23 @@ pre.ptb-code code{padding:10px 16px;font:inherit;background:transparent;color:in
 
 /* Không dùng chữ ghép: học viên phải thấy đúng các ký tự "<=" ">=" "==" "!=" như khi gõ */
 .ptb-ed,.ptb-hl,.ptb-ta,pre.ptb-code,.ptb-trace,.l5 .code-content,.code-box .terminal-output{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+
+/* Cạnh tranh về độ ưu tiên với style cũ trong từng bài */
+pre.ptb-code,.visual-fig figcaption pre.ptb-code{background:var(--vs-bg)!important;color:var(--vs-fg)!important;border:1px solid #333!important;border-radius:8px!important;padding:0!important;margin:10px 0 14px!important}
+pre.ptb-code code{padding:10px 16px!important}
+pre.ptb-code.anatomy{font-size:17px;line-height:1.75;margin:0 0 14px!important}
+pre.ptb-code.anatomy .ptb-gut{padding:14px 12px 14px 10px;font-size:15px}
+pre.ptb-code.anatomy code{padding:14px 18px!important}
+
+/* Màn hình in ra / nhật ký mô phỏng: giống TERMINAL của VS Code */
+.trace-console,.guess-log,.surv-log,.crud-log,.l5 .terminal-window{background:#181818!important;border:1px solid #333!important;border-radius:8px!important;font-family:var(--vs-font)!important;font-variant-ligatures:none}
+.trace-console{color:#cccccc!important}
+
+/* Code ngắn trong câu chữ: bảng màu Light+ của VS Code */
+code.ptb-ic{background:#f3f3f3;color:#000;border:1px solid #e6e6e6;border-radius:4px;padding:1px 6px;font-family:var(--vs-font);font-size:.92em;font-variant-ligatures:none;white-space:nowrap}
+.ptb-ic .tk-ctl{color:#af00db}.ptb-ic .tk-kw{color:#0000ff}.ptb-ic .tk-fn{color:#795e26}.ptb-ic .tk-type{color:#267f99}
+.ptb-ic .tk-var,.ptb-ic .tk-prop{color:#001080}.ptb-ic .tk-num{color:#098658}.ptb-ic .tk-str{color:#a31515}
+.ptb-ic .tk-brace{color:#0000ff}.ptb-ic .tk-cm{color:#008000}.ptb-ic .tk-op,.ptb-ic .tk-pun{color:#000}
+pre.ptb-code.anatomy{line-height:30px!important}
+pre.ptb-code.anatomy .ptb-gut{line-height:30px}
+pre.ptb-code.anatomy code{line-height:30px}

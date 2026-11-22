@@ -111,7 +111,24 @@
     enhanceTrace(el);
   }
 
+  /* ---------- code ngắn trong câu chữ: tô màu theo Light+ ---------- */
+  var SKIP = 'pre,.code-box,.ptb-ed,.ptb-hl,.trace-code,.terminal-output,.trace-console,.guess-log,.surv-log,.crud-log,.terminal-window,header,button,textarea,script,style,[style*="#0f172a"],[style*="#1e1e1e"]';
+  function enhanceInline(root) {
+    (root || document).querySelectorAll('code:not([data-ptb-ic])').forEach(function (c) {
+      c.setAttribute('data-ptb-ic', '1');
+      if (c.closest(SKIP) || c.children.length) return;
+      var t = c.textContent; if (!t.trim() || t.length > 80) return;
+      c.classList.add('ptb-ic'); c.innerHTML = highlight(t);
+    });
+  }
+  function watchInline() {
+    var q = false;
+    new MutationObserver(function () { if (q) return; q = true; requestAnimationFrame(function () { q = false; enhanceInline(); }); })
+      .observe(document.body, { childList: true, subtree: true });
+  }
+
   function init() {
+    enhanceInline(); watchInline();
     document.querySelectorAll('.code-editor-area textarea').forEach(enhanceTextarea);
     document.querySelectorAll('pre').forEach(enhancePre);
     document.querySelectorAll('.trace-code').forEach(watchTrace);
